@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- index-August-2024-->
+ <!-- ProfJero -->
+<head>
+	<!--===== Meta Tag =====-->
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+	<!-- ======== Meta Description ========= -->
+	<meta name="description" content="Personal portfolio of ProfJero, a Software Developer and IT Trainer creating practical digital solutions and empowering others through technology.">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="Prof Jero, ProfJero, Software Developer, IT Trainer, web development, HTML, CSS, JavaScript, front-end development, web applications, dashboards, digital solutions, portfolio">
+	<meta name="author" content="ProfJero">
+
+	<!-- ======== Open Graph Tags ========-->
+	 <meta property="og:title" content="ProfJero | Software Developer & IT Trainer">
+	 <meta property="og:description" content="Creating practical digital solutions and empowering others through technlogy.">
+	 <!-- <meta property="og:image" content=""> -->
+	 <meta property="og:type" content="website">
+
+	<!-- ======= Google Search Engine Verification ======== -->
+	 <meta name="google-site-verification" content="KQFO-fdbRUuyV-gC0so2L_bkoT4S42o00kB5FmA-MCk" />
+
+	 <!--	Css Links
+    ==================================================-->
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="fonts/flaticon.css">
+     <link rel="stylesheet" href="css/plugins.css">
+     <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="css/color.css" id="color-change">
+
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+     <!-- Favicon 
+    ==================================================-->
+	<link rel="icon" type="image/png" sizes="32x32" href="images/Prof/logo/profjero logo.png">
+
+      <!--	Title
+    ==================================================-->
+	<title>ProfJero | Software Developer & IT Trainer</title>
+
+	<!-- ========= Structured Data ===========-->
+	 <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "ProfJero",
+  "jobTitle": "Software Developer",
+  "url": "https://profjero.pages.dev",
+  "knowsAbout": ["HTML", "CSS", "JavaScript", "Web Development"]
+}
+</script>
+
+<style>
+	.portfolio-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.portfolio-preview img {
+    width: 100%;
+    height: 300px;
+	overflow: hidden;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.portfolio-card:hover .portfolio-preview img {
+    transform: scale(1.08);
+}
+
+.portfolio-info {
+    background: #f8f9fa;
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 0.4em 0.8em;
+    margin: 0 0.3em 0.3em 0;
+}
+
+.view-gallery {
+    cursor: pointer;
+}
+</style>
+
+<style>
+.studio-hub-title {
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+}
+.studio-hub-title i {
+    margin-right: 10px;
+    color: #f39c12; /* Adjust to your brand color */
+}
+.studio-hub-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #f39c12; /* Adjust to your brand color */
+}
+.mt_30 {
+    margin-top: 30px;
+}
+.srv_icon i {
+    font-size: 48px;
+    line-height: 1.2;
+    color: #ffffff;
+}
+</style>
+
+<style>
+/* ========== PORTFOLIO CARD STYLES ========== */
+.portfolio-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    height: 100%;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+/* ========== OPTION 1: SCREENSHOT + LINK ========== */
+.preview-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: #f8f9fa;
+    cursor: pointer;
+}
+
+.preview-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-card:hover .preview-img {
+    transform: scale(1.05);
+}
+
+.action-buttons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.preview-wrapper:hover .action-buttons {
+    opacity: 1;
+}
+
+.preview-btn {
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.live-btn {
+    background: #28a745;
+    color: white;
+}
+
+.live-btn:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+.demo-btn {
+    background: #007bff;
+    color: white;
+}
+
+.demo-btn:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* ========== OPTION 2: VIDEO DEMO ========== */
+.video-demo {
+    position: relative;
+    background: #000;
+}
+
+.video-demo video {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.video-controls {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.7);
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+/* ========== OPTION 3: IFRAME MODAL ========== */
+.modal-iframe {
+    width: 100%;
+    height: 70vh;
+    border: none;
+}
+
+.preview-toolbar {
+    padding: 12px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ========== OPTION 4: SCREENSHOT GALLERY ========== */
+.screenshot-gallery {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-top: 1px solid #eee;
+}
+
+.screenshot-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+}
+
+.screenshot-thumb:hover {
+    transform: scale(1.05);
+    border-color: #007bff;
+}
+
+/* Lightbox styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+/* Live badge */
+.live-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.live-badge .badge {
+    padding: 6px 12px;
+    font-size: 11px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; box-shadow: 0 0 5px rgba(40,167,69,0.5); }
+    100% { opacity: 0.8; }
+}
+
+/* Info section */
+.portfolio-info {
+    padding: 20px;
+}
+
+.portfolio-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.portfolio-desc {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.tech-tags {
+    margin-bottom: 15px;
+}
+
+.tech-tags .badge {
+    margin-right: 6px;
+    margin-bottom: 6px;
+    padding: 5px 10px;
+    font-weight: 500;
+}
+
+.portfolio-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-sm {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+}
+
+/* Filter tabs */
+.filter-tabs {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.filter-tabs li {
+    display: inline-block;
+    padding: 8px 24px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.3s;
+    background: #f0f0f0;
+    font-weight: 500;
+}
+
+.filter-tabs li.active,
+.filter-tabs li:hover {
+    background: #007bff;
+    color: white;
+}
+</style>
+
+</head>
+
+<body id="top" class="page-load">
+	<!--	Start Back to top
+	=================================================-->
+	<a href="#" id="scroll" style="display: none;"><span></span></a>
+	<!--	End Back to top
+	==================================================-->
+
+	<!--	Preloader
+	==================================================-->
+
+	<!-- Color Settings Start
+	==================================================-->
+	<div class="color-panel">
+		<div class="on-panel color_white bg_primary">
+			<div class="text-center icon-spinner">
+			  <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+			</div>
+		</div>
+		<div class="panel-box">
+			<span class="panel-title"><b>Theme Colors</b></span>
+			<ul class="color-box">
+				<li class="default" data-name="default" data-path="css/color/color-0.css" data-image="/images/Prof/logo/logo1.png" data-target="/images/Prof/logo/logo1.png"></li>
+				<li class="color_2" data-name="color_2" data-path="css/color/color-1.css" data-image="/images/Prof/logo/logo2.png" data-target="/images/Prof/logo/logo2.png"></li>
+				<li class="color_3" data-name="color_3" data-path="css/color/color-2.css" data-image="/images/Prof/logo/logo3.png" data-target="/images/Prof/logo/logo3.png"></li>
+				<li class="color_4" data-name="color_4" data-path="css/color/color-3.css" data-image="/images/Prof/logo/logo4.png" data-target="/images/Prof/logo/logo4.png"></li>
+				<li class="color_5" data-name="color_5" data-path="css/color/color-4.css" data-image="/images/Prof/logo/logo5.png" data-target="/images/Prof/logo/logo5.png"></li>
+				<li class="color_6" data-name="color_6" data-path="css/color/color-5.css" data-image="/images/Prof/logo/logo6.png" data-target="/images/Prof/logo/logo6.png"></li>
+				<li class="color_7" data-name="color_7" data-path="css/color/color-6.css" data-image="/images/Prof/logo/logo7.png" data-target="/images/Prof/logo/logo7.png"></li>
+				<li class="color_8" data-name="color_8" data-path="css/color/color-7.css" data-image="/images/Prof/logo/logo8.png" data-target="/images/Prof/logo/logo8.png"></li>
+				<li class="color_9" data-name="color_9" data-path="css/color/color-8.css" data-image="/images/Prof/logo/logo9.png" data-target="/images/Prof/logo/logo9.png"></li>
+				<li class="color_10" data-name="color_10" data-path="css/color/color-9.css" data-image="/images/Prof/logo/logo10.png" data-target="/images/Prof/logo/logo10.png"></li>
+				<li class="color_11" data-name="color_11" data-path="css/color/color-10.css" data-image="/images/Prof/logo/logo11.png" data-target="/images/Prof/logo/logo11.png"></li>
+				<li class="color_12" data-name="color_12" data-path="css/color/color-11.css" data-image="/images/Prof/logo/logo12.png" data-target="/images/Prof/logo/logo12.png"></li>
+				<li class="color_13" data-name="color_13" data-path="css/color/color-12.css" data-image="/images/Prof/logo/logo13.png" data-target="/images/Prof/logo/logo13.png"></li>
+				<li class="color_14" data-name="color_14" data-path="css/color/color-13.css" data-image="/images/Prof/logo/logo14.png" data-target="/images/Prof/logo/logo14.png"></li>
+			</ul>
+		</div>
+		<div class="switcher_layout">
+			<span class="layout_title"><b>Layout Style</b></span>
+			<div class="radio_check">
+				<input type="checkbox" id="layout_type" name="layout" value="Yes">
+				<label class="bg_default text-left" for="layout_type"><span class="white_color">Full</span><span class="secondary_color">Box</span></label>
+			</div>
+		</div>
+		<div class="template_style">
+			<span class="layout_title"><b>Color Mode</b></span>
+			<ul>
+				<!-- <li><a class="btn_link" href="" data-name data-path="">Dark Mode</a></li> -->
+			</ul>
+		</div>
+		<div class="box_bg_style">
+			<span class="layout_title"><b>Background pattern</b></span>
+			<div class="select_bg">
+				<ul>
+					<li><input type="radio" name="radio" id="patrn1" value="pattern_1" /><label for="patrn1" class="radios pattern1"></label></li>
+					<li><input type="radio" name="radio" id="patrn2" value="pattern_2" /><label for="patrn2" class="radios pattern2"></label></li>
+					<li><input type="radio" name="radio" id="patrn3" value="pattern_3" /><label for="patrn3" class="radios pattern3"></label></li>
+					<li><input type="radio" name="radio" id="patrn4" value="pattern_4" /><label for="patrn4" class="radios pattern4"></label></li>
+					<li><input type="radio" name="radio" id="patrn5" value="pattern_5" /><label for="patrn5" class="radios pattern5"></label></li>
+				</ul>
+			</div>
+			<span class="layout_title"><b>Background pattern</b></span>
+			<div class="select_bg">
+				<ul>
+					<li><input type="radio" name="radio" id="bg_img1" value="body_bg_1" /><label for="bg_img1" class="radios body_image1"></label></li>
+					<li><input type="radio" name="radio" id="bg_img2" value="body_bg_2" /><label for="bg_img2" class="radios body_image2"></label></li>
+					<li><input type="radio" name="radio" id="bg_img3" value="body_bg_3" /><label for="bg_img3" class="radios body_image3"></label></li>
+					<li><input type="radio" name="radio" id="bg_img4" value="body_bg_4" /><label for="bg_img4" class="radios body_image4"></label></li>
+					<li><input type="radio" name="radio" id="bg_img5" value="body_bg_5" /><label for="bg_img5" class="radios body_image5"></label></li>
+					<li><input type="radio" name="radio" id="bg_img6" value="body_bg_6" /><label for="bg_img6" class="radios body_image6"></label></li>
+					<li><input type="radio" name="radio" id="bg_img7" value="body_bg_7" /><label for="bg_img7" class="radios body_image7"></label></li>
+					<li><input type="radio" name="radio" id="bg_img8" value="body_bg_8" /><label for="bg_img8" class="radios body_image8"></label></li>
+					<li><input type="radio" name="radio" id="bg_img9" value="body_bg_9" /><label for="bg_img9" class="radios body_image9"></label></li>
+					<li><input type="radio" name="radio" id="bg_img10" value="body_bg_10" /><label for="bg_img10" class="radios body_image10"></label></li>
+				</ul>
+			</div>
+			<div class="select_bg">
+				<ul>
+					<li><input type="checkbox" name="runaway" id="bg_over" value="" /> Overlay</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--  Color Settings End
+	==============================================-->
+
+<!-- Wrapper Start 
+==================================================-->
+<div id="page_wrapper">
+	<div class="row">
+	<!-- Start Nav Menu 
+	==============================================-->
+	<header class="main_nav">
+		<div class="container">
+			<nav id="navbar-example2" class="navbar navbar-expand-lg navbar-light w-100"> 
+				<a class="navbar-brand" href="#top"><img class="nav-logo" src="images/Prof/logo/profjero logo.png" alt="logo"></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto">
+					  <li class="nav-item"><a class="nav-link active" href="#top" data-scroll="top">Home<span class="sr-only">(current)</span></a></li>
+					  <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+					  <li class="nav-item"><a class="nav-link" href="#skill">Skill</a></li>
+					  <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+					  <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>	
+					  <li class="nav-item"><a class="nav-link" href="#testimonial">Testimonial</a></li>	
+					  <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>	
+					  <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>	
+					</ul>
+				</div>		
+			</nav>
+		</div>	
+	</header>
+	<!-- End Nav Menu
+	==================================================-->
+	
+	<!--	Start Main Banner 
+	==================================================-->
+	<section id="main_banner" class=" banner_water_effect background3 overlay_one">
+		<div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-md-12 col-lg-12 home-content text-left">
+                    <div class="mainbanner_content">
+                        <span class="pb_5 banner_title color_white">Hello, I am <b class="name" style="font-size: 40px;">Benjamin Amoako</b></span>  
+                        <h1 class="cd-headline clip is-full-width text-uppercase">
+                            <span class="color_white">a</span>
+                            <span class="cd-words-wrapper color_default">
+                                <b class="is-visible">Software Developer.</b>
+                                <b>IT Trainer</b>
+                                <b>Creative Designer.</b>
+								<b>Freelancer.</b>
+                            </span>
+                        </h1>
+                        <p class="color_white mb_30">I have over 4 years of experience delivering creative and digital solutions. My expertise spans web development, design, and building systems that solve real-world problems. I am exited to share my work with you</p>
+                        <a class="btn btn-default" href="profile.html">View Profile</a>
+                    </div>
+                </div>          
+            </div>
+        </div>
+    </section>
+	<!--	End Main Banner 
+	==================================================-->
+	<!--	Start About
+	===================================================-->
+	<section id="about" class="py_80 full_row bg_white">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-12">
+					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
+	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">About</span>about myself</h2>
+	                    <span class="sub_title">I'm Benjamin Amoako, a highly motivated and detailed-oriented professional driven by passion for innovation, creative problem-solving and building impactful solutions.</span>
+	                </div>
+				</div>
+			</div>
+			<div class="about_one">
+				<div class="row">
+					<div class="col-md-7 col-lg-7">
+						<div class="myself color_secondery wow animated fadeInLeft">
+							<p>I am a Co-Founder and Executive Director of Digital Bridge Initiative, and the Founder of ProfJero Hub, where I lead initiatives focused on creativity, technology, and innovation</p>
+							
+							<p>With a strong educational background in Information Technology, I have built a solid foundation in programming, web development, database management, and brand design. Professionally, I have worked on a variety of projects that have strengthened my ability to design and develop solutions that are both functional and impactful.</p>
+
+							<p>I am passionate about continuous learning, growth, and using my skills to create meaningful impact. I am always open to new challenges, collaborations, and opportunities that drive innovation and progress.</p>
+
+							<p>If you'd like to learn more about my work or connect, feel free to reach out.</p>
+						</div>
+						<div class="personal_info">
+							<div class="row">
+								<div class="col-md-12 col-lg-6">
+									<ul>
+										<li><span class="color_secondery">Name :</span> Amoako Benjamin</li>
+										<li><span class="color_secondery">Email :</span> <a href="mailto:profjero947@gmail.com" style="color: #292929;">profjero947@gmail.com</a></li>
+										<li><span class="color_secondery">Phone :</span> <a href="tel:+233531207256" style="color: #292929;">+233 531 207 256</a> </li>	
+									</ul>
+								</div>
+								<div class="col-md-12 col-lg-6">
+									<ul>
+										<li><span class="color_secondery">Profession :</span> Software Development</li>
+										<li><span class="color_secondery">Education :</span> Degree</li>
+										<li><span class="color_secondery">Address :</span> Cape Coast, Ghana.</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5 col-lg-5">
+						<div class="profile_img personal_video wow animated fadeInRight">
+							<img src="images/Prof/about01.png" alt="image">
+							<div class="iconround"><a class="video-popup" href="#" title="video popup">
+							<i class="fa fa-play" aria-hidden="true"></i></a></div>
+							<div class="loader">
+								<div class="loader-inner ball-scale-multiple">
+									<div></div>
+									<div></div>
+									<div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<a class="btn btn-default" href="#contact">Hire Me</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--	End About
+	===================================================-->
+	<!--	Start Skill
+	===================================================-->
+	<section id="skill" class="py_80 bg_secondery full_row">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-12">
+					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
+	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">skill</span>Design skill</h2>
+	                    <span class="sub_title">I approach creativity with structure, purpose and attention to detail.</span>
+	                </div>
+				</div>
+			</div>
+			<div class="my_skill">
+				<div class="row">
+					<div class="col-md-12 col-lg-6">
+						<div class="about_myskill color_secondery wow animated slideInLeft">
+							<h2 class="color_primary">Some talk about my professional design skill</h2>
+							<p class="pt_15">As a detail-oriented and creative IT professional, I have developed a strong foundation in visual design and web experiences. I focus on creating solutions that are not only visually engaging but also intuitive and user-centered.</p>
+
+							<p class="pt_15">I believe that great design goes beyond appearance, it is about clarity, usability, and meaningful communication. By staying up-to-date with modern trends and tools, I ensure that every project remains relevant, effective, and impactful.</p>
+
+							<p class="pt_15">With a keen eye for detail and a passion for innovation, I combine creativity with technical understanding to deliver solutions that are both aesthetically refined and functionally strong.</p>
+						</div>
+					</div>
+					<div class="col-md-12 col-lg-6">
+						<div class="skill-progress wow animated slideInRight">
+		                    <div class="prgs-bar fact-counter"> <span>HTML</span>
+		                        <div class="progress count wow" data-wow-duration="0ms">
+		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="95">0</span>%</div>
+		                            <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemax="100"> </div>
+								</div>
+							</div>
+		                    <div class="prgs-bar fact-counter"> <span>CSS</span>
+		                        <div class="progress count wow" data-wow-duration="0ms">
+		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="92">0</span>%</div>
+		                            <div class="progress-bar" role="progressbar" aria-valuenow="92" aria-valuemax="100"> </div>
+								</div>
+							</div>
+		                    <div class="prgs-bar fact-counter"> <span>JavaScript</span>
+		                        <div class="progress count wow" data-wow-duration="0ms">
+		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="86">0</span>%</div>
+		                            <div class="progress-bar" role="progressbar" aria-valuenow="86" aria-valuemax="100"> </div>
+								</div>
+							</div>
+		                    <div class="prgs-bar fact-counter"> <span>PHP</span>
+		                        <div class="progress count wow" data-wow-duration="0ms">
+		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="78">0</span>%</div>
+		                            <div class="progress-bar" role="progressbar" aria-valuenow="78" aria-valuemax="100"> </div>
+								</div>
+							</div>
+		                    <div class="prgs-bar fact-counter"> <span>Wordpress</span>
+		                        <div class="progress count wow" data-wow-duration="0ms">
+		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="80">0</span>%</div>
+		                            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemax="100"> </div>
+								</div>
+							</div>
+							<div class="prgs-bar fact-counter"> <span>React</span>
+		                        <div class="progress count wow" data-wow-duration="0ms">
+		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="75">0</span>%</div>
+		                            <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemax="100"> </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--	End Skill
+	===================================================-->
+	<!--	Start Experience and Projects
+	===================================================-->
+	<div class="experience background2 overlay_two py_60 full_row">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-12">
+					<div class="fact-counter">
+						<div class="row">
+							<div class="col-md-4 col-lg-4">
+							    <div class="counter count wow text-center" data-wow-duration="300ms">
+							    	<span class="flaticon-man-working-on-a-laptop-from-side-view"></span>
+					            	<div class="counting_digit color_default mt_15"> <h2 class="count-num" data-speed="3000" data-stop="4">0</h2><span>+</span>
+					            	</div>
+					            	<h3 class="color_white mt_15">Years of Experience</h3>
+					          	</div>
+							</div>
+							<div class="col-md-4 col-lg-4">
+							    <div class="counter count wow text-center" data-wow-duration="300ms">
+							    	<span class="flaticon-half-time-work"></span>
+					            	<div class="counting_digit color_default mt_15"> <h2 class="count-num" data-speed="3000" data-stop="46">0</h2><span>+</span>
+					            	</div>
+					            	<h3 class="color_white mt_15">Projects Done</h3>
+					          	</div>
+							</div>
+							<div class="col-md-4 col-lg-4">
+							    <div class="counter count wow text-center" data-wow-duration="300ms">
+							    	<span class="flaticon-happy"></span>
+					            	<div class="counting_digit color_default mt_15"><h2 class="count-num" data-speed="3000" data-stop="42">0</h2><span>+</span>
+					            	</div>
+					            	<h3 class="color_white mt_15">Happy Clients</h3>
+					          	</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--	End Experience and Projects
+	===================================================-->
+	<!-- Start Services
+===================================================-->
+<section id="services" class="py_80 full_row bg_white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
+                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">services</span>What i do</h2>
+                    <span class="sub_title">As a skilled IT professional, I offer a range of services designed to help individuals and businesses / companies succeed in the digital landscape. <br> I also provide innovative solutions that drive business growth and improve digital experiences.</span>
+                </div>
+            </div>
+            <div class="services_item1">
+                <div class="col-md-12 col-lg-12">
+                    <div class="row">
+                        
+                        <!-- ========== DIGITAL STUDIO HUB ========== -->
+                        <div class="col-md-12">
+                            <h3 class="studio-hub-title text-center mb_30 color_primary"><i class="fas fa-laptop-code"></i> Digital Studio</h3>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>01.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Software Development</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-code fa-3x"></i></div>
+                                <p>We build custom software solutions tailored to your business needs. From desktop to enterprise applications, we deliver scalable, secure, and high-performance software that drives efficiency and growth.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>02.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Web Development</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-globe fa-3x"></i></div>
+                                <p>We build robust, scalable, and secure web applications that drive business growth. Our web development services combine technical expertise with innovative thinking to deliver tailored solutions that meet your unique needs.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>03.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Mobile App Development</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-mobile-alt fa-3x"></i></div>
+                                <p>We create powerful iOS and Android apps that engage users and deliver results. Our mobile development services focus on performance, user experience, and seamless functionality.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>04.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Cloud Computing</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-cloud-upload-alt fa-3x"></i></div>
+                                <p>We help you migrate, manage, and optimize your infrastructure on AWS, Azure, or Google Cloud. Scale your business with reliable and cost-effective cloud solutions.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- ========== CREATIVE STUDIO HUB ========== -->
+                        <div class="col-md-12 mt_30">
+                            <h3 class="studio-hub-title text-center mb_30 color_primary"><i class="fas fa-palette"></i> Creative Studio</h3>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>05.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Branding & Identity</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-trademark fa-3x"></i></div>
+                                <p>We craft compelling brand identities that tell your story. From logo design to brand guidelines, we create memorable brand experiences that connect with your audience.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>06.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Graphic Design</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-pen-fancy fa-3x"></i></div>
+                                <p>We craft compelling visual identities that elevate your brand. Our graphic design services combine creativity with technical skills to deliver custom visual solutions that capture your unique message.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>07.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">UI/UX Design</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-drafting-compass fa-3x"></i></div>
+                                <p>We design intuitive and beautiful user interfaces that delight users. Our UX research and UI design services ensure your digital products are easy to use and visually stunning.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>08.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Video Editing</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-video fa-3x"></i></div>
+                                <p>We produce engaging video content that captures attention. From promotional videos to social media content, we bring your stories to life through professional editing.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- ========== NOURISH STUDIO HUB ========== -->
+                        <div class="col-md-12 mt_30">
+                            <h3 class="studio-hub-title text-center mb_30 color_primary"><i class="fas fa-leaf"></i> Nourish Studio</h3>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>09.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Nutrition Consulting</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-apple-alt fa-3x"></i></div>
+                                <p>Get personalized nutrition plans that support your health goals. Our certified nutritionists provide evidence-based guidance for balanced eating and wellness.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>10.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Wellness Programs</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-heartbeat fa-3x"></i></div>
+                                <p>We design holistic wellness programs for individuals and organizations. Improve mental and physical wellbeing through structured health initiatives.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>11.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Meal Planning</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-utensils fa-3x"></i></div>
+                                <p>Customized meal plans tailored to your dietary preferences and health objectives. Save time and eat healthier with organized weekly menus.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- ========== AGRO STUDIO HUB ========== -->
+                        <div class="col-md-12 mt_30">
+                            <h3 class="studio-hub-title text-center mb_30 color_primary"><i class="fas fa-tractor"></i> Agro Studio</h3>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>12.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Smart Farming</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-microchip fa-3x"></i></div>
+                                <p>Integrate IoT and automation into your farm for efficient crop management. Increase yields while reducing resource waste with smart agriculture solutions.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>13.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Crop Consulting</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-seedling fa-3x"></i></div>
+                                <p>Expert advice on crop selection, soil health, and sustainable farming practices. Maximize your agricultural output with professional guidance.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
+                                <div class="srv_item_number color_lightgray"><strong>14.</strong></div>
+                                <h3 class="p_20 text-uppercase color_primary">Agri-Tech Solutions</h3>
+                                <div class="srv_icon color_white"><i class="fas fa-chart-line fa-3x"></i></div>
+                                <p>Leverage technology to optimize farm operations. From drone monitoring to data analytics, we bring innovation to traditional agriculture.</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Services 
+ ======================================================-->
+	<!-- Start Portfolio
+===================================================-->
+<section id="portfolio" class="py_80 bg_secondery full_row">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
+                    <h2 class="title text-uppercase">
+                        <span class="line_double mx-auto color_default">portfolio</span>
+                        My Live Projects
+                    </h2>
+                    <span class="sub_title">
+                        Explore real web applications I've built. Each project includes live demos, video walkthroughs, and detailed case studies.
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="my_portfolio" id="tab-panel">
+                    <!-- Filters -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="filters mb_40 w-100 text-center">
+                                <ul class="filter-tabs mx-auto d-inline-block">
+                                    <li class="active filter" data-filter="all">All Projects</li>
+                                    <li class="filter" data-filter=".educational">Educational</li>
+                                    <li class="filter" data-filter=".nonprofit">Non-Profit</li>
+                                    <li class="filter" data-filter=".impact">Impact</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Items -->
+                    <div class="filter-list">
+                        <div class="portfolio-items row">
+
+                            <!-- ============================================ -->
+                            <!-- PROJECT 1: Using OPTION 1 (Screenshot + Link) -->
+                            <!-- ============================================ -->
+                            <div class="column mix mb_30 col-md-6 col-lg-4 educational">
+                                <div class="portfolio-card">
+                                    <div class="preview-wrapper">
+                                        <img src="assets/images/projects/dbi-learn-preview.jpg" 
+                                             class="preview-img" 
+                                             alt="DBI Learn Platform">
+                                        <div class="action-buttons">
+                                            <a href="https://dbi-learn.pages.dev" target="_blank" class="preview-btn live-btn">
+                                                <i class="fas fa-external-link-alt"></i> Visit Live
+                                            </a>
+                                            <button onclick="showProjectDetails('dbi-learn')" class="preview-btn demo-btn">
+                                                <i class="fas fa-info-circle"></i> Details
+                                            </button>
+                                        </div>
+                                        <div class="live-badge">
+                                            <span class="badge bg-success"><i class="fas fa-circle"></i> LIVE</span>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-info">
+                                        <h5 class="portfolio-title">DBI Learn</h5>
+                                        <p class="portfolio-desc">Interactive e-learning platform with courses, progress tracking, and multimedia lessons.</p>
+                                        <div class="tech-tags">
+                                            <span class="badge bg-primary">HTML/CSS</span>
+                                            <span class="badge bg-secondary">JavaScript</span>
+                                            <span class="badge bg-info">Cloudflare</span>
+                                        </div>
+                                        <div class="portfolio-actions">
+                                            <a href="https://dbi-learn.pages.dev" target="_blank" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-external-link-alt"></i> Launch
+                                            </a>
+                                            <a href="#" target="_blank" class="btn btn-outline-dark btn-sm">
+                                                <i class="fab fa-github"></i> Code
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ============================================ -->
+                            <!-- PROJECT 2: Using OPTION 2 (Video Demo) -->
+                            <!-- ============================================ -->
+                            <div class="column mix mb_30 col-md-6 col-lg-4 nonprofit">
+                                <div class="portfolio-card">
+                                    <div class="video-demo">
+                                        <video poster="assets/images/projects/dbi-poster.jpg" controls>
+                                            <source src="assets/videos/dbi-walkthrough.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <div class="live-badge">
+                                            <span class="badge bg-success"><i class="fas fa-circle"></i> LIVE</span>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-info">
+                                        <h5 class="portfolio-title">Digital Bridge Initiative</h5>
+                                        <p class="portfolio-desc">Main hub for DBI - bridging digital divide through technology education.</p>
+                                        <div class="tech-tags">
+                                            <span class="badge bg-primary">Responsive</span>
+                                            <span class="badge bg-secondary">Modern UI</span>
+                                            <span class="badge bg-info">Static Site</span>
+                                        </div>
+                                        <div class="portfolio-actions">
+                                            <a href="https://digitalbridgeinitiative.pages.dev" target="_blank" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-external-link-alt"></i> Live Site
+                                            </a>
+                                            <button onclick="showProjectDetails('dbi-main')" class="btn btn-outline-secondary btn-sm">
+                                                <i class="fas fa-info-circle"></i> Details
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ============================================ -->
+                            <!-- PROJECT 3: Using OPTION 3 (Iframe Modal) -->
+                            <!-- ============================================ -->
+                            <div class="column mix mb_30 col-md-6 col-lg-4 impact">
+                                <div class="portfolio-card">
+                                    <div class="preview-wrapper">
+                                        <img src="assets/images/projects/dbi-impact-preview.jpg" 
+                                             class="preview-img" 
+                                             alt="DBI Impact Dashboard">
+                                        <div class="action-buttons">
+                                            <button onclick="openIframeModal('https://dbi-impact.pages.dev', 'DBI Impact')" class="preview-btn live-btn">
+                                                <i class="fas fa-eye"></i> Quick Preview
+                                            </button>
+                                            <button onclick="showProjectDetails('dbi-impact')" class="preview-btn demo-btn">
+                                                <i class="fas fa-info-circle"></i> Details
+                                            </button>
+                                        </div>
+                                        <div class="live-badge">
+                                            <span class="badge bg-success"><i class="fas fa-circle"></i> LIVE</span>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-info">
+                                        <h5 class="portfolio-title">DBI Impact</h5>
+                                        <p class="portfolio-desc">Impact tracking dashboard showcasing program outcomes and success metrics.</p>
+                                        <div class="tech-tags">
+                                            <span class="badge bg-primary">Data Viz</span>
+                                            <span class="badge bg-secondary">Analytics</span>
+                                            <span class="badge bg-info">Dashboard</span>
+                                        </div>
+                                        <div class="portfolio-actions">
+                                            <a href="https://dbi-impact.pages.dev" target="_blank" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-external-link-alt"></i> Open Full
+                                            </a>
+                                            <button onclick="openIframeModal('https://dbi-impact.pages.dev', 'DBI Impact')" class="btn btn-outline-info btn-sm">
+                                                <i class="fas fa-window-maximize"></i> Quick View
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ============================================ -->
+                            <!-- PROJECT 4: Using OPTION 4 (Screenshot Gallery) -->
+                            <!-- ============================================ -->
+                            <div class="column mix mb_30 col-md-6 col-lg-4 educational platform">
+                                <div class="portfolio-card">
+                                    <div class="preview-wrapper">
+                                        <img src="assets/images/projects/e-learning-main.jpg" 
+                                             class="preview-img" 
+                                             alt="E-Learning Platform">
+                                        <div class="action-buttons">
+                                            <a href="#" target="_blank" class="preview-btn live-btn">
+                                                <i class="fas fa-external-link-alt"></i> Visit Live
+                                            </a>
+                                            <button class="preview-btn demo-btn" onclick="showGallery(['img1.jpg','img2.jpg','img3.jpg'])">
+                                                <i class="fas fa-images"></i> View Gallery
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="screenshot-gallery">
+                                        <img src="assets/images/projects/thumb1.jpg" class="screenshot-thumb" onclick="openLightbox('assets/images/projects/full1.jpg')">
+                                        <img src="assets/images/projects/thumb2.jpg" class="screenshot-thumb" onclick="openLightbox('assets/images/projects/full2.jpg')">
+                                        <img src="assets/images/projects/thumb3.jpg" class="screenshot-thumb" onclick="openLightbox('assets/images/projects/full3.jpg')">
+                                        <img src="assets/images/projects/thumb4.jpg" class="screenshot-thumb" onclick="openLightbox('assets/images/projects/full4.jpg')">
+                                    </div>
+                                    <div class="portfolio-info">
+                                        <h5 class="portfolio-title">E-Learning Dashboard</h5>
+                                        <p class="portfolio-desc">Complete learning management system with admin panel and student analytics.</p>
+                                        <div class="tech-tags">
+                                            <span class="badge bg-primary">React</span>
+                                            <span class="badge bg-secondary">Node.js</span>
+                                            <span class="badge bg-info">MongoDB</span>
+                                        </div>
+                                        <div class="portfolio-actions">
+                                            <a href="#" target="_blank" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-external-link-alt"></i> Live Demo
+                                            </a>
+                                            <a href="#" target="_blank" class="btn btn-outline-dark btn-sm">
+                                                <i class="fab fa-github"></i> GitHub
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== MODAL FOR IFRAME PREVIEW ========== -->
+<div class="modal fade" id="iframeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="preview-toolbar">
+                <div>
+                    <i class="fas fa-desktop text-primary"></i>
+                    <strong id="modalTitle">Live Preview</strong>
+                    <span class="text-muted ms-2 small">(Best viewed in new tab)</span>
+                </div>
+                <div>
+                    <a href="#" id="openInNewTab" target="_blank" class="btn btn-sm btn-primary me-2">
+                        <i class="fas fa-external-link-alt"></i> Open in New Tab
+                    </a>
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body p-0">
+                <iframe id="previewIframe" class="modal-iframe" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== LIGHTBOX FOR GALLERY ========== -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-img" id="lightboxImg" src="">
+</div>
+	<!--	Start Testimonial
+	===================================================-->
+	<section id="testimonial" class="py_80 full_row bg_white">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-12">
+					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
+	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">testimonial</span>What Client Says</h2>
+	                    <span class="sub_title">Don't jsut take our word for it - hear from our satisfied clients who have experienced the impact of our work</span>
+	                </div>
+				</div>
+				<div class="col-md-12 col-lg-12">
+    				<div class="testimonial_item owl-carousel wow animated slideInUp">
+						<div class="member_feedback p_30 color_secondery">
+							<div class="client_img"><img src="images/testimonial/05.png" alt="image"></div>
+							<div class="star d-inline-block mt_30 color_default">
+								<ul>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+								</ul>
+							</div>
+							<h5 class="color_primary mb_15">Digital Bridge Initiative</h5>
+							<p>ProfJero played a key role in building Digital Bridge Initiative's official website, assessment platform, and admin portal. His ability to translate our ideas into functional, user-friendly system greatly improved how we manage training, learners, assessments and administration, track progress and organize operations. The solutions delivered were practical, reliable, and well-structured.</p>
+						</div>
+    					<div class="member_feedback p_30 color_secondery">
+							<div class="client_img"><img src="images/testimonial/01.jpg" alt="image"></div>
+							<div class="star d-inline-block mt_30 color_default">
+								<ul>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+								</ul>
+							</div>
+							<h5 class="color_primary mb_15">Rev. Eric</h5>
+							<p>Working with ProfJero to build our Church website has been a true blessing. The design is clean, modern, and beautifully reflects our mission and values. Members can now access sermons, events, and updates with ease . His dedication, creativity, and technical skill brought our vision to life in a way that feels both professional and personal. We are truly grateful.</p>
+						</div>
+						<div class="member_feedback p_30 color_secondery">
+							<div class="client_img"><img src="images/testimonial/02.jpg" alt="image"></div>
+							<div class="star d-inline-block mt_30 color_default">
+								<ul>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+								</ul>
+							</div>
+							<h5 class="color_primary mb_15">Edmond</h5>
+							<p>Since ProfJero deployed our new POS system, managing our pharmacy has been smoother. From tracking stock levels to generating daily sales reports, everything is now just a click away. It's very fast and reliable. He uderstood our needs, delivered on time, and exceeded expectations. This system has truly transformed how we run our business</p>
+						</div>
+    				</div>
+    			</div>
+			</div>
+		</div>
+	</section>
+	<!--	End Testimonial
+	===================================================-->
+	<!--	Start Blog
+	===================================================-->
+	<section id="blog" class="py_80 bg_secondery full_row">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-12">
+					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
+	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">blog</span>What's New</h2>
+	                    <span class="sub_title">Stay up-to-date with the latest news, trends, and insights from our team. From industy updates to company announcements, we've got you covered.</span>
+	                </div>
+				</div>
+				<div class="col-md-12 col-lg-12">
+					<div class="blog_grid_1 wow animated slideInUp">
+						<div class="row">
+							<div class="col-md-12 col-lg-4">
+								<div class="blog_item">
+									<div class="comments">
+										<i class="fa fa-comment" aria-hidden="true"></i>
+										<span class="color_white">12</span>
+									</div>
+									<div class="blog_img overlay_one"><img src="images/Prof/blog banner02.png" alt="image"></div>
+									<div class="blog_content bg_white color_secondery">
+										<div class="blog_title">
+											<a class="color_primary" href=""><h5>Front-end vs Back-end Development: Understanding the Difference</h5></a>
+										</div>
+										<p class="mt_15 mb_30">When it comes to building a website or web application, two crucial aspects come into play: front-end development, which focuses on creating the user interface and user experience, and back-end development, which concentrates on the server-side logic, database integration, and API connectivity.</p>
+										<div class="admin">
+											<img src="images/Prof/Author01.png" alt="image">
+											<span class="color_white">By - ProfJero</span>
+										</div>
+										<div class="date float-right color_primary">20 Jan 2019</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 col-lg-4">
+								<div class="blog_item">
+									<div class="comments">
+										<i class="fa fa-comment" aria-hidden="true"></i>
+										<span class="color_white">18</span>
+									</div>
+									<div class="blog_img overlay_one"><img src="images/Prof/blog banner04.png" alt="image"></div>
+									<div class="blog_content bg_white color_secondery">
+										<div class="blog_title">
+											<a class="color_primary" href=""><h5>Web Development Frameworks: A Comprehensive Guide</h5></a>
+										</div>
+										<p class="mt_15 mb_30">Web development frameworks are essential tools for building scalable, and maintainable web applications. With numerous frameworks available, choosing the right one can be overwhelming. In this blog post, we'll delve into the world of web development frameworks, their benefits and more</p>
+										
+										<div class="admin">
+											<img src="images/Prof/Author01.png" alt="image">
+											<span class="color_white">By - ProfJero</span>
+										</div>
+										<div class="date float-right color_primary">18 Jan 2019</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 col-lg-4">
+								<div class="blog_item">
+									<div class="comments">
+										<i class="fa fa-comment" aria-hidden="true"></i>
+										<span class="color_white">23</span>
+									</div>
+									<div class="blog_img overlay_one"><img src="images/Prof/blog banner01.png" alt="image"></div>
+									<div class="blog_content bg_white color_secondery">
+										<div class="blog_title">
+											<a class="color_primary" href=""><h5>The Ultimate Guide to WordPress: The Power of the World's Most Popular CMS</h5></a>
+										</div>
+										<p class="mt_15 mb_30">WordPress is the undisputed king of Content Management Systems (CMS), powering over 40% of the world's websites. Its versatility, flexibility, and user-friendly interface have made it the go-to platform for bloggers, and businesses of all sizes. In this blog post, we'll delve into the world of WordPress.</p>
+										
+										<div class="admin">
+											<img src="images/Prof/Author01.png" alt="image">
+											<span class="color_white">By - ProfJero</span>
+										</div>
+										<div class="date float-right color_primary">17 Jan 2019</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mx-auto text-center mt_60"><a class="btn btn-default" href="">View Blog</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--	End Blog
+	===================================================-->
+	<!--	Start Contact
+	===================================================-->
+	<section id="contact" class="py_80 full_row bg_white">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-12">
+					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
+	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">contact</span>Get In Touch</h2>
+	                    <span class="sub_title">Ready to collaborate? We're passionate about building meaningful relationships and delivering exceptional results. If you are looking for a partner to help you bring your vison to life, we'd love to hear from you. Let's start a conversation and see where it takes us.</span>
+	                </div>
+				</div>
+				<div class="col-md-12 col-lg-12">
+					<div class="row">
+						<div class="col-md-4 col-lg-4">
+							<div class="contact_info wow animated fadeInLeft">
+		    					<ul>
+		    						<li>
+		    							<div class="contact_text">
+		    								<h6 class="font-weight-bold color_primary">Email</h6>
+		    								<span class="color_secondery"><a href="mailto:profjero947@gmail.com" style="color: #808080;">profjero947@gmail.com</a></span>
+		    							</div>
+		    						</li>
+		    						<li>
+		    							<div class="contact_text">
+		    								<h6 class="font-weight-bold color_primary">Phone</h6>
+		    								<span class="color_secondery"><a href="tel:+233204785158" style="color: #808080;">+233 531 207 256</a></span>
+		    							</div>
+		    						</li>
+		    						<li>
+		    							<div class="contact_text">
+		    								<h6 class="font-weight-bold color_primary">Website</h6>
+		    								<span class="color_secondery"><a href="profjero.pages.dev" style="color: #808080;">profjero.pages.dev</a></span>
+		    							</div>
+		    						</li>
+		    						<li>
+		    							<div class="contact_text">
+		    								<h6 class="font-weight-bold color_primary">Address</h6>
+		    								<span class="color_secondery">Cape Coast, Ghana</span>
+		    							</div>
+		    						</li>
+		    					</ul>
+		    				</div>
+		    				<div class="socal_media_2 mt_15 d-inline-block">
+					            <ul style="font-size: 28px;">
+									<li class="image" data-toggle="tooltip" data-placement="top" title="whatsapp">
+										<a href="https://wa.me/233531207256" target="_blank"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+									</li>
+									<li class="image" data-toggle="tooltip" data-placement="top" title="facebook">
+										<a href="https://www.facebook.com/profile.php?id=61585853362550&mibextid=rS40aB7S9Ucbxw6v" target="_blank"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+									</li>
+									<li class="image" data-toggle="tooltip" data-placement="top" title="tiktok">
+										<a href="https://www.tiktok.com/@profjero?_r=1&_t=ZM-92lSf510Hff" target="_blank"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
+									</li>
+									<li class="image" data-toggle="tooltip" data-placement="top" title="x">
+										<a href="#"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+									</li>
+									<li class="image" data-toggle="tooltip" data-placement="top" title="linkedin">
+										<a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+									</li>
+								</ul>
+					        </div>
+						</div>
+						<div class="col-md-8 col-lg-8">
+							<form class="form contact_message wow animated fadeInRight" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+								<div class="row">
+									<div class="col-md-6 col-lg-6">
+										<input type="hidden" name="access_key" value="aea97fda-9e09-47cd-9b52-86fcdf6caf47">
+										<div class="form-group">
+											<input class="form-control" type="text" name="name" placeholder="Your Name" />
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group">
+											<input class="form-control" type="email" name="email" placeholder="Email Address" />
+										</div>
+									</div>
+									<div class="col-md-12 col-lg-12">
+										<div class="form-group">
+										  <input class="form-control" type="text" name="subject" placeholder="Subject"/>
+										</div>
+									</div>
+									<div class="col-md-12 col-lg-12">
+										<div class="form-group">
+											<textarea class="form-control" name="message" rows="7" placeholder="Message"></textarea>
+										</div>							
+									</div>
+									<div class="col-md-12 col-lg-12">
+										<div class="form-group">
+											<input class="btn btn-default" id="send" value="Send Massage" type="submit"/>
+										</div>
+									</div>
+									<div class="col-md-12 col-lg-12">
+										<div class="error-handel">
+											<div id="success">Your email sent Successfully, Thank you.</div>
+											<div id="error"> Error occurred while sending email. Please try again.</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--	End Contact
+	===================================================-->
+	<!--	Start Footer
+	===================================================-->
+	<footer class="p_20 color_primary bg_secondery text-center full_row"> 
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-12">
+					<div class="copyright"><p><a style="color: #3333ff;">© 2024<b class="name"> P</b>rof<b class="name">J</b>ero. All rights reserved</a></p></div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--	End Footer
+	===================================================-->
+	</div>
+</div>
+<!--	Wrapper End
+=======================================================-->
+	<!--	Js Links
+	===================================================-->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/custom.js"></script>
+	<!--<script src="google_sheet.js"></script> -->
+	<script>
+		$(document).ready(function() {
+		//=========================================
+		//  Water Effect
+		//=========================================
+		
+			$('.banner_water_effect').ripples({
+			  resolution: 256,
+			  dropRadius: 20,
+			  perturbance: 0.03,
+			  interactive:true,
+			});
+		//  Smoothscroll js
+		//=========================================
+		  $("a").on('click', function(event) {
+
+			  if (this.hash !== "") {
+				event.preventDefault();
+			  
+				var hash = this.hash;
+
+				$('html, body').animate({
+				  scrollTop: $(hash).offset().top 
+				}, 1000, function(){
+			 
+				  window.location.hash = hash;
+				});
+			  }
+			});
+		 });
+	</script>
+
+	<script>
+// Project details data
+const projectDetails = {
+    'dbi-learn': {
+        title: 'DBI Learn Platform',
+        description: `Full-featured e-learning platform with:`,
+        features: [
+            'Course management system',
+            'Student progress tracking',
+            'Video lessons and quizzes',
+            'Certificate generation',
+            'Admin dashboard'
+        ],
+        techStack: ['HTML5', 'CSS3', 'JavaScript', 'Cloudflare Pages', 'REST API']
+    },
+    'dbi-main': {
+        title: 'Digital Bridge Initiative',
+        description: `Official website for non-profit organization:`,
+        features: [
+            'Mission & vision presentation',
+            'Program listings',
+            'Volunteer portal',
+            'Success stories',
+            'Donation integration'
+        ],
+        techStack: ['HTML5', 'CSS3', 'Bootstrap', 'JavaScript']
+    },
+    'dbi-impact': {
+        title: 'DBI Impact Dashboard',
+        description: `Analytics and impact measurement platform:`,
+        features: [
+            'Interactive charts',
+            'Year-over-year metrics',
+            'Beneficiary stories',
+            'Program completion rates',
+            'Data export'
+        ],
+        techStack: ['HTML5', 'CSS3', 'Chart.js', 'Data Visualization']
+    }
+};
+
+// Show project details modal
+function showProjectDetails(projectId) {
+    const project = projectDetails[projectId];
+    if (!project) return;
+    
+    const modalHtml = `
+        <div class="modal fade" id="detailsModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">${project.title}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>${project.description}</p>
+                        <h6>Key Features:</h6>
+                        <ul>
+                            ${project.features.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                        <h6>Technologies:</h6>
+                        <div>
+                            ${project.techStack.map(tech => `<span class="badge bg-primary me-2">${tech}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const existing = document.getElementById('detailsModal');
+    if (existing) existing.remove();
+    
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+    modal.show();
+}
+
+// Open iframe modal (Option 3)
+function openIframeModal(url, title) {
+    const modal = new bootstrap.Modal(document.getElementById('iframeModal'));
+    const iframe = document.getElementById('previewIframe');
+    const modalTitle = document.getElementById('modalTitle');
+    const openLink = document.getElementById('openInNewTab');
+    
+    iframe.src = url;
+    modalTitle.textContent = title;
+    openLink.href = url;
+    
+    modal.show();
+    
+    // Clear iframe when modal closes
+    document.getElementById('iframeModal').addEventListener('hidden.bs.modal', function() {
+        iframe.src = 'about:blank';
+    });
+}
+
+// Open lightbox for gallery (Option 4)
+function openLightbox(imageUrl) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    lightboxImg.src = imageUrl;
+    lightbox.classList.add('active');
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
+}
+
+// Show screenshot gallery
+function showGallery(images) {
+    // Create gallery modal
+    const galleryHtml = `
+        <div class="modal fade" id="galleryModal" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Project Screenshots</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                ${images.map((img, idx) => `
+                                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                                        <img src="${img}" class="d-block w-100" style="height: 500px; object-fit: contain;">
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const existing = document.getElementById('galleryModal');
+    if (existing) existing.remove();
+    
+    document.body.insertAdjacentHTML('beforeend', galleryHtml);
+    const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
+    modal.show();
+}
+
+// Easy way to add new projects with different display types
+const ProjectDisplayTypes = {
+    SCREENSHOT: 'screenshot',
+    VIDEO: 'video', 
+    IFRAME_MODAL: 'iframe',
+    GALLERY: 'gallery'
+};
+
+// Helper function to create projects dynamically
+function addProject(projectData, displayType) {
+    // Returns HTML based on display type
+    console.log(`Adding project with ${displayType} display`);
+}
+
+// Close lightbox with ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeLightbox();
+    }
+});
+</script>
+
+</body>
+
+<!-- index-August-2024-->
+</html>

@@ -1,0 +1,14 @@
+# Welcome all crawlers including AI training bots
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://profjero.pages.dev/sitemap.xml
