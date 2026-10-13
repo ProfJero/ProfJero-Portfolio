@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin · ProfJero</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0A60EE">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+  <script>try{var t=localStorage.getItem("pj_theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body class="admin">
+  <div class="boot" id="boot"><img src="/assets/img/brand/mark-192.png" alt="Loading"></div>
+
+  <!-- ============ LOGIN ============ -->
+  <section class="login" id="login" hidden>
+    <div class="login-art">
+      <a class="logo" href="/"><img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40"><span class="logo-text">Prof<b>Jero</b></span></a>
+      <div>
+        <h2>Manage your portfolio, blog and studios — without touching code.</h2>
+        <p>One dashboard for ProfJero and ProfJero Hub, powered by Firebase and Cloudinary.</p>
+      </div>
+      <ul class="login-feats">
+        <li><i class="fa-solid fa-pen-nib"></i> Write and publish blog posts with live preview</li>
+        <li><i class="fa-solid fa-inbox"></i> Read every message from your contact forms</li>
+        <li><i class="fa-solid fa-display"></i> Add projects with live demos and YouTube/TikTok videos</li>
+        <li><i class="fa-solid fa-sliders"></i> Update profile, skills, studios, pricing and SEO</li>
+      </ul>
+    </div>
+    <div class="login-box">
+      <div class="login-card">
+        <h1>Welcome back</h1>
+        <p class="muted">Sign in with your admin account.</p>
+        <button class="btn btn-google" id="login-google" type="button"><i class="fa-brands fa-google" style="color:#EA4335"></i> Continue with Google</button>
+        <div class="divider">or with email</div>
+        <form id="login-form" class="fields" style="grid-template-columns:1fr" novalidate>
+          <div class="f"><label for="l-email">Email</label><input id="l-email" type="email" autocomplete="username" required></div>
+          <div class="f"><label for="l-pass">Password <a href="#" id="forgot" class="small">Forgot?</a></label><input id="l-pass" type="password" autocomplete="current-password" required></div>
+          <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+        <p class="small muted" id="login-msg" style="margin-top:14px" role="alert"></p>
+        <p class="small muted" style="margin-top:22px"><a href="/"><i class="fa-solid fa-arrow-left"></i> Back to website</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APP ============ -->
+  <div class="admin-shell" id="app" hidden>
+    <aside class="sidebar" aria-label="Admin navigation">
+      <a class="logo" href="#/dashboard"><img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40"><span class="logo-text">Prof<b>Jero</b><small>Admin</small></span></a>
+      <nav id="side-nav">
+        <a class="side-link" href="#/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a class="side-link" href="#/messages"><i class="fa-solid fa-inbox"></i> Messages <span class="side-badge" id="badge-messages"></span></a>
+        <div class="side-group">Content</div>
+        <a class="side-link" href="#/posts"><i class="fa-solid fa-pen-nib"></i> Blog posts</a>
+        <a class="side-link" href="#/comments"><i class="fa-regular fa-comments"></i> Comments</a>
+        <a class="side-link" href="#/projects"><i class="fa-solid fa-briefcase"></i> Projects &amp; demos</a>
+        <a class="side-link" href="#/studios"><i class="fa-solid fa-building"></i> Studios &amp; services</a>
+        <a class="side-link" href="#/skills"><i class="fa-solid fa-bolt"></i> Skills</a>
+        <a class="side-link" href="#/testimonials"><i class="fa-solid fa-quote-left"></i> Testimonials</a>
+        <a class="side-link" href="#/experience"><i class="fa-solid fa-timeline"></i> Experience</a>
+        <div class="side-group">Site</div>
+        <a class="side-link" href="#/profile"><i class="fa-solid fa-id-card"></i> Profile &amp; site</a>
+        <a class="side-link" href="#/media"><i class="fa-regular fa-images"></i> Media library</a>
+        <a class="side-link" href="#/subscribers"><i class="fa-solid fa-users"></i> Subscribers</a>
+        <a class="side-link" href="#/settings"><i class="fa-solid fa-gear"></i> Settings</a>
+      </nav>
+      <div class="side-foot">
+        <a class="side-link" href="/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> View website</a>
+        <a class="side-link" href="https://profjerohub.pages.dev" target="_blank" rel="noopener"><i class="fa-solid fa-cubes"></i> ProfJero Hub</a>
+        <button class="side-link" id="logout" type="button"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
+      </div>
+    </aside>
+    <div class="admin-main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <h1 id="page-title">Dashboard</h1>
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></button>
+        <div class="user-chip" id="user-chip"></div>
+      </header>
+      <main class="content" id="view" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <dialog class="a-dialog" id="dlg"><div class="modal-box"><div class="modal-head"><h3 id="dlg-title"></h3><button class="icon-btn" type="button" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div><div class="modal-body" id="dlg-body"></div><div class="modal-foot" id="dlg-foot"></div></div></dialog>
+
+  <script type="module" src="/admin/js/app.js"></script>
+</body>
+</html>

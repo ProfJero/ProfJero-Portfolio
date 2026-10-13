@@ -1,0 +1,19 @@
+{
+  "name": "profjero-portfolio",
+  "private": true,
+  "description": "ProfJero portfolio — static site + Cloudflare Pages Functions + Firebase Firestore + Cloudinary. No build step required.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev . --port 8788",
+    "prerender": "node scripts/prerender.mjs",
+    "emulators": "firebase emulators:start --only firestore,auth",
+    "test:rules": "firebase emulators:exec --only firestore \"node tests/rules.test.mjs\"",
+    "deploy:rules": "firebase deploy --only firestore:rules"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^3.0.4",
+    "firebase": "10.12.2",
+    "firebase-tools": "^13.0.0",
+    "wrangler": "^3.0.0"
+  }
+}

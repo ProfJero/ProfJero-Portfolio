@@ -1,1609 +1,1086 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- index-August-2024-->
- <!-- ProfJero -->
 <head>
-	<!--===== Meta Tag =====-->
-	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ProfJero — Benjamin Amoako | Full-Stack Developer &amp; IT Trainer in Ghana</title>
+  <meta name="description" content="Benjamin Amoako (ProfJero) is a full-stack developer and IT trainer in Cape Coast, Ghana, building fast, secure websites, web apps, dashboards and business systems with demos you can try.">
+  <meta name="keywords" content="ProfJero, Prof Jero, Benjamin Amoako, full-stack developer Ghana, web developer Cape Coast, software developer Ghana, backend developer, IT trainer, Firebase developer, web apps, POS system Ghana">
+  <meta name="author" content="Benjamin Amoako (ProfJero)">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://profjero.pages.dev/">
+  <meta name="google-site-verification" content="KQFO-fdbRUuyV-gC0so2L_bkoT4S42o00kB5FmA-MCk">
+  <meta name="theme-color" content="#0A60EE">
 
-	<!-- ======== Meta Description ========= -->
-	<meta name="description" content="Personal portfolio of ProfJero, a Software Developer and IT Trainer creating practical digital solutions and empowering others through technology.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ProfJero">
+  <meta property="og:title" content="ProfJero — Full-Stack Developer & IT Trainer">
+  <meta property="og:description" content="Websites, web apps, dashboards and business systems built end-to-end — with live demos and video walkthroughs.">
+  <meta property="og:url" content="https://profjero.pages.dev/">
+  <meta property="og:image" content="https://profjero.pages.dev/assets/img/brand/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ProfJero — Full-Stack Developer & IT Trainer">
+  <meta name="twitter:description" content="Websites, web apps, dashboards and business systems built end-to-end — with live demos.">
+  <meta name="twitter:image" content="https://profjero.pages.dev/assets/img/brand/og-image.jpg">
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="keywords" content="Prof Jero, ProfJero, Software Developer, IT Trainer, web development, HTML, CSS, JavaScript, front-end development, web applications, dashboards, digital solutions, portfolio">
-	<meta name="author" content="ProfJero">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="alternate" type="application/rss+xml" title="ProfJero Blog" href="/rss.xml">
 
-	<!-- ======== Open Graph Tags ========-->
-	 <meta property="og:title" content="ProfJero | Software Developer & IT Trainer">
-	 <meta property="og:description" content="Creating practical digital solutions and empowering others through technlogy.">
-	 <!-- <meta property="og:image" content=""> -->
-	 <meta property="og:type" content="website">
+  <script>try{var t=localStorage.getItem("pj_theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
 
-	<!-- ======= Google Search Engine Verification ======== -->
-	 <meta name="google-site-verification" content="KQFO-fdbRUuyV-gC0so2L_bkoT4S42o00kB5FmA-MCk" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com">
+  <link rel="preload" as="image" href="/assets/img/people/profjero-at-work.webp" fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/css/main.css">
 
-	 <!--	Css Links
-    ==================================================-->
-     <link rel="stylesheet" href="css/bootstrap.min.css">
-     <link rel="stylesheet" href="css/font-awesome.min.css">
-     <link rel="stylesheet" href="fonts/flaticon.css">
-     <link rel="stylesheet" href="css/plugins.css">
-     <link rel="stylesheet" href="css/style.css">
-     <link rel="stylesheet" href="css/color.css" id="color-change">
-
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-
-     <!-- Favicon 
-    ==================================================-->
-	<link rel="icon" type="image/png" sizes="32x32" href="images/Prof/logo/profjero logo.png">
-
-      <!--	Title
-    ==================================================-->
-	<title>ProfJero | Software Developer & IT Trainer</title>
-
-	<!-- ========= Structured Data ===========-->
-	 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "ProfJero",
-  "jobTitle": "Software Developer",
-  "url": "https://profjero.pages.dev",
-  "knowsAbout": ["HTML", "CSS", "JavaScript", "Web Development"]
-}
-</script>
-
-<style>
-	.portfolio-card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.portfolio-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-}
-
-.portfolio-preview img {
-    width: 100%;
-    height: 300px;
-	overflow: hidden;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.portfolio-card:hover .portfolio-preview img {
-    transform: scale(1.08);
-}
-
-.portfolio-info {
-    background: #f8f9fa;
-}
-
-.badge {
-    font-size: 0.75rem;
-    padding: 0.4em 0.8em;
-    margin: 0 0.3em 0.3em 0;
-}
-
-.view-gallery {
-    cursor: pointer;
-}
-</style>
-
-<style>
-.studio-hub-title {
-    position: relative;
-    padding-bottom: 15px;
-    margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: 600;
-}
-.studio-hub-title i {
-    margin-right: 10px;
-    color: #f39c12; /* Adjust to your brand color */
-}
-.studio-hub-title:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background: #f39c12; /* Adjust to your brand color */
-}
-.mt_30 {
-    margin-top: 30px;
-}
-.srv_icon i {
-    font-size: 48px;
-    line-height: 1.2;
-    color: #ffffff;
-}
-</style>
-
-<style>
-/* ========== PORTFOLIO CARD STYLES ========== */
-.portfolio-card {
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    height: 100%;
-}
-
-.portfolio-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-}
-
-/* ========== OPTION 1: SCREENSHOT + LINK ========== */
-.preview-wrapper {
-    position: relative;
-    overflow: hidden;
-    background: #f8f9fa;
-    cursor: pointer;
-}
-
-.preview-img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.portfolio-card:hover .preview-img {
-    transform: scale(1.05);
-}
-
-.action-buttons {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.preview-wrapper:hover .action-buttons {
-    opacity: 1;
-}
-
-.preview-btn {
-    padding: 10px 20px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s;
-    border: none;
-    cursor: pointer;
-}
-
-.live-btn {
-    background: #28a745;
-    color: white;
-}
-
-.live-btn:hover {
-    background: #218838;
-    transform: scale(1.05);
-}
-
-.demo-btn {
-    background: #007bff;
-    color: white;
-}
-
-.demo-btn:hover {
-    background: #0056b3;
-    transform: scale(1.05);
-}
-
-/* ========== OPTION 2: VIDEO DEMO ========== */
-.video-demo {
-    position: relative;
-    background: #000;
-}
-
-.video-demo video {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-}
-
-.video-controls {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background: rgba(0,0,0,0.7);
-    padding: 5px 10px;
-    border-radius: 20px;
-}
-
-/* ========== OPTION 3: IFRAME MODAL ========== */
-.modal-iframe {
-    width: 100%;
-    height: 70vh;
-    border: none;
-}
-
-.preview-toolbar {
-    padding: 12px 20px;
-    background: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* ========== OPTION 4: SCREENSHOT GALLERY ========== */
-.screenshot-gallery {
-    display: flex;
-    gap: 8px;
-    padding: 12px;
-    background: #f8f9fa;
-    border-top: 1px solid #eee;
-}
-
-.screenshot-thumb {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 2px solid transparent;
-}
-
-.screenshot-thumb:hover {
-    transform: scale(1.05);
-    border-color: #007bff;
-}
-
-/* Lightbox styles */
-.lightbox {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.95);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-}
-
-.lightbox.active {
-    display: flex;
-}
-
-.lightbox-img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-}
-
-.lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    color: white;
-    font-size: 40px;
-    cursor: pointer;
-}
-
-/* Live badge */
-.live-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 10;
-}
-
-.live-badge .badge {
-    padding: 6px 12px;
-    font-size: 11px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.8; }
-    50% { opacity: 1; box-shadow: 0 0 5px rgba(40,167,69,0.5); }
-    100% { opacity: 0.8; }
-}
-
-/* Info section */
-.portfolio-info {
-    padding: 20px;
-}
-
-.portfolio-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #2c3e50;
-}
-
-.portfolio-desc {
-    font-size: 0.9rem;
-    color: #6c757d;
-    margin-bottom: 15px;
-    line-height: 1.5;
-}
-
-.tech-tags {
-    margin-bottom: 15px;
-}
-
-.tech-tags .badge {
-    margin-right: 6px;
-    margin-bottom: 6px;
-    padding: 5px 10px;
-    font-weight: 500;
-}
-
-.portfolio-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.btn-sm {
-    padding: 6px 14px;
-    font-size: 0.85rem;
-}
-
-/* Filter tabs */
-.filter-tabs {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.filter-tabs li {
-    display: inline-block;
-    padding: 8px 24px;
-    margin: 0 5px;
-    cursor: pointer;
-    border-radius: 30px;
-    transition: all 0.3s;
-    background: #f0f0f0;
-    font-weight: 500;
-}
-
-.filter-tabs li.active,
-.filter-tabs li:hover {
-    background: #007bff;
-    color: white;
-}
-</style>
-
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://profjero.pages.dev/#person",
+        "name": "Benjamin Amoako",
+        "alternateName": ["ProfJero", "Prof Jero"],
+        "jobTitle": "Full-Stack Developer & IT Trainer",
+        "description": "Full-stack software developer and IT trainer in Cape Coast, Ghana. Co-Founder & Executive Director of Digital Bridge Initiative and Founder of ProfJero Hub.",
+        "url": "https://profjero.pages.dev/",
+        "image": "https://profjero.pages.dev/assets/img/people/benjamin-amoako.webp",
+        "email": "mailto:profjero947@gmail.com",
+        "telephone": "+233531207256",
+        "address": { "@type": "PostalAddress", "addressLocality": "Cape Coast", "addressCountry": "GH" },
+        "knowsAbout": ["Full-stack web development", "JavaScript", "React", "Node.js", "PHP", "Firebase", "Firestore", "MySQL", "REST APIs", "UI/UX design", "Graphic design", "IT training", "SEO"],
+        "worksFor": [
+          { "@type": "Organization", "name": "ProfJero Hub", "url": "https://profjerohub.pages.dev/" },
+          { "@type": "Organization", "name": "Digital Bridge Initiative", "url": "https://digitalbridgeinitiative.pages.dev/" }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=61585853362550",
+          "https://www.tiktok.com/@profjero",
+          "https://profjerohub.pages.dev/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://profjero.pages.dev/#website",
+        "url": "https://profjero.pages.dev/",
+        "name": "ProfJero",
+        "publisher": { "@id": "https://profjero.pages.dev/#person" },
+        "potentialAction": { "@type": "SearchAction", "target": "https://profjero.pages.dev/blog?q={search_term_string}", "query-input": "required name=search_term_string" }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://profjero.pages.dev/#service",
+        "name": "ProfJero — Software Development & IT Training",
+        "url": "https://profjero.pages.dev/",
+        "image": "https://profjero.pages.dev/assets/img/brand/og-image.jpg",
+        "logo": "https://profjero.pages.dev/assets/img/brand/icon-512.png",
+        "founder": { "@id": "https://profjero.pages.dev/#person" },
+        "areaServed": ["Ghana", "Worldwide"],
+        "address": { "@type": "PostalAddress", "addressLocality": "Cape Coast", "addressCountry": "GH" },
+        "telephone": "+233531207256",
+        "priceRange": "GH₵1,000+",
+        "serviceType": ["Web development", "Software development", "Mobile app development", "Admin dashboards", "UI/UX design", "Branding", "IT training"]
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json" id="faq-schema">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What kind of projects do you build?","acceptedAnswer":{"@type":"Answer","text":"Websites, web applications, admin dashboards, e-learning platforms, inventory and point-of-sale systems, and APIs. I handle both the front end and the back end, so I can deliver a complete system."}},{"@type":"Question","name":"Which technologies do you use?","acceptedAnswer":{"@type":"Answer","text":"HTML, CSS, JavaScript and React on the front end; Node.js, PHP, Firebase/Firestore, MySQL and REST APIs on the back end; Cloudflare, Cloudinary and Google Cloud for hosting and media. I choose the stack that fits your budget and goals."}},{"@type":"Question","name":"How long does a project take?","acceptedAnswer":{"@type":"Answer","text":"A landing page usually takes 1–2 weeks. A business system with an admin dashboard typically takes 4–8 weeks depending on features. You get a clear timeline before we start."}},{"@type":"Question","name":"Can I try your systems before hiring you?","acceptedAnswer":{"@type":"Answer","text":"Yes. Most projects in my portfolio have live demos and video walkthroughs on YouTube or TikTok, so you can see exactly how they work."}},{"@type":"Question","name":"Do you work with clients outside Ghana?","acceptedAnswer":{"@type":"Answer","text":"Yes. I work remotely with clients anywhere and communicate via WhatsApp, email and video calls."}},{"@type":"Question","name":"Do you offer training?","acceptedAnswer":{"@type":"Answer","text":"Yes. I train individuals, schools and organisations in web development, digital skills and IT, both in person and online."}}]}</script>
 </head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="announce" hidden><span></span><button type="button" aria-label="Dismiss announcement"><i class="fa-solid fa-xmark"></i></button></div>
 
-<body id="top" class="page-load">
-	<!--	Start Back to top
-	=================================================-->
-	<a href="#" id="scroll" style="display: none;"><span></span></a>
-	<!--	End Back to top
-	==================================================-->
+  <header class="site-header">
+    <nav class="container nav" aria-label="Main">
+      <a class="logo" href="/" aria-label="ProfJero home">
+        <img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40">
+        <span class="logo-text">Prof<b>Jero</b></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#services">Studios</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></button>
+        <a class="btn btn-primary btn-sm btn-hire" href="#contact">Hire me <i class="fa-solid fa-arrow-right"></i></a>
+        <button class="icon-btn nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </nav>
+    <div class="progress-bar"></div>
+  </header>
 
-	<!--	Preloader
-	==================================================-->
-
-	<!-- Color Settings Start
-	==================================================-->
-	<div class="color-panel">
-		<div class="on-panel color_white bg_primary">
-			<div class="text-center icon-spinner">
-			  <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-			</div>
-		</div>
-		<div class="panel-box">
-			<span class="panel-title"><b>Theme Colors</b></span>
-			<ul class="color-box">
-				<li class="default" data-name="default" data-path="css/color/color-0.css" data-image="/images/Prof/logo/logo1.png" data-target="/images/Prof/logo/logo1.png"></li>
-				<li class="color_2" data-name="color_2" data-path="css/color/color-1.css" data-image="/images/Prof/logo/logo2.png" data-target="/images/Prof/logo/logo2.png"></li>
-				<li class="color_3" data-name="color_3" data-path="css/color/color-2.css" data-image="/images/Prof/logo/logo3.png" data-target="/images/Prof/logo/logo3.png"></li>
-				<li class="color_4" data-name="color_4" data-path="css/color/color-3.css" data-image="/images/Prof/logo/logo4.png" data-target="/images/Prof/logo/logo4.png"></li>
-				<li class="color_5" data-name="color_5" data-path="css/color/color-4.css" data-image="/images/Prof/logo/logo5.png" data-target="/images/Prof/logo/logo5.png"></li>
-				<li class="color_6" data-name="color_6" data-path="css/color/color-5.css" data-image="/images/Prof/logo/logo6.png" data-target="/images/Prof/logo/logo6.png"></li>
-				<li class="color_7" data-name="color_7" data-path="css/color/color-6.css" data-image="/images/Prof/logo/logo7.png" data-target="/images/Prof/logo/logo7.png"></li>
-				<li class="color_8" data-name="color_8" data-path="css/color/color-7.css" data-image="/images/Prof/logo/logo8.png" data-target="/images/Prof/logo/logo8.png"></li>
-				<li class="color_9" data-name="color_9" data-path="css/color/color-8.css" data-image="/images/Prof/logo/logo9.png" data-target="/images/Prof/logo/logo9.png"></li>
-				<li class="color_10" data-name="color_10" data-path="css/color/color-9.css" data-image="/images/Prof/logo/logo10.png" data-target="/images/Prof/logo/logo10.png"></li>
-				<li class="color_11" data-name="color_11" data-path="css/color/color-10.css" data-image="/images/Prof/logo/logo11.png" data-target="/images/Prof/logo/logo11.png"></li>
-				<li class="color_12" data-name="color_12" data-path="css/color/color-11.css" data-image="/images/Prof/logo/logo12.png" data-target="/images/Prof/logo/logo12.png"></li>
-				<li class="color_13" data-name="color_13" data-path="css/color/color-12.css" data-image="/images/Prof/logo/logo13.png" data-target="/images/Prof/logo/logo13.png"></li>
-				<li class="color_14" data-name="color_14" data-path="css/color/color-13.css" data-image="/images/Prof/logo/logo14.png" data-target="/images/Prof/logo/logo14.png"></li>
-			</ul>
-		</div>
-		<div class="switcher_layout">
-			<span class="layout_title"><b>Layout Style</b></span>
-			<div class="radio_check">
-				<input type="checkbox" id="layout_type" name="layout" value="Yes">
-				<label class="bg_default text-left" for="layout_type"><span class="white_color">Full</span><span class="secondary_color">Box</span></label>
-			</div>
-		</div>
-		<div class="template_style">
-			<span class="layout_title"><b>Color Mode</b></span>
-			<ul>
-				<!-- <li><a class="btn_link" href="" data-name data-path="">Dark Mode</a></li> -->
-			</ul>
-		</div>
-		<div class="box_bg_style">
-			<span class="layout_title"><b>Background pattern</b></span>
-			<div class="select_bg">
-				<ul>
-					<li><input type="radio" name="radio" id="patrn1" value="pattern_1" /><label for="patrn1" class="radios pattern1"></label></li>
-					<li><input type="radio" name="radio" id="patrn2" value="pattern_2" /><label for="patrn2" class="radios pattern2"></label></li>
-					<li><input type="radio" name="radio" id="patrn3" value="pattern_3" /><label for="patrn3" class="radios pattern3"></label></li>
-					<li><input type="radio" name="radio" id="patrn4" value="pattern_4" /><label for="patrn4" class="radios pattern4"></label></li>
-					<li><input type="radio" name="radio" id="patrn5" value="pattern_5" /><label for="patrn5" class="radios pattern5"></label></li>
-				</ul>
-			</div>
-			<span class="layout_title"><b>Background pattern</b></span>
-			<div class="select_bg">
-				<ul>
-					<li><input type="radio" name="radio" id="bg_img1" value="body_bg_1" /><label for="bg_img1" class="radios body_image1"></label></li>
-					<li><input type="radio" name="radio" id="bg_img2" value="body_bg_2" /><label for="bg_img2" class="radios body_image2"></label></li>
-					<li><input type="radio" name="radio" id="bg_img3" value="body_bg_3" /><label for="bg_img3" class="radios body_image3"></label></li>
-					<li><input type="radio" name="radio" id="bg_img4" value="body_bg_4" /><label for="bg_img4" class="radios body_image4"></label></li>
-					<li><input type="radio" name="radio" id="bg_img5" value="body_bg_5" /><label for="bg_img5" class="radios body_image5"></label></li>
-					<li><input type="radio" name="radio" id="bg_img6" value="body_bg_6" /><label for="bg_img6" class="radios body_image6"></label></li>
-					<li><input type="radio" name="radio" id="bg_img7" value="body_bg_7" /><label for="bg_img7" class="radios body_image7"></label></li>
-					<li><input type="radio" name="radio" id="bg_img8" value="body_bg_8" /><label for="bg_img8" class="radios body_image8"></label></li>
-					<li><input type="radio" name="radio" id="bg_img9" value="body_bg_9" /><label for="bg_img9" class="radios body_image9"></label></li>
-					<li><input type="radio" name="radio" id="bg_img10" value="body_bg_10" /><label for="bg_img10" class="radios body_image10"></label></li>
-				</ul>
-			</div>
-			<div class="select_bg">
-				<ul>
-					<li><input type="checkbox" name="runaway" id="bg_over" value="" /> Overlay</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<!--  Color Settings End
-	==============================================-->
-
-<!-- Wrapper Start 
-==================================================-->
-<div id="page_wrapper">
-	<div class="row">
-	<!-- Start Nav Menu 
-	==============================================-->
-	<header class="main_nav">
-		<div class="container">
-			<nav id="navbar-example2" class="navbar navbar-expand-lg navbar-light w-100"> 
-				<a class="navbar-brand" href="#top"><img class="nav-logo" src="images/Prof/logo/profjero logo.png" alt="logo"></a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav ml-auto">
-					  <li class="nav-item"><a class="nav-link active" href="#top" data-scroll="top">Home<span class="sr-only">(current)</span></a></li>
-					  <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-					  <li class="nav-item"><a class="nav-link" href="#skill">Skill</a></li>
-					  <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-					  <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>	
-					  <li class="nav-item"><a class="nav-link" href="#testimonial">Testimonial</a></li>	
-					  <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>	
-					  <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>	
-					</ul>
-				</div>		
-			</nav>
-		</div>	
-	</header>
-	<!-- End Nav Menu
-	==================================================-->
-	
-	<!--	Start Main Banner 
-	==================================================-->
-	<section id="main_banner" class=" banner_water_effect background3 overlay_one">
-		<div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-md-12 col-lg-12 home-content text-left">
-                    <div class="mainbanner_content">
-                        <span class="pb_5 banner_title color_white">Hello, I am <b class="name" style="font-size: 40px;">Benjamin Amoako</b></span>  
-                        <h1 class="cd-headline clip is-full-width text-uppercase">
-                            <span class="color_white">a</span>
-                            <span class="cd-words-wrapper color_default">
-                                <b class="is-visible">Software Developer.</b>
-                                <b>IT Trainer</b>
-                                <b>Creative Designer.</b>
-								<b>Freelancer.</b>
-                            </span>
-                        </h1>
-                        <p class="color_white mb_30">I have over 4 years of experience delivering creative and digital solutions. My expertise spans web development, design, and building systems that solve real-world problems. I am exited to share my work with you</p>
-                        <a class="btn btn-default" href="profile.html">View Profile</a>
-                    </div>
-                </div>          
-            </div>
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="home">
+      <div class="hero-grid-bg"></div>
+      <div class="container hero-inner">
+        <div>
+          <span class="status-pill" id="status-pill"><span class="pulse"></span><span data-s="availability">Available for new projects</span></span>
+          <h1>
+            <span data-s="heroGreeting">Hi, I'm Benjamin Amoako</span>
+            <span class="role-line"><span class="typed" id="typed">Full-Stack Developer</span></span>
+          </h1>
+          <p class="hero-lead" data-s="heroIntro">I design and build fast, secure web applications, dashboards and business systems — from the interface people love to the APIs and databases that power it. I also train the next generation of African tech talent.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#work"><i class="fa-solid fa-display"></i> See live demos</a>
+            <a class="btn btn-outline" href="#contact">Start a project <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><strong><span data-years>5</span><sup>+</sup></strong><span>Years experience</span></div>
+            <div class="stat"><strong><span data-s="projectsDone">46</span><sup>+</sup></strong><span>Projects delivered</span></div>
+            <div class="stat"><strong><span data-s="happyClients">42</span><sup>+</sup></strong><span>Happy clients</span></div>
+            <div class="stat" id="stat-students" hidden><strong><span data-s="studentsTrained">0</span><sup>+</sup></strong><span>Students trained</span></div>
+          </div>
+          <div class="hero-socials"><span>Follow:</span><div class="socials" data-socials></div></div>
         </div>
+        <div class="hero-visual">
+          <div class="hero-photo"><img id="hero-img" src="/assets/img/people/profjero-at-work.webp" alt="Benjamin Amoako (ProfJero) coding at his desk" width="470" height="588" fetchpriority="high"></div>
+          <div class="float-card fc-1"><i class="fa-solid fa-layer-group"></i><div>Full-Stack<small>Frontend + Backend</small></div></div>
+          <div class="float-card fc-2"><i class="fa-solid fa-database"></i><div>APIs &amp; Databases<small>Node · PHP · Firebase</small></div></div>
+          <div class="float-card fc-3"><i class="fa-solid fa-chalkboard-user"></i><div>IT Trainer<small>Empowering lives</small></div></div>
+        </div>
+      </div>
     </section>
-	<!--	End Main Banner 
-	==================================================-->
-	<!--	Start About
-	===================================================-->
-	<section id="about" class="py_80 full_row bg_white">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 col-lg-12">
-					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
-	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">About</span>about myself</h2>
-	                    <span class="sub_title">I'm Benjamin Amoako, a highly motivated and detailed-oriented professional driven by passion for innovation, creative problem-solving and building impactful solutions.</span>
-	                </div>
-				</div>
-			</div>
-			<div class="about_one">
-				<div class="row">
-					<div class="col-md-7 col-lg-7">
-						<div class="myself color_secondery wow animated fadeInLeft">
-							<p>I am a Co-Founder and Executive Director of Digital Bridge Initiative, and the Founder of ProfJero Hub, where I lead initiatives focused on creativity, technology, and innovation</p>
-							
-							<p>With a strong educational background in Information Technology, I have built a solid foundation in programming, web development, database management, and brand design. Professionally, I have worked on a variety of projects that have strengthened my ability to design and develop solutions that are both functional and impactful.</p>
 
-							<p>I am passionate about continuous learning, growth, and using my skills to create meaningful impact. I am always open to new challenges, collaborations, and opportunities that drive innovation and progress.</p>
+    <div class="marquee" aria-label="Technologies I use">
+      <div class="marquee-track">
+        <span><i class="fa-brands fa-html5"></i>HTML5</span><span><i class="fa-brands fa-css3-alt"></i>CSS3</span><span><i class="fa-brands fa-js"></i>JavaScript</span><span><i class="fa-brands fa-react"></i>React</span><span><i class="fa-brands fa-node-js"></i>Node.js</span><span><i class="fa-brands fa-php"></i>PHP</span><span><i class="fa-solid fa-fire"></i>Firebase</span><span><i class="fa-solid fa-database"></i>MySQL</span><span><i class="fa-brands fa-cloudflare"></i>Cloudflare</span><span><i class="fa-brands fa-wordpress"></i>WordPress</span><span><i class="fa-brands fa-figma"></i>Figma</span><span><i class="fa-brands fa-git-alt"></i>Git</span>
+        <span aria-hidden="true"><i class="fa-brands fa-html5"></i>HTML5</span><span aria-hidden="true"><i class="fa-brands fa-css3-alt"></i>CSS3</span><span aria-hidden="true"><i class="fa-brands fa-js"></i>JavaScript</span><span aria-hidden="true"><i class="fa-brands fa-react"></i>React</span><span aria-hidden="true"><i class="fa-brands fa-node-js"></i>Node.js</span><span aria-hidden="true"><i class="fa-brands fa-php"></i>PHP</span><span aria-hidden="true"><i class="fa-solid fa-fire"></i>Firebase</span><span aria-hidden="true"><i class="fa-solid fa-database"></i>MySQL</span><span aria-hidden="true"><i class="fa-brands fa-cloudflare"></i>Cloudflare</span><span aria-hidden="true"><i class="fa-brands fa-wordpress"></i>WordPress</span><span aria-hidden="true"><i class="fa-brands fa-figma"></i>Figma</span><span aria-hidden="true"><i class="fa-brands fa-git-alt"></i>Git</span>
+      </div>
+    </div>
 
-							<p>If you'd like to learn more about my work or connect, feel free to reach out.</p>
-						</div>
-						<div class="personal_info">
-							<div class="row">
-								<div class="col-md-12 col-lg-6">
-									<ul>
-										<li><span class="color_secondery">Name :</span> Amoako Benjamin</li>
-										<li><span class="color_secondery">Email :</span> <a href="mailto:profjero947@gmail.com" style="color: #292929;">profjero947@gmail.com</a></li>
-										<li><span class="color_secondery">Phone :</span> <a href="tel:+233531207256" style="color: #292929;">+233 531 207 256</a> </li>	
-									</ul>
-								</div>
-								<div class="col-md-12 col-lg-6">
-									<ul>
-										<li><span class="color_secondery">Profession :</span> Software Development</li>
-										<li><span class="color_secondery">Education :</span> Degree</li>
-										<li><span class="color_secondery">Address :</span> Cape Coast, Ghana.</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-5 col-lg-5">
-						<div class="profile_img personal_video wow animated fadeInRight">
-							<img src="images/Prof/about01.png" alt="image">
-							<div class="iconround"><a class="video-popup" href="#" title="video popup">
-							<i class="fa fa-play" aria-hidden="true"></i></a></div>
-							<div class="loader">
-								<div class="loader-inner ball-scale-multiple">
-									<div></div>
-									<div></div>
-									<div></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<a class="btn btn-default" href="#contact">Hire Me</a>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--	End About
-	===================================================-->
-	<!--	Start Skill
-	===================================================-->
-	<section id="skill" class="py_80 bg_secondery full_row">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 col-lg-12">
-					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
-	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">skill</span>Design skill</h2>
-	                    <span class="sub_title">I approach creativity with structure, purpose and attention to detail.</span>
-	                </div>
-				</div>
-			</div>
-			<div class="my_skill">
-				<div class="row">
-					<div class="col-md-12 col-lg-6">
-						<div class="about_myskill color_secondery wow animated slideInLeft">
-							<h2 class="color_primary">Some talk about my professional design skill</h2>
-							<p class="pt_15">As a detail-oriented and creative IT professional, I have developed a strong foundation in visual design and web experiences. I focus on creating solutions that are not only visually engaging but also intuitive and user-centered.</p>
+    <!-- ================= ABOUT ================= -->
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <div class="about-photo reveal">
+          <img id="about-img" src="/assets/img/people/benjamin-amoako.webp" alt="Portrait of Benjamin Amoako" width="560" height="560" loading="lazy">
+          <div class="exp-badge"><strong><span data-years>5</span>+</strong><span>Years building<br>real systems</span></div>
+        </div>
+        <div class="about-text reveal">
+          <span class="eyebrow"><i class="fa-solid fa-user"></i> About me</span>
+          <h2 data-s="aboutTitle">Full-stack developer who builds systems that work in the real world</h2>
+          <div id="about-body"><!--ssr:about--><p>I&#39;m Benjamin Amoako — known as ProfJero — a full-stack developer and IT trainer based in Cape Coast, Ghana. For 5 years I have been turning ideas into reliable digital products: websites, e-learning platforms, admin dashboards, point-of-sale and inventory systems.</p><p>On the front end I craft accessible, responsive interfaces. On the back end I design databases, authentication, REST APIs and serverless functions with Node.js, PHP, Firebase and SQL — so you get one person who understands the whole system end to end.</p><p>I am the Co-Founder and Executive Director of Digital Bridge Initiative and the Founder of ProfJero Hub, where our studios combine technology, creativity, nutrition and agriculture to create impact. I love teaching, and I&#39;m always open to collaborations that move people and businesses forward.</p><!--/ssr:about--></div>
+          <div class="info-grid">
+            <div class="info-item"><i class="fa-solid fa-user"></i><div><small>Name</small><span data-s="name">Benjamin Amoako</span></div></div>
+            <div class="info-item"><i class="fa-solid fa-envelope"></i><div><small>Email</small><a data-s="email" data-s-href="mailto:{email}" href="mailto:profjero947@gmail.com">profjero947@gmail.com</a></div></div>
+            <div class="info-item"><i class="fa-solid fa-phone"></i><div><small>Phone</small><a data-s="phone" data-s-href="tel:{phone}" href="tel:+233531207256">+233 53 120 7256</a></div></div>
+            <div class="info-item"><i class="fa-solid fa-location-dot"></i><div><small>Location</small><span data-s="location">Cape Coast, Ghana</span></div></div>
+            <div class="info-item"><i class="fa-solid fa-graduation-cap"></i><div><small>Education</small><span data-s="education">BSc. Information Technology</span></div></div>
+            <div class="info-item"><i class="fa-solid fa-language"></i><div><small>Languages</small><span data-s="languages">English, Twi, Fante</span></div></div>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="#contact"><i class="fa-solid fa-handshake"></i> Hire me</a>
+            <a class="btn btn-outline" id="cv-btn" href="#" hidden download><i class="fa-solid fa-download"></i> Download CV</a>
+            <a class="btn btn-ghost" data-hub href="https://profjerohub.pages.dev" target="_blank" rel="noopener">ProfJero Hub <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-							<p class="pt_15">I believe that great design goes beyond appearance, it is about clarity, usability, and meaningful communication. By staying up-to-date with modern trends and tools, I ensure that every project remains relevant, effective, and impactful.</p>
+    <!-- ================= SKILLS ================= -->
+    <section class="section section-alt" id="skills">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-bolt"></i> Skills</span>
+          <h2>Frontend to backend — <span class="grad-text">the whole stack</span></h2>
+          <p>I take products from idea to production: interfaces, APIs, databases, authentication, hosting and the admin tools your team uses every day.</p>
+        </div>
+        <div class="fullstack-strip">
+          <div class="fs-item reveal"><i class="fa-solid fa-display"></i><div><h3>Frontend</h3><p>Responsive, accessible, fast interfaces in HTML, CSS, JavaScript &amp; React.</p></div></div>
+          <div class="fs-item reveal"><i class="fa-solid fa-server"></i><div><h3>Backend</h3><p>REST APIs, auth, business logic and serverless functions in Node.js &amp; PHP.</p></div></div>
+          <div class="fs-item reveal"><i class="fa-solid fa-database"></i><div><h3>Databases</h3><p>Firestore, MySQL &amp; MongoDB — modelled, secured and indexed properly.</p></div></div>
+          <div class="fs-item reveal"><i class="fa-solid fa-cloud-arrow-up"></i><div><h3>DevOps &amp; Cloud</h3><p>Deployment on Cloudflare &amp; Google Cloud, media on Cloudinary, SEO-ready.</p></div></div>
+        </div>
+        <div class="skills-grid" id="skills-grid"><!--ssr:skills-->
+    <article class="skill-card reveal">
+      <header><span class="skill-icon"><i class="fa-solid fa-display"></i></span><h3>Frontend</h3></header>
+      <ul>
+        <li>
+          <div class="skill-row"><span>HTML5 &amp; Semantic Markup</span><span class="skill-pct">95%</span></div>
+          <div class="bar" role="progressbar" aria-label="HTML5 &amp; Semantic Markup" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"><span style="--w:95%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>CSS3, Tailwind &amp; Bootstrap</span><span class="skill-pct">92%</span></div>
+          <div class="bar" role="progressbar" aria-label="CSS3, Tailwind &amp; Bootstrap" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"><span style="--w:92%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>JavaScript (ES2023+)</span><span class="skill-pct">88%</span></div>
+          <div class="bar" role="progressbar" aria-label="JavaScript (ES2023+)" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"><span style="--w:88%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>React</span><span class="skill-pct">78%</span></div>
+          <div class="bar" role="progressbar" aria-label="React" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"><span style="--w:78%"></span></div>
+        </li>
+      </ul>
+    </article>
+    <article class="skill-card reveal">
+      <header><span class="skill-icon"><i class="fa-solid fa-server"></i></span><h3>Backend</h3></header>
+      <ul>
+        <li>
+          <div class="skill-row"><span>Node.js &amp; Express</span><span class="skill-pct">80%</span></div>
+          <div class="bar" role="progressbar" aria-label="Node.js &amp; Express" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"><span style="--w:80%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>PHP</span><span class="skill-pct">82%</span></div>
+          <div class="bar" role="progressbar" aria-label="PHP" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"><span style="--w:82%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>REST APIs &amp; Serverless Functions</span><span class="skill-pct">84%</span></div>
+          <div class="bar" role="progressbar" aria-label="REST APIs &amp; Serverless Functions" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"><span style="--w:84%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>Authentication &amp; Security</span><span class="skill-pct">80%</span></div>
+          <div class="bar" role="progressbar" aria-label="Authentication &amp; Security" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"><span style="--w:80%"></span></div>
+        </li>
+      </ul>
+    </article>
+    <article class="skill-card reveal">
+      <header><span class="skill-icon"><i class="fa-solid fa-database"></i></span><h3>Databases &amp; Cloud</h3></header>
+      <ul>
+        <li>
+          <div class="skill-row"><span>Firebase / Firestore</span><span class="skill-pct">86%</span></div>
+          <div class="bar" role="progressbar" aria-label="Firebase / Firestore" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100"><span style="--w:86%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>MySQL &amp; SQL</span><span class="skill-pct">82%</span></div>
+          <div class="bar" role="progressbar" aria-label="MySQL &amp; SQL" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"><span style="--w:82%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>MongoDB</span><span class="skill-pct">70%</span></div>
+          <div class="bar" role="progressbar" aria-label="MongoDB" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"><span style="--w:70%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>Cloudflare, Cloudinary &amp; Deployment</span><span class="skill-pct">85%</span></div>
+          <div class="bar" role="progressbar" aria-label="Cloudflare, Cloudinary &amp; Deployment" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><span style="--w:85%"></span></div>
+        </li>
+      </ul>
+    </article>
+    <article class="skill-card reveal">
+      <header><span class="skill-icon"><i class="fa-solid fa-pen-nib"></i></span><h3>Tools &amp; Design</h3></header>
+      <ul>
+        <li>
+          <div class="skill-row"><span>WordPress</span><span class="skill-pct">80%</span></div>
+          <div class="bar" role="progressbar" aria-label="WordPress" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"><span style="--w:80%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>UI/UX Design (Figma)</span><span class="skill-pct">85%</span></div>
+          <div class="bar" role="progressbar" aria-label="UI/UX Design (Figma)" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><span style="--w:85%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>Graphic Design &amp; Branding</span><span class="skill-pct">90%</span></div>
+          <div class="bar" role="progressbar" aria-label="Graphic Design &amp; Branding" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><span style="--w:90%"></span></div>
+        </li>
+        <li>
+          <div class="skill-row"><span>Git &amp; GitHub</span><span class="skill-pct">82%</span></div>
+          <div class="bar" role="progressbar" aria-label="Git &amp; GitHub" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"><span style="--w:82%"></span></div>
+        </li>
+      </ul>
+    </article><!--/ssr:skills--></div>
+      </div>
+    </section>
 
-							<p class="pt_15">With a keen eye for detail and a passion for innovation, I combine creativity with technical understanding to deliver solutions that are both aesthetically refined and functionally strong.</p>
-						</div>
-					</div>
-					<div class="col-md-12 col-lg-6">
-						<div class="skill-progress wow animated slideInRight">
-		                    <div class="prgs-bar fact-counter"> <span>HTML</span>
-		                        <div class="progress count wow" data-wow-duration="0ms">
-		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="95">0</span>%</div>
-		                            <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemax="100"> </div>
-								</div>
-							</div>
-		                    <div class="prgs-bar fact-counter"> <span>CSS</span>
-		                        <div class="progress count wow" data-wow-duration="0ms">
-		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="92">0</span>%</div>
-		                            <div class="progress-bar" role="progressbar" aria-valuenow="92" aria-valuemax="100"> </div>
-								</div>
-							</div>
-		                    <div class="prgs-bar fact-counter"> <span>JavaScript</span>
-		                        <div class="progress count wow" data-wow-duration="0ms">
-		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="86">0</span>%</div>
-		                            <div class="progress-bar" role="progressbar" aria-valuenow="86" aria-valuemax="100"> </div>
-								</div>
-							</div>
-		                    <div class="prgs-bar fact-counter"> <span>PHP</span>
-		                        <div class="progress count wow" data-wow-duration="0ms">
-		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="78">0</span>%</div>
-		                            <div class="progress-bar" role="progressbar" aria-valuenow="78" aria-valuemax="100"> </div>
-								</div>
-							</div>
-		                    <div class="prgs-bar fact-counter"> <span>Wordpress</span>
-		                        <div class="progress count wow" data-wow-duration="0ms">
-		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="80">0</span>%</div>
-		                            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemax="100"> </div>
-								</div>
-							</div>
-							<div class="prgs-bar fact-counter"> <span>React</span>
-		                        <div class="progress count wow" data-wow-duration="0ms">
-		                            <div class="skill-percent"><span class="count-num" data-speed="3000" data-stop="75">0</span>%</div>
-		                            <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemax="100"> </div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--	End Skill
-	===================================================-->
-	<!--	Start Experience and Projects
-	===================================================-->
-	<div class="experience background2 overlay_two py_60 full_row">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 col-lg-12">
-					<div class="fact-counter">
-						<div class="row">
-							<div class="col-md-4 col-lg-4">
-							    <div class="counter count wow text-center" data-wow-duration="300ms">
-							    	<span class="flaticon-man-working-on-a-laptop-from-side-view"></span>
-					            	<div class="counting_digit color_default mt_15"> <h2 class="count-num" data-speed="3000" data-stop="4">0</h2><span>+</span>
-					            	</div>
-					            	<h3 class="color_white mt_15">Years of Experience</h3>
-					          	</div>
-							</div>
-							<div class="col-md-4 col-lg-4">
-							    <div class="counter count wow text-center" data-wow-duration="300ms">
-							    	<span class="flaticon-half-time-work"></span>
-					            	<div class="counting_digit color_default mt_15"> <h2 class="count-num" data-speed="3000" data-stop="46">0</h2><span>+</span>
-					            	</div>
-					            	<h3 class="color_white mt_15">Projects Done</h3>
-					          	</div>
-							</div>
-							<div class="col-md-4 col-lg-4">
-							    <div class="counter count wow text-center" data-wow-duration="300ms">
-							    	<span class="flaticon-happy"></span>
-					            	<div class="counting_digit color_default mt_15"><h2 class="count-num" data-speed="3000" data-stop="42">0</h2><span>+</span>
-					            	</div>
-					            	<h3 class="color_white mt_15">Happy Clients</h3>
-					          	</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--	End Experience and Projects
-	===================================================-->
-	<!-- Start Services
-===================================================-->
-<section id="services" class="py_80 full_row bg_white">
+    <!-- ================= STUDIOS / SERVICES ================= -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-building"></i> Services &amp; Studios</span>
+          <h2>One hub, <span class="grad-text">four studios</span></h2>
+          <p>Through ProfJero Hub, each studio focuses on what it does best. Explore the services below or visit a studio directly.</p>
+        </div>
+        <div class="studio-tabs" role="tablist" id="studio-tabs"><!--ssr:studio-tabs--><button class="studio-tab active" role="tab" aria-selected="true" data-studio="digital-studio" style="--c:#0A60EE"><i class="fa-solid fa-laptop-code"></i><span>Digital Studio</span></button><button class="studio-tab" role="tab" aria-selected="false" data-studio="creative-studio" style="--c:#7C3AED"><i class="fa-solid fa-palette"></i><span>Creative Studio</span></button><button class="studio-tab" role="tab" aria-selected="false" data-studio="nourish-studio" style="--c:#08BC6F"><i class="fa-solid fa-seedling"></i><span>Nourish Studio</span></button><button class="studio-tab" role="tab" aria-selected="false" data-studio="agro-studio" style="--c:#D97706"><i class="fa-solid fa-tractor"></i><span>Agro Studio</span></button><!--/ssr:studio-tabs--></div>
+        <div id="studio-panels"><!--ssr:studio-panels-->
+    <div class="studio-panel active" role="tabpanel" data-panel="digital-studio" style="--c:#0A60EE">
+      <div class="studio-head">
+        <div class="studio-badge"><i class="fa-solid fa-laptop-code"></i></div>
+        <div>
+          <h3>Digital Studio <small>Software, web, mobile &amp; cloud</small></h3>
+          <p>Custom software, websites, mobile apps and cloud solutions that help businesses run better.</p>
+        </div>
+        <a class="btn btn-studio" href="https://profjerohub.pages.dev/#digital-studio" target="_blank" rel="noopener">Visit Digital Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="service-grid">
+        
+          <article class="service-card">
+            <span class="service-num">01</span>
+            <h4>Software Development</h4>
+            <p>Custom software tailored to your business — from desktop tools to enterprise systems — scalable, secure and fast.</p>
+            <a class="service-link" href="#contact" data-service="Software Development">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">02</span>
+            <h4>Web Development</h4>
+            <p>Robust, SEO-ready websites and web applications with admin dashboards, databases and integrations.</p>
+            <a class="service-link" href="#contact" data-service="Web Development">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">03</span>
+            <h4>Mobile App Development</h4>
+            <p>iOS and Android apps focused on performance, great user experience and seamless functionality.</p>
+            <a class="service-link" href="#contact" data-service="Mobile App Development">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">04</span>
+            <h4>Cloud &amp; Backend</h4>
+            <p>APIs, databases, authentication and cloud hosting on Firebase, Cloudflare, AWS, Azure or Google Cloud.</p>
+            <a class="service-link" href="#contact" data-service="Cloud &amp; Backend">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+      </div>
+    </div>
+    <div class="studio-panel" role="tabpanel" data-panel="creative-studio" style="--c:#7C3AED" hidden>
+      <div class="studio-head">
+        <div class="studio-badge"><i class="fa-solid fa-palette"></i></div>
+        <div>
+          <h3>Creative Studio <small>Brand, design &amp; video</small></h3>
+          <p>Brand identities, graphics, UI/UX and video that make people remember you.</p>
+        </div>
+        <a class="btn btn-studio" href="https://profjerohub.pages.dev/#creative-studio" target="_blank" rel="noopener">Visit Creative Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="service-grid">
+        
+          <article class="service-card">
+            <span class="service-num">01</span>
+            <h4>Branding &amp; Identity</h4>
+            <p>Logos, brand guidelines and complete identity systems that tell your story and connect with your audience.</p>
+            <a class="service-link" href="#contact" data-service="Branding &amp; Identity">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">02</span>
+            <h4>Graphic Design</h4>
+            <p>Flyers, social media designs, packaging and print materials that capture your message.</p>
+            <a class="service-link" href="#contact" data-service="Graphic Design">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">03</span>
+            <h4>UI/UX Design</h4>
+            <p>Research-driven, beautiful interfaces that make digital products easy and delightful to use.</p>
+            <a class="service-link" href="#contact" data-service="UI/UX Design">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">04</span>
+            <h4>Video Editing</h4>
+            <p>Promotional videos and social media content edited to capture attention and tell your story.</p>
+            <a class="service-link" href="#contact" data-service="Video Editing">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+      </div>
+    </div>
+    <div class="studio-panel" role="tabpanel" data-panel="nourish-studio" style="--c:#08BC6F" hidden>
+      <div class="studio-head">
+        <div class="studio-badge"><i class="fa-solid fa-seedling"></i></div>
+        <div>
+          <h3>Nourish Studio <small>Nutrition &amp; wellness</small></h3>
+          <p>Evidence-based nutrition and wellness programmes for individuals and organisations.</p>
+        </div>
+        <a class="btn btn-studio" href="https://profjerohub.pages.dev/#nourish-studio" target="_blank" rel="noopener">Visit Nourish Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="service-grid">
+        
+          <article class="service-card">
+            <span class="service-num">01</span>
+            <h4>Nutrition Consulting</h4>
+            <p>Personalised nutrition plans that support your health goals with evidence-based guidance.</p>
+            <a class="service-link" href="#contact" data-service="Nutrition Consulting">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">02</span>
+            <h4>Wellness Programs</h4>
+            <p>Holistic programmes that improve mental and physical wellbeing for individuals and teams.</p>
+            <a class="service-link" href="#contact" data-service="Wellness Programs">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">03</span>
+            <h4>Meal Planning</h4>
+            <p>Weekly meal plans tailored to your preferences and health objectives — eat better, save time.</p>
+            <a class="service-link" href="#contact" data-service="Meal Planning">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+      </div>
+    </div>
+    <div class="studio-panel" role="tabpanel" data-panel="agro-studio" style="--c:#D97706" hidden>
+      <div class="studio-head">
+        <div class="studio-badge"><i class="fa-solid fa-tractor"></i></div>
+        <div>
+          <h3>Agro Studio <small>Smart farming &amp; agri-tech</small></h3>
+          <p>Technology and expert advice that help farms grow more with less.</p>
+        </div>
+        <a class="btn btn-studio" href="https://profjerohub.pages.dev/#agro-studio" target="_blank" rel="noopener">Visit Agro Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="service-grid">
+        
+          <article class="service-card">
+            <span class="service-num">01</span>
+            <h4>Smart Farming</h4>
+            <p>IoT and automation for efficient crop management, higher yields and less waste.</p>
+            <a class="service-link" href="#contact" data-service="Smart Farming">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">02</span>
+            <h4>Crop Consulting</h4>
+            <p>Expert advice on crop selection, soil health and sustainable farming practices.</p>
+            <a class="service-link" href="#contact" data-service="Crop Consulting">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">03</span>
+            <h4>Agri-Tech Solutions</h4>
+            <p>From drone monitoring to data analytics — modern technology for traditional agriculture.</p>
+            <a class="service-link" href="#contact" data-service="Agri-Tech Solutions">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+      </div>
+    </div><!--/ssr:studio-panels--></div>
+      </div>
+    </section>
+
+    <!-- ================= PROCESS ================= -->
+    <section class="section section-alt" id="process">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-route"></i> How I work</span>
+          <h2>A simple, transparent process</h2>
+          <p>You always know what's happening, what's next and what it costs.</p>
+        </div>
+        <ol class="process" id="process-list"><!--ssr:process-->
+    <li class="process-step reveal">
+      <span class="process-num">1</span>
+      <i class="fa-solid fa-magnifying-glass-chart"></i>
+      <h3>Discover</h3>
+      <p>We clarify your goals, users and must-have features, then agree on scope, timeline and budget.</p>
+    </li>
+    <li class="process-step reveal">
+      <span class="process-num">2</span>
+      <i class="fa-solid fa-pen-ruler"></i>
+      <h3>Design</h3>
+      <p>Wireframes and polished UI so you can see and approve the product before a line of code.</p>
+    </li>
+    <li class="process-step reveal">
+      <span class="process-num">3</span>
+      <i class="fa-solid fa-code"></i>
+      <h3>Build</h3>
+      <p>Front end, back end, database and admin dashboard — with weekly demos so you&#39;re never in the dark.</p>
+    </li>
+    <li class="process-step reveal">
+      <span class="process-num">4</span>
+      <i class="fa-solid fa-rocket"></i>
+      <h3>Launch &amp; Support</h3>
+      <p>Deployment, SEO, training for your team and ongoing support as your business grows.</p>
+    </li><!--/ssr:process--></ol>
+      </div>
+    </section>
+
+    <!-- ================= WORK ================= -->
+    <section class="section" id="work">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-briefcase"></i> Portfolio</span>
+          <h2>Live projects you can <span class="grad-text">try right now</span></h2>
+          <p>Web apps, dashboards and business systems — open a live demo, watch a video walkthrough on YouTube or TikTok, or read the details.</p>
+        </div>
+        <div class="chips" id="project-filters" role="toolbar" aria-label="Filter projects"><!--ssr:project-filters--><button class="chip active" data-filter="*">All <span>12</span></button><button class="chip" data-filter="Web Apps">Web Apps <span>1</span></button><button class="chip" data-filter="Websites">Websites <span>3</span></button><button class="chip" data-filter="Dashboards">Dashboards <span>2</span></button><button class="chip" data-filter="Business Systems">Business Systems <span>2</span></button><button class="chip" data-filter="Branding &amp; Design">Branding &amp; Design <span>4</span></button><!--/ssr:project-filters--></div>
+        <div class="project-grid" id="project-grid"><!--ssr:projects-->
+    <article class="project-card reveal" data-cat="Web Apps" data-id="dbi-learn">
+      <div class="project-media" style="--h:167">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>DBI Learn</span></div>
+        <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fdbi-learn.pages.dev?w=800&amp;h=500" alt="DBI Learn preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-live"><i class="dot"></i>Live</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Web Apps</span><span>2025</span></div>
+        <h3>DBI Learn</h3>
+        <p>Interactive e-learning platform with courses, multimedia lessons, quizzes and learner progress tracking.</p>
+        <div class="tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Firebase</span><span>Cloudflare Pages</span></div>
+        <div class="project-actions">
+          <button class="btn btn-primary btn-sm" data-action="demo" data-id="dbi-learn"><i class="fa-solid fa-display"></i> Try live demo</button>
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="dbi-learn">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Websites" data-id="rural-tech-hub">
+      <div class="project-media" style="--h:57">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Rural Tech Hub</span></div>
+        <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fruraltech.pages.dev?w=800&amp;h=500" alt="Rural Tech Hub preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-live"><i class="dot"></i>Live</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Websites</span><span>2026</span></div>
+        <h3>Rural Tech Hub</h3>
+        <p>Platform connecting rural youth in Ghana with IT training programmes, events and digital opportunities.</p>
+        <div class="tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Cloudflare Pages</span></div>
+        <div class="project-actions">
+          <button class="btn btn-primary btn-sm" data-action="demo" data-id="rural-tech-hub"><i class="fa-solid fa-display"></i> Try live demo</button>
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="rural-tech-hub">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Dashboards" data-id="rth-admin">
+      <div class="project-media" style="--h:8">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Rural Tech Hub Admin</span></div>
+        <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Frthadmins.pages.dev?w=800&amp;h=500" alt="Rural Tech Hub Admin preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-live"><i class="dot"></i>Live</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Dashboards</span><span>2026</span></div>
+        <h3>Rural Tech Hub Admin</h3>
+        <p>Secure admin control centre to manage students, programmes, events, mentors and impact reports.</p>
+        <div class="tags"><span>JavaScript</span><span>Firebase Auth</span><span>Firestore</span><span>Chart.js</span></div>
+        <div class="project-actions">
+          <button class="btn btn-primary btn-sm" data-action="demo" data-id="rth-admin"><i class="fa-solid fa-display"></i> Try live demo</button>
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="rth-admin">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Dashboards" data-id="dbi-impact">
+      <div class="project-media" style="--h:71">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>DBI Impact Dashboard</span></div>
+        <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fdbi-impact.pages.dev?w=800&amp;h=500" alt="DBI Impact Dashboard preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-live"><i class="dot"></i>Live</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Dashboards</span><span>2025</span></div>
+        <h3>DBI Impact Dashboard</h3>
+        <p>Impact tracking dashboard showcasing programme outcomes, success metrics and beneficiary stories.</p>
+        <div class="tags"><span>JavaScript</span><span>Chart.js</span><span>Data Visualisation</span></div>
+        <div class="project-actions">
+          <button class="btn btn-primary btn-sm" data-action="demo" data-id="dbi-impact"><i class="fa-solid fa-display"></i> Try live demo</button>
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="dbi-impact">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Websites" data-id="digital-bridge-initiative">
+      <div class="project-media" style="--h:211">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Digital Bridge Initiative</span></div>
+        <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fdigitalbridgeinitiative.pages.dev?w=800&amp;h=500" alt="Digital Bridge Initiative preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-live"><i class="dot"></i>Live</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Websites</span><span>2025</span></div>
+        <h3>Digital Bridge Initiative</h3>
+        <p>Official website of a non-profit bridging the digital divide through technology education.</p>
+        <div class="tags"><span>HTML5</span><span>CSS3</span><span>Bootstrap</span><span>JavaScript</span></div>
+        <div class="project-actions">
+          <button class="btn btn-primary btn-sm" data-action="demo" data-id="digital-bridge-initiative"><i class="fa-solid fa-display"></i> Try live demo</button>
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="digital-bridge-initiative">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Business Systems" data-id="smartinventory">
+      <div class="project-media" style="--h:203">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>SmartInventory</span></div>
+        
+        <div class="project-badges">
+          <span class="pill pill-live"><i class="dot"></i>Live</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Business Systems</span><span>2025</span></div>
+        <h3>SmartInventory</h3>
+        <p>Inventory and warehouse management with real-time stock, purchases, sales, multi-location and reports.</p>
+        <div class="tags"><span>PHP</span><span>MySQL</span><span>JavaScript</span><span>Chart.js</span></div>
+        <div class="project-actions">
+          <a class="btn btn-primary btn-sm" href="/docs.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Visit</a>
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="smartinventory">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Business Systems" data-id="pharmacy-pos">
+      <div class="project-media" style="--h:152">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Pharmacy POS System</span></div>
+        
+        <div class="project-badges">
+          <span class="pill pill-live"><i class="dot"></i>Live</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Business Systems</span><span>2024</span></div>
+        <h3>Pharmacy POS System</h3>
+        <p>Point-of-sale and stock management for a pharmacy — fast checkout, stock levels and daily sales reports.</p>
+        <div class="tags"><span>PHP</span><span>MySQL</span><span>JavaScript</span></div>
+        <div class="project-actions">
+          
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="pharmacy-pos">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Websites" data-id="tourizto">
+      <div class="project-media" style="--h:9">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Tourizto Travel Website</span></div>
+        <img src="/assets/img/work/tourizto-website.webp" alt="Tourizto Travel Website preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-concept">Concept</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Websites</span><span>2023</span></div>
+        <h3>Tourizto Travel Website</h3>
+        <p>Travel booking website design with destination search and featured offers.</p>
+        <div class="tags"><span>WordPress</span><span>Elementor</span></div>
+        <div class="project-actions">
+          
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="tourizto">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Branding &amp; Design" data-id="dna-brand">
+      <div class="project-media" style="--h:104">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>DNA Brand Identity</span></div>
+        <img src="/assets/img/work/dna-brand-identity.webp" alt="DNA Brand Identity preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-delivered">Delivered</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Branding &amp; Design</span><span>2024</span></div>
+        <h3>DNA Brand Identity</h3>
+        <p>Complete brand identity and merchandise system.</p>
+        <div class="tags"><span>Branding</span><span>Illustrator</span></div>
+        <div class="project-actions">
+          
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="dna-brand">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Branding &amp; Design" data-id="sanfas-brand">
+      <div class="project-media" style="--h:287">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Sanfas Brand Identity</span></div>
+        <img src="/assets/img/work/sanfas-brand-identity.webp" alt="Sanfas Brand Identity preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-delivered">Delivered</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Branding &amp; Design</span><span>2024</span></div>
+        <h3>Sanfas Brand Identity</h3>
+        <p>Corporate identity applied across uniforms, bags and stationery.</p>
+        <div class="tags"><span>Branding</span><span>Mockups</span></div>
+        <div class="project-actions">
+          
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="sanfas-brand">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Branding &amp; Design" data-id="photo-retouching">
+      <div class="project-media" style="--h:152">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Beauty Photo Retouching</span></div>
+        <img src="/assets/img/work/photo-retouching.webp" alt="Beauty Photo Retouching preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-delivered">Delivered</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Branding &amp; Design</span><span>2024</span></div>
+        <h3>Beauty Photo Retouching</h3>
+        <p>High-end skin retouching and colour grading.</p>
+        <div class="tags"><span>Photoshop</span></div>
+        <div class="project-actions">
+          
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="photo-retouching">Details</button>
+        </div>
+      </div>
+    </article>
+    <article class="project-card reveal" data-cat="Branding &amp; Design" data-id="sabs-kitchen">
+      <div class="project-media" style="--h:220">
+        <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Sab&#39;s Kitchen Flyer</span></div>
+        <img src="/assets/img/work/sabs-kitchen-flyer.webp" alt="Sab&#39;s Kitchen Flyer preview" loading="lazy" decoding="async" onerror="this.remove()">
+        <div class="project-badges">
+          <span class="pill pill-delivered">Delivered</span>
+          
+        </div>
+        
+      </div>
+      <div class="project-body">
+        <div class="project-meta"><span>Branding &amp; Design</span><span>2024</span></div>
+        <h3>Sab&#39;s Kitchen Flyer</h3>
+        <p>Promotional food flyer for a local restaurant.</p>
+        <div class="tags"><span>Photoshop</span><span>Print</span></div>
+        <div class="project-actions">
+          
+          
+          <button class="btn btn-ghost btn-sm" data-action="details" data-id="sabs-kitchen">Details</button>
+        </div>
+      </div>
+    </article><!--/ssr:projects--></div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section class="section section-alt" id="experience">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-timeline"></i> Journey</span>
+          <h2>Experience &amp; education</h2>
+        </div>
+        <div class="tl-grid">
+          <div class="tl-col"><h3><i class="fa-solid fa-briefcase"></i> Experience</h3><ol class="timeline" id="tl-work"><!--ssr:tl-work-->
+    <li class="tl-item reveal">
+      <span class="tl-dot"></span>
+      <div class="tl-when">2024 — Present</div>
+      <h4>Founder</h4>
+      <div class="tl-org">ProfJero Hub</div>
+      <p>Leading Digital, Creative, Nourish and Agro studios that deliver software, design, wellness and agri-tech solutions.</p>
+    </li>
+    <li class="tl-item reveal">
+      <span class="tl-dot"></span>
+      <div class="tl-when">2024 — Present</div>
+      <h4>Co-Founder &amp; Executive Director</h4>
+      <div class="tl-org">Digital Bridge Initiative</div>
+      <p>Building the organisation&#39;s platforms (website, DBI Learn, assessments, admin portal, impact dashboard) and leading digital-skills programmes.</p>
+    </li>
+    <li class="tl-item reveal">
+      <span class="tl-dot"></span>
+      <div class="tl-when">2023 — Present</div>
+      <h4>IT &amp; Design Professional</h4>
+      <div class="tl-org">Aquila Apex</div>
+      <p>Delivering IT, graphic design, branding and UI/UX projects with cross-functional teams for client satisfaction and growth.</p>
+    </li>
+    <li class="tl-item reveal">
+      <span class="tl-dot"></span>
+      <div class="tl-when">2021 — Present</div>
+      <h4>Freelance Full-Stack Developer</h4>
+      <div class="tl-org">Self-employed</div>
+      <p>Websites, POS and inventory systems, church and business platforms for clients — from requirements to deployment and support.</p>
+    </li><!--/ssr:tl-work--></ol></div>
+          <div class="tl-col"><h3><i class="fa-solid fa-graduation-cap"></i> Education &amp; training</h3><ol class="timeline" id="tl-edu"><!--ssr:tl-edu-->
+    <li class="tl-item reveal">
+      <span class="tl-dot"></span>
+      <div class="tl-when"></div>
+      <h4>BSc. Information Technology</h4>
+      <div class="tl-org">University</div>
+      <p>Programming, web development, databases, networking and systems analysis.</p>
+    </li>
+    <li class="tl-item reveal">
+      <span class="tl-dot"></span>
+      <div class="tl-when">2023 — 2024</div>
+      <h4>Python Programming</h4>
+      <div class="tl-org">Professional course</div>
+      <p>Data types, control flow, functions, OOP and data structures through practical projects.</p>
+    </li>
+    <li class="tl-item reveal">
+      <span class="tl-dot"></span>
+      <div class="tl-when">2021 — 2022</div>
+      <h4>PHP &amp; MySQL</h4>
+      <div class="tl-org">Professional course</div>
+      <p>Dynamic web applications, databases and PHP frameworks.</p>
+    </li><!--/ssr:tl-edu--></ol></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONIALS ================= -->
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-heart"></i> Testimonials</span>
+          <h2>What clients say</h2>
+          <p>Don't just take my word for it — hear from people who have used what I built.</p>
+        </div>
+        <div class="testimonials" id="testimonial-list"><!--ssr:testimonials-->
+    <figure class="testimonial reveal">
+      <div class="stars" aria-label="5 out of 5 stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+      <blockquote>“ProfJero played a key role in building Digital Bridge Initiative&#39;s official website, assessment platform and admin portal. His ability to translate our ideas into functional, user-friendly systems greatly improved how we manage training, learners, assessments and administration. The solutions delivered were practical, reliable and well-structured.”</blockquote>
+      <figcaption><img class="avatar" src="/assets/img/people/dbi-logo.webp" alt="Digital Bridge Initiative" loading="lazy" width="48" height="48"><div><strong>Digital Bridge Initiative</strong><span>Non-profit organisation</span></div></figcaption>
+    </figure>
+    <figure class="testimonial reveal">
+      <div class="stars" aria-label="5 out of 5 stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+      <blockquote>“Working with ProfJero to build our church website has been a true blessing. The design is clean, modern and beautifully reflects our mission and values. Members can now access sermons, events and updates with ease. His dedication, creativity and technical skill brought our vision to life.”</blockquote>
+      <figcaption><img class="avatar" src="/assets/img/people/rev-eric.webp" alt="Rev. Eric" loading="lazy" width="48" height="48"><div><strong>Rev. Eric</strong><span>Church leader</span></div></figcaption>
+    </figure>
+    <figure class="testimonial reveal">
+      <div class="stars" aria-label="5 out of 5 stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+      <blockquote>“Since ProfJero deployed our new POS system, managing our pharmacy has been smoother. From tracking stock levels to generating daily sales reports, everything is now just a click away. It&#39;s fast and reliable. He understood our needs, delivered on time and exceeded expectations.”</blockquote>
+      <figcaption><img class="avatar" src="/assets/img/people/edmond.webp" alt="Edmond" loading="lazy" width="48" height="48"><div><strong>Edmond</strong><span>Pharmacy owner</span></div></figcaption>
+    </figure><!--/ssr:testimonials--></div>
+      </div>
+    </section>
+
+    <!-- ================= PRICING ================= -->
+    <section class="section section-alt" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-tags"></i> Pricing</span>
+          <h2>Clear packages, no surprises</h2>
+          <p>Every project is different — these starting prices help you plan. Get an exact quote in under 24 hours.</p>
+        </div>
+        <div class="pricing" id="pricing-list"><!--ssr:pricing-->
+    <article class="price-card reveal">
+      
+      <h3>Starter</h3>
+      <div class="price"><small>Starting from</small><strong>GH₵ 1,000</strong></div>
+      <ul><li><i class="fa-solid fa-check"></i> Landing page or small website</li><li><i class="fa-solid fa-check"></i> Responsive, mobile-first design</li><li><i class="fa-solid fa-check"></i> SEO-ready structure &amp; Google indexing</li><li><i class="fa-solid fa-check"></i> Contact form &amp; WhatsApp integration</li><li><i class="fa-solid fa-check"></i> 1 month free support</li></ul>
+      <a class="btn btn-outline" href="#contact" data-plan="Starter">Discuss your project</a>
+    </article>
+    <article class="price-card reveal featured">
+      <span class="price-flag">Most popular</span>
+      <h3>Business</h3>
+      <div class="price"><small>Starting from</small><strong>GH₵ 3,000</strong></div>
+      <ul><li><i class="fa-solid fa-check"></i> Custom web app or business system</li><li><i class="fa-solid fa-check"></i> Admin dashboard</li><li><i class="fa-solid fa-check"></i> Database &amp; user authentication</li><li><i class="fa-solid fa-check"></i> Cloud hosting &amp; media storage setup</li><li><i class="fa-solid fa-check"></i> 3 months free support</li></ul>
+      <a class="btn btn-primary" href="#contact" data-plan="Business">Discuss your project</a>
+    </article>
+    <article class="price-card reveal">
+      
+      <h3>Enterprise</h3>
+      <div class="price"><small>Starting from</small><strong>GH₵ 7,000</strong></div>
+      <ul><li><i class="fa-solid fa-check"></i> Fully custom software platform</li><li><i class="fa-solid fa-check"></i> Advanced roles, analytics &amp; reports</li><li><i class="fa-solid fa-check"></i> Assessment, LMS or management systems</li><li><i class="fa-solid fa-check"></i> API &amp; third-party integrations</li><li><i class="fa-solid fa-check"></i> Long-term scalability support</li></ul>
+      <a class="btn btn-outline" href="#contact" data-plan="Enterprise">Discuss your project</a>
+    </article><!--/ssr:pricing--></div>
+      </div>
+    </section>
+
+    <!-- ================= BLOG ================= -->
+    <section class="section" id="blog">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-pen-nib"></i> Blog</span>
+          <h2>Latest articles</h2>
+          <p>Practical guides on web development, backend, AI and careers — plus motivation for your journey.</p>
+        </div>
+        <div class="post-grid" id="latest-posts"><!--ssr:posts-->
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/full-stack-developer-roadmap-2026" tabindex="-1" aria-hidden="true">
+      <img src="/assets/img/blog/frontend-backend.webp" alt="" loading="lazy" decoding="async">
+      <span class="pill pill-featured"><i class="fa-solid fa-bolt"></i> Featured</span>
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=Web%20Development">Web Development</a>
+        <span>12 Oct 2026</span><span>6 min read</span>
+      </div>
+      <h3><a href="/blog/full-stack-developer-roadmap-2026">The Full-Stack Developer Roadmap for 2026: What to Learn, in What Order</a></h3>
+      <p>A practical, no-hype full-stack roadmap for 2026: the fundamentals that still matter, the tools worth learning, where AI fits, and how to build a portfolio that gets you hired.</p>
+      <div class="post-stats" data-post-stats="full-stack-developer-roadmap-2026">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/full-stack-developer-roadmap-2026">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/get-found-on-google-and-ai-assistants" tabindex="-1" aria-hidden="true">
+      <div class="cover-fallback" style="--h:153"><span>SEO &amp; Marketing</span><strong>Getting Found on Google and AI Assistants: SEO, Structured Data and llms.txt</strong></div>
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=SEO%20%26%20Marketing">SEO &amp; Marketing</a>
+        <span>1 Oct 2026</span><span>5 min read</span>
+      </div>
+      <h3><a href="/blog/get-found-on-google-and-ai-assistants">Getting Found on Google and AI Assistants: SEO, Structured Data and llms.txt</a></h3>
+      <p>How to make your website discoverable by both search engines and AI assistants in 2026: solid SEO foundations, JSON-LD structured data, generative engine optimization and llms.txt.</p>
+      <div class="post-stats" data-post-stats="get-found-on-google-and-ai-assistants">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/get-found-on-google-and-ai-assistants">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/ai-coding-assistants-without-losing-fundamentals" tabindex="-1" aria-hidden="true">
+      <img src="/assets/img/blog/coding-laptop.webp" alt="" loading="lazy" decoding="async">
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=AI%20%26%20Productivity">AI &amp; Productivity</a>
+        <span>22 Sept 2026</span><span>5 min read</span>
+      </div>
+      <h3><a href="/blog/ai-coding-assistants-without-losing-fundamentals">Using AI Coding Assistants Without Losing Your Fundamentals</a></h3>
+      <p>AI coding assistants can make you faster or make you fragile. Here is how I use them day to day, and the habits that keep your own skills sharp while you do.</p>
+      <div class="post-stats" data-post-stats="ai-coding-assistants-without-losing-fundamentals">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/ai-coding-assistants-without-losing-fundamentals">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article><!--/ssr:posts--></div>
+        <div class="center-cta"><a class="btn btn-primary" href="/blog"><i class="fa-solid fa-book-open"></i> View all articles</a></div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section-alt" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-circle-question"></i> FAQ</span>
+          <h2>Frequently asked questions</h2>
+        </div>
+        <div class="faq-list" id="faq-list"><!--ssr:faqs-->
+    <details class="faq reveal" open>
+      <summary>What kind of projects do you build?<i class="fa-solid fa-plus"></i></summary>
+      <p>Websites, web applications, admin dashboards, e-learning platforms, inventory and point-of-sale systems, and APIs. I handle both the front end and the back end, so I can deliver a complete system.</p>
+    </details>
+    <details class="faq reveal">
+      <summary>Which technologies do you use?<i class="fa-solid fa-plus"></i></summary>
+      <p>HTML, CSS, JavaScript and React on the front end; Node.js, PHP, Firebase/Firestore, MySQL and REST APIs on the back end; Cloudflare, Cloudinary and Google Cloud for hosting and media. I choose the stack that fits your budget and goals.</p>
+    </details>
+    <details class="faq reveal">
+      <summary>How long does a project take?<i class="fa-solid fa-plus"></i></summary>
+      <p>A landing page usually takes 1–2 weeks. A business system with an admin dashboard typically takes 4–8 weeks depending on features. You get a clear timeline before we start.</p>
+    </details>
+    <details class="faq reveal">
+      <summary>Can I try your systems before hiring you?<i class="fa-solid fa-plus"></i></summary>
+      <p>Yes. Most projects in my portfolio have live demos and video walkthroughs on YouTube or TikTok, so you can see exactly how they work.</p>
+    </details>
+    <details class="faq reveal">
+      <summary>Do you work with clients outside Ghana?<i class="fa-solid fa-plus"></i></summary>
+      <p>Yes. I work remotely with clients anywhere and communicate via WhatsApp, email and video calls.</p>
+    </details>
+    <details class="faq reveal">
+      <summary>Do you offer training?<i class="fa-solid fa-plus"></i></summary>
+      <p>Yes. I train individuals, schools and organisations in web development, digital skills and IT, both in person and online.</p>
+    </details><!--/ssr:faqs--></div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-paper-plane"></i> Contact</span>
+          <h2>Let's build something great together</h2>
+          <p>Tell me about your project. I usually reply within 24 hours.</p>
+        </div>
+        <div class="contact-grid">
+          <aside class="contact-card reveal">
+            <h3>Get in touch</h3>
+            <p>Prefer a quick chat? Message me on WhatsApp or call directly.</p>
+            <ul class="contact-list">
+              <li><i class="fa-solid fa-envelope"></i><div><small>Email</small><a data-s="email" data-s-href="mailto:{email}" href="mailto:profjero947@gmail.com">profjero947@gmail.com</a></div></li>
+              <li><i class="fa-solid fa-phone"></i><div><small>Phone</small><a data-s="phone" data-s-href="tel:{phone}" href="tel:+233531207256">+233 53 120 7256</a></div></li>
+              <li><i class="fa-brands fa-whatsapp"></i><div><small>WhatsApp</small><a data-s-href="https://wa.me/{whatsapp}" href="https://wa.me/233531207256" target="_blank" rel="noopener">Chat on WhatsApp</a></div></li>
+              <li><i class="fa-solid fa-location-dot"></i><div><small>Location</small><span data-s="location">Cape Coast, Ghana</span></div></li>
+            </ul>
+            <div class="socials" data-socials></div>
+          </aside>
+          <div class="form-card reveal">
+            <form id="contact-form" novalidate>
+              <div class="form-grid">
+                <div class="field"><label for="c-name">Full name <span class="req">*</span></label><input id="c-name" name="name" autocomplete="name" required maxlength="100" placeholder="Your name"></div>
+                <div class="field"><label for="c-email">Email <span class="req">*</span></label><input id="c-email" name="email" type="email" autocomplete="email" required maxlength="150" placeholder="you@example.com"></div>
+                <div class="field"><label for="c-phone">Phone / WhatsApp</label><input id="c-phone" name="phone" type="tel" autocomplete="tel" maxlength="30" placeholder="+233 ..."></div>
+                <div class="field"><label for="c-service">Service</label><select id="c-service" name="service"><option value="">Select a service</option></select></div>
+                <div class="field"><label for="c-budget">Budget</label>
+                  <select id="c-budget" name="budget">
+                    <option value="">Select a range</option><option>Below GH₵ 1,000</option><option>GH₵ 1,000 – 3,000</option><option>GH₵ 3,000 – 7,000</option><option>Above GH₵ 7,000</option><option>Not sure yet</option>
+                  </select></div>
+                <div class="field"><label for="c-subject">Subject</label><input id="c-subject" name="subject" maxlength="150" placeholder="What's this about?"></div>
+                <div class="field full"><label for="c-message">Message <span class="req">*</span></label><textarea id="c-message" name="message" required maxlength="5000" placeholder="Tell me about your goals, timeline and anything I should know…"></textarea></div>
+                <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+              </div>
+              <div class="form-foot">
+                <small><i class="fa-solid fa-lock"></i> Your details are private and never shared.</small>
+                <button class="btn btn-primary" type="submit"><i class="fa-solid fa-paper-plane"></i> Send message</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div><h2>Have an idea? Let's turn it into a product.</h2><p>Websites, systems, dashboards, training — one conversation away.</p></div>
+          <a class="btn btn-white" data-s-href="https://wa.me/{whatsapp}" href="https://wa.me/233531207256" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
-                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">services</span>What i do</h2>
-                    <span class="sub_title">As a skilled IT professional, I offer a range of services designed to help individuals and businesses / companies succeed in the digital landscape. <br> I also provide innovative solutions that drive business growth and improve digital experiences.</span>
-                </div>
-            </div>
-            <div class="services_item1">
-                <div class="col-md-12 col-lg-12">
-                    <div class="row">
-                        
-                        <!-- ========== DIGITAL STUDIO HUB ========== -->
-                        <div class="col-md-12">
-                            <h3 class="studio-hub-title text-center mb_30 color_primary"><i class="fas fa-laptop-code"></i> Digital Studio</h3>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>01.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Software Development</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-code fa-3x"></i></div>
-                                <p>We build custom software solutions tailored to your business needs. From desktop to enterprise applications, we deliver scalable, secure, and high-performance software that drives efficiency and growth.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>02.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Web Development</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-globe fa-3x"></i></div>
-                                <p>We build robust, scalable, and secure web applications that drive business growth. Our web development services combine technical expertise with innovative thinking to deliver tailored solutions that meet your unique needs.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>03.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Mobile App Development</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-mobile-alt fa-3x"></i></div>
-                                <p>We create powerful iOS and Android apps that engage users and deliver results. Our mobile development services focus on performance, user experience, and seamless functionality.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>04.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Cloud Computing</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-cloud-upload-alt fa-3x"></i></div>
-                                <p>We help you migrate, manage, and optimize your infrastructure on AWS, Azure, or Google Cloud. Scale your business with reliable and cost-effective cloud solutions.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- ========== CREATIVE STUDIO HUB ========== -->
-                        <div class="col-md-12 mt_30">
-                            <h3 class="studio-hub-title text-center mb_30 color_primary"><i class="fas fa-palette"></i> Creative Studio</h3>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>05.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Branding & Identity</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-trademark fa-3x"></i></div>
-                                <p>We craft compelling brand identities that tell your story. From logo design to brand guidelines, we create memorable brand experiences that connect with your audience.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>06.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Graphic Design</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-pen-fancy fa-3x"></i></div>
-                                <p>We craft compelling visual identities that elevate your brand. Our graphic design services combine creativity with technical skills to deliver custom visual solutions that capture your unique message.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>07.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">UI/UX Design</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-drafting-compass fa-3x"></i></div>
-                                <p>We design intuitive and beautiful user interfaces that delight users. Our UX research and UI design services ensure your digital products are easy to use and visually stunning.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>08.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Video Editing</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-video fa-3x"></i></div>
-                                <p>We produce engaging video content that captures attention. From promotional videos to social media content, we bring your stories to life through professional editing.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- ========== NOURISH STUDIO HUB ========== -->
-                        <div class="col-md-12 mt_30">
-                            <h3 class="studio-hub-title text-center mb_30 color_primary"><i class="fas fa-leaf"></i> Nourish Studio</h3>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>09.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Nutrition Consulting</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-apple-alt fa-3x"></i></div>
-                                <p>Get personalized nutrition plans that support your health goals. Our certified nutritionists provide evidence-based guidance for balanced eating and wellness.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>10.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Wellness Programs</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-heartbeat fa-3x"></i></div>
-                                <p>We design holistic wellness programs for individuals and organizations. Improve mental and physical wellbeing through structured health initiatives.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>11.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Meal Planning</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-utensils fa-3x"></i></div>
-                                <p>Customized meal plans tailored to your dietary preferences and health objectives. Save time and eat healthier with organized weekly menus.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- ========== AGRO STUDIO HUB ========== -->
-                        <div class="col-md-12 mt_30">
-                            <h3 class="studio-hub-title text-center mb_30 color_primary"><i class="fas fa-tractor"></i> Agro Studio</h3>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>12.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Smart Farming</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-microchip fa-3x"></i></div>
-                                <p>Integrate IoT and automation into your farm for efficient crop management. Increase yields while reducing resource waste with smart agriculture solutions.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>13.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Crop Consulting</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-seedling fa-3x"></i></div>
-                                <p>Expert advice on crop selection, soil health, and sustainable farming practices. Maximize your agricultural output with professional guidance.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service_two text-center pt_15 mb_30 wow animated slideInUp">
-                                <div class="srv_item_number color_lightgray"><strong>14.</strong></div>
-                                <h3 class="p_20 text-uppercase color_primary">Agri-Tech Solutions</h3>
-                                <div class="srv_icon color_white"><i class="fas fa-chart-line fa-3x"></i></div>
-                                <p>Leverage technology to optimize farm operations. From drone monitoring to data analytics, we bring innovation to traditional agriculture.</p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="logo" href="/"><img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40"><span class="logo-text">Prof<b>Jero</b></span></a>
+          <p data-s="footerText">Building solutions. Empowering lives. Full-stack development, IT training and creative studios from Cape Coast to the world.</p>
+          <div class="socials" data-socials></div>
         </div>
+        <div>
+          <h4>Explore</h4>
+          <ul><li><a href="/#about">About</a></li><li><a href="/#work">Portfolio &amp; demos</a></li><li><a href="/#pricing">Pricing</a></li><li><a href="/blog">Blog</a></li><li><a href="/profile">Resume &amp; team</a></li></ul>
+        </div>
+        <div>
+          <h4>Studios</h4>
+          <ul id="footer-studios"><li><a href="https://profjerohub.pages.dev" target="_blank" rel="noopener">ProfJero Hub</a></li></ul>
+        </div>
+        <div>
+          <h4>Newsletter</h4>
+          <p style="font-size:.93rem;margin:0">New articles, tutorials and opportunities — no spam.</p>
+          <form class="newsletter" data-newsletter><label class="sr-only" for="nl-footer">Email address</label><input id="nl-footer" type="email" placeholder="Your email" required><button class="btn btn-primary btn-sm" type="submit">Subscribe</button></form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> ProfJero — Benjamin Amoako. All rights reserved.</span>
+        <span><a href="/sitemap.xml">Sitemap</a> · <a href="/rss.xml">RSS</a> · <a href="/llms.txt">llms.txt</a></span>
+      </div>
     </div>
-</section>
-<!-- End Services 
- ======================================================-->
-	<!-- Start Portfolio
-===================================================-->
-<section id="portfolio" class="py_80 bg_secondery full_row">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
-                    <h2 class="title text-uppercase">
-                        <span class="line_double mx-auto color_default">portfolio</span>
-                        My Live Projects
-                    </h2>
-                    <span class="sub_title">
-                        Explore real web applications I've built. Each project includes live demos, video walkthroughs, and detailed case studies.
-                    </span>
-                </div>
-            </div>
+  </footer>
 
-            <div class="col-md-12 col-lg-12">
-                <div class="my_portfolio" id="tab-panel">
-                    <!-- Filters -->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="filters mb_40 w-100 text-center">
-                                <ul class="filter-tabs mx-auto d-inline-block">
-                                    <li class="active filter" data-filter="all">All Projects</li>
-                                    <li class="filter" data-filter=".educational">Educational</li>
-                                    <li class="filter" data-filter=".nonprofit">Non-Profit</li>
-                                    <li class="filter" data-filter=".impact">Impact</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+  <a class="wa-float" href="https://wa.me/233531207256" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <button class="to-top" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
 
-                    <!-- Portfolio Items -->
-                    <div class="filter-list">
-                        <div class="portfolio-items row">
-
-                            <!-- ============================================ -->
-                            <!-- PROJECT 1: Using OPTION 1 (Screenshot + Link) -->
-                            <!-- ============================================ -->
-                            <div class="column mix mb_30 col-md-6 col-lg-4 educational">
-                                <div class="portfolio-card">
-                                    <div class="preview-wrapper">
-                                        <img src="assets/images/projects/dbi-learn-preview.jpg" 
-                                             class="preview-img" 
-                                             alt="DBI Learn Platform">
-                                        <div class="action-buttons">
-                                            <a href="https://dbi-learn.pages.dev" target="_blank" class="preview-btn live-btn">
-                                                <i class="fas fa-external-link-alt"></i> Visit Live
-                                            </a>
-                                            <button onclick="showProjectDetails('dbi-learn')" class="preview-btn demo-btn">
-                                                <i class="fas fa-info-circle"></i> Details
-                                            </button>
-                                        </div>
-                                        <div class="live-badge">
-                                            <span class="badge bg-success"><i class="fas fa-circle"></i> LIVE</span>
-                                        </div>
-                                    </div>
-                                    <div class="portfolio-info">
-                                        <h5 class="portfolio-title">DBI Learn</h5>
-                                        <p class="portfolio-desc">Interactive e-learning platform with courses, progress tracking, and multimedia lessons.</p>
-                                        <div class="tech-tags">
-                                            <span class="badge bg-primary">HTML/CSS</span>
-                                            <span class="badge bg-secondary">JavaScript</span>
-                                            <span class="badge bg-info">Cloudflare</span>
-                                        </div>
-                                        <div class="portfolio-actions">
-                                            <a href="https://dbi-learn.pages.dev" target="_blank" class="btn btn-primary btn-sm">
-                                                <i class="fas fa-external-link-alt"></i> Launch
-                                            </a>
-                                            <a href="#" target="_blank" class="btn btn-outline-dark btn-sm">
-                                                <i class="fab fa-github"></i> Code
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- ============================================ -->
-                            <!-- PROJECT 2: Using OPTION 2 (Video Demo) -->
-                            <!-- ============================================ -->
-                            <div class="column mix mb_30 col-md-6 col-lg-4 nonprofit">
-                                <div class="portfolio-card">
-                                    <div class="video-demo">
-                                        <video poster="assets/images/projects/dbi-poster.jpg" controls>
-                                            <source src="assets/videos/dbi-walkthrough.mp4" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                        <div class="live-badge">
-                                            <span class="badge bg-success"><i class="fas fa-circle"></i> LIVE</span>
-                                        </div>
-                                    </div>
-                                    <div class="portfolio-info">
-                                        <h5 class="portfolio-title">Digital Bridge Initiative</h5>
-                                        <p class="portfolio-desc">Main hub for DBI - bridging digital divide through technology education.</p>
-                                        <div class="tech-tags">
-                                            <span class="badge bg-primary">Responsive</span>
-                                            <span class="badge bg-secondary">Modern UI</span>
-                                            <span class="badge bg-info">Static Site</span>
-                                        </div>
-                                        <div class="portfolio-actions">
-                                            <a href="https://digitalbridgeinitiative.pages.dev" target="_blank" class="btn btn-primary btn-sm">
-                                                <i class="fas fa-external-link-alt"></i> Live Site
-                                            </a>
-                                            <button onclick="showProjectDetails('dbi-main')" class="btn btn-outline-secondary btn-sm">
-                                                <i class="fas fa-info-circle"></i> Details
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- ============================================ -->
-                            <!-- PROJECT 3: Using OPTION 3 (Iframe Modal) -->
-                            <!-- ============================================ -->
-                            <div class="column mix mb_30 col-md-6 col-lg-4 impact">
-                                <div class="portfolio-card">
-                                    <div class="preview-wrapper">
-                                        <img src="assets/images/projects/dbi-impact-preview.jpg" 
-                                             class="preview-img" 
-                                             alt="DBI Impact Dashboard">
-                                        <div class="action-buttons">
-                                            <button onclick="openIframeModal('https://dbi-impact.pages.dev', 'DBI Impact')" class="preview-btn live-btn">
-                                                <i class="fas fa-eye"></i> Quick Preview
-                                            </button>
-                                            <button onclick="showProjectDetails('dbi-impact')" class="preview-btn demo-btn">
-                                                <i class="fas fa-info-circle"></i> Details
-                                            </button>
-                                        </div>
-                                        <div class="live-badge">
-                                            <span class="badge bg-success"><i class="fas fa-circle"></i> LIVE</span>
-                                        </div>
-                                    </div>
-                                    <div class="portfolio-info">
-                                        <h5 class="portfolio-title">DBI Impact</h5>
-                                        <p class="portfolio-desc">Impact tracking dashboard showcasing program outcomes and success metrics.</p>
-                                        <div class="tech-tags">
-                                            <span class="badge bg-primary">Data Viz</span>
-                                            <span class="badge bg-secondary">Analytics</span>
-                                            <span class="badge bg-info">Dashboard</span>
-                                        </div>
-                                        <div class="portfolio-actions">
-                                            <a href="https://dbi-impact.pages.dev" target="_blank" class="btn btn-primary btn-sm">
-                                                <i class="fas fa-external-link-alt"></i> Open Full
-                                            </a>
-                                            <button onclick="openIframeModal('https://dbi-impact.pages.dev', 'DBI Impact')" class="btn btn-outline-info btn-sm">
-                                                <i class="fas fa-window-maximize"></i> Quick View
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- ============================================ -->
-                            <!-- PROJECT 4: Using OPTION 4 (Screenshot Gallery) -->
-                            <!-- ============================================ -->
-                            <div class="column mix mb_30 col-md-6 col-lg-4 educational platform">
-                                <div class="portfolio-card">
-                                    <div class="preview-wrapper">
-                                        <img src="assets/images/projects/e-learning-main.jpg" 
-                                             class="preview-img" 
-                                             alt="E-Learning Platform">
-                                        <div class="action-buttons">
-                                            <a href="#" target="_blank" class="preview-btn live-btn">
-                                                <i class="fas fa-external-link-alt"></i> Visit Live
-                                            </a>
-                                            <button class="preview-btn demo-btn" onclick="showGallery(['img1.jpg','img2.jpg','img3.jpg'])">
-                                                <i class="fas fa-images"></i> View Gallery
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="screenshot-gallery">
-                                        <img src="assets/images/projects/thumb1.jpg" class="screenshot-thumb" onclick="openLightbox('assets/images/projects/full1.jpg')">
-                                        <img src="assets/images/projects/thumb2.jpg" class="screenshot-thumb" onclick="openLightbox('assets/images/projects/full2.jpg')">
-                                        <img src="assets/images/projects/thumb3.jpg" class="screenshot-thumb" onclick="openLightbox('assets/images/projects/full3.jpg')">
-                                        <img src="assets/images/projects/thumb4.jpg" class="screenshot-thumb" onclick="openLightbox('assets/images/projects/full4.jpg')">
-                                    </div>
-                                    <div class="portfolio-info">
-                                        <h5 class="portfolio-title">E-Learning Dashboard</h5>
-                                        <p class="portfolio-desc">Complete learning management system with admin panel and student analytics.</p>
-                                        <div class="tech-tags">
-                                            <span class="badge bg-primary">React</span>
-                                            <span class="badge bg-secondary">Node.js</span>
-                                            <span class="badge bg-info">MongoDB</span>
-                                        </div>
-                                        <div class="portfolio-actions">
-                                            <a href="#" target="_blank" class="btn btn-primary btn-sm">
-                                                <i class="fas fa-external-link-alt"></i> Live Demo
-                                            </a>
-                                            <a href="#" target="_blank" class="btn btn-outline-dark btn-sm">
-                                                <i class="fab fa-github"></i> GitHub
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <dialog class="modal" id="modal" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-head"><h3 id="modal-title">Preview</h3><div class="modal-tools"></div><button class="icon-btn" type="button" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="modal-body"></div>
     </div>
-</section>
+  </dialog>
 
-<!-- ========== MODAL FOR IFRAME PREVIEW ========== -->
-<div class="modal fade" id="iframeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="preview-toolbar">
-                <div>
-                    <i class="fas fa-desktop text-primary"></i>
-                    <strong id="modalTitle">Live Preview</strong>
-                    <span class="text-muted ms-2 small">(Best viewed in new tab)</span>
-                </div>
-                <div>
-                    <a href="#" id="openInNewTab" target="_blank" class="btn btn-sm btn-primary me-2">
-                        <i class="fas fa-external-link-alt"></i> Open in New Tab
-                    </a>
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
-                        <i class="fas fa-times"></i> Close
-                    </button>
-                </div>
-            </div>
-            <div class="modal-body p-0">
-                <iframe id="previewIframe" class="modal-iframe" src="about:blank"></iframe>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ========== LIGHTBOX FOR GALLERY ========== -->
-<div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="lightbox-close">&times;</span>
-    <img class="lightbox-img" id="lightboxImg" src="">
-</div>
-	<!--	Start Testimonial
-	===================================================-->
-	<section id="testimonial" class="py_80 full_row bg_white">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 col-lg-12">
-					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
-	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">testimonial</span>What Client Says</h2>
-	                    <span class="sub_title">Don't jsut take our word for it - hear from our satisfied clients who have experienced the impact of our work</span>
-	                </div>
-				</div>
-				<div class="col-md-12 col-lg-12">
-    				<div class="testimonial_item owl-carousel wow animated slideInUp">
-						<div class="member_feedback p_30 color_secondery">
-							<div class="client_img"><img src="images/testimonial/05.png" alt="image"></div>
-							<div class="star d-inline-block mt_30 color_default">
-								<ul>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-								</ul>
-							</div>
-							<h5 class="color_primary mb_15">Digital Bridge Initiative</h5>
-							<p>ProfJero played a key role in building Digital Bridge Initiative's official website, assessment platform, and admin portal. His ability to translate our ideas into functional, user-friendly system greatly improved how we manage training, learners, assessments and administration, track progress and organize operations. The solutions delivered were practical, reliable, and well-structured.</p>
-						</div>
-    					<div class="member_feedback p_30 color_secondery">
-							<div class="client_img"><img src="images/testimonial/01.jpg" alt="image"></div>
-							<div class="star d-inline-block mt_30 color_default">
-								<ul>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-								</ul>
-							</div>
-							<h5 class="color_primary mb_15">Rev. Eric</h5>
-							<p>Working with ProfJero to build our Church website has been a true blessing. The design is clean, modern, and beautifully reflects our mission and values. Members can now access sermons, events, and updates with ease . His dedication, creativity, and technical skill brought our vision to life in a way that feels both professional and personal. We are truly grateful.</p>
-						</div>
-						<div class="member_feedback p_30 color_secondery">
-							<div class="client_img"><img src="images/testimonial/02.jpg" alt="image"></div>
-							<div class="star d-inline-block mt_30 color_default">
-								<ul>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-									<li><i class="fa fa-star" aria-hidden="true"></i></li>
-								</ul>
-							</div>
-							<h5 class="color_primary mb_15">Edmond</h5>
-							<p>Since ProfJero deployed our new POS system, managing our pharmacy has been smoother. From tracking stock levels to generating daily sales reports, everything is now just a click away. It's very fast and reliable. He uderstood our needs, delivered on time, and exceeded expectations. This system has truly transformed how we run our business</p>
-						</div>
-    				</div>
-    			</div>
-			</div>
-		</div>
-	</section>
-	<!--	End Testimonial
-	===================================================-->
-	<!--	Start Blog
-	===================================================-->
-	<section id="blog" class="py_80 bg_secondery full_row">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 col-lg-12">
-					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
-	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">blog</span>What's New</h2>
-	                    <span class="sub_title">Stay up-to-date with the latest news, trends, and insights from our team. From industy updates to company announcements, we've got you covered.</span>
-	                </div>
-				</div>
-				<div class="col-md-12 col-lg-12">
-					<div class="blog_grid_1 wow animated slideInUp">
-						<div class="row">
-							<div class="col-md-12 col-lg-4">
-								<div class="blog_item">
-									<div class="comments">
-										<i class="fa fa-comment" aria-hidden="true"></i>
-										<span class="color_white">12</span>
-									</div>
-									<div class="blog_img overlay_one"><img src="images/Prof/blog banner02.png" alt="image"></div>
-									<div class="blog_content bg_white color_secondery">
-										<div class="blog_title">
-											<a class="color_primary" href=""><h5>Front-end vs Back-end Development: Understanding the Difference</h5></a>
-										</div>
-										<p class="mt_15 mb_30">When it comes to building a website or web application, two crucial aspects come into play: front-end development, which focuses on creating the user interface and user experience, and back-end development, which concentrates on the server-side logic, database integration, and API connectivity.</p>
-										<div class="admin">
-											<img src="images/Prof/Author01.png" alt="image">
-											<span class="color_white">By - ProfJero</span>
-										</div>
-										<div class="date float-right color_primary">20 Jan 2019</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12 col-lg-4">
-								<div class="blog_item">
-									<div class="comments">
-										<i class="fa fa-comment" aria-hidden="true"></i>
-										<span class="color_white">18</span>
-									</div>
-									<div class="blog_img overlay_one"><img src="images/Prof/blog banner04.png" alt="image"></div>
-									<div class="blog_content bg_white color_secondery">
-										<div class="blog_title">
-											<a class="color_primary" href=""><h5>Web Development Frameworks: A Comprehensive Guide</h5></a>
-										</div>
-										<p class="mt_15 mb_30">Web development frameworks are essential tools for building scalable, and maintainable web applications. With numerous frameworks available, choosing the right one can be overwhelming. In this blog post, we'll delve into the world of web development frameworks, their benefits and more</p>
-										
-										<div class="admin">
-											<img src="images/Prof/Author01.png" alt="image">
-											<span class="color_white">By - ProfJero</span>
-										</div>
-										<div class="date float-right color_primary">18 Jan 2019</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12 col-lg-4">
-								<div class="blog_item">
-									<div class="comments">
-										<i class="fa fa-comment" aria-hidden="true"></i>
-										<span class="color_white">23</span>
-									</div>
-									<div class="blog_img overlay_one"><img src="images/Prof/blog banner01.png" alt="image"></div>
-									<div class="blog_content bg_white color_secondery">
-										<div class="blog_title">
-											<a class="color_primary" href=""><h5>The Ultimate Guide to WordPress: The Power of the World's Most Popular CMS</h5></a>
-										</div>
-										<p class="mt_15 mb_30">WordPress is the undisputed king of Content Management Systems (CMS), powering over 40% of the world's websites. Its versatility, flexibility, and user-friendly interface have made it the go-to platform for bloggers, and businesses of all sizes. In this blog post, we'll delve into the world of WordPress.</p>
-										
-										<div class="admin">
-											<img src="images/Prof/Author01.png" alt="image">
-											<span class="color_white">By - ProfJero</span>
-										</div>
-										<div class="date float-right color_primary">17 Jan 2019</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="mx-auto text-center mt_60"><a class="btn btn-default" href="">View Blog</a></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--	End Blog
-	===================================================-->
-	<!--	Start Contact
-	===================================================-->
-	<section id="contact" class="py_80 full_row bg_white">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 col-lg-12">
-					<div class="section_title_1 text-center mx-auto pb_60 wow animated slideInUp">
-	                    <h2 class="title text-uppercase"><span class="line_double mx-auto color_default">contact</span>Get In Touch</h2>
-	                    <span class="sub_title">Ready to collaborate? We're passionate about building meaningful relationships and delivering exceptional results. If you are looking for a partner to help you bring your vison to life, we'd love to hear from you. Let's start a conversation and see where it takes us.</span>
-	                </div>
-				</div>
-				<div class="col-md-12 col-lg-12">
-					<div class="row">
-						<div class="col-md-4 col-lg-4">
-							<div class="contact_info wow animated fadeInLeft">
-		    					<ul>
-		    						<li>
-		    							<div class="contact_text">
-		    								<h6 class="font-weight-bold color_primary">Email</h6>
-		    								<span class="color_secondery"><a href="mailto:profjero947@gmail.com" style="color: #808080;">profjero947@gmail.com</a></span>
-		    							</div>
-		    						</li>
-		    						<li>
-		    							<div class="contact_text">
-		    								<h6 class="font-weight-bold color_primary">Phone</h6>
-		    								<span class="color_secondery"><a href="tel:+233204785158" style="color: #808080;">+233 531 207 256</a></span>
-		    							</div>
-		    						</li>
-		    						<li>
-		    							<div class="contact_text">
-		    								<h6 class="font-weight-bold color_primary">Website</h6>
-		    								<span class="color_secondery"><a href="profjero.pages.dev" style="color: #808080;">profjero.pages.dev</a></span>
-		    							</div>
-		    						</li>
-		    						<li>
-		    							<div class="contact_text">
-		    								<h6 class="font-weight-bold color_primary">Address</h6>
-		    								<span class="color_secondery">Cape Coast, Ghana</span>
-		    							</div>
-		    						</li>
-		    					</ul>
-		    				</div>
-		    				<div class="socal_media_2 mt_15 d-inline-block">
-					            <ul style="font-size: 28px;">
-									<li class="image" data-toggle="tooltip" data-placement="top" title="whatsapp">
-										<a href="https://wa.me/233531207256" target="_blank"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-									</li>
-									<li class="image" data-toggle="tooltip" data-placement="top" title="facebook">
-										<a href="https://www.facebook.com/profile.php?id=61585853362550&mibextid=rS40aB7S9Ucbxw6v" target="_blank"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-									</li>
-									<li class="image" data-toggle="tooltip" data-placement="top" title="tiktok">
-										<a href="https://www.tiktok.com/@profjero?_r=1&_t=ZM-92lSf510Hff" target="_blank"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
-									</li>
-									<li class="image" data-toggle="tooltip" data-placement="top" title="x">
-										<a href="#"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
-									</li>
-									<li class="image" data-toggle="tooltip" data-placement="top" title="linkedin">
-										<a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-									</li>
-								</ul>
-					        </div>
-						</div>
-						<div class="col-md-8 col-lg-8">
-							<form class="form contact_message wow animated fadeInRight" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-								<div class="row">
-									<div class="col-md-6 col-lg-6">
-										<input type="hidden" name="access_key" value="aea97fda-9e09-47cd-9b52-86fcdf6caf47">
-										<div class="form-group">
-											<input class="form-control" type="text" name="name" placeholder="Your Name" />
-										</div>
-									</div>
-									<div class="col-md-6 col-lg-6">
-										<div class="form-group">
-											<input class="form-control" type="email" name="email" placeholder="Email Address" />
-										</div>
-									</div>
-									<div class="col-md-12 col-lg-12">
-										<div class="form-group">
-										  <input class="form-control" type="text" name="subject" placeholder="Subject"/>
-										</div>
-									</div>
-									<div class="col-md-12 col-lg-12">
-										<div class="form-group">
-											<textarea class="form-control" name="message" rows="7" placeholder="Message"></textarea>
-										</div>							
-									</div>
-									<div class="col-md-12 col-lg-12">
-										<div class="form-group">
-											<input class="btn btn-default" id="send" value="Send Massage" type="submit"/>
-										</div>
-									</div>
-									<div class="col-md-12 col-lg-12">
-										<div class="error-handel">
-											<div id="success">Your email sent Successfully, Thank you.</div>
-											<div id="error"> Error occurred while sending email. Please try again.</div>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--	End Contact
-	===================================================-->
-	<!--	Start Footer
-	===================================================-->
-	<footer class="p_20 color_primary bg_secondery text-center full_row"> 
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 col-lg-12">
-					<div class="copyright"><p><a style="color: #3333ff;">© 2024<b class="name"> P</b>rof<b class="name">J</b>ero. All rights reserved</a></p></div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!--	End Footer
-	===================================================-->
-	</div>
-</div>
-<!--	Wrapper End
-=======================================================-->
-	<!--	Js Links
-	===================================================-->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/custom.js"></script>
-	<!--<script src="google_sheet.js"></script> -->
-	<script>
-		$(document).ready(function() {
-		//=========================================
-		//  Water Effect
-		//=========================================
-		
-			$('.banner_water_effect').ripples({
-			  resolution: 256,
-			  dropRadius: 20,
-			  perturbance: 0.03,
-			  interactive:true,
-			});
-		//  Smoothscroll js
-		//=========================================
-		  $("a").on('click', function(event) {
-
-			  if (this.hash !== "") {
-				event.preventDefault();
-			  
-				var hash = this.hash;
-
-				$('html, body').animate({
-				  scrollTop: $(hash).offset().top 
-				}, 1000, function(){
-			 
-				  window.location.hash = hash;
-				});
-			  }
-			});
-		 });
-	</script>
-
-	<script>
-// Project details data
-const projectDetails = {
-    'dbi-learn': {
-        title: 'DBI Learn Platform',
-        description: `Full-featured e-learning platform with:`,
-        features: [
-            'Course management system',
-            'Student progress tracking',
-            'Video lessons and quizzes',
-            'Certificate generation',
-            'Admin dashboard'
-        ],
-        techStack: ['HTML5', 'CSS3', 'JavaScript', 'Cloudflare Pages', 'REST API']
-    },
-    'dbi-main': {
-        title: 'Digital Bridge Initiative',
-        description: `Official website for non-profit organization:`,
-        features: [
-            'Mission & vision presentation',
-            'Program listings',
-            'Volunteer portal',
-            'Success stories',
-            'Donation integration'
-        ],
-        techStack: ['HTML5', 'CSS3', 'Bootstrap', 'JavaScript']
-    },
-    'dbi-impact': {
-        title: 'DBI Impact Dashboard',
-        description: `Analytics and impact measurement platform:`,
-        features: [
-            'Interactive charts',
-            'Year-over-year metrics',
-            'Beneficiary stories',
-            'Program completion rates',
-            'Data export'
-        ],
-        techStack: ['HTML5', 'CSS3', 'Chart.js', 'Data Visualization']
-    }
-};
-
-// Show project details modal
-function showProjectDetails(projectId) {
-    const project = projectDetails[projectId];
-    if (!project) return;
-    
-    const modalHtml = `
-        <div class="modal fade" id="detailsModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title">${project.title}</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>${project.description}</p>
-                        <h6>Key Features:</h6>
-                        <ul>
-                            ${project.features.map(f => `<li>${f}</li>`).join('')}
-                        </ul>
-                        <h6>Technologies:</h6>
-                        <div>
-                            ${project.techStack.map(tech => `<span class="badge bg-primary me-2">${tech}</span>`).join('')}
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    const existing = document.getElementById('detailsModal');
-    if (existing) existing.remove();
-    
-    document.body.insertAdjacentHTML('beforeend', modalHtml);
-    const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
-    modal.show();
-}
-
-// Open iframe modal (Option 3)
-function openIframeModal(url, title) {
-    const modal = new bootstrap.Modal(document.getElementById('iframeModal'));
-    const iframe = document.getElementById('previewIframe');
-    const modalTitle = document.getElementById('modalTitle');
-    const openLink = document.getElementById('openInNewTab');
-    
-    iframe.src = url;
-    modalTitle.textContent = title;
-    openLink.href = url;
-    
-    modal.show();
-    
-    // Clear iframe when modal closes
-    document.getElementById('iframeModal').addEventListener('hidden.bs.modal', function() {
-        iframe.src = 'about:blank';
-    });
-}
-
-// Open lightbox for gallery (Option 4)
-function openLightbox(imageUrl) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    lightboxImg.src = imageUrl;
-    lightbox.classList.add('active');
-}
-
-function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    lightbox.classList.remove('active');
-}
-
-// Show screenshot gallery
-function showGallery(images) {
-    // Create gallery modal
-    const galleryHtml = `
-        <div class="modal fade" id="galleryModal" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Project Screenshots</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                ${images.map((img, idx) => `
-                                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                                        <img src="${img}" class="d-block w-100" style="height: 500px; object-fit: contain;">
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    const existing = document.getElementById('galleryModal');
-    if (existing) existing.remove();
-    
-    document.body.insertAdjacentHTML('beforeend', galleryHtml);
-    const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
-    modal.show();
-}
-
-// Easy way to add new projects with different display types
-const ProjectDisplayTypes = {
-    SCREENSHOT: 'screenshot',
-    VIDEO: 'video', 
-    IFRAME_MODAL: 'iframe',
-    GALLERY: 'gallery'
-};
-
-// Helper function to create projects dynamically
-function addProject(projectData, displayType) {
-    // Returns HTML based on display type
-    console.log(`Adding project with ${displayType} display`);
-}
-
-// Close lightbox with ESC key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeLightbox();
-    }
-});
-</script>
-
+  <script type="module" src="/assets/js/home.js"></script>
 </body>
-
-<!-- index-August-2024-->
 </html>

@@ -1,0 +1,1363 @@
+# ProfJero — Benjamin Amoako
+
+> Benjamin Amoako (also known as ProfJero / Prof Jero) is a Full-Stack Developer & IT Trainer based in Cape Coast, Ghana with 5+ years of experience building websites, web applications, admin dashboards and business systems end-to-end (frontend, backend, databases, cloud). He is Co-Founder & Executive Director of Digital Bridge Initiative and Founder of ProfJero Hub.
+
+- Website: https://profjero.pages.dev/
+- Contact: profjero947@gmail.com · +233 53 120 7256 · WhatsApp https://wa.me/233531207256
+- Availability: Available for new projects
+- ProfJero Hub: https://profjerohub.pages.dev
+
+## Skills
+
+- Frontend: HTML5 & Semantic Markup, CSS3, Tailwind & Bootstrap, JavaScript (ES2023+), React
+- Backend: Node.js & Express, PHP, REST APIs & Serverless Functions, Authentication & Security
+- Databases & Cloud: Firebase / Firestore, MySQL & SQL, MongoDB, Cloudflare, Cloudinary & Deployment
+- Tools & Design: WordPress, UI/UX Design (Figma), Graphic Design & Branding, Git & GitHub
+
+## Studios & services
+
+- [Digital Studio](https://profjerohub.pages.dev/#digital-studio): Custom software, websites, mobile apps and cloud solutions that help businesses run better. Services: Software Development, Web Development, Mobile App Development, Cloud & Backend.
+- [Creative Studio](https://profjerohub.pages.dev/#creative-studio): Brand identities, graphics, UI/UX and video that make people remember you. Services: Branding & Identity, Graphic Design, UI/UX Design, Video Editing.
+- [Nourish Studio](https://profjerohub.pages.dev/#nourish-studio): Evidence-based nutrition and wellness programmes for individuals and organisations. Services: Nutrition Consulting, Wellness Programs, Meal Planning.
+- [Agro Studio](https://profjerohub.pages.dev/#agro-studio): Technology and expert advice that help farms grow more with less. Services: Smart Farming, Crop Consulting, Agri-Tech Solutions.
+
+## Projects (with live demos)
+
+- [DBI Learn](https://dbi-learn.pages.dev): Interactive e-learning platform with courses, multimedia lessons, quizzes and learner progress tracking. Tech: HTML5, CSS3, JavaScript, Firebase, Cloudflare Pages.
+- [Rural Tech Hub](https://ruraltech.pages.dev): Platform connecting rural youth in Ghana with IT training programmes, events and digital opportunities. Tech: HTML5, CSS3, JavaScript, Cloudflare Pages.
+- [Rural Tech Hub Admin](https://rthadmins.pages.dev): Secure admin control centre to manage students, programmes, events, mentors and impact reports. Tech: JavaScript, Firebase Auth, Firestore, Chart.js.
+- [DBI Impact Dashboard](https://dbi-impact.pages.dev): Impact tracking dashboard showcasing programme outcomes, success metrics and beneficiary stories. Tech: JavaScript, Chart.js, Data Visualisation.
+- [Digital Bridge Initiative](https://digitalbridgeinitiative.pages.dev): Official website of a non-profit bridging the digital divide through technology education. Tech: HTML5, CSS3, Bootstrap, JavaScript.
+- SmartInventory: Inventory and warehouse management with real-time stock, purchases, sales, multi-location and reports. Tech: PHP, MySQL, JavaScript, Chart.js.
+- Pharmacy POS System: Point-of-sale and stock management for a pharmacy — fast checkout, stock levels and daily sales reports. Tech: PHP, MySQL, JavaScript.
+- Tourizto Travel Website: Travel booking website design with destination search and featured offers. Tech: WordPress, Elementor.
+- DNA Brand Identity: Complete brand identity and merchandise system. Tech: Branding, Illustrator.
+- Sanfas Brand Identity: Corporate identity applied across uniforms, bags and stationery. Tech: Branding, Mockups.
+- Beauty Photo Retouching: High-end skin retouching and colour grading. Tech: Photoshop.
+- Sab's Kitchen Flyer: Promotional food flyer for a local restaurant. Tech: Photoshop, Print.
+
+## Blog
+
+- [The Full-Stack Developer Roadmap for 2026: What to Learn, in What Order](https://profjero.pages.dev/blog/full-stack-developer-roadmap-2026): A practical, no-hype full-stack roadmap for 2026: the fundamentals that still matter, the tools worth learning, where AI fits, and how to build a portfolio that gets you hired.
+- [Getting Found on Google and AI Assistants: SEO, Structured Data and llms.txt](https://profjero.pages.dev/blog/get-found-on-google-and-ai-assistants): How to make your website discoverable by both search engines and AI assistants in 2026: solid SEO foundations, JSON-LD structured data, generative engine optimization and llms.txt.
+- [Using AI Coding Assistants Without Losing Your Fundamentals](https://profjero.pages.dev/blog/ai-coding-assistants-without-losing-fundamentals): AI coding assistants can make you faster or make you fragile. Here is how I use them day to day, and the habits that keep your own skills sharp while you do.
+- [Building a Serverless Backend with Firebase Firestore (and Security Rules That Actually Protect You)](https://profjero.pages.dev/blog/serverless-backend-firebase-firestore-security-rules): A practical guide to building a serverless backend with Firebase: data modelling in Firestore, reading and writing from the web, and writing security rules that keep your data safe.
+- [You're Not Late: A Letter to Every Beginner Who Feels Behind](https://profjero.pages.dev/blog/youre-not-late-for-beginners-who-feel-behind): If you feel too old, too slow or too far behind to start a career in tech, this is for you. Why comparison lies, what actually matters, and how to start from exactly where you are.
+- [Core Web Vitals in Practice: A Developer's Guide to LCP, INP and CLS](https://profjero.pages.dev/blog/core-web-vitals-inp-performance-guide): A hands-on guide to Core Web Vitals: what LCP, INP and CLS measure, how to diagnose them, and practical fixes that make your site feel fast, especially on mid-range phones and slow networks.
+- [Digital Skills, Real Opportunity: Why Young People in Ghana's Rural Communities Can't Be Left Behind](https://profjero.pages.dev/blog/digital-skills-opportunity-young-people-ghana): Talent is everywhere in Ghana, but access is not. Lessons from training young people in tech, what digital skills open up, and practical ways communities can close the gap.
+- [Web App Security Essentials: A Practical Guide Based on the OWASP Top 10](https://profjero.pages.dev/blog/web-app-security-essentials-owasp-top-10): The security risks that matter most for web developers, explained with practical examples and fixes: access control, injection, authentication, misconfiguration, dependencies and more.
+- [Consistency Over Talent: Lessons from 5 Years of Building Software](https://profjero.pages.dev/blog/consistency-over-talent-lessons-from-5-years-of-building): Five years of building software, training learners and starting organisations taught me one thing above all: consistency beats talent. Here are the lessons and habits that made the difference.
+
+## Pricing (starting from)
+
+- Starter: GH₵ 1,000 — Landing page or small website; Responsive, mobile-first design; SEO-ready structure & Google indexing; Contact form & WhatsApp integration; 1 month free support
+- Business: GH₵ 3,000 — Custom web app or business system; Admin dashboard; Database & user authentication; Cloud hosting & media storage setup; 3 months free support
+- Enterprise: GH₵ 7,000 — Fully custom software platform; Advanced roles, analytics & reports; Assessment, LMS or management systems; API & third-party integrations; Long-term scalability support
+
+## FAQ
+
+### What kind of projects do you build?
+
+Websites, web applications, admin dashboards, e-learning platforms, inventory and point-of-sale systems, and APIs. I handle both the front end and the back end, so I can deliver a complete system.
+
+### Which technologies do you use?
+
+HTML, CSS, JavaScript and React on the front end; Node.js, PHP, Firebase/Firestore, MySQL and REST APIs on the back end; Cloudflare, Cloudinary and Google Cloud for hosting and media. I choose the stack that fits your budget and goals.
+
+### How long does a project take?
+
+A landing page usually takes 1–2 weeks. A business system with an admin dashboard typically takes 4–8 weeks depending on features. You get a clear timeline before we start.
+
+### Can I try your systems before hiring you?
+
+Yes. Most projects in my portfolio have live demos and video walkthroughs on YouTube or TikTok, so you can see exactly how they work.
+
+### Do you work with clients outside Ghana?
+
+Yes. I work remotely with clients anywhere and communicate via WhatsApp, email and video calls.
+
+### Do you offer training?
+
+Yes. I train individuals, schools and organisations in web development, digital skills and IT, both in person and online.
+
+## Optional
+
+- [Full content for LLMs](https://profjero.pages.dev/llms-full.txt)
+- [RSS feed](https://profjero.pages.dev/rss.xml)
+- [Sitemap](https://profjero.pages.dev/sitemap.xml)
+
+---
+
+# Full articles
+
+## The Full-Stack Developer Roadmap for 2026: What to Learn, in What Order
+
+URL: https://profjero.pages.dev/blog/full-stack-developer-roadmap-2026 · Published: 2026-10-12 · Category: Web Development
+
+Every few weeks someone sends me a message that sounds like this: "Prof, I want to become a full-stack developer. Where do I start? There are too many things to learn."
+
+They are right. There *are* too many things. Every week brings a new framework, a new AI tool, a new "you must learn this or you'll be left behind" thread. After five years of building real products — e-learning platforms, dashboards, a pharmacy point-of-sale system, inventory software and websites for churches and community organisations — and after training many beginners, I have a simple belief: **the order you learn things matters more than the number of things you learn.**
+
+This is the roadmap I would follow if I were starting again today, in 2026.
+
+## First, what "full-stack" actually means
+
+A full-stack developer can take an idea from a blank screen to a working product that real people use. That means you can:
+
+- Build an interface people can use on a phone with a slow connection
+- Store, protect and retrieve data
+- Write the logic that connects the two
+- Deploy it, monitor it and fix it when it breaks
+
+You do not need to be an expert in everything. You need to be *competent across the stack* and *deep in at least one area*.
+
+## Stage 1: The web fundamentals (do not skip this)
+
+This is where most people rush, and it is where most people later get stuck.
+
+### HTML and accessibility
+
+Learn semantic HTML properly: headings, landmarks (`header`, `main`, `nav`, `footer`), forms, labels and buttons. Accessible HTML is not an "extra" — it is how you build pages that work for everyone, including screen-reader users and search engines.
+
+### CSS that you actually understand
+
+Focus on the box model, Flexbox, Grid, responsive design with media queries, and CSS custom properties (variables). Modern CSS can do a lot that used to require JavaScript. If you understand layout, every UI framework becomes easier.
+
+### JavaScript, the language itself
+
+Before any framework, be comfortable with:
+
+- Variables, functions, arrays and objects
+- Array methods like `map`, `filter` and `reduce`
+- The DOM: selecting elements, handling events, updating the page
+- Asynchronous code: promises, `async`/`await` and `fetch`
+- Modules (`import` / `export`)
+
+Here is a small test of readiness. If you can write and explain this, you are ready to move on:
+
+```js
+async function loadCourses() {
+  const list = document.querySelector("#courses");
+  try {
+    const res = await fetch("/api/courses");
+    if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+    const courses = await res.json();
+    list.innerHTML = "";
+    for (const course of courses) {
+      const li = document.createElement("li");
+      li.textContent = course.title;
+      list.append(li);
+    }
+  } catch (err) {
+    list.textContent = "Could not load courses. Please try again.";
+    console.error(err);
+  }
+}
+```
+
+Notice the use of `textContent` instead of `innerHTML` for user data. Small habits like that will matter later when we talk about security.
+
+### Git and the command line
+
+Learn to create a repository, commit, branch, merge and push to GitHub. Learn basic terminal commands. Every professional team uses version control, and your GitHub profile becomes part of your portfolio.
+
+## Stage 2: One frontend framework, learned well
+
+Pick **one** component-based framework and stay with it for a while. React remains a very common choice in job listings, and Vue and Svelte are excellent too. The concepts transfer: components, props, state, effects, routing and forms.
+
+TypeScript is worth adding at this stage. It catches many mistakes before your users do, and most modern codebases use it. You do not need to master advanced types — start by typing your function parameters, API responses and component props.
+
+## Stage 3: The backend and data
+
+This is what turns a pretty page into a product.
+
+### Choose a backend path
+
+You have two good options, and you will eventually learn both:
+
+1. **A traditional server**: Node.js with a framework like Express or a similar alternative, or another language such as Python or PHP. You write routes, handle requests and talk to a database.
+2. **A serverless / Backend-as-a-Service approach**: tools like Firebase or Supabase give you authentication, a database and hosting without managing servers. This is how I build many projects quickly, especially for organisations with small budgets.
+
+### Learn databases properly
+
+- **SQL** (PostgreSQL or MySQL): tables, relationships, joins, indexes. SQL is one of the most durable skills in tech.
+- **NoSQL** (Firestore or MongoDB): documents and collections, and how to model data around the way your app reads it.
+
+### APIs, authentication and security basics
+
+Understand REST, HTTP status codes, JSON, and how authentication works (sessions, tokens, OAuth sign-in). Learn the basics of input validation, hashing passwords, and never trusting the client. Security is not a later topic — it starts with your first form.
+
+## Stage 4: Shipping to the real world
+
+A project on your laptop is practice. A project on the internet is experience.
+
+- **Deployment**: learn at least one hosting platform for static sites and one for backends or serverless functions.
+- **Environment variables and secrets**: keep keys out of your code and out of GitHub.
+- **Performance**: understand Core Web Vitals and test on a mid-range phone, not just your laptop.
+- **SEO basics**: titles, meta descriptions, clean URLs, structured data.
+- **Testing**: start with a few tests around your most important logic. Something is better than nothing.
+
+## Where AI fits in 2026
+
+AI coding assistants are now part of everyday development, and you should learn to use them. But here is my honest advice: **use AI to go faster on things you understand, not to skip things you don't.**
+
+Ask it to explain code, suggest tests, review your functions or generate boilerplate. Then read every line it gives you. The developers who will do well are the ones who can judge whether the AI's answer is right — and that judgement comes from fundamentals.
+
+## Build projects that solve real problems
+
+Tutorials teach syntax. Projects teach engineering. Here is a progression I recommend:
+
+| Stage | Project idea | What it teaches |
+|---|---|---|
+| Fundamentals | Personal portfolio site | HTML, CSS, responsive design, deployment |
+| JavaScript | Expense or task tracker | DOM, events, local storage |
+| Framework | Quiz or course app | Components, state, routing |
+| Backend | Inventory or booking system with login | Auth, database, CRUD, security rules |
+| Full product | A tool for a real local business or group | Requirements, feedback, maintenance |
+
+That last row is where real growth happens. When I built a point-of-sale system for a pharmacy and an inventory system, the hardest lessons were not about code. They were about understanding what users actually needed, handling messy real-world data, and supporting software after launch.
+
+## A realistic weekly rhythm
+
+You do not need ten hours a day. You need a rhythm you can keep:
+
+- **Learn** (3–4 sessions a week): one focused topic per session
+- **Build** (2–3 sessions a week): apply what you learned to a project
+- **Share** (once a week): push to GitHub, write a short post, or explain what you learned to someone
+- **Review** (once a month): look back, update your portfolio, adjust your plan
+
+## Your checklist
+
+- I can build a responsive, accessible page from scratch
+- I can explain `async`/`await` and handle errors from an API call
+- I use Git daily and my projects are on GitHub
+- I know one frontend framework well enough to build a multi-page app
+- I can design a simple database and protect it with proper rules or validation
+- I have deployed at least one full-stack project that someone else uses
+- I use AI tools, and I review and understand everything they produce
+
+## Conclusion
+
+The full-stack path is long, but it is not mysterious. Start with fundamentals, go deep on one framework, learn data and security seriously, and ship real projects. Do it consistently and you will be surprised where you are a year from now.
+
+Which stage are you at right now — and what is the one thing you are stuck on? Drop a comment below. I read them, and your question might become my next post.
+
+---
+
+## Getting Found on Google and AI Assistants: SEO, Structured Data and llms.txt
+
+URL: https://profjero.pages.dev/blog/get-found-on-google-and-ai-assistants · Published: 2026-10-01 · Category: SEO & Marketing
+
+A few years ago, "getting found online" meant one thing: ranking on Google. Today, many people ask an AI assistant instead. They type a question into a chatbot, or they read the AI-generated summary at the top of a search results page, and they may never scroll down to the blue links.
+
+So the question for anyone with a website — a developer portfolio, a non-profit, a small business — is no longer just "How do I rank?" It is: **"How do I make sure both search engines and AI systems understand who I am, what I offer, and when to recommend me?"**
+
+The good news is that most of the work overlaps. In this post I will walk through what I do on my own sites and on projects I build for organisations.
+
+## The foundation: classic SEO still matters
+
+AI assistants that search the web often rely on search indexes and on pages that are easy to crawl and understand. If your site is invisible to search engines, it will usually be invisible to AI as well. Start here.
+
+### Technical basics
+
+- **Make every page crawlable.** Check your `robots.txt` and make sure you are not accidentally blocking important pages.
+- **Submit a sitemap.** An up-to-date `sitemap.xml` helps search engines discover your pages. Submit it in Google Search Console.
+- **Use HTTPS** everywhere.
+- **Be fast and mobile-friendly.** Many of your visitors are on phones, sometimes on slow networks. Performance is part of user experience, and user experience is part of SEO.
+- **Use clean URLs** like `/blog/firebase-security-rules` instead of `/post?id=8473`.
+
+### On-page basics
+
+Every important page should have:
+
+- A unique, descriptive `<title>` (roughly under 60 characters so it is not cut off)
+- A meta description that reads like a helpful summary, not a list of keywords
+- One clear main heading, followed by a logical structure of subheadings
+- Descriptive link text ("read the Firebase security guide", not "click here")
+- Alt text on meaningful images
+
+Here is a minimal, solid `<head>` for a blog post:
+
+```html
+<title>Firebase Security Rules Basics | ProfJero</title>
+<meta name="description" content="A beginner-friendly guide to writing Firestore security rules that actually protect your data.">
+<link rel="canonical" href="https://profjero.pages.dev/blog/serverless-backend-firebase-firestore-security-rules">
+<meta property="og:title" content="Firebase Security Rules Basics">
+<meta property="og:description" content="Protect your Firestore data with clear, testable rules.">
+<meta property="og:type" content="article">
+```
+
+### Content that deserves to be found
+
+No technique replaces genuinely useful content. Write for a specific person with a specific question. Answer it clearly, early, and completely. Show real experience — what you built, what went wrong, what you learned. Search engines and AI systems are both increasingly good at telling the difference between thin content and content written by someone who has done the work.
+
+## Structured data: speak the machine's language
+
+Structured data is a way of describing your content in a format machines can read without guessing. The most common format is **JSON-LD** using the vocabulary from [schema.org](https://schema.org).
+
+For a personal portfolio, a `Person` schema on your homepage tells machines exactly who you are:
+
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Benjamin Amoako",
+  "alternateName": "ProfJero",
+  "jobTitle": "Full-Stack Software Developer & IT Trainer",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Cape Coast",
+    "addressCountry": "GH"
+  },
+  "url": "https://profjero.pages.dev",
+  "sameAs": [
+    "https://www.facebook.com/profile.php?id=61585853362550",
+    "https://www.tiktok.com/@profjero"
+  ]
+}
+</script>
+```
+
+For blog posts, use `BlogPosting` (or `Article`) with the headline, author, publish date and description. For organisations, use `Organization` or `NGO`. For FAQs, products, events and courses, there are dedicated types as well.
+
+A few rules I follow:
+
+- **Only mark up what is visible on the page.** Structured data should describe the content, not add hidden claims.
+- **Keep it consistent.** Your name, location and job title should match across your site, your social profiles and your structured data.
+- **Validate it.** Use Google's Rich Results Test and the Schema Markup Validator before you ship.
+
+## Generative engine optimization (GEO)
+
+"Generative engine optimization" is the name people now use for making your content more likely to be understood, cited and recommended by AI-powered answers. It is a young field, and honestly, nobody outside these companies knows exactly how each system chooses its sources. But some practices make sense regardless, because they also make your content better for humans.
+
+### 1. Answer questions directly
+
+AI systems often extract short, self-contained answers. Structure your content so a key question is followed immediately by a clear answer, then the detail. For example:
+
+> **What is INP?** Interaction to Next Paint measures how quickly a page visibly responds after a user clicks, taps or types.
+
+### 2. Be specific and factual
+
+Vague marketing language ("we deliver world-class innovative solutions") gives a machine nothing to work with. Specific statements ("I build e-learning platforms and inventory systems for organisations in Ghana") do.
+
+### 3. Build a consistent identity across the web
+
+Your website, GitHub, LinkedIn, organisation pages and any directories you appear in should describe you in the same way. Consistency helps machines connect the dots and be confident about who you are.
+
+### 4. Use clear structure
+
+Headings, short paragraphs, lists and tables are easier to parse than walls of text. This is not about "gaming" anything — it is about clarity.
+
+### 5. Show authorship and expertise
+
+Put a real author name and short bio on your articles. Link to your about page. Explain where your experience comes from. Anonymous content is harder to trust, for people and machines alike.
+
+## What about llms.txt?
+
+`llms.txt` is a proposed convention: a Markdown file at the root of your site (`/llms.txt`) that gives language models a concise overview of your site and links to the most important pages. Think of it as a curated guide for AI, a bit like how `robots.txt` is guidance for crawlers.
+
+A simple example:
+
+```markdown
+# ProfJero
+
+> Benjamin Amoako (ProfJero) is a full-stack software developer and IT trainer based in Cape Coast, Ghana.
+
+## Key pages
+
+- [About](https://profjero.pages.dev/#about): Background, skills and experience
+- [Projects](https://profjero.pages.dev/#work): E-learning, dashboards, POS and inventory systems
+- [Blog](https://profjero.pages.dev/blog): Tutorials on web development, security and careers
+
+## Contact
+
+- [Contact page](https://profjero.pages.dev/#contact)
+```
+
+Let me be honest about it: `llms.txt` is a proposal, not an official standard, and support across AI products is uneven and changing. I add one because it takes ten minutes, it does no harm, and it forces me to summarise my site clearly — which is useful in itself. Do not expect it to replace the fundamentals above.
+
+## Your discoverability checklist
+
+1. Site is on HTTPS, fast, and mobile-friendly
+2. `robots.txt` allows important pages; `sitemap.xml` is submitted
+3. Every page has a unique title, meta description and canonical URL
+4. Content answers real questions clearly, with real experience behind it
+5. JSON-LD structured data for Person/Organization and each article, validated
+6. Consistent name, bio and links across your site and profiles
+7. Author names and bios on articles
+8. An `llms.txt` summarising your key pages
+9. Search Console set up, and checked monthly
+
+## Conclusion
+
+Search is changing, but the core idea has not: be useful, be clear, and make it easy for machines to understand you. Do the fundamentals well, add structured data, write content that answers real questions, and treat newer ideas like GEO and `llms.txt` as helpful extras rather than magic tricks.
+
+Have you checked how AI assistants describe you or your organisation yet? Try asking one today, and share in the comments what you found — I am curious.
+
+---
+
+## Using AI Coding Assistants Without Losing Your Fundamentals
+
+URL: https://profjero.pages.dev/blog/ai-coding-assistants-without-losing-fundamentals · Published: 2026-09-22 · Category: AI & Productivity
+
+I use AI coding assistants every week. They help me scaffold components, write tests, explain unfamiliar code and think through bugs. Pretending they don't exist, or telling my students not to touch them, would be bad advice.
+
+But I have also watched something worrying happen. A learner builds an impressive-looking app in a weekend with heavy AI help. Then something breaks — a small thing, like a missing `await` or a wrong field name — and they are completely stuck. They cannot read the code, because they never really wrote it.
+
+AI can make you **faster** or it can make you **fragile**. The difference is not the tool. It is how you use it.
+
+## The core principle: you are still the engineer
+
+An AI assistant is like a very fast junior colleague who has read a lot of code but does not know your project, your users or your constraints. It is often right. It is sometimes confidently wrong. It can invent functions that don't exist, use outdated APIs, or quietly introduce a security hole.
+
+So the rule I follow, and the rule I teach, is simple:
+
+> Never ship code you cannot explain line by line.
+
+If you can't explain it, you don't own it. And if you don't own it, you can't maintain it, debug it, or defend it in an interview.
+
+## Where AI genuinely helps
+
+Here is where I find assistants most valuable:
+
+- **Boilerplate and repetition**: form handlers, config files, repetitive CRUD functions, data transformations
+- **Explaining code**: "Walk me through what this regex does" or "Why does this function return undefined?"
+- **First drafts of tests**: generating test cases, including edge cases I might forget
+- **Rubber-duck debugging**: describing a bug in words often reveals the answer, and the assistant can suggest places to look
+- **Learning a new library**: asking for a minimal example, then checking it against the official documentation
+- **Refactoring suggestions**: "How could this function be simpler?"
+- **Writing documentation**: README sections, comments, commit message drafts
+
+## Where you need to be careful
+
+- **Security-sensitive code**: authentication, authorization, database rules, payment logic, anything handling personal data. Review this with extra care, and check it against trusted sources.
+- **Library versions and APIs**: assistants may suggest methods from older versions. Check the docs.
+- **Architecture decisions**: AI can list options, but it does not know your budget, team, users or internet conditions. You do.
+- **Anything you are learning for the first time**: if the goal is to learn, letting AI do it for you defeats the purpose.
+
+## A practical workflow that keeps you sharp
+
+This is the workflow I use and recommend.
+
+### 1. Think before you prompt
+
+Before asking the assistant anything, spend two minutes writing down what you want: inputs, outputs, edge cases. This keeps *you* doing the design thinking. It also produces a much better prompt.
+
+### 2. Ask for small pieces, not whole apps
+
+"Build me a complete inventory system" gives you a large blob of code you don't understand. "Write a function that takes a list of products and returns those with stock below their reorder level" gives you something you can read, test and integrate.
+
+### 3. Read, run, and question
+
+When the assistant gives you code:
+
+1. Read every line. If anything is unclear, ask it to explain.
+2. Run it with normal input, then with strange input (empty lists, missing fields, very large numbers).
+3. Ask: "What could go wrong with this code?" or "What are the security risks here?"
+
+### 4. Rewrite in your own style
+
+Rename variables so they match your project. Remove what you don't need. Simplify. When you reshape code, you understand it.
+
+### 5. Verify against real sources
+
+Check unfamiliar functions in the official documentation. If the assistant says "this method does X," confirm it. This takes a minute and has saved me hours.
+
+## An example: reviewing AI output
+
+Suppose you ask for a function to search products by name, and you get this:
+
+```js
+function searchProducts(products, term) {
+  return products.filter(p => p.name.includes(term));
+}
+```
+
+It looks fine. But ask yourself a few questions:
+
+- What happens if `term` has different capitalisation? "panadol" will not match "Panadol".
+- What if a product has no `name`? This will throw an error.
+- What about extra spaces in the search box?
+
+A more robust version:
+
+```js
+function searchProducts(products, term) {
+  const query = term.trim().toLowerCase();
+  if (!query) return products;
+  return products.filter(p =>
+    (p.name ?? "").toLowerCase().includes(query)
+  );
+}
+```
+
+The AI wasn't "wrong" — it just didn't know your real users. Those questions come from experience with real data, and that is exactly the skill you must keep building.
+
+## Deliberate practice: protect your fundamentals
+
+To make sure AI is not quietly eroding your skills, build some "no-AI" time into your week:
+
+- **Write some code from scratch.** Small exercises: array manipulation, DOM updates, a simple API route.
+- **Debug first, ask later.** Give yourself fifteen or twenty minutes with the browser dev tools, `console.log` and the error message before asking for help.
+- **Explain your code to someone else.** If you train or mentor others, as I do, you will quickly discover what you don't actually understand.
+- **Read documentation directly.** It builds the mental map that helps you judge AI answers.
+- **Rebuild something you generated.** Take a component an assistant wrote and rewrite it yourself without looking.
+
+## For beginners specifically
+
+If you are in your first year of learning, my advice is to use AI mainly as a **tutor**, not as a **ghostwriter**. Good prompts for learning look like this:
+
+- "Explain this error message in simple terms and suggest where I should look — don't fix it for me."
+- "Give me a hint, not the answer."
+- "Review my function and tell me what could be improved, and why."
+- "Quiz me on JavaScript promises with five questions."
+
+Used this way, AI can be one of the best learning tools we have ever had — especially for learners who don't have a mentor nearby.
+
+## A quick self-check
+
+- Can I explain every line of the code I shipped this week?
+- Did I verify unfamiliar APIs against the official docs?
+- Did I test edge cases, not just the happy path?
+- Did I review security-sensitive code with extra care?
+- Did I write at least some code without assistance this week?
+
+If you can answer "yes" to most of these, you are using AI well.
+
+## Conclusion
+
+AI assistants are not going away, and they shouldn't. They can remove a lot of tedious work and help you learn faster. But your value as a developer is your judgement: knowing what to build, spotting what's wrong, and understanding why. Protect that, and AI becomes a multiplier rather than a crutch.
+
+How are you using AI in your coding right now — tutor, assistant, or ghostwriter? Share your workflow in the comments; I'd love to learn from yours too.
+
+---
+
+## Building a Serverless Backend with Firebase Firestore (and Security Rules That Actually Protect You)
+
+URL: https://profjero.pages.dev/blog/serverless-backend-firebase-firestore-security-rules · Published: 2026-09-10 · Category: Backend & Databases
+
+A lot of the projects I build are for organisations that need something reliable without a big budget or a dedicated server team: a non-profit tracking its impact, a small business managing stock, a training programme running online courses. For many of these, a serverless backend with Firebase is a great fit.
+
+"Serverless" does not mean there are no servers. It means *you* don't manage them. You get authentication, a database, file storage and hosting as services, and you focus on your app.
+
+But there is a catch that bites many beginners: **with Firestore, your web app talks to the database directly from the browser.** That means your security rules are not optional. They *are* your backend's security. In this guide I will cover both: building the backend, and locking it down.
+
+## What we are building
+
+Let's use a simple example: a course platform where:
+
+- Anyone can read published courses
+- Signed-in learners can enrol and see their own progress
+- Only admins can create or edit courses
+
+## Step 1: Model your data around how you read it
+
+Firestore is a document database. Data lives in **documents** (like JSON objects) inside **collections**. The most important mindset shift from SQL: **design your structure around the queries your app makes**, not just around "normalised" tables.
+
+A reasonable structure:
+
+```text
+courses/{courseId}
+  title, description, published, createdAt
+
+users/{userId}
+  displayName, role
+
+users/{userId}/enrolments/{courseId}
+  enrolledAt, progress
+```
+
+Putting enrolments under each user makes "show my courses" a simple, cheap query, and it makes security rules easy to write: a user can only touch documents under their own ID.
+
+## Step 2: Read and write from the web
+
+Using the modular Firebase JavaScript SDK, initialise your app and get a Firestore instance:
+
+```js
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
+const app = initializeApp({
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "..."
+});
+
+export const db = getFirestore(app);
+export const auth = getAuth(app);
+```
+
+A quick note: the Firebase web config, including `apiKey`, is *meant* to be public. It identifies your project; it does not grant access. What protects your data is security rules (and features like App Check). This is exactly why rules matter so much.
+
+Reading published courses:
+
+```js
+import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+
+export async function getPublishedCourses() {
+  const q = query(
+    collection(db, "courses"),
+    where("published", "==", true),
+    orderBy("createdAt", "desc")
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+```
+
+Enrolling the current user:
+
+```js
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+
+export async function enrol(courseId) {
+  const user = auth.currentUser;
+  if (!user) throw new Error("Please sign in first.");
+  await setDoc(doc(db, "users", user.uid, "enrolments", courseId), {
+    enrolledAt: serverTimestamp(),
+    progress: 0
+  });
+}
+```
+
+Firestore may ask you to create a composite index for queries that combine `where` and `orderBy` on different fields. The error message includes a link to create it — just follow it.
+
+## Step 3: Security rules, the part you must not skip
+
+When you create a Firestore database, you will see options like "test mode", which allows open access for a limited time. That is fine for a first experiment, but **never launch with open rules.** Anyone who finds your project ID could read or delete everything.
+
+Rules live in a `firestore.rules` file. They match document paths and say who can read or write. Here is a set for our course platform:
+
+```text
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return signedIn() && request.auth.token.admin == true;
+    }
+
+    match /courses/{courseId} {
+      allow read: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId)
+        && !("role" in request.resource.data);
+      allow update: if isOwner(userId)
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(["role"]);
+
+      match /enrolments/{courseId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId)
+          && request.resource.data.progress == 0;
+        allow update: if isOwner(userId)
+          && request.resource.data.progress is number
+          && request.resource.data.progress >= 0
+          && request.resource.data.progress <= 100;
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}
+```
+
+Let's unpack the key ideas.
+
+### Deny by default
+
+If no rule allows an operation, it is denied. Start from nothing and open only what you need.
+
+### Rules are not filters
+
+This one confuses many developers. If a query *could* return a document the user isn't allowed to read, Firestore rejects the whole query. That is why our `getPublishedCourses` query includes `where("published", "==", true)` — it matches the rule, so Firestore can prove the query is safe.
+
+### Validate the data, not just the user
+
+Checking that a user is signed in is not enough. In the rules above, users can update their own profile but **cannot change their own `role`**. Without that check, any user could promote themselves to admin. Similarly, we check that `progress` is a number between 0 and 100.
+
+### Use custom claims for admins
+
+Notice `request.auth.token.admin`. That is a **custom claim** set on the user's auth token from a trusted server environment (for example, using the Firebase Admin SDK in a Cloud Function or a secure script). Users cannot set their own claims, which makes this safer than storing `role: "admin"` in a document that a buggy rule might let them edit.
+
+## Step 4: Test your rules
+
+Don't just hope your rules work. Test them.
+
+- Use the **Rules Playground** in the Firebase console to simulate reads and writes as different users.
+- Use the **Firebase Local Emulator Suite** to run Firestore and Auth locally, and write automated tests that try forbidden actions and expect them to fail.
+
+A good habit: for every rule, write at least one test that should succeed and one that should fail.
+
+## Step 5: When you need real server logic
+
+Some things must not happen in the browser: sending emails, processing payments, calculating trusted totals, or setting custom claims. For these, use **Cloud Functions** (or another trusted backend). The browser asks; the server decides.
+
+## Security checklist before launch
+
+- Test mode rules are gone; nothing is open to everyone by accident
+- Every collection has explicit read and write rules
+- Users can only access their own private data
+- Users cannot change fields like `role`, `isAdmin` or prices
+- Incoming data is validated: types, ranges, required fields
+- Admin access uses custom claims set from a trusted environment
+- Rules are tested, including tests that should fail
+- Sensitive logic runs in Cloud Functions, not the browser
+- Budget alerts are set up in your cloud billing account
+
+## Conclusion
+
+Firebase lets a small team — or a single developer — ship a real product quickly. I have used this approach for dashboards and learning platforms, and it works well. But its speed comes with responsibility: in a serverless app, your security rules are your backend. Treat them like code: design them, review them and test them.
+
+Are you using Firestore in a project right now? Paste a (non-sensitive) rule you are unsure about in the comments, and let's improve it together.
+
+---
+
+## You're Not Late: A Letter to Every Beginner Who Feels Behind
+
+URL: https://profjero.pages.dev/blog/youre-not-late-for-beginners-who-feel-behind · Published: 2026-08-28 · Category: Motivation
+
+I want to talk to a specific person today.
+
+Maybe you are twenty-six and just finished national service, and your friends who studied computer science seem years ahead. Maybe you are thirty-five, with a family and a job you don't love, and you wonder if it is too late to switch. Maybe you are a student in a rural community who has only recently had regular access to a computer, while you see others online who have been coding since they were twelve.
+
+Maybe you have started learning to code three times already, and each time you stopped, and now you feel like it's proof you are not "a tech person."
+
+If any of that sounds like you, I want you to hear this clearly: **you are not late.**
+
+## Where the "behind" feeling comes from
+
+The feeling of being behind almost always comes from comparison. And comparison online is deeply unfair, because:
+
+- You see other people's **highlights**, not their struggles. Nobody posts "spent four hours on a bug caused by a missing comma."
+- You see the **result**, not the years behind it. The developer launching an app this week may have been learning quietly for a long time.
+- You compare your **chapter one** with someone else's **chapter ten**.
+
+There is no universal timeline for a career. There is only your path, starting from where you actually are.
+
+## What I wish someone had told me
+
+When I started my career in 2021, I did not feel like an expert. I felt like everyone else knew more than I did. Looking back over five years of building and teaching, here is what I have learned:
+
+### The tech you'd be "late" for keeps changing anyway
+
+Frameworks rise and fall. Tools that were essential a few years ago are now rarely mentioned. AI coding assistants have changed how many of us work in a short time. This means the people who started years ago also have to keep learning new things — constantly. In a field that reinvents itself this often, everyone is a beginner at something.
+
+### Fundamentals don't expire
+
+HTML, CSS, JavaScript, how the web works, how databases store data, how to break a problem into smaller pieces — these have stayed useful through all the changes. If you learn them well, you are building on rock, not sand.
+
+### Your previous life is not wasted
+
+If you are coming from teaching, nursing, sales, farming, accounting, church administration or anything else — that experience is an advantage, not a gap.
+
+- A teacher understands how to explain things, which makes great documentation and great training.
+- Someone from a pharmacy understands stock, prescriptions and real-world constraints that a pure coder might miss.
+- Someone who has run a small business understands customers, money and deadlines.
+
+Some of the most useful software is built by people who deeply understand the problem it solves. Your background might be exactly what makes you valuable.
+
+## "But I'm slow"
+
+Speed is overrated in learning. What matters is direction and consistency.
+
+If you learn for one focused hour a day, that adds up to a lot of hours over a year. Not hours of scrolling tutorials — hours of building, breaking and fixing things. That is enough to change your life over time, even if it doesn't feel like it day to day.
+
+Slow and steady also has hidden benefits. You understand things more deeply. You build habits that last. You avoid the burnout of people who try to learn everything in a month.
+
+> The only real way to be "too late" is to never start.
+
+## "But I've quit before"
+
+So have most people who eventually succeed. Quitting before doesn't prove you can't do it. It usually proves that your approach didn't fit your life at that time — maybe the plan was too ambitious, the resource was confusing, or life simply got in the way.
+
+Instead of blaming yourself, adjust the plan:
+
+- Make it **smaller**: twenty to thirty minutes a day instead of three hours
+- Make it **concrete**: "build a page about my hometown" instead of "learn web development"
+- Make it **social**: find a study partner, a community, or a programme where people learn together
+- Make it **visible**: track your days on a calendar or in a notebook
+
+## How to start from exactly where you are
+
+Here is a simple, realistic plan for the next 30 days.
+
+1. **Week 1:** Learn basic HTML. Build one page about something you care about — your town, your church, your favourite food.
+2. **Week 2:** Learn basic CSS. Make that page look good on a phone.
+3. **Week 3:** Learn the basics of JavaScript. Add one interactive feature, like a button that shows or hides content.
+4. **Week 4:** Put your project on GitHub and publish it online with a free hosting service. Share the link with one person.
+
+At the end of 30 days, you will not be an expert. But you will be someone who has **built and published** something. That is a completely different identity from "someone who wants to learn to code."
+
+## About AI and the fear of being replaced
+
+Many beginners ask me: "With AI writing code, is it even worth starting now?"
+
+My honest answer is yes. AI tools are changing *how* we write software, but someone still has to understand the problem, design the solution, judge whether the code is correct and safe, and take responsibility for it. People who combine solid fundamentals with good use of AI tools are in a strong position. And AI can actually make learning easier — you can ask it to explain concepts, give hints and review your code at any hour.
+
+Use it as a patient tutor, not as a replacement for your own thinking.
+
+## You are not alone
+
+Part of why I co-founded Digital Bridge Initiative is because I believe talent is everywhere, but opportunity and access are not. Many people who would be brilliant in tech simply haven't had the chance to start yet. If that is you, your timeline started the day you got the chance — not the day someone else got theirs.
+
+## A few reminders to keep close
+
+- Comparison shows you a highlight reel, not the truth.
+- Your background is a strength, not a delay.
+- Small daily progress beats big occasional effort.
+- Quitting before is information, not a verdict.
+- Built and published beats perfect and hidden.
+
+## Conclusion
+
+You are not late. You are right on time for *your* story. The best moment to begin was some time ago; the second best moment is today, with whatever device, data bundle and time you have.
+
+If you're starting (or restarting) your journey this month, tell me in the comments: what is the first thing you want to build? I'll be cheering you on.
+
+---
+
+## Core Web Vitals in Practice: A Developer's Guide to LCP, INP and CLS
+
+URL: https://profjero.pages.dev/blog/core-web-vitals-inp-performance-guide · Published: 2026-08-18 · Category: Web Development
+
+Many of the people who use the websites and apps I build are on mid-range Android phones, sometimes on patchy mobile data. On my laptop with fast Wi-Fi, everything feels instant. On their phones, the same site can feel sluggish, jumpy or unresponsive.
+
+That gap is exactly what **Core Web Vitals** help you measure. They are Google's set of user-centred performance metrics, and they matter for two reasons: they reflect real user experience, and they are part of how Google evaluates page experience in search.
+
+In this guide, I'll explain the three metrics in plain language and share the fixes that have helped me most.
+
+## The three Core Web Vitals
+
+| Metric | What it measures | "Good" threshold |
+|---|---|---|
+| LCP (Largest Contentful Paint) | How quickly the main content appears | 2.5 seconds or less |
+| INP (Interaction to Next Paint) | How quickly the page responds to user input | 200 milliseconds or less |
+| CLS (Cumulative Layout Shift) | How much the layout jumps around unexpectedly | 0.1 or less |
+
+Google assesses these at the 75th percentile of real page loads — so it is not enough for the site to be fast for *some* users. It needs to be good for most of them, including those on slower devices.
+
+INP replaced First Input Delay (FID) as a Core Web Vital in 2024. FID only measured the delay before the *first* interaction began to be processed. INP looks at responsiveness across interactions during the whole visit, which is a much more honest picture — and a harder one to pass.
+
+## Lab data vs field data
+
+Before fixing anything, understand the two kinds of data:
+
+- **Lab data** comes from tools like Lighthouse in Chrome DevTools. It is a simulated test, great for debugging.
+- **Field data** comes from real users, for example the Chrome User Experience Report shown in PageSpeed Insights and in Search Console's Core Web Vitals report.
+
+Field data tells you *whether* you have a problem. Lab data helps you find *why*. If your site is new or small, you may not have enough field data yet; in that case, measure your own users with the `web-vitals` JavaScript library:
+
+```js
+import { onLCP, onINP, onCLS } from "web-vitals";
+
+function sendToAnalytics(metric) {
+  const body = JSON.stringify({
+    name: metric.name,
+    value: metric.value,
+    rating: metric.rating,
+    page: location.pathname
+  });
+  navigator.sendBeacon?.("/analytics", body);
+}
+
+onLCP(sendToAnalytics);
+onINP(sendToAnalytics);
+onCLS(sendToAnalytics);
+```
+
+## Improving LCP: get the main content on screen fast
+
+The LCP element is usually a hero image, a large heading or a banner. Common problems and fixes:
+
+### Make the LCP resource discoverable early
+
+If your hero image is loaded through CSS or JavaScript, the browser discovers it late. Use a normal `img` tag in the HTML and give it high priority:
+
+```html
+<img src="/images/hero-800.webp"
+     srcset="/images/hero-480.webp 480w, /images/hero-800.webp 800w, /images/hero-1200.webp 1200w"
+     sizes="100vw"
+     width="1200" height="630"
+     fetchpriority="high"
+     alt="Students learning to code at a community tech hub">
+```
+
+### Never lazy-load the LCP image
+
+`loading="lazy"` is great for images further down the page, but on the hero image it delays your most important content.
+
+### Optimise images
+
+Use modern formats like WebP or AVIF, serve appropriately sized images with `srcset`, and compress them. Images are often the biggest single win on content sites.
+
+### Reduce render-blocking resources
+
+Large CSS files and synchronous scripts in the `head` delay rendering. Inline small critical CSS, `defer` non-critical scripts, and remove unused code.
+
+### Speed up the server
+
+A slow server response delays everything. Use a CDN, enable caching, and make sure your hosting is close to your users where possible.
+
+## Improving INP: make interactions feel instant
+
+INP problems usually come from **long tasks** on the main thread: JavaScript that runs for a long time and blocks the browser from responding.
+
+### Find the slow interactions
+
+In Chrome DevTools, use the Performance panel to record yourself clicking buttons, opening menus and typing in forms. Look for long tasks after each interaction. Test with CPU throttling turned on to simulate a slower phone.
+
+### Break up long tasks
+
+If a click handler does a lot of work, update the UI first, then yield to the browser before doing the heavy part:
+
+```js
+function yieldToMain() {
+  return new Promise(resolve => setTimeout(resolve, 0));
+}
+
+button.addEventListener("click", async () => {
+  button.disabled = true;
+  status.textContent = "Saving...";   // visible feedback first
+
+  await yieldToMain();                // let the browser paint
+
+  const report = buildLargeReport(data); // heavy work afterwards
+  renderReport(report);
+  button.disabled = false;
+});
+```
+
+Some browsers also support `scheduler.yield()` for this purpose; you can feature-detect it and fall back to `setTimeout`.
+
+### Other INP fixes
+
+- **Debounce expensive input handlers**, like search-as-you-type, so you don't run heavy work on every keystroke.
+- **Reduce DOM size.** Rendering thousands of table rows at once is slow; paginate or virtualise long lists.
+- **Audit third-party scripts.** Chat widgets, trackers and ad scripts can quietly take over the main thread. Keep only what you truly need, and load it late.
+- **Move heavy computation to a Web Worker** when it doesn't need the DOM.
+- **Avoid unnecessary re-renders** in frameworks. Profile your components and memoise where it helps.
+
+## Improving CLS: stop the page from jumping
+
+Layout shift is the frustration of trying to tap a button just as an image loads and pushes it down.
+
+- **Always set dimensions on images and videos** using `width` and `height` attributes or CSS `aspect-ratio`.
+- **Reserve space for dynamic content** such as ads, embeds and banners.
+- **Don't insert content above existing content** unless the user asked for it.
+- **Be careful with web fonts.** Use `font-display: swap` or `optional`, preload key fonts, and choose fallback fonts with similar sizing.
+- **Animate with `transform` and `opacity`**, not properties like `top` or `height` that trigger layout.
+
+## My performance workflow
+
+1. Check field data in PageSpeed Insights or Search Console.
+2. Identify which metric is failing and on which pages.
+3. Reproduce the issue in DevTools with throttling enabled.
+4. Fix the biggest issue first — usually images for LCP, long tasks for INP, missing dimensions for CLS.
+5. Re-test in the lab, then watch field data over the following weeks.
+6. Add a performance check to your workflow so regressions don't creep back.
+
+## Quick checklist
+
+- Hero image is in the HTML, not lazy-loaded, with `fetchpriority="high"`
+- Images are compressed, modern formats, properly sized
+- Non-critical JavaScript is deferred
+- Third-party scripts are audited and minimised
+- Long tasks are broken up; interactions give instant visual feedback
+- All images and embeds have reserved space
+- Fonts are loaded without causing big shifts
+- You have tested on a real mid-range phone
+
+## Conclusion
+
+Performance is not about chasing a perfect Lighthouse score. It is about respect for your users' time, data and devices. Fixing Core Web Vitals usually makes a site feel calmer, faster and more trustworthy — and that is felt most by the users who have the least powerful phones.
+
+Have you run your site through PageSpeed Insights recently? Share which metric gives you the most trouble in the comments, and I'll try to help.
+
+---
+
+## Digital Skills, Real Opportunity: Why Young People in Ghana's Rural Communities Can't Be Left Behind
+
+URL: https://profjero.pages.dev/blog/digital-skills-opportunity-young-people-ghana · Published: 2026-08-05 · Category: Tech in Africa
+
+I have a belief that shapes almost everything I do: **talent is evenly distributed, but opportunity is not.**
+
+A young person in a farming community near Cape Coast can be just as curious, creative and capable as a young person in a well-resourced school in a big city. What often separates them is not intelligence. It is access — to a computer, to reliable internet, to a teacher who can guide them, and to someone who can show them what is possible.
+
+That belief is why I co-founded **Digital Bridge Initiative (DBI)**, a non-profit focused on bridging the digital divide through tech education. In this post I want to share why digital skills matter so much for young people in Ghana, what I have learned from training them, and what all of us can do.
+
+## Why digital skills matter now
+
+Digital skills are no longer only for people who want to be software developers. They have become part of everyday life and work:
+
+- Students research, submit assignments and take courses online.
+- Traders and small businesses use mobile money, social media and messaging apps to reach customers.
+- Farmers can access weather information, market prices and agricultural advice.
+- Many job applications, government services and registrations are now done online.
+- Remote and freelance work allows people to earn from clients far beyond their town.
+
+For a young person, digital literacy is the difference between being a *consumer* of technology and being a *participant* in the digital economy. And for some, it is the first step toward a career as a developer, designer, data analyst, digital marketer or IT support professional.
+
+## What the divide actually looks like
+
+When people hear "digital divide," they often think only of devices. Devices matter, but in my experience the gap has several layers:
+
+### Access to devices
+
+Many young people have a smartphone — sometimes shared — but not a laptop or desktop. You can learn a lot on a phone, but writing code, building spreadsheets or designing a website is much harder on a small screen.
+
+### Affordable, reliable internet
+
+Data costs and unreliable connections affect how much people can learn online. A video course that streams smoothly in one place may be impossible to watch in another.
+
+### Exposure and role models
+
+If you have never met anyone who works in tech, it is hard to imagine yourself doing it. Many young people simply don't know what a software developer, UI designer or data analyst does — or that someone from their community could become one.
+
+### Guidance and structure
+
+The internet is full of free resources, but without structure it is overwhelming. Beginners need a path, feedback and encouragement, not just links.
+
+### Confidence
+
+This one is invisible but powerful. Some learners arrive believing technology is "for other people." Changing that belief is often the most important thing we do.
+
+## What I have learned from training young people
+
+Training learners has taught me as much as building software. A few lessons stand out:
+
+### 1. Start with what is relevant to their lives
+
+A lesson about building a website becomes exciting when it is a website for the learner's own church, family business or community group. Relevance turns abstract skills into something personal.
+
+### 2. Design for low bandwidth and shared devices
+
+When I build learning tools, like DBI Learn, I think about learners on mobile data and older phones. Lightweight pages, content that works on small screens and progress that is saved reliably all make a real difference. Good design for constrained conditions is good design for everyone.
+
+### 3. Hands-on beats lecture
+
+People learn by doing. The moment a learner types something and sees it appear on screen, their confidence changes. We keep explanation short and practice long.
+
+### 4. Community keeps people going
+
+Learning alone is hard. Learning in a group, with peers who are also struggling and succeeding, keeps people motivated. Peer support is one of the most underrated tools in tech education.
+
+### 5. Measure impact honestly
+
+It is easy to count attendance. It is harder, and more important, to know whether people actually gained skills and used them. That is why we built the DBI Impact dashboard — to track what is working and be accountable to the communities and partners we serve.
+
+## Where opportunity can come from
+
+When young people gain digital skills, several doors open. Not every door suits every person, and that is fine:
+
+- **Employment**: IT support, data entry, digital marketing, customer service and junior developer roles.
+- **Freelancing**: web design, graphic design, content writing and virtual assistance for clients locally and abroad.
+- **Entrepreneurship**: building a business online, or adding digital tools to an existing one.
+- **Further education**: online courses and certifications that were previously out of reach.
+- **Community impact**: building solutions for local problems — in agriculture, health, education and local commerce.
+
+That last one excites me most. Some of the most important software for our communities will be built by people who understand those communities from the inside.
+
+## What communities and individuals can do
+
+You don't need to run an organisation to help close the gap. Here are practical ways to contribute:
+
+1. **Share access**: a spare laptop, a corner of an office with Wi-Fi, or a community space for evening classes can matter enormously.
+2. **Mentor one person**: if you work in tech, regular check-ins with a single beginner can change their trajectory.
+3. **Teach a basic skill**: email, spreadsheets, online safety, how to spot scams. Foundational digital literacy is valuable for every age.
+4. **Support local training programmes**: with time, equipment, connections or funding.
+5. **Hire and give first chances**: internships and entry-level opportunities are often the hardest part of the journey.
+6. **Talk about it**: tell young people that tech careers exist and that people from their background succeed in them.
+
+## A word to young people reading this
+
+If you are a young person in a rural community or a small town reading this on your phone: your location does not decide your future. Start with what you have. Learn on your phone if that is all you have. Find a community, ask questions, and build something small. Your perspective — knowing the problems your community faces — is valuable.
+
+## Conclusion
+
+Bridging the digital divide is not charity. It is about unlocking talent that is already there, and making sure the next generation of builders, problem-solvers and leaders includes young people from every part of Ghana. That is the work we are committed to at Digital Bridge Initiative, and it is work everyone can be part of.
+
+How did you first get access to technology, and who helped you along the way? Share your story in the comments — and if you'd like to support or partner with our work, I would love to hear from you.
+
+---
+
+## Web App Security Essentials: A Practical Guide Based on the OWASP Top 10
+
+URL: https://profjero.pages.dev/blog/web-app-security-essentials-owasp-top-10 · Published: 2026-07-27 · Category: Security
+
+When you build software for real organisations — a pharmacy system handling sales, a learning platform with user accounts, an admin dashboard for a community programme — security stops being an abstract topic. Real people trust you with their data.
+
+The best starting point I know is the **OWASP Top 10**, a widely used awareness document from the Open Worldwide Application Security Project that describes the most critical categories of web application security risks. OWASP updates the list periodically, and the categories get renamed, merged and reordered between editions, so always check [owasp.org](https://owasp.org) for the current version. The underlying lessons, however, are remarkably stable.
+
+In this post I'll group the key risks into practical themes and show what each looks like in everyday code.
+
+## 1. Broken access control: the most important one to get right
+
+Access control means making sure users can only do what they are allowed to do. It sits at or near the top of the OWASP list for good reason: it is easy to get wrong and the consequences are serious.
+
+A classic mistake looks like this:
+
+```js
+// Dangerous: trusts whatever ID the client sends
+app.get("/api/orders/:id", async (req, res) => {
+  const order = await db.orders.findById(req.params.id);
+  res.json(order);
+});
+```
+
+Any logged-in user can change the ID in the URL and see someone else's order. The fix is to check ownership on the server, every time:
+
+```js
+app.get("/api/orders/:id", requireAuth, async (req, res) => {
+  const order = await db.orders.findById(req.params.id);
+  if (!order || order.userId !== req.user.id) {
+    return res.status(404).json({ error: "Not found" });
+  }
+  res.json(order);
+});
+```
+
+Key habits:
+
+- **Deny by default.** Grant access explicitly.
+- **Enforce on the server**, never only by hiding buttons in the UI.
+- **Check ownership and roles** on every request that touches data.
+- In serverless apps (like Firebase), **your security rules are your access control** — test them.
+
+## 2. Injection: never mix data and commands
+
+Injection happens when user input is treated as code — in SQL queries, shell commands or HTML.
+
+### SQL injection
+
+```js
+// Vulnerable
+const sql = "SELECT * FROM users WHERE email = '" + email + "'";
+
+// Safe: parameterised query
+const [rows] = await db.execute(
+  "SELECT * FROM users WHERE email = ?",
+  [email]
+);
+```
+
+Parameterised queries (or a reputable ORM / query builder used correctly) keep data and commands separate.
+
+### Cross-site scripting (XSS)
+
+XSS is injection into the browser. If you insert user input as HTML, an attacker can run scripts in other users' browsers.
+
+```js
+// Risky with user input
+comment.innerHTML = userComment;
+
+// Safe
+comment.textContent = userComment;
+```
+
+If you must render user-provided HTML or Markdown, use a well-maintained sanitiser library, and add a **Content Security Policy (CSP)** header as a second layer of defence. Modern frameworks escape output by default, but escape hatches (like rendering raw HTML) bypass that protection.
+
+## 3. Authentication failures
+
+Weak authentication lets attackers take over accounts. Practical defences:
+
+- **Never store plain-text passwords.** Use a slow, salted hashing algorithm designed for passwords, such as bcrypt or Argon2.
+- **Rate-limit login attempts** to slow down guessing attacks.
+- **Offer multi-factor authentication** (MFA), especially for admin accounts.
+- **Don't reveal which part was wrong.** "Invalid email or password" is better than "No account with that email."
+- **Manage sessions securely**: set cookies with `HttpOnly`, `Secure` and an appropriate `SameSite` value; expire sessions; invalidate them on logout and password change.
+- **Consider a trusted auth provider** (such as Firebase Authentication or a similar service) rather than building everything from scratch.
+
+## 4. Cryptographic failures: protect sensitive data
+
+- Use **HTTPS everywhere** — no exceptions.
+- Don't collect sensitive data you don't need. Data you never store can never leak.
+- Encrypt sensitive data at rest where appropriate.
+- Never put secrets (API keys with real privileges, database passwords) in frontend code or in your Git repository. Use environment variables and secret managers.
+
+## 5. Security misconfiguration
+
+Many breaches have nothing to do with clever hacking — just something left open.
+
+- Default credentials not changed
+- Debug mode or detailed error messages enabled in production
+- Database or storage buckets left publicly readable
+- Missing security headers
+- Unused features, ports or admin pages left exposed
+
+A minimal set of headers worth knowing:
+
+```text
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Security-Policy: default-src 'self'
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+```
+
+A strict CSP will usually need adjusting for your actual scripts, fonts and APIs — start strict and loosen carefully.
+
+## 6. Vulnerable components and the software supply chain
+
+Modern apps depend on many third-party packages. Each one is code you didn't write but are responsible for. The OWASP community has put increasing emphasis on this area, and for good reason.
+
+- Run `npm audit` (or your ecosystem's equivalent) and act on serious findings.
+- Enable automated dependency update alerts on your repository.
+- Remove packages you don't use.
+- Be cautious with new or obscure packages; check maintenance activity and watch out for names that imitate popular packages.
+- Commit your lockfile so builds are reproducible.
+
+## 7. Insecure design
+
+Some vulnerabilities aren't coding mistakes — they are design gaps. For example: a password reset flow with no expiry, a discount code that can be applied unlimited times, or a POS system where a cashier can change prices without any record.
+
+Before building a feature, ask: **"How could someone misuse this?"** Write down a few abuse cases alongside your user stories. This simple habit, often called threat modelling, catches problems before they become code.
+
+## 8. Logging, monitoring and handling errors
+
+If something goes wrong, will you know?
+
+- Log important security events: logins, failed logins, permission denials, admin actions.
+- **Never log passwords, tokens or full payment details.**
+- Set up alerts for unusual activity.
+- Handle errors gracefully: show users a friendly message, log details privately, and make sure failures don't leave the system in an unsafe state (for example, granting access when a check throws an error).
+
+## 9. Server-side request forgery (SSRF)
+
+If your server fetches URLs provided by users (for previews, imports or webhooks), an attacker might trick it into requesting internal resources. Validate and restrict destinations with an allow-list, and avoid fetching arbitrary user-supplied URLs where you can.
+
+## Security checklist for your next project
+
+- Every data request checks authentication **and** authorization on the server
+- All database queries are parameterised
+- User content is rendered as text, or sanitised; CSP is in place
+- Passwords are hashed with a password-hashing algorithm; MFA available for admins
+- HTTPS everywhere; secure cookie flags set
+- No secrets in frontend code or Git history
+- Production has no debug mode, default credentials or public buckets
+- Dependencies are audited and updated regularly
+- Abuse cases considered during design
+- Security events are logged, without sensitive data
+
+## Conclusion
+
+You don't need to be a security specialist to build secure software. You need good habits: never trust input, enforce access on the server, keep secrets secret, update your dependencies and think about misuse before you build. The OWASP Top 10 is a great map — read the current edition, and revisit it every time you start a new project.
+
+Which of these areas do you find hardest to get right in your projects? Let me know in the comments — I'm happy to go deeper on any of them in a future post.
+
+---
+
+## Consistency Over Talent: Lessons from 5 Years of Building Software
+
+URL: https://profjero.pages.dev/blog/consistency-over-talent-lessons-from-5-years-of-building · Published: 2026-07-15 · Category: Career & Growth
+
+I started my career in tech in 2021. Five years later, I have built e-learning platforms, impact dashboards, a pharmacy point-of-sale system, an inventory management system, websites and admin dashboards for community organisations, and websites for churches. I co-founded a non-profit, Digital Bridge Initiative, and started ProfJero Hub. I have trained many learners along the way.
+
+When people look at that list, they sometimes assume I must be unusually talented. I don't think that's the real story. The real story is much less glamorous: **I kept showing up.**
+
+This post is about what five years of consistent effort has taught me — and why I believe consistency beats talent almost every time.
+
+## Talent gets you started. Consistency gets you somewhere.
+
+I have met many talented people. Some learned faster than I did, solved problems more elegantly, and had natural instincts I still admire. But talent without consistency tends to produce the same pattern: a burst of brilliant activity, then a long pause, then another burst. Projects get started and abandoned.
+
+Consistency produces a different pattern. Progress that feels slow week to week, but compounds over months and years. Skills that build on each other. A body of work that grows quietly until one day it is substantial.
+
+> Small things done consistently will usually beat big things done occasionally.
+
+## Lesson 1: Motivation is unreliable. Systems are not.
+
+In my early days, I waited to feel motivated. Some days I did, and I worked for hours. Other days I didn't, and I did nothing. The results were unpredictable.
+
+What changed things was building **systems** that didn't depend on mood:
+
+- A fixed time for learning or building, even if it was short
+- A simple rule: on low-energy days, do the smallest possible version — fix one bug, read one page of documentation, write ten lines
+- A visible record of progress, so I could see the streak and not want to break it
+
+Motivation comes and goes. A system carries you through the days it is gone.
+
+## Lesson 2: Shipping teaches more than studying
+
+I learned more from my first real project than from many hours of tutorials. When you build for real users, you face things no course prepares you for: unclear requirements, messy data, users who click things you didn't expect, and bugs that only appear on someone else's phone.
+
+Working on a point-of-sale system taught me that a small mistake in stock or price logic isn't just a bug — it affects a real business. Building learning platforms taught me to design for people on slow connections and older devices. Each project forced me to grow in ways study alone could not.
+
+**Lesson:** finish things and put them in front of people. Imperfect and shipped beats perfect and hidden.
+
+## Lesson 3: Fundamentals compound
+
+Over five years, the tools I use have changed a lot. Frameworks have evolved, AI coding assistants arrived, and best practices shifted. What has stayed valuable throughout are the fundamentals: understanding how the web works, how data should be structured, how to debug methodically, how to write clear code and how to communicate with users.
+
+Every hour invested in fundamentals keeps paying off. Every hour invested only in a trendy tool may not.
+
+## Lesson 4: Teaching makes you better
+
+Becoming an IT trainer was one of the best things that happened to my development career. When you have to explain something simply, you discover the gaps in your own understanding. Learners ask questions you would never think to ask yourself.
+
+If you want to grow faster, teach what you know — even if you only know a little more than the person you are teaching. Write a blog post. Help someone in a WhatsApp group. Explain a concept to a friend.
+
+## Lesson 5: Rest is part of consistency
+
+Consistency does not mean working all the time. I have learned this the hard way. Pushing too hard for too long leads to burnout, and burnout destroys consistency far more than a planned rest day ever will.
+
+Sustainable consistency looks like:
+
+- Working at a pace you can maintain for years, not weeks
+- Taking real breaks, and protecting sleep
+- Accepting that some seasons of life allow more time than others
+- Restarting quickly after a missed day, without guilt
+
+The goal is not a perfect streak. It is a long, steady direction.
+
+## Lesson 6: Your network grows when you show up
+
+Many opportunities in my career came from people who had seen my work over time — a project I built, a training I delivered, a conversation in a community group. Consistency builds trust. When people see you showing up again and again, they start to remember you and to recommend you.
+
+You don't need to be the loudest person in the room. Be the person who reliably delivers.
+
+## Lesson 7: Purpose sustains you
+
+Some days, code is frustrating and progress is slow. What keeps me going on those days is purpose. Seeing a learner build their first webpage, or an organisation finally manage its work with a tool I built, reminds me why I do this.
+
+Find your "why." It might be your family, your community, financial independence, or simply the joy of building. Write it down. Come back to it on the hard days.
+
+## A simple consistency plan you can start this week
+
+1. **Choose a minimum daily commitment** you can keep even on bad days: 20–30 minutes is enough.
+2. **Pick one project** to focus on for the next month. Not five. One.
+3. **Track it visibly**: a calendar, a notebook, or a habit app.
+4. **Share progress weekly**: a GitHub commit, a short post, a message to a friend.
+5. **Review monthly**: what worked, what didn't, what to adjust.
+6. **Plan your rest**: one day a week fully off.
+
+## A quick reflection checklist
+
+- Do I have a fixed time for learning or building?
+- Do I have a "minimum version" for low-energy days?
+- Have I shipped anything in the last month?
+- Am I investing in fundamentals, not just tools?
+- Am I resting enough to keep going for years?
+- Do I know my "why"?
+
+## Conclusion
+
+Five years ago, I couldn't have imagined all the things I would build, the people I would train, or the organisations I would help start. None of it happened in one big leap. It happened one ordinary day at a time.
+
+You don't need to be the most talented person in the room. You need to keep showing up. Do that long enough, and you will surprise yourself.
+
+What is one small thing you will do consistently starting this week? Write it in the comments — saying it publicly is the first step toward keeping it.
+
+---
+

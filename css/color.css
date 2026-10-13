@@ -1,7 +1,7 @@
 /*	Color
 =====================================================================*/
 .color_default{
-	color: #002fff;
+	color: #0A60EE;
 }
 .color_primary{
 	color: #1e283c;
@@ -21,7 +21,7 @@
 /*	Background Color
 ===================================================================*/
 .bg_default{
-	background-color: #002fff;
+	background-color: #0A60EE;
 }
 .bg_primary{
 	background-color: #1e283c;
@@ -47,7 +47,7 @@
 /*	btn color
 ===================================================================*/
 .btn-default{
-	background-color: #002fff;
+	background-color: #0A60EE;
 	color: #fff;
 }
 .btn-default:hover,.btn-default.active{
@@ -59,7 +59,7 @@
     filter: brightness(115%);
 }
 .btn_info{
-	color: #002fff;
+	color: #0A60EE;
 }
 .btn_info:hover{
 	color: #1e283c;
@@ -77,14 +77,14 @@
 	color: #1e283c;
 }
 .navbar-nav .nav-item .nav-link:before{
-	background-color: #002fff;
+	background-color: #0A60EE;
 }
 .navbar-light .navbar-nav .nav-link{
 	color: #fff
 }
 .navbar-light .navbar-nav .nav-link.active,.nav-scroll .navbar-light .navbar-nav .nav-link.active,
 ul#menu li.active a,.contact_massage a{
-	color: #002fff;
+	color: #0A60EE;
 }
 .nav-scroll .navbar-light .navbar-nav .nav-link{
 	color: #1e283c
@@ -101,7 +101,7 @@ ul#menu li.active a,.contact_massage a{
 	color: #fff
 }
 .white_hover a i:hover{
-	color: #002fff;
+	color: #0A60EE;
 }
 /*	Default Color Class & ID
 ===================================================================*/
@@ -109,7 +109,7 @@ ul#menu li.active a,.contact_massage a{
 .navbar-light .navbar-nav .nav-link:hover,.socal_media_2 ul li a:hover,
 ul#menu li a:hover,.twite i,.twite a:hover,.category_sidebar ul li:hover,
 .white_link a:hover,.recent_post a:hover,.archives ul li a:hover{
-	color: #002fff;
+	color: #0A60EE;
 }
 /*	Primary Color Class & ID
 ===================================================================*/
@@ -137,7 +137,7 @@ ul#menu li a:hover,.twite i,.twite a:hover,.category_sidebar ul li:hover,
 .lds-spinner div,.socal_media ul li a,#pp-nav li .active span, .pp-slidesNav .active span,
 .carousel-indicators .active,.contact_icon,.widget_title:before,.progress-bar,.page-item.active .page-link,
 .page-link:hover,.tags ul li a:hover{
-	background-color: #002fff !important;
+	background-color: #0A60EE !important;
 }
 ::-webkit-scrollbar-thumb{
 	background-color: #232323;
@@ -167,7 +167,7 @@ ul#menu li a:hover,.twite i,.twite a:hover,.category_sidebar ul li:hover,
 /*	Border Color Default
 ===================================================================*/
 .overlay-box{
-	border-color: #002fff;
+	border-color: #0A60EE;
 }
 /*	Border Color Primary
 ===================================================================*/
@@ -202,7 +202,7 @@ ul#menu li a:hover,.twite i,.twite a:hover,.category_sidebar ul li:hover,
 	border-color: #e1e1e1;
 }
 .border{
-	border-color: #002fff !important;
+	border-color: #0A60EE !important;
 }
 .form-control:focus{
 	border-color: #1e283c;
