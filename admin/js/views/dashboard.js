@@ -51,6 +51,9 @@ export async function render(view) {
       <div class="kpi" style="--c:var(--green)"><i class="fa-regular fa-comments"></i><small>Comments</small><strong>${compact(totals.comments)}</strong><span><a href="#/comments">Moderate</a></span></div>
       <div class="kpi" style="--c:#D97706"><i class="fa-solid fa-inbox"></i><small>Unread messages</small><strong>${num(state.unread)}</strong><span><a href="#/messages">Open inbox</a></span></div>
       <div class="kpi" style="--c:#0891B2"><i class="fa-solid fa-envelope-open-text"></i><small>Subscribers</small><strong>${num(subs?.data().count)}</strong><span><a href="#/subscribers">View list</a></span></div>
+      <div class="kpi" style="--c:#0A60EE"><i class="fa-regular fa-calendar-check"></i><small>Pending bookings</small><strong>${num(state.pendingBookings)}</strong><span><a href="#/bookings">Manage</a></span></div>
+      <div class="kpi" style="--c:#7C3AED"><i class="fa-solid fa-file-invoice"></i><small>New quote requests</small><strong>${num(state.newOrders)}</strong><span><a href="#/orders">Send quotes</a></span></div>
+      <div class="kpi" style="--c:#08BC6F"><i class="fa-regular fa-comments"></i><small>Unread client chats</small><strong>${num(state.unreadChats)}</strong><span><a href="#/chat">Reply</a></span></div>
     </div>
     ${postList.length ? "" : `<div class="callout" style="margin-bottom:18px"><i class="fa-solid fa-wand-magic-sparkles"></i><div><strong>Your database is empty.</strong> The website is currently showing built-in default content. Go to <a href="#/settings">Settings → Import default content</a> to copy everything (profile, projects, studios, 9 blog posts…) into Firestore so you can edit it and enable likes & comments.</div></div>`}
     <div class="grid-3">

@@ -2,6 +2,8 @@
 // Firestore data when available. The admin dashboard can import all of it into
 // Firestore in one click (Settings → Import default content).
 
+import { STUDIO_DETAILS, PRODUCTS, PRODUCT_CATEGORIES } from "./studio-content.js";
+
 export const DEFAULT_SETTINGS = {
   name: "Benjamin Amoako",
   brand: "ProfJero",
@@ -140,13 +142,13 @@ export const DEFAULT_SKILLS = [
   { name: "Git & GitHub", level: 82, group: "Tools & Design", order: 16 }
 ];
 
-export const DEFAULT_STUDIOS = [
+const BASE_STUDIOS = [
   {
     id: "digital-studio", name: "Digital Studio", order: 1, active: true,
     icon: "fa-solid fa-laptop-code", color: "#0A60EE",
     tagline: "Software, web, mobile & cloud",
     description: "Custom software, websites, mobile apps and cloud solutions that help businesses run better.",
-    url: "https://profjerohub.pages.dev/#digital-studio",
+    url: "https://profjerohub.pages.dev/digital-studio",
     services: [
       { title: "Software Development", text: "Custom software tailored to your business — from desktop tools to enterprise systems — scalable, secure and fast." },
       { title: "Web Development", text: "Robust, SEO-ready websites and web applications with admin dashboards, databases and integrations." },
@@ -157,9 +159,9 @@ export const DEFAULT_STUDIOS = [
   {
     id: "creative-studio", name: "Creative Studio", order: 2, active: true,
     icon: "fa-solid fa-palette", color: "#7C3AED",
-    tagline: "Brand, design & video",
-    description: "Brand identities, graphics, UI/UX and video that make people remember you.",
-    url: "https://profjerohub.pages.dev/#creative-studio",
+    tagline: "Product branding & design",
+    description: "Custom product branding — watches, mugs, apparel, awards, frames and print — plus brand identity design.",
+    url: "https://profjerohub.pages.dev/creative-studio",
     services: [
       { title: "Branding & Identity", text: "Logos, brand guidelines and complete identity systems that tell your story and connect with your audience." },
       { title: "Graphic Design", text: "Flyers, social media designs, packaging and print materials that capture your message." },
@@ -172,7 +174,7 @@ export const DEFAULT_STUDIOS = [
     icon: "fa-solid fa-seedling", color: "#08BC6F",
     tagline: "Nutrition & wellness",
     description: "Evidence-based nutrition and wellness programmes for individuals and organisations.",
-    url: "https://profjerohub.pages.dev/#nourish-studio",
+    url: "https://profjerohub.pages.dev/nourish-studio",
     services: [
       { title: "Nutrition Consulting", text: "Personalised nutrition plans that support your health goals with evidence-based guidance." },
       { title: "Wellness Programs", text: "Holistic programmes that improve mental and physical wellbeing for individuals and teams." },
@@ -184,7 +186,7 @@ export const DEFAULT_STUDIOS = [
     icon: "fa-solid fa-tractor", color: "#D97706",
     tagline: "Smart farming & agri-tech",
     description: "Technology and expert advice that help farms grow more with less.",
-    url: "https://profjerohub.pages.dev/#agro-studio",
+    url: "https://profjerohub.pages.dev/agro-studio",
     services: [
       { title: "Smart Farming", text: "IoT and automation for efficient crop management, higher yields and less waste." },
       { title: "Crop Consulting", text: "Expert advice on crop selection, soil health and sustainable farming practices." },
@@ -193,9 +195,14 @@ export const DEFAULT_STUDIOS = [
   }
 ];
 
+// Studio records = short summary (portfolio) + rich page content (ProfJero Hub studio pages).
+export const DEFAULT_STUDIOS = BASE_STUDIOS.map(s => ({ ...s, ...(STUDIO_DETAILS[s.id] || {}), page: s.id }));
+export const DEFAULT_PRODUCTS = PRODUCTS.map((p, i) => ({ visible: true, order: i + 1, ...p }));
+export { PRODUCT_CATEGORIES };
+
 export const DEFAULT_PROJECTS = [
   {
-    id: "dbi-learn", title: "DBI Learn", category: "Web Apps", order: 1, featured: true, status: "live", year: 2025,
+    id: "dbi-learn", studio: "digital-studio", title: "DBI Learn", category: "Web Apps", order: 1, featured: true, status: "live", year: 2025,
     client: "Digital Bridge Initiative",
     summary: "Interactive e-learning platform with courses, multimedia lessons, quizzes and learner progress tracking.",
     description: "DBI Learn is the learning platform of Digital Bridge Initiative. Learners enrol in courses, watch lessons, take quizzes and track their progress, while administrators manage courses and learners from a dashboard.\n\n- Course and lesson management\n- Learner progress tracking\n- Video lessons and quizzes\n- Certificates on completion\n- Admin dashboard",
@@ -203,7 +210,7 @@ export const DEFAULT_PROJECTS = [
     cover: "", liveUrl: "https://dbi-learn.pages.dev", demoUrl: "https://dbi-learn.pages.dev", videoUrl: "", repoUrl: "", demoNote: ""
   },
   {
-    id: "rural-tech-hub", title: "Rural Tech Hub", category: "Websites", order: 2, featured: true, status: "live", year: 2026,
+    id: "rural-tech-hub", studio: "digital-studio", title: "Rural Tech Hub", category: "Websites", order: 2, featured: true, status: "live", year: 2026,
     client: "Rural Tech Hub",
     summary: "Platform connecting rural youth in Ghana with IT training programmes, events and digital opportunities.",
     description: "Rural Tech Hub brings quality IT education to young people in rural communities. The platform presents programmes (software development, design, data analysis, digital marketing), upcoming events with registration, and impact stories.",
@@ -211,7 +218,7 @@ export const DEFAULT_PROJECTS = [
     cover: "", liveUrl: "https://ruraltech.pages.dev", demoUrl: "https://ruraltech.pages.dev", videoUrl: "", repoUrl: "", demoNote: ""
   },
   {
-    id: "rth-admin", title: "Rural Tech Hub Admin", category: "Dashboards", order: 3, featured: true, status: "live", year: 2026,
+    id: "rth-admin", studio: "digital-studio", title: "Rural Tech Hub Admin", category: "Dashboards", order: 3, featured: true, status: "live", year: 2026,
     client: "Rural Tech Hub",
     summary: "Secure admin control centre to manage students, programmes, events, mentors and impact reports.",
     description: "The back office behind Rural Tech Hub. Administrators manage student profiles and certificates, programmes and schedules, events and registrations, and monitor impact with analytics — with role-based access for team members.",
@@ -219,7 +226,7 @@ export const DEFAULT_PROJECTS = [
     cover: "", liveUrl: "https://rthadmins.pages.dev", demoUrl: "https://rthadmins.pages.dev", videoUrl: "", repoUrl: "", demoNote: "Ask for demo login credentials via WhatsApp."
   },
   {
-    id: "dbi-impact", title: "DBI Impact Dashboard", category: "Dashboards", order: 4, featured: false, status: "live", year: 2025,
+    id: "dbi-impact", studio: "digital-studio", title: "DBI Impact Dashboard", category: "Dashboards", order: 4, featured: false, status: "live", year: 2025,
     client: "Digital Bridge Initiative",
     summary: "Impact tracking dashboard showcasing programme outcomes, success metrics and beneficiary stories.",
     description: "An analytics dashboard that turns Digital Bridge Initiative's programme data into clear, interactive charts: year-over-year metrics, completion rates and beneficiary stories, with data export for reports.",
@@ -227,7 +234,7 @@ export const DEFAULT_PROJECTS = [
     cover: "", liveUrl: "https://dbi-impact.pages.dev", demoUrl: "https://dbi-impact.pages.dev", videoUrl: "", repoUrl: "", demoNote: ""
   },
   {
-    id: "digital-bridge-initiative", title: "Digital Bridge Initiative", category: "Websites", order: 5, featured: false, status: "live", year: 2025,
+    id: "digital-bridge-initiative", studio: "digital-studio", title: "Digital Bridge Initiative", category: "Websites", order: 5, featured: false, status: "live", year: 2025,
     client: "Digital Bridge Initiative",
     summary: "Official website of a non-profit bridging the digital divide through technology education.",
     description: "The main website of Digital Bridge Initiative: mission and vision, programmes, volunteer portal, success stories and ways to support.",
@@ -235,7 +242,7 @@ export const DEFAULT_PROJECTS = [
     cover: "", liveUrl: "https://digitalbridgeinitiative.pages.dev", demoUrl: "https://digitalbridgeinitiative.pages.dev", videoUrl: "", repoUrl: "", demoNote: ""
   },
   {
-    id: "smartinventory", title: "SmartInventory", category: "Business Systems", order: 6, featured: false, status: "live", year: 2025,
+    id: "smartinventory", studio: "digital-studio", title: "SmartInventory", category: "Business Systems", order: 6, featured: false, status: "live", year: 2025,
     client: "Small & medium businesses",
     summary: "Inventory and warehouse management with real-time stock, purchases, sales, multi-location and reports.",
     description: "SmartInventory gives small and medium businesses accurate stock control: real-time stock levels with low-stock alerts, purchase-to-sale flow with invoicing, multi-location transfers, role-based access and clear reports on best sellers, slow movers and margins.",
@@ -243,7 +250,7 @@ export const DEFAULT_PROJECTS = [
     cover: "", liveUrl: "/docs.html", demoUrl: "", videoUrl: "", repoUrl: "", demoNote: "Request a guided demo via WhatsApp."
   },
   {
-    id: "pharmacy-pos", title: "Pharmacy POS System", category: "Business Systems", order: 7, featured: false, status: "live", year: 2024,
+    id: "pharmacy-pos", studio: "digital-studio", title: "Pharmacy POS System", category: "Business Systems", order: 7, featured: false, status: "live", year: 2024,
     client: "Community pharmacy",
     summary: "Point-of-sale and stock management for a pharmacy — fast checkout, stock levels and daily sales reports.",
     description: "A fast, reliable point-of-sale system built for a pharmacy: barcode-friendly checkout, stock tracking with expiry and low-stock alerts, and daily sales reports.",
@@ -251,29 +258,29 @@ export const DEFAULT_PROJECTS = [
     cover: "", liveUrl: "", demoUrl: "", videoUrl: "", repoUrl: "", demoNote: "Private client system — demo video available on request."
   },
   {
-    id: "tourizto", title: "Tourizto Travel Website", category: "Websites", order: 8, featured: false, status: "concept", year: 2023,
+    id: "tourizto", studio: "digital-studio", title: "Tourizto Travel Website", category: "Websites", order: 8, featured: false, status: "concept", year: 2023,
     client: "Concept",
     summary: "Travel booking website design with destination search and featured offers.",
     description: "A travel agency website concept with hero search, featured destinations and offer cards.",
     tech: ["WordPress", "Elementor"], cover: "/assets/img/work/tourizto-website.webp", liveUrl: "", demoUrl: "", videoUrl: "", repoUrl: "", demoNote: ""
   },
   {
-    id: "dna-brand", title: "DNA Brand Identity", category: "Branding & Design", order: 9, featured: false, status: "delivered", year: 2024,
+    id: "dna-brand", studio: "creative-studio", title: "DNA Brand Identity", category: "Branding & Design", order: 9, featured: false, status: "delivered", year: 2024,
     client: "Creative Studio", summary: "Complete brand identity and merchandise system.", description: "Logo, colour system and branded merchandise from stationery to apparel.",
     tech: ["Branding", "Illustrator"], cover: "/assets/img/work/dna-brand-identity.webp", liveUrl: "", demoUrl: "", videoUrl: "", repoUrl: "", demoNote: ""
   },
   {
-    id: "sanfas-brand", title: "Sanfas Brand Identity", category: "Branding & Design", order: 10, featured: false, status: "delivered", year: 2024,
+    id: "sanfas-brand", studio: "creative-studio", title: "Sanfas Brand Identity", category: "Branding & Design", order: 10, featured: false, status: "delivered", year: 2024,
     client: "Creative Studio", summary: "Corporate identity applied across uniforms, bags and stationery.", description: "Brand mark and identity applied to corporate merchandise.",
     tech: ["Branding", "Mockups"], cover: "/assets/img/work/sanfas-brand-identity.webp", liveUrl: "", demoUrl: "", videoUrl: "", repoUrl: "", demoNote: ""
   },
   {
-    id: "photo-retouching", title: "Beauty Photo Retouching", category: "Branding & Design", order: 11, featured: false, status: "delivered", year: 2024,
+    id: "photo-retouching", studio: "creative-studio", title: "Beauty Photo Retouching", category: "Branding & Design", order: 11, featured: false, status: "delivered", year: 2024,
     client: "Creative Studio", summary: "High-end skin retouching and colour grading.", description: "Professional beauty retouching that keeps natural texture.",
     tech: ["Photoshop"], cover: "/assets/img/work/photo-retouching.webp", liveUrl: "", demoUrl: "", videoUrl: "", repoUrl: "", demoNote: ""
   },
   {
-    id: "sabs-kitchen", title: "Sab's Kitchen Flyer", category: "Branding & Design", order: 12, featured: false, status: "delivered", year: 2024,
+    id: "sabs-kitchen", studio: "creative-studio", title: "Sab's Kitchen Flyer", category: "Branding & Design", order: 12, featured: false, status: "delivered", year: 2024,
     client: "Sab's Kitchen", summary: "Promotional food flyer for a local restaurant.", description: "Eye-catching food flyer designed for print and social media.",
     tech: ["Photoshop", "Print"], cover: "/assets/img/work/sabs-kitchen-flyer.webp", liveUrl: "", demoUrl: "", videoUrl: "", repoUrl: "", demoNote: ""
   }

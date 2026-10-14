@@ -1,12 +1,13 @@
 // Client-side data access with graceful fallbacks to bundled defaults, so the
 // site always renders even before Firestore is populated or when offline.
-import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_TEAM } from "./defaults.js";
+import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_TEAM, DEFAULT_PRODUCTS } from "./defaults.js";
+import { SITE } from "./config.js";
 import { SEED_POSTS } from "./seed-posts.js";
 import { readingTime } from "./utils.js";
 
 export const DEFAULTS = {
   skills: DEFAULT_SKILLS, studios: DEFAULT_STUDIOS, projects: DEFAULT_PROJECTS,
-  testimonials: DEFAULT_TESTIMONIALS, experience: DEFAULT_EXPERIENCE, team: DEFAULT_TEAM
+  testimonials: DEFAULT_TESTIMONIALS, experience: DEFAULT_EXPERIENCE, team: DEFAULT_TEAM, products: DEFAULT_PRODUCTS
 };
 
 let fb; // lazily imported firebase module
@@ -67,7 +68,7 @@ export async function loadPosts() {
     const { db, collection, getDocs, query, where } = await firebase();
     const snap = await withTimeout(getDocs(query(collection(db, "posts"), where("status", "==", "published"))));
     if (snap.empty) return seedPosts();
-    return snap.docs.map(d => normalizePost(d.data(), d.id)).filter(p => !p.sites || p.sites.includes("portfolio"));
+    return snap.docs.map(d => normalizePost(d.data(), d.id)).filter(p => !p.sites || p.sites.includes(SITE.id));
   } catch (e) {
     console.warn("[posts] using bundled posts:", e.message);
     return seedPosts();
@@ -95,8 +96,20 @@ export async function trackVisit() {
     const { db, doc, setDoc, increment } = await firebase();
     const day = new Date().toISOString().slice(0, 10);
     await Promise.all([
-      setDoc(doc(db, "stats", "site"), { visits: increment(1) }, { merge: true }),
+      setDoc(doc(db, "stats", SITE.id === "portfolio" ? "site" : SITE.id), { visits: increment(1) }, { merge: true }),
       setDoc(doc(db, "stats_daily", day), { visits: increment(1), date: day }, { merge: true })
     ]);
   } catch { /* stats are best-effort */ }
+}
+
+/** A single settings document (e.g. settings/hub) merged over defaults. */
+export async function loadDoc(path, defaults = {}) {
+  try {
+    const { db, doc, getDoc } = await firebase();
+    const snap = await withTimeout(getDoc(doc(db, ...path.split("/"))));
+    return { ...defaults, ...(snap.exists() ? snap.data() : {}), _loaded: true };
+  } catch (e) {
+    console.warn(`[${path}] using defaults:`, e.message);
+    return { ...defaults, _loaded: true };
+  }
 }

@@ -16,6 +16,13 @@ const routes = {
   testimonials: ["Testimonials", () => import("./views/collections.js")],
   experience: ["Experience", () => import("./views/collections.js")],
   team: ["Team", () => import("./views/collections.js")],
+  bookings: ["Bookings", () => import("./views/requests.js")],
+  orders: ["Quotes & orders", () => import("./views/requests.js")],
+  clients: ["Clients", () => import("./views/clients.js")],
+  clientProjects: ["Client projects", () => import("./views/collections.js")],
+  chat: ["Client chat", () => import("./views/chat.js")],
+  products: ["Branded products", () => import("./views/collections.js")],
+  hub: ["Hub homepage", () => import("./views/hubsettings.js")],
   profile: ["Profile & site", () => import("./views/profile.js")],
   media: ["Media library", () => import("./views/media.js")],
   subscribers: ["Subscribers", () => import("./views/subscribers.js")],
@@ -35,11 +42,14 @@ async function route() {
   document.body.classList.remove("side-open");
   $("#page-title").textContent = r[0];
   document.title = `${r[0]} · ProfJero Admin`;
-  const view = $("#view");
+  // Fresh element per route so listeners a view attached don't leak into the next one.
+  const old = $("#view"), view = old.cloneNode(false);
+  old.replaceWith(view);
   view.innerHTML = `<div class="kpis">${'<div class="kpi skeleton" style="height:110px"></div>'.repeat(4)}</div><div class="card skeleton" style="height:320px"></div>`;
   current?.destroy?.();
   try {
     const mod = await r[1]();
+    if (!view.isConnected) return; // superseded by a newer navigation
     current = mod;
     await mod.render(view, { name: key, params: rest });
   } catch (e) {
@@ -84,6 +94,10 @@ async function startApp(u) {
   $("#app").hidden = false;
   $("#user-chip").innerHTML = `${avatar(u.displayName || u.email, u.photoURL)}<span>${esc(u.displayName || u.email)}</span>`;
   unsubBadge?.();
+  const badge = (id, n) => { const b = $(id); if (b) { b.textContent = n || ""; b.dataset.n = n; } };
+  fb.onSnapshot(fb.query(fb.collection(fb.db, "bookings"), fb.where("status", "==", "pending")), s => { state.pendingBookings = s.size; badge("#badge-bookings", s.size); }, () => { });
+  fb.onSnapshot(fb.query(fb.collection(fb.db, "orders"), fb.where("status", "==", "requested")), s => { state.newOrders = s.size; badge("#badge-orders", s.size); }, () => { });
+  fb.onSnapshot(fb.query(fb.collection(fb.db, "threads"), fb.where("unreadAdmin", ">", 0)), s => { state.unreadChats = s.size; badge("#badge-chat", s.size); }, () => { });
   unsubBadge = fb.onSnapshot(fb.query(fb.collection(fb.db, "messages"), fb.where("status", "==", "new")), snap => {
     state.unread = snap.size;
     const b = $("#badge-messages");

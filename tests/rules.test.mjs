@@ -119,5 +119,49 @@ await t("visit counter +1", () => assertSucceeds(setDoc(doc(anon, "stats/site"),
 await t("visit counter +100 denied", () => assertFails(setDoc(doc(anon, "stats/site"), { visits: increment(100) }, { merge: true })));
 await t("stats hidden from public", () => assertFails(getDoc(doc(anon, "stats/site"))));
 
+console.log("Hub: bookings");
+const booking = (extra = {}) => ({ ref: "PJB7K2M9QX", studio: "digital-studio", studioName: "Digital Studio", service: "Web Development", mode: "remote", date: "2026-11-02", time: "10:00", name: "Kofi Mensah", email: "kofi@example.com", phone: "0531207256", company: "", notes: "Need a site", uid: null, status: "pending", source: "hub", createdAt: serverTimestamp(), ...extra });
+await t("guest books", () => assertSucceeds(setDoc(doc(anon, "bookings/PJB7K2M9QX"), booking())));
+await t("guest tracks by ref", () => assertSucceeds(getDoc(doc(anon, "bookings/PJB7K2M9QX"))));
+await t("guest cannot list bookings", () => assertFails(getDocs(collection(anon, "bookings"))));
+await t("cannot pre-confirm booking", () => assertFails(setDoc(doc(anon, "bookings/PJBAAAAAAA"), booking({ ref: "PJBAAAAAAA", status: "confirmed" }))));
+await t("ref must match id", () => assertFails(setDoc(doc(anon, "bookings/PJBBBBBBBB"), booking({ ref: "OTHER12345" }))));
+await t("cannot book as someone else's uid", () => assertFails(setDoc(doc(bob, "bookings/PJBCCCCCCC"), booking({ ref: "PJBCCCCCCC", uid: "alice" }))));
+await t("alice books with account", () => assertSucceeds(setDoc(doc(alice, "bookings/PJBDDDDDDD"), booking({ ref: "PJBDDDDDDD", uid: "alice" }))));
+await t("alice lists own bookings", () => assertSucceeds(getDocs(query(collection(alice, "bookings"), where("uid", "==", "alice")))));
+await t("bob cannot list alice's", () => assertFails(getDocs(query(collection(bob, "bookings"), where("uid", "==", "alice")))));
+const kofi = env.authenticatedContext("kofi", { email: "kofi@example.com", email_verified: true }).firestore();
+await t("verified email sees guest bookings", () => assertSucceeds(getDocs(query(collection(kofi, "bookings"), where("email", "==", "kofi@example.com")))));
+await t("alice cancels own booking", () => assertSucceeds(updateDoc(doc(alice, "bookings/PJBDDDDDDD"), { status: "cancelled", updatedAt: serverTimestamp() })));
+await t("client cannot confirm", () => assertFails(updateDoc(doc(kofi, "bookings/PJB7K2M9QX"), { status: "confirmed" })));
+await t("bob cannot cancel others", () => assertFails(updateDoc(doc(bob, "bookings/PJB7K2M9QX"), { status: "cancelled" })));
+await t("admin confirms", () => assertSucceeds(updateDoc(doc(owner, "bookings/PJB7K2M9QX"), { status: "confirmed", adminNote: "See you" })));
+
+console.log("Hub: orders");
+const order = (extra = {}) => ({ ref: "PJO4R8T2LV", productId: "custom-mugs", product: "Custom Mugs", category: "Drinkware", quantity: 50, method: "Sublimation", colors: "2", artworkUrl: "", deadline: "2026-11-20", budget: "", name: "Ama Owusu", email: "ama@example.com", phone: "", company: "Ama Ltd", notes: "", uid: "alice", status: "requested", source: "hub", createdAt: serverTimestamp(), ...extra });
+await t("client requests quote", () => assertSucceeds(setDoc(doc(alice, "orders/PJO4R8T2LV"), order())));
+await t("quantity must be int", () => assertFails(setDoc(doc(alice, "orders/PJO4R8T2LX"), order({ ref: "PJO4R8T2LX", quantity: "50" }))));
+await t("client cannot set quote amount", () => assertFails(updateDoc(doc(alice, "orders/PJO4R8T2LV"), { quoteAmount: 1 })));
+await t("client cannot approve before quote", () => assertFails(updateDoc(doc(alice, "orders/PJO4R8T2LV"), { status: "approved" })));
+await t("admin quotes", () => assertSucceeds(updateDoc(doc(owner, "orders/PJO4R8T2LV"), { status: "quoted", quoteAmount: 1500 })));
+await t("client approves quote", () => assertSucceeds(updateDoc(doc(alice, "orders/PJO4R8T2LV"), { status: "approved", updatedAt: serverTimestamp() })));
+await t("client cannot mark delivered", () => assertFails(updateDoc(doc(alice, "orders/PJO4R8T2LV"), { status: "delivered" })));
+
+console.log("Hub: portal");
+await t("alice creates profile", () => assertSucceeds(setDoc(doc(alice, "users/alice"), { name: "Alice", email: "a@x.com", phone: "", company: "", createdAt: serverTimestamp() })));
+await t("cannot set role", () => assertFails(setDoc(doc(alice, "users/alice"), { name: "Alice", role: "admin" })));
+await t("bob cannot read alice profile", () => assertFails(getDoc(doc(bob, "users/alice"))));
+await env.withSecurityRulesDisabled(async ctx => { await setDoc(doc(ctx.firestore(), "clientProjects/p1"), { uid: "alice", title: "School site", progress: 40 }); });
+await t("alice reads her project", () => assertSucceeds(getDoc(doc(alice, "clientProjects/p1"))));
+await t("bob cannot read alice project", () => assertFails(getDoc(doc(bob, "clientProjects/p1"))));
+await t("alice cannot edit project", () => assertFails(updateDoc(doc(alice, "clientProjects/p1"), { progress: 100 })));
+await t("alice opens thread", () => assertSucceeds(setDoc(doc(alice, "threads/alice"), { uid: "alice", name: "Alice", email: "a@x.com", lastMessage: "Hi", lastAt: serverTimestamp(), lastFrom: "client", unreadAdmin: 1, unreadClient: 0 })));
+await t("alice sends message", () => assertSucceeds(setDoc(doc(alice, "threads/alice/messages/m1"), { from: "client", text: "Hello", name: "Alice", createdAt: serverTimestamp() })));
+await t("alice cannot fake admin message", () => assertFails(setDoc(doc(alice, "threads/alice/messages/m2"), { from: "admin", text: "Paid", createdAt: serverTimestamp() })));
+await t("bob cannot read alice thread", () => assertFails(getDocs(collection(bob, "threads/alice/messages"))));
+await t("admin replies", () => assertSucceeds(setDoc(doc(owner, "threads/alice/messages/m3"), { from: "admin", text: "Hi Alice", createdAt: serverTimestamp() })));
+await t("anyone reads products", () => assertSucceeds(getDocs(collection(anon, "products"))));
+await t("visitor cannot add product", () => assertFails(setDoc(doc(alice, "products/x"), { name: "x" })));
+
 await env.cleanup();
 console.log(`\n${passed} passed${process.exitCode ? ", some FAILED" : ""}`);

@@ -12,7 +12,7 @@ export function sitemap(posts) {
   const list = [...posts].sort(newest);
   const latest = list[0] ? day(list[0].updatedAt || list[0].publishedAt) : day();
   const urls = [
-    { loc: `${SITE.url}/`, lastmod: latest, priority: "1.0", freq: "weekly" },
+    { loc: `${SITE.url}/`, lastmod: latest, priority: "1.0", freq: "weekly", images: ["/assets/img/people/benjamin-amoako.webp", "/assets/img/people/hero-bg.webp", "/assets/img/people/profjero-at-work.webp", "/assets/img/brand/icon-512.png", "/assets/img/brand/og-image.jpg", "/assets/img/team/abel-eduah.webp", "/assets/img/team/godsway-arhin.webp", "/assets/img/work/dna-brand-identity.webp", "/assets/img/work/sanfas-brand-identity.webp", "/assets/img/work/tourizto-website.webp"] },
     { loc: `${SITE.url}/blog`, lastmod: latest, priority: "0.9", freq: "daily" },
     { loc: `${SITE.url}/profile`, lastmod: "2026-10-13", priority: "0.6", freq: "monthly" },
     { loc: `${SITE.url}/docs`, lastmod: "2026-10-13", priority: "0.5", freq: "monthly" },
@@ -27,7 +27,8 @@ ${urls.map(u => `  <url>
     <loc>${x(u.loc)}</loc>
     <lastmod>${u.lastmod}</lastmod>
     <changefreq>${u.freq}</changefreq>
-    <priority>${u.priority}</priority>${u.image ? `
+    <priority>${u.priority}</priority>${(u.images || []).map(i => `
+    <image:image><image:loc>${x(new URL(i, SITE.url).href)}</image:loc></image:image>`).join("")}${u.image ? `
     <image:image><image:loc>${x(new URL(u.image, SITE.url).href)}</image:loc></image:image>` : ""}
   </url>`).join("\n")}
 </urlset>

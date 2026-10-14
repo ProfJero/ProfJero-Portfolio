@@ -10,7 +10,7 @@ import {
 import {
   getAuth, onAuthStateChanged, signInAnonymously, signInWithPopup, GoogleAuthProvider,
   signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail,
-  signOut, updateProfile, connectAuthEmulator
+  signOut, updateProfile, connectAuthEmulator, createUserWithEmailAndPassword, updatePassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { firebaseConfig } from "./config.js";
 
@@ -58,7 +58,7 @@ export {
   Timestamp, onSnapshot, collectionGroup, getCountFromServer,
   onAuthStateChanged, signInAnonymously, signInWithPopup, GoogleAuthProvider,
   signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail,
-  signOut, updateProfile
+  signOut, updateProfile, createUserWithEmailAndPassword
 };
 
 /** Resolves with the current user once Firebase has restored the session. */

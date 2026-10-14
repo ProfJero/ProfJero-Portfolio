@@ -15,6 +15,9 @@ export const SITE = {
   id: "portfolio",                       // identifies this site in shared collections (messages.source, posts.sites)
   url: "https://profjero.pages.dev",
   hubUrl: "https://profjerohub.pages.dev",
+  portfolioUrl: "https://profjero.pages.dev",
+  adminUrl: "/admin/",
+  blogBase: "",                          // article links are relative on the portfolio
   name: "ProfJero",
   ownerEmail: "profjero947@gmail.com"    // always treated as admin (must match firestore.rules)
 };

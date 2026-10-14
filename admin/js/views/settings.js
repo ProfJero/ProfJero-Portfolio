@@ -1,6 +1,7 @@
 import { $, $$, fb, esc, toast, confirmDialog, download, cloudinaryConfig, uploadToCloudinary, state } from "../core.js";
 import { renderFields, bindFields, readFields } from "../forms.js";
-import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_TEAM } from "/assets/js/defaults.js";
+import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_TEAM, DEFAULT_PRODUCTS } from "/assets/js/defaults.js";
+import { HUB_SETTINGS } from "/assets/js/hub-defaults.js";
 import { SEED_POSTS } from "/assets/js/seed-posts.js";
 import { SITE } from "/assets/js/config.js";
 import { readingTime } from "/assets/js/utils.js";
@@ -11,7 +12,7 @@ const cloudFields = [
   { key: "folder", label: "Folder (optional)", type: "text", placeholder: "profjero", full: true }
 ];
 
-const COLLECTIONS = ["settings", "skills", "studios", "projects", "testimonials", "experience", "team", "posts", "messages", "subscribers", "media", "admins"];
+const COLLECTIONS = ["settings", "skills", "studios", "projects", "testimonials", "experience", "team", "products", "bookings", "orders", "users", "clientProjects", "threads", "posts", "messages", "subscribers", "media", "admins"];
 
 export async function render(view) {
   const cfg = await cloudinaryConfig(true);
@@ -40,7 +41,7 @@ export async function render(view) {
 
     <section class="card">
       <div class="card-head"><h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--green)"></i> Import default content</h3>
-        <p>Copies the built-in content (profile & site settings, ${DEFAULT_SKILLS.length} skills, ${DEFAULT_STUDIOS.length} studios, ${DEFAULT_PROJECTS.length} projects, ${DEFAULT_TESTIMONIALS.length} testimonials, ${DEFAULT_EXPERIENCE.length} timeline entries, ${DEFAULT_TEAM.length} team members and ${SEED_POSTS.length} blog posts) into Firestore so you can edit everything here and readers can like and comment on posts.</p></div>
+        <p>Copies the built-in content (profile & site settings, ${DEFAULT_SKILLS.length} skills, ${DEFAULT_STUDIOS.length} studios, ${DEFAULT_PROJECTS.length} projects, ${DEFAULT_TESTIMONIALS.length} testimonials, ${DEFAULT_EXPERIENCE.length} timeline entries, ${DEFAULT_TEAM.length} team members, ${DEFAULT_PRODUCTS.length} branded products, the Hub homepage and ${SEED_POSTS.length} blog posts) into Firestore so you can edit everything here and readers can like and comment on posts.</p></div>
       <label class="switch" style="margin-bottom:14px"><input type="checkbox" id="seed-overwrite"><span class="track"></span>Overwrite items that already exist (blog stats, likes and comments are never touched)</label>
       <div class="btn-row"><button class="btn btn-primary" id="seed"><i class="fa-solid fa-file-import"></i> Import default content</button></div>
       <pre class="small muted" id="seed-log" style="white-space:pre-wrap;margin-top:12px"></pre>
@@ -105,12 +106,23 @@ export async function render(view) {
       const siteDoc = await fb.getDoc(fb.doc(fb.db, "settings", "site"));
       if (!siteDoc.exists() || overwrite) writes.push([fb.doc(fb.db, "settings", "site"), { ...DEFAULT_SETTINGS, updatedAt: fb.serverTimestamp() }]);
       log(`settings: ${!siteDoc.exists() || overwrite ? "imported" : "kept existing"}`);
-      for (const [col, list] of [["skills", DEFAULT_SKILLS], ["studios", DEFAULT_STUDIOS], ["projects", DEFAULT_PROJECTS], ["testimonials", DEFAULT_TESTIMONIALS], ["experience", DEFAULT_EXPERIENCE], ["team", DEFAULT_TEAM]]) {
+      const hubDoc = await fb.getDoc(fb.doc(fb.db, "settings", "hub"));
+      if (!hubDoc.exists() || overwrite) writes.push([fb.doc(fb.db, "settings", "hub"), { ...HUB_SETTINGS, updatedAt: fb.serverTimestamp() }]);
+      log(`hub homepage: ${!hubDoc.exists() || overwrite ? "imported" : "kept existing"}`);
+      const studioDocs = Object.fromEntries((await fb.getDocs(fb.collection(fb.db, "studios"))).docs.map(d => [d.id, d.data()]));
+      for (const [col, list] of [["skills", DEFAULT_SKILLS], ["studios", DEFAULT_STUDIOS], ["projects", DEFAULT_PROJECTS], ["testimonials", DEFAULT_TESTIMONIALS], ["experience", DEFAULT_EXPERIENCE], ["team", DEFAULT_TEAM], ["products", DEFAULT_PRODUCTS]]) {
         const have = await existing(col);
         let n = 0;
         list.forEach((item, i) => {
           const id = item.id || `${col}-${String(i + 1).padStart(2, "0")}-${item.name || item.title}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-          if (have.has(id) && !overwrite) return;
+          if (have.has(id) && !overwrite) {
+            if (col === "studios") {   // add only the new Hub page fields that older studio records lack — never overwrite edits
+              const cur = studioDocs[id] || {};
+              const missing = Object.fromEntries(Object.entries(item).filter(([k]) => k !== "id" && !(k in cur)));
+              if (Object.keys(missing).length) { writes.push([fb.doc(fb.db, col, id), missing, true]); n++; }
+            }
+            return;
+          }
           const { id: _, ...rest } = item;
           writes.push([fb.doc(fb.db, col, id), { order: i + 1, ...rest }]); n++;
         });

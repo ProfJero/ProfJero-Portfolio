@@ -1,5 +1,6 @@
 // HTML renderers shared by the browser and Cloudflare Pages Functions (SSR).
 // Pure string functions: no DOM access.
+import { SITE } from "./config.js";
 import { esc, safeUrl, img, parseVideo, compact, formatDate, readingTime, initials, hueFrom, byOrder, yearsSince, toDate } from "./utils.js";
 
 const SOCIAL_ICONS = {
@@ -83,7 +84,7 @@ export function renderProjects(projects = []) {
     const live = safeUrl(p.liveUrl);
     const statusLabel = { live: "Live", "in-progress": "In progress", concept: "Concept", delivered: "Delivered" }[p.status] || "";
     return `
-    <article class="project-card reveal" data-cat="${esc(p.category || "")}" data-id="${esc(p.id)}">
+    <article class="project-card reveal" data-cat="${esc(p.category || "")}" data-studio="${esc(p.studio || "")}" data-id="${esc(p.id)}">
       <div class="project-media" style="--h:${hueFrom(p.title)}">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>${esc(p.title)}</span></div>
         ${cover ? `<img src="${esc(cover)}" alt="${esc(p.title)} preview" loading="lazy" decoding="async" onerror="this.remove()">` : ""}
@@ -213,7 +214,7 @@ export function postCover(post, w = 900) {
   return post.cover ? img(post.cover, w) : "";
 }
 
-export function postUrl(post) { return `/blog/${encodeURIComponent(post.slug || post.id)}`; }
+export function postUrl(post) { return `${SITE.blogBase || ""}/blog/${encodeURIComponent(post.slug || post.id)}`; }
 
 export function coverFallback(post) {
   return `<div class="cover-fallback" style="--h:${hueFrom(post.category || post.title)}"><span>${esc(post.category || "Blog")}</span><strong>${esc(post.title)}</strong></div>`;
@@ -230,7 +231,7 @@ export function renderPostCard(post, { big = false } = {}) {
     </a>
     <div class="post-body">
       <div class="post-meta">
-        <a class="post-cat" href="/blog?category=${encodeURIComponent(post.category || "")}">${esc(post.category || "Article")}</a>
+        <a class="post-cat" href="${SITE.blogBase || ""}/blog?category=${encodeURIComponent(post.category || "")}">${esc(post.category || "Article")}</a>
         <span>${formatDate(post.publishedAt)}</span><span>${mins} min read</span>
       </div>
       <h3><a href="${postUrl(post)}">${esc(post.title)}</a></h3>

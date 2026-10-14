@@ -26,7 +26,8 @@
   <meta name="twitter:description" content="Websites, web apps, dashboards and business systems built end-to-end — with live demos.">
   <meta name="twitter:image" content="https://profjero.pages.dev/assets/img/brand/og-image.jpg">
 
-  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/icon-192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
   <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
@@ -55,7 +56,7 @@
         "jobTitle": "Full-Stack Developer & IT Trainer",
         "description": "Full-stack software developer and IT trainer in Cape Coast, Ghana. Co-Founder & Executive Director of Digital Bridge Initiative and Founder of ProfJero Hub.",
         "url": "https://profjero.pages.dev/",
-        "image": "https://profjero.pages.dev/assets/img/people/benjamin-amoako.webp",
+        "image": { "@type": "ImageObject", "url": "https://profjero.pages.dev/assets/img/people/benjamin-amoako.webp", "caption": "Benjamin Amoako (ProfJero), full-stack developer in Cape Coast, Ghana" },
         "email": "mailto:profjero947@gmail.com",
         "telephone": "+233531207256",
         "address": { "@type": "PostalAddress", "addressLocality": "Cape Coast", "addressCountry": "GH" },
@@ -71,11 +72,21 @@
         ]
       },
       {
+        "@type": "Organization",
+        "@id": "https://profjero.pages.dev/#organization",
+        "name": "ProfJero",
+        "url": "https://profjero.pages.dev/",
+        "logo": { "@type": "ImageObject", "url": "https://profjero.pages.dev/assets/img/brand/icon-512.png", "width": 512, "height": 512 },
+        "image": "https://profjero.pages.dev/assets/img/brand/og-image.jpg",
+        "founder": { "@id": "https://profjero.pages.dev/#person" },
+        "sameAs": ["https://profjerohub.pages.dev/", "https://www.facebook.com/profile.php?id=61585853362550", "https://www.tiktok.com/@profjero"]
+      },
+      {
         "@type": "WebSite",
         "@id": "https://profjero.pages.dev/#website",
         "url": "https://profjero.pages.dev/",
         "name": "ProfJero",
-        "publisher": { "@id": "https://profjero.pages.dev/#person" },
+        "publisher": { "@id": "https://profjero.pages.dev/#organization" },
         "potentialAction": { "@type": "SearchAction", "target": "https://profjero.pages.dev/blog?q={search_term_string}", "query-input": "required name=search_term_string" }
       },
       {
@@ -85,6 +96,7 @@
         "url": "https://profjero.pages.dev/",
         "image": "https://profjero.pages.dev/assets/img/brand/og-image.jpg",
         "logo": "https://profjero.pages.dev/assets/img/brand/icon-512.png",
+        "parentOrganization": { "@id": "https://profjero.pages.dev/#organization" },
         "founder": { "@id": "https://profjero.pages.dev/#person" },
         "areaServed": ["Ghana", "Worldwide"],
         "address": { "@type": "PostalAddress", "addressLocality": "Cape Coast", "addressCountry": "GH" },
@@ -313,33 +325,57 @@
           <h3>Digital Studio <small>Software, web, mobile &amp; cloud</small></h3>
           <p>Custom software, websites, mobile apps and cloud solutions that help businesses run better.</p>
         </div>
-        <a class="btn btn-studio" href="https://profjerohub.pages.dev/#digital-studio" target="_blank" rel="noopener">Visit Digital Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a class="btn btn-studio" href="https://profjerohub.pages.dev/digital-studio" target="_blank" rel="noopener">Visit Digital Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       </div>
       <div class="service-grid">
         
           <article class="service-card">
             <span class="service-num">01</span>
-            <h4>Software Development</h4>
-            <p>Custom software tailored to your business — from desktop tools to enterprise systems — scalable, secure and fast.</p>
-            <a class="service-link" href="#contact" data-service="Software Development">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Business &amp; Personal Websites</h4>
+            <p>Fast, mobile-first websites that present your business clearly, rank on Google and turn visitors into WhatsApp chats, calls and bookings.</p>
+            <a class="service-link" href="#contact" data-service="Business &amp; Personal Websites">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">02</span>
-            <h4>Web Development</h4>
-            <p>Robust, SEO-ready websites and web applications with admin dashboards, databases and integrations.</p>
-            <a class="service-link" href="#contact" data-service="Web Development">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Custom Web Applications</h4>
+            <p>Browser-based applications built around how your organisation really works, from booking portals and client dashboards to membership and records systems.</p>
+            <a class="service-link" href="#contact" data-service="Custom Web Applications">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">03</span>
-            <h4>Mobile App Development</h4>
-            <p>iOS and Android apps focused on performance, great user experience and seamless functionality.</p>
-            <a class="service-link" href="#contact" data-service="Mobile App Development">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Business Management Systems</h4>
+            <p>Point-of-sale, inventory, school management and church/membership systems that replace notebooks and spreadsheets with reliable, searchable records.</p>
+            <a class="service-link" href="#contact" data-service="Business Management Systems">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">04</span>
-            <h4>Cloud &amp; Backend</h4>
-            <p>APIs, databases, authentication and cloud hosting on Firebase, Cloudflare, AWS, Azure or Google Cloud.</p>
-            <a class="service-link" href="#contact" data-service="Cloud &amp; Backend">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Dashboards &amp; Admin Portals</h4>
+            <p>Clear dashboards that pull your data together so owners and managers can see sales, attendance, stock or performance at a glance.</p>
+            <a class="service-link" href="#contact" data-service="Dashboards &amp; Admin Portals">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">05</span>
+            <h4>Mobile App Development</h4>
+            <p>Cross-platform Android and iOS apps, or installable progressive web apps (PWAs) that work offline and cost less to build and maintain.</p>
+            <a class="service-link" href="#contact" data-service="Mobile App Development">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">06</span>
+            <h4>Cloud, Backend &amp; Hosting</h4>
+            <p>Secure, affordable infrastructure on Firebase, Cloudflare and similar platforms, including domains, business email, databases, APIs and backups.</p>
+            <a class="service-link" href="#contact" data-service="Cloud, Backend &amp; Hosting">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">07</span>
+            <h4>AI-Assisted Automation &amp; Integrations</h4>
+            <p>Practical use of AI and automation to save staff time: chat assistants for FAQs, automated reports, form-to-database workflows and connections between the tools you already use.</p>
+            <a class="service-link" href="#contact" data-service="AI-Assisted Automation &amp; Integrations">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">08</span>
+            <h4>IT Training &amp; Digital Skills</h4>
+            <p>Hands-on training for individuals, staff teams and schools, from computer basics and Microsoft Office to web development and using your new system confidently.</p>
+            <a class="service-link" href="#contact" data-service="IT Training &amp; Digital Skills">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
       </div>
     </div>
@@ -347,36 +383,60 @@
       <div class="studio-head">
         <div class="studio-badge"><i class="fa-solid fa-palette"></i></div>
         <div>
-          <h3>Creative Studio <small>Brand, design &amp; video</small></h3>
-          <p>Brand identities, graphics, UI/UX and video that make people remember you.</p>
+          <h3>Creative Studio <small>Product branding &amp; design</small></h3>
+          <p>Custom product branding — watches, mugs, apparel, awards, frames and print — plus brand identity design.</p>
         </div>
-        <a class="btn btn-studio" href="https://profjerohub.pages.dev/#creative-studio" target="_blank" rel="noopener">Visit Creative Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a class="btn btn-studio" href="https://profjerohub.pages.dev/creative-studio" target="_blank" rel="noopener">Visit Creative Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       </div>
       <div class="service-grid">
         
           <article class="service-card">
             <span class="service-num">01</span>
-            <h4>Branding &amp; Identity</h4>
-            <p>Logos, brand guidelines and complete identity systems that tell your story and connect with your audience.</p>
-            <a class="service-link" href="#contact" data-service="Branding &amp; Identity">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Custom Timepieces</h4>
+            <p>Wristwatches and wall clocks with your logo printed on the dial or engraved on the case back. A lasting gift for staff, clients, anniversaries and memorials.</p>
+            <a class="service-link" href="#contact" data-service="Custom Timepieces">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">02</span>
-            <h4>Graphic Design</h4>
-            <p>Flyers, social media designs, packaging and print materials that capture your message.</p>
-            <a class="service-link" href="#contact" data-service="Graphic Design">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Tech Accessory Branding</h4>
+            <p>Phone covers, power banks, USB drives and keyholders branded for promotions, conferences and staff welcome packs.</p>
+            <a class="service-link" href="#contact" data-service="Tech Accessory Branding">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">03</span>
-            <h4>UI/UX Design</h4>
-            <p>Research-driven, beautiful interfaces that make digital products easy and delightful to use.</p>
-            <a class="service-link" href="#contact" data-service="UI/UX Design">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Drinkware &amp; Gift Items</h4>
+            <p>Mugs, magic mugs, flasks and water bottles printed or engraved with logos, photos and messages for gifts, events and everyday branding.</p>
+            <a class="service-link" href="#contact" data-service="Drinkware &amp; Gift Items">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">04</span>
-            <h4>Video Editing</h4>
-            <p>Promotional videos and social media content edited to capture attention and tell your story.</p>
-            <a class="service-link" href="#contact" data-service="Video Editing">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Apparel &amp; Textile Printing</h4>
+            <p>T-shirts, polo shirts, caps and tote bags for staff uniforms, events, campaigns, church anniversaries, funerals and weddings.</p>
+            <a class="service-link" href="#contact" data-service="Apparel &amp; Textile Printing">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">05</span>
+            <h4>Awards &amp; Recognition</h4>
+            <p>Trophies, medals and plaques for schools, sports, churches and corporate awards nights, engraved with names, titles and dates.</p>
+            <a class="service-link" href="#contact" data-service="Awards &amp; Recognition">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">06</span>
+            <h4>Print &amp; Signage</h4>
+            <p>Banners, roll-ups, stickers, flyers and backdrops that help your business or event get noticed.</p>
+            <a class="service-link" href="#contact" data-service="Print &amp; Signage">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">07</span>
+            <h4>Frames, Décor &amp; Stationery</h4>
+            <p>Picture frames, branded notebooks, pens and diaries for gifts, office use, memorials and keepsakes.</p>
+            <a class="service-link" href="#contact" data-service="Frames, Décor &amp; Stationery">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">08</span>
+            <h4>Logo &amp; Brand Identity Design</h4>
+            <p>A logo and simple brand kit that looks great on screen and on every product we brand for you, plus packaging and label design.</p>
+            <a class="service-link" href="#contact" data-service="Logo &amp; Brand Identity Design">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
       </div>
     </div>
@@ -387,27 +447,45 @@
           <h3>Nourish Studio <small>Nutrition &amp; wellness</small></h3>
           <p>Evidence-based nutrition and wellness programmes for individuals and organisations.</p>
         </div>
-        <a class="btn btn-studio" href="https://profjerohub.pages.dev/#nourish-studio" target="_blank" rel="noopener">Visit Nourish Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a class="btn btn-studio" href="https://profjerohub.pages.dev/nourish-studio" target="_blank" rel="noopener">Visit Nourish Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       </div>
       <div class="service-grid">
         
           <article class="service-card">
             <span class="service-num">01</span>
-            <h4>Nutrition Consulting</h4>
-            <p>Personalised nutrition plans that support your health goals with evidence-based guidance.</p>
-            <a class="service-link" href="#contact" data-service="Nutrition Consulting">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Personal Nutrition Consultation</h4>
+            <p>A one-on-one session to review your eating habits, goals and lifestyle, followed by practical recommendations you can start using straight away.</p>
+            <a class="service-link" href="#contact" data-service="Personal Nutrition Consultation">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">02</span>
-            <h4>Wellness Programs</h4>
-            <p>Holistic programmes that improve mental and physical wellbeing for individuals and teams.</p>
-            <a class="service-link" href="#contact" data-service="Wellness Programs">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Personalised Meal Plans</h4>
+            <p>Weekly meal plans built around Ghanaian staples, your schedule, budget and preferences, with shopping lists and simple recipes.</p>
+            <a class="service-link" href="#contact" data-service="Personalised Meal Plans">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">03</span>
-            <h4>Meal Planning</h4>
-            <p>Weekly meal plans tailored to your preferences and health objectives — eat better, save time.</p>
-            <a class="service-link" href="#contact" data-service="Meal Planning">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Family Nutrition Coaching</h4>
+            <p>Guidance for parents and households on balanced family meals, children&#39;s lunch boxes and feeding the whole family well on a budget.</p>
+            <a class="service-link" href="#contact" data-service="Family Nutrition Coaching">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">04</span>
+            <h4>Workplace Wellness Programmes</h4>
+            <p>Talks, workshops and challenges that help staff build healthier eating and lifestyle habits, delivered at your workplace or online.</p>
+            <a class="service-link" href="#contact" data-service="Workplace Wellness Programmes">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">05</span>
+            <h4>Healthy Meal Prep &amp; Food Products</h4>
+            <p>Freshly prepared balanced meals and healthy snack options for individuals, offices and events in the Cape Coast area.</p>
+            <a class="service-link" href="#contact" data-service="Healthy Meal Prep &amp; Food Products">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">06</span>
+            <h4>Nutrition Education for Schools &amp; Churches</h4>
+            <p>Engaging, age-appropriate nutrition talks and workshops for students, parents, youth groups and congregations.</p>
+            <a class="service-link" href="#contact" data-service="Nutrition Education for Schools &amp; Churches">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
       </div>
     </div>
@@ -418,27 +496,51 @@
           <h3>Agro Studio <small>Smart farming &amp; agri-tech</small></h3>
           <p>Technology and expert advice that help farms grow more with less.</p>
         </div>
-        <a class="btn btn-studio" href="https://profjerohub.pages.dev/#agro-studio" target="_blank" rel="noopener">Visit Agro Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a class="btn btn-studio" href="https://profjerohub.pages.dev/agro-studio" target="_blank" rel="noopener">Visit Agro Studio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       </div>
       <div class="service-grid">
         
           <article class="service-card">
             <span class="service-num">01</span>
-            <h4>Smart Farming</h4>
-            <p>IoT and automation for efficient crop management, higher yields and less waste.</p>
-            <a class="service-link" href="#contact" data-service="Smart Farming">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Smart Farming &amp; IoT Sensors</h4>
+            <p>Soil moisture, temperature and humidity sensors that send readings to your phone, helping you water and manage crops based on data rather than guesswork.</p>
+            <a class="service-link" href="#contact" data-service="Smart Farming &amp; IoT Sensors">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">02</span>
-            <h4>Crop Consulting</h4>
-            <p>Expert advice on crop selection, soil health and sustainable farming practices.</p>
-            <a class="service-link" href="#contact" data-service="Crop Consulting">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Irrigation Design &amp; Automation</h4>
+            <p>Drip and sprinkler irrigation planning, with optional timers or sensor-based controllers that save water, fuel and labour.</p>
+            <a class="service-link" href="#contact" data-service="Irrigation Design &amp; Automation">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
           <article class="service-card">
             <span class="service-num">03</span>
-            <h4>Agri-Tech Solutions</h4>
-            <p>From drone monitoring to data analytics — modern technology for traditional agriculture.</p>
-            <a class="service-link" href="#contact" data-service="Agri-Tech Solutions">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+            <h4>Crop Consulting &amp; Soil Health</h4>
+            <p>Field visits to assess your soil, crops and practices, with practical recommendations on soil fertility, planting, spacing and pest and disease management.</p>
+            <a class="service-link" href="#contact" data-service="Crop Consulting &amp; Soil Health">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">04</span>
+            <h4>Farm Management Records &amp; Apps</h4>
+            <p>Simple digital systems to track inputs, labour, sales, livestock and costs so you know what is profitable and can present proper records to buyers or lenders.</p>
+            <a class="service-link" href="#contact" data-service="Farm Management Records &amp; Apps">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">05</span>
+            <h4>Poultry &amp; Livestock Advisory</h4>
+            <p>Practical guidance on housing, feeding, biosecurity, record keeping and production planning for poultry, goats, sheep and pigs, working alongside veterinary professionals for animal health.</p>
+            <a class="service-link" href="#contact" data-service="Poultry &amp; Livestock Advisory">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">06</span>
+            <h4>Farm-to-Market Digital Presence</h4>
+            <p>Help farms and agribusinesses reach buyers directly with a simple website, WhatsApp catalogue, product labels and social media setup.</p>
+            <a class="service-link" href="#contact" data-service="Farm-to-Market Digital Presence">Request this service <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+          <article class="service-card">
+            <span class="service-num">07</span>
+            <h4>Farmer &amp; Youth Agribusiness Training</h4>
+            <p>Hands-on workshops for farmer groups, cooperatives, schools and young people on modern farming practices, record keeping and using technology in agriculture.</p>
+            <a class="service-link" href="#contact" data-service="Farmer &amp; Youth Agribusiness Training">Request this service <i class="fa-solid fa-arrow-right"></i></a>
           </article>
       </div>
     </div><!--/ssr:studio-panels--></div>
@@ -491,7 +593,7 @@
         </div>
         <div class="chips" id="project-filters" role="toolbar" aria-label="Filter projects"><!--ssr:project-filters--><button class="chip active" data-filter="*">All <span>12</span></button><button class="chip" data-filter="Web Apps">Web Apps <span>1</span></button><button class="chip" data-filter="Websites">Websites <span>3</span></button><button class="chip" data-filter="Dashboards">Dashboards <span>2</span></button><button class="chip" data-filter="Business Systems">Business Systems <span>2</span></button><button class="chip" data-filter="Branding &amp; Design">Branding &amp; Design <span>4</span></button><!--/ssr:project-filters--></div>
         <div class="project-grid" id="project-grid"><!--ssr:projects-->
-    <article class="project-card reveal" data-cat="Web Apps" data-id="dbi-learn">
+    <article class="project-card reveal" data-cat="Web Apps" data-studio="digital-studio" data-id="dbi-learn">
       <div class="project-media" style="--h:167">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>DBI Learn</span></div>
         <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fdbi-learn.pages.dev?w=800&amp;h=500" alt="DBI Learn preview" loading="lazy" decoding="async" onerror="this.remove()">
@@ -513,7 +615,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Websites" data-id="rural-tech-hub">
+    <article class="project-card reveal" data-cat="Websites" data-studio="digital-studio" data-id="rural-tech-hub">
       <div class="project-media" style="--h:57">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Rural Tech Hub</span></div>
         <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fruraltech.pages.dev?w=800&amp;h=500" alt="Rural Tech Hub preview" loading="lazy" decoding="async" onerror="this.remove()">
@@ -535,7 +637,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Dashboards" data-id="rth-admin">
+    <article class="project-card reveal" data-cat="Dashboards" data-studio="digital-studio" data-id="rth-admin">
       <div class="project-media" style="--h:8">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Rural Tech Hub Admin</span></div>
         <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Frthadmins.pages.dev?w=800&amp;h=500" alt="Rural Tech Hub Admin preview" loading="lazy" decoding="async" onerror="this.remove()">
@@ -557,7 +659,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Dashboards" data-id="dbi-impact">
+    <article class="project-card reveal" data-cat="Dashboards" data-studio="digital-studio" data-id="dbi-impact">
       <div class="project-media" style="--h:71">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>DBI Impact Dashboard</span></div>
         <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fdbi-impact.pages.dev?w=800&amp;h=500" alt="DBI Impact Dashboard preview" loading="lazy" decoding="async" onerror="this.remove()">
@@ -579,7 +681,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Websites" data-id="digital-bridge-initiative">
+    <article class="project-card reveal" data-cat="Websites" data-studio="digital-studio" data-id="digital-bridge-initiative">
       <div class="project-media" style="--h:211">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Digital Bridge Initiative</span></div>
         <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fdigitalbridgeinitiative.pages.dev?w=800&amp;h=500" alt="Digital Bridge Initiative preview" loading="lazy" decoding="async" onerror="this.remove()">
@@ -601,7 +703,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Business Systems" data-id="smartinventory">
+    <article class="project-card reveal" data-cat="Business Systems" data-studio="digital-studio" data-id="smartinventory">
       <div class="project-media" style="--h:203">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>SmartInventory</span></div>
         
@@ -623,7 +725,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Business Systems" data-id="pharmacy-pos">
+    <article class="project-card reveal" data-cat="Business Systems" data-studio="digital-studio" data-id="pharmacy-pos">
       <div class="project-media" style="--h:152">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Pharmacy POS System</span></div>
         
@@ -645,7 +747,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Websites" data-id="tourizto">
+    <article class="project-card reveal" data-cat="Websites" data-studio="digital-studio" data-id="tourizto">
       <div class="project-media" style="--h:9">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Tourizto Travel Website</span></div>
         <img src="/assets/img/work/tourizto-website.webp" alt="Tourizto Travel Website preview" loading="lazy" decoding="async" onerror="this.remove()">
@@ -667,7 +769,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Branding &amp; Design" data-id="dna-brand">
+    <article class="project-card reveal" data-cat="Branding &amp; Design" data-studio="creative-studio" data-id="dna-brand">
       <div class="project-media" style="--h:104">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>DNA Brand Identity</span></div>
         <img src="/assets/img/work/dna-brand-identity.webp" alt="DNA Brand Identity preview" loading="lazy" decoding="async" onerror="this.remove()">
@@ -689,7 +791,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Branding &amp; Design" data-id="sanfas-brand">
+    <article class="project-card reveal" data-cat="Branding &amp; Design" data-studio="creative-studio" data-id="sanfas-brand">
       <div class="project-media" style="--h:287">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Sanfas Brand Identity</span></div>
         <img src="/assets/img/work/sanfas-brand-identity.webp" alt="Sanfas Brand Identity preview" loading="lazy" decoding="async" onerror="this.remove()">
@@ -711,7 +813,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Branding &amp; Design" data-id="photo-retouching">
+    <article class="project-card reveal" data-cat="Branding &amp; Design" data-studio="creative-studio" data-id="photo-retouching">
       <div class="project-media" style="--h:152">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Beauty Photo Retouching</span></div>
         <img src="/assets/img/work/photo-retouching.webp" alt="Beauty Photo Retouching preview" loading="lazy" decoding="async" onerror="this.remove()">
@@ -733,7 +835,7 @@
         </div>
       </div>
     </article>
-    <article class="project-card reveal" data-cat="Branding &amp; Design" data-id="sabs-kitchen">
+    <article class="project-card reveal" data-cat="Branding &amp; Design" data-studio="creative-studio" data-id="sabs-kitchen">
       <div class="project-media" style="--h:220">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>Sab&#39;s Kitchen Flyer</span></div>
         <img src="/assets/img/work/sabs-kitchen-flyer.webp" alt="Sab&#39;s Kitchen Flyer preview" loading="lazy" decoding="async" onerror="this.remove()">

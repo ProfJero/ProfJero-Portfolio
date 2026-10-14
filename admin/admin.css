@@ -95,9 +95,11 @@ table.table { width: 100%; border-collapse: collapse; font-size: .9rem; }
 .msg-item { display: flex; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); cursor: pointer; position: relative; }
 .msg-item:hover { background: var(--surface-2); }
 .msg-item.active { background: var(--brand-50); }
-.msg-item.unread .title { font-weight: 800; }
 .msg-item.unread::before { content: ""; position: absolute; left: 6px; top: 50%; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
 .msg-item .when { font-size: .75rem; color: var(--muted); white-space: nowrap; }
+.msg-item .title { font-weight: 650; }
+.msg-item .sub { font-size: .8rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.msg-item.unread .title { font-weight: 800; }
 .inbox-detail { padding: 26px; overflow-y: auto; max-height: 76vh; }
 .msg-meta { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin: 18px 0; padding: 16px; background: var(--surface-2); border-radius: var(--radius-sm); }
 .msg-meta small { display: block; color: var(--muted); font-size: .75rem; font-weight: 600; }
@@ -251,3 +253,20 @@ code.k { font-family: ui-monospace, monospace; font-size: .85em; background: var
 .content .search input { padding-top: 11px; padding-bottom: 11px; }
 .editor-grid > div:last-child .fields { grid-template-columns: 1fr; }
 .editor-grid > div:last-child .img-preview { width: 96px; height: 64px; }
+
+/* Client chat */
+.chat-pane { display: flex; flex-direction: column; padding: 0 !important; }
+.chat-head { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.chat-pane .chat-log { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; background: var(--bg); min-height: 50vh; max-height: 64vh; }
+.bubble { max-width: min(78%, 520px); padding: 10px 14px; border-radius: 16px; }
+.bubble p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.bubble time { display: block; font-size: .72rem; opacity: .7; margin-top: 4px; }
+.bubble.me { align-self: flex-end; background: var(--brand); color: #fff; border-bottom-right-radius: 4px; }
+.bubble.them { align-self: flex-start; background: var(--surface); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+.chat-form { display: flex; gap: 10px; padding: 12px; border-top: 1px solid var(--line); background: var(--surface); }
+.chat-form textarea { flex: 1; resize: none; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); padding: 11px 14px; color: var(--text); }
+.chat-form textarea:focus { outline: none; border-color: var(--brand); }
+.status.pending, .status.requested { color: #9a6700; background: color-mix(in srgb, var(--amber) 20%, transparent); }
+.status.confirmed, .status.quoted, .status.approved, .status.in-production, .status.active { color: var(--brand); background: var(--brand-50); }
+.status.completed, .status.delivered, .status.ready { color: #078a52; background: color-mix(in srgb, var(--green) 14%, transparent); }
+.status.cancelled, .status.declined { color: var(--red); background: color-mix(in srgb, var(--red) 10%, transparent); }

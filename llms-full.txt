@@ -16,10 +16,10 @@
 
 ## Studios & services
 
-- [Digital Studio](https://profjerohub.pages.dev/#digital-studio): Custom software, websites, mobile apps and cloud solutions that help businesses run better. Services: Software Development, Web Development, Mobile App Development, Cloud & Backend.
-- [Creative Studio](https://profjerohub.pages.dev/#creative-studio): Brand identities, graphics, UI/UX and video that make people remember you. Services: Branding & Identity, Graphic Design, UI/UX Design, Video Editing.
-- [Nourish Studio](https://profjerohub.pages.dev/#nourish-studio): Evidence-based nutrition and wellness programmes for individuals and organisations. Services: Nutrition Consulting, Wellness Programs, Meal Planning.
-- [Agro Studio](https://profjerohub.pages.dev/#agro-studio): Technology and expert advice that help farms grow more with less. Services: Smart Farming, Crop Consulting, Agri-Tech Solutions.
+- [Digital Studio](https://profjerohub.pages.dev/digital-studio): Custom software, websites, mobile apps and cloud solutions that help businesses run better. Services: Business & Personal Websites, Custom Web Applications, Business Management Systems, Dashboards & Admin Portals, Mobile App Development, Cloud, Backend & Hosting, AI-Assisted Automation & Integrations, IT Training & Digital Skills.
+- [Creative Studio](https://profjerohub.pages.dev/creative-studio): Custom product branding — watches, mugs, apparel, awards, frames and print — plus brand identity design. Services: Custom Timepieces, Tech Accessory Branding, Drinkware & Gift Items, Apparel & Textile Printing, Awards & Recognition, Print & Signage, Frames, Décor & Stationery, Logo & Brand Identity Design.
+- [Nourish Studio](https://profjerohub.pages.dev/nourish-studio): Evidence-based nutrition and wellness programmes for individuals and organisations. Services: Personal Nutrition Consultation, Personalised Meal Plans, Family Nutrition Coaching, Workplace Wellness Programmes, Healthy Meal Prep & Food Products, Nutrition Education for Schools & Churches.
+- [Agro Studio](https://profjerohub.pages.dev/agro-studio): Technology and expert advice that help farms grow more with less. Services: Smart Farming & IoT Sensors, Irrigation Design & Automation, Crop Consulting & Soil Health, Farm Management Records & Apps, Poultry & Livestock Advisory, Farm-to-Market Digital Presence, Farmer & Youth Agribusiness Training.
 
 ## Projects (with live demos)
 

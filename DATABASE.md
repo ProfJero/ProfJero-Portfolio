@@ -7,9 +7,10 @@ The ProfJero portfolio and **ProfJero Hub** (https://profjerohub.pages.dev) use 
 | Collection | Purpose | Public read | Public write |
 |---|---|---|---|
 | `settings/site` | Portfolio profile, hero (`heroBackground`, `heroOverlay`, `waterEffect`), about, contact, socials, process, pricing (`pricingGroups[{name, icon, plans[{name, tagline, prefix, price, priceUsd, period, delivery, featured, features[]}]}]`, `pricingNote`), team (`showTeam`, `teamTitle`, `teamIntro`), appearance (`appearance{color, layout, mode, bg, overlay, panel}`), FAQ, SEO, announcement | ✅ | ❌ |
-| `settings/hub` | *(Reserved for ProfJero Hub settings)* | ✅ | ❌ |
+| `settings/hub` | Hub homepage: hero, about, values, steps, FAQ, SEO | ✅ | ❌ |
 | `skills/{id}` | `name, level (0–100), group, order` | ✅ | ❌ |
-| `studios/{id}` | `name, tagline, description, icon, color, url, active, order, services[{title,text}]` | ✅ | ❌ |
+| `studios/{id}` | `name, tagline, description, icon, color, url, page, active, order, services[], packages[], highlights[], process[], faqs[], seo{}` | ✅ | ❌ |
+| `products/{id}` | Creative Studio catalogue: `name, category, description, image, priceFrom, moq, delivery, options[], featured, active, order` | ✅ | ❌ |
 | `projects/{id}` | `title, category, summary, description (md), cover, videoUrl, demoUrl, liveUrl, demoNote, repoUrl, client, year, tech[], status, featured, order` | ✅ | ❌ |
 | `testimonials/{id}` | `name, role, text, avatar, rating, visible, order` | ✅ | ❌ |
 | `experience/{id}` | `type (work/education), title, org, start, end, text, order` | ✅ | ❌ |
@@ -22,13 +23,22 @@ The ProfJero portfolio and **ProfJero Hub** (https://profjerohub.pages.dev) use 
 | `messages/{id}` | Contact and enquiry forms: `name, email, phone, service, budget, subject, message, studio, extra{}, source ("portfolio"/"hub"), page, status, createdAt` | ❌ | create only (validated) |
 | `subscribers/{email}` | Newsletter: `email, source, page, createdAt` | ❌ | create only |
 | `stats/site`, `stats_daily/{YYYY-MM-DD}` | Visit counters (`visits`) | ❌ | +1 only |
+| `bookings/{ref}` | Hub appointments. The id is the reference code `PJB…`. Fields: `ref, studio, service, date, time, mode, name, email, phone, company, notes, uid, status, adminNote, rescheduleRequest, createdAt` | get by reference only | create (validated, `pending`); the owner can cancel or request a new time |
+| `orders/{ref}` | Product quotes and orders, with id `PJO…`. Fields: `product, quantity, options, name, email, phone, company, uid, status (requested/quoted/approved/declined/in-production/ready/delivered/cancelled), quoteAmount, quoteNote, createdAt` | get by reference only | create (validated); the owner can approve or decline a quote, or cancel |
+| `users/{uid}` | Client portal profile: `name, email, phone, company, photo, notify` | owner, admins | owner |
+| `clientProjects/{id}` | `title, uid, email, studio, status, progress, stages[], nextStep, files[], updates[], invoice{total, paid}` | owner (uid or verified email), admins | admins |
+| `threads/{uid}` and `threads/{uid}/messages/{id}` | Client ↔ admin chat | owner, admins | owner (`from: "client"`), admins |
 | `media/{id}` | Cloudinary upload library | admins | admins |
 | `private/integrations` | Cloudinary cloud name and upload preset | admins | admins |
 | `admins/{email}` | Extra admins. `profjero947@gmail.com` is always the owner. | admins | owner |
 
-All admin screens are in the portfolio dashboard at `/admin/`. The Hub can use the same dashboard because the data is shared.
+All admin screens are in the portfolio dashboard at `/admin/`, including the ProfJero Hub screens. The Hub has no separate admin.
+
+"Owner" means the signed-in user whose `uid` matches the document, or whose **verified** email matches its `email`. Bookings and quotes made as a guest therefore appear in the portal once the client verifies the same email address.
 
 ## Using the database from ProfJero Hub
+
+The Hub repo keeps its own copies of the shared modules (`ProfJero-Hub/assets/js/`) with `SITE.id = "hub"`. These are the same files as in this repo. When you change `store.js`, `render.js`, `firebase.js`, `utils.js`, `appearance.js`, `ripples.js`, `ui.js`, `defaults.js` or `studio-content.js` here, copy the file over there too.
 
 The shared modules allow cross-origin imports (`Access-Control-Allow-Origin: *` on `/assets/js/*`), so the Hub can use them directly:
 
@@ -57,4 +67,4 @@ The shared modules allow cross-origin imports (`Access-Control-Allow-Origin: *` 
 
 Article links for Hub readers: `https://profjero.pages.dev/blog/<slug>`. They include likes, comments and shares.
 
-**Studio links.** Each studio's **Visit studio** button uses its `url` field. Point it at the matching section or page on the Hub, for example `https://profjerohub.pages.dev/#digital-studio`. If the Hub uses different anchors or page paths, update the links in **Admin → Studios & services**.
+**Studio links.** Each studio's **Visit studio** button uses its `url` field. Point it at the matching section or page on the Hub, for example `https://profjerohub.pages.dev/digital-studio`. Each studio has its own page on the Hub.
