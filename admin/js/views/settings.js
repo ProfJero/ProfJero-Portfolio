@@ -1,6 +1,6 @@
 import { $, $$, fb, esc, toast, confirmDialog, download, cloudinaryConfig, uploadToCloudinary, state } from "../core.js";
 import { renderFields, bindFields, readFields } from "../forms.js";
-import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE } from "/assets/js/defaults.js";
+import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_TEAM } from "/assets/js/defaults.js";
 import { SEED_POSTS } from "/assets/js/seed-posts.js";
 import { SITE } from "/assets/js/config.js";
 import { readingTime } from "/assets/js/utils.js";
@@ -11,7 +11,7 @@ const cloudFields = [
   { key: "folder", label: "Folder (optional)", type: "text", placeholder: "profjero", full: true }
 ];
 
-const COLLECTIONS = ["settings", "skills", "studios", "projects", "testimonials", "experience", "posts", "messages", "subscribers", "media", "admins"];
+const COLLECTIONS = ["settings", "skills", "studios", "projects", "testimonials", "experience", "team", "posts", "messages", "subscribers", "media", "admins"];
 
 export async function render(view) {
   const cfg = await cloudinaryConfig(true);
@@ -40,7 +40,7 @@ export async function render(view) {
 
     <section class="card">
       <div class="card-head"><h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--green)"></i> Import default content</h3>
-        <p>Copies the built-in content (profile & site settings, ${DEFAULT_SKILLS.length} skills, ${DEFAULT_STUDIOS.length} studios, ${DEFAULT_PROJECTS.length} projects, ${DEFAULT_TESTIMONIALS.length} testimonials, ${DEFAULT_EXPERIENCE.length} timeline entries and ${SEED_POSTS.length} blog posts) into Firestore so you can edit everything here and readers can like and comment on posts.</p></div>
+        <p>Copies the built-in content (profile & site settings, ${DEFAULT_SKILLS.length} skills, ${DEFAULT_STUDIOS.length} studios, ${DEFAULT_PROJECTS.length} projects, ${DEFAULT_TESTIMONIALS.length} testimonials, ${DEFAULT_EXPERIENCE.length} timeline entries, ${DEFAULT_TEAM.length} team members and ${SEED_POSTS.length} blog posts) into Firestore so you can edit everything here and readers can like and comment on posts.</p></div>
       <label class="switch" style="margin-bottom:14px"><input type="checkbox" id="seed-overwrite"><span class="track"></span>Overwrite items that already exist (blog stats, likes and comments are never touched)</label>
       <div class="btn-row"><button class="btn btn-primary" id="seed"><i class="fa-solid fa-file-import"></i> Import default content</button></div>
       <pre class="small muted" id="seed-log" style="white-space:pre-wrap;margin-top:12px"></pre>
@@ -105,7 +105,7 @@ export async function render(view) {
       const siteDoc = await fb.getDoc(fb.doc(fb.db, "settings", "site"));
       if (!siteDoc.exists() || overwrite) writes.push([fb.doc(fb.db, "settings", "site"), { ...DEFAULT_SETTINGS, updatedAt: fb.serverTimestamp() }]);
       log(`settings: ${!siteDoc.exists() || overwrite ? "imported" : "kept existing"}`);
-      for (const [col, list] of [["skills", DEFAULT_SKILLS], ["studios", DEFAULT_STUDIOS], ["projects", DEFAULT_PROJECTS], ["testimonials", DEFAULT_TESTIMONIALS], ["experience", DEFAULT_EXPERIENCE]]) {
+      for (const [col, list] of [["skills", DEFAULT_SKILLS], ["studios", DEFAULT_STUDIOS], ["projects", DEFAULT_PROJECTS], ["testimonials", DEFAULT_TESTIMONIALS], ["experience", DEFAULT_EXPERIENCE], ["team", DEFAULT_TEAM]]) {
         const have = await existing(col);
         let n = 0;
         list.forEach((item, i) => {

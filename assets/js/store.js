@@ -1,12 +1,12 @@
 // Client-side data access with graceful fallbacks to bundled defaults, so the
 // site always renders even before Firestore is populated or when offline.
-import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE } from "./defaults.js";
+import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_TEAM } from "./defaults.js";
 import { SEED_POSTS } from "./seed-posts.js";
 import { readingTime } from "./utils.js";
 
 export const DEFAULTS = {
   skills: DEFAULT_SKILLS, studios: DEFAULT_STUDIOS, projects: DEFAULT_PROJECTS,
-  testimonials: DEFAULT_TESTIMONIALS, experience: DEFAULT_EXPERIENCE
+  testimonials: DEFAULT_TESTIMONIALS, experience: DEFAULT_EXPERIENCE, team: DEFAULT_TEAM
 };
 
 let fb; // lazily imported firebase module
@@ -20,6 +20,8 @@ export function mergeSettings(saved = {}) {
   const out = { ...DEFAULT_SETTINGS, ...saved };
   out.socials = { ...DEFAULT_SETTINGS.socials, ...(saved.socials || {}) };
   out.seo = { ...DEFAULT_SETTINGS.seo, ...(saved.seo || {}) };
+  out.appearance = { ...DEFAULT_SETTINGS.appearance, ...(saved.appearance || {}) };
+  if (!Array.isArray(saved.pricingGroups) || !saved.pricingGroups.length) out.pricingGroups = DEFAULT_SETTINGS.pricingGroups;
   return out;
 }
 
@@ -40,10 +42,10 @@ export async function loadSettings() {
   try {
     const { db, doc, getDoc } = await firebase();
     const snap = await withTimeout(getDoc(doc(db, "settings", "site")));
-    return mergeSettings(snap.exists() ? snap.data() : {});
+    return { ...mergeSettings(snap.exists() ? snap.data() : {}), _loaded: true };
   } catch (e) {
     console.warn("[settings] using defaults:", e.message);
-    return mergeSettings();
+    return { ...mergeSettings(), _loaded: true };
   }
 }
 

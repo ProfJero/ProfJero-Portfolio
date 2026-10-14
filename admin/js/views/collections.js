@@ -78,6 +78,25 @@ const CONFIG = {
     ],
     card: t => `<div style="display:flex;gap:14px;align-items:center;flex:1;min-width:0">${t.avatar ? `<img class="avatar" src="${esc(img(t.avatar, 100))}" alt="">` : ""}<div class="grow"><div class="title">${esc(t.name)} ${t.visible === false ? '<span class="status">Hidden</span>' : ""}</div><div class="sub">${esc(t.text)}</div></div></div>`
   },
+  team: {
+    singular: "team member", idFrom: "name",
+    intro: "Team members appear in the <b>Team</b> section of the homepage. Turn the whole section on or off in <a href=\"#/profile/team\">Profile & site → Team</a>.",
+    toForm: m => ({ ...(m.socials || {}), ...m }),
+    fields: [
+      { key: "name", label: "Full name", type: "text", required: true },
+      { key: "role", label: "Role", type: "text", placeholder: "e.g. Graphic & UI/UX Designer" },
+      { key: "studio", label: "Studio", type: "text", placeholder: "Digital Studio, Creative Studio…" },
+      { key: "visible", label: "Visible on website", type: "toggle", default: true },
+      { key: "photo", label: "Photo", type: "image", full: true, help: "Square or portrait photo works best." },
+      { key: "bio", label: "Short bio", type: "textarea", full: true, rows: 3, max: 220 },
+      { key: "linkedin", label: "LinkedIn URL", type: "url" },
+      { key: "github", label: "GitHub URL", type: "url" },
+      { key: "x", label: "X (Twitter) URL", type: "url" },
+      { key: "instagram", label: "Instagram URL", type: "url" },
+      { key: "email", label: "Email", type: "email" }
+    ],
+    card: m => `<div style="display:flex;gap:14px;align-items:center;flex:1;min-width:0">${m.photo ? `<img class="avatar" src="${esc(img(m.photo, 100))}" alt="">` : ""}<div class="grow"><div class="title">${esc(m.name)} ${m.visible === false ? '<span class="status">Hidden</span>' : ""}</div><div class="sub">${esc(m.role || "")} · ${esc(m.studio || "")}</div></div></div>`
+  },
   experience: {
     singular: "entry", idFrom: "title",
     intro: "Your work experience and education timeline.",
@@ -122,7 +141,7 @@ export async function render(view, { name }) {
     const data = item || { order: items.length + 1 };
     await openDialog({
       title: isNew ? `Add ${cfg.singular}` : `Edit ${cfg.singular}`, size: "wide",
-      body: `<form data-scope id="c-form" novalidate>${renderFields(cfg.fields, data)}</form>`,
+      body: `<form data-scope id="c-form" novalidate>${renderFields(cfg.fields, cfg.toForm ? cfg.toForm(data) : data)}</form>`,
       onOpen: body => { bindFields($("#c-form", body)); $("input, textarea", body)?.focus(); },
       actions: [
         { label: "Cancel", value: null, cls: "btn-ghost" },

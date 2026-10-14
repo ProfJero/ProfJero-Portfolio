@@ -16,7 +16,12 @@ export const DEFAULT_SETTINGS = {
   happyClients: 42,
   studentsTrained: 0,              // set in the admin dashboard; hidden when 0
   avatar: "/assets/img/people/benjamin-amoako.webp",
-  heroImage: "/assets/img/people/profjero-at-work.webp",
+  heroBackground: "/assets/img/people/hero-bg.webp",   // full-width hero photo (water ripple effect runs on it)
+  heroOverlay: 78,                                      // 0–100: darkness of the hero overlay
+  waterEffect: true,                                    // interactive water ripple on the hero
+  appearance: {                                         // site-wide defaults; visitors can personalise in the Customize panel
+    color: "#0A60EE", layout: "full", mode: "system", bg: "", overlay: false, ripples: true, panel: true
+  },
   cvUrl: "",
   aboutTitle: "Full-stack developer who builds systems that work in the real world",
   about: [
@@ -53,11 +58,54 @@ export const DEFAULT_SETTINGS = {
     { icon: "fa-solid fa-code", title: "Build", text: "Front end, back end, database and admin dashboard — with weekly demos so you're never in the dark." },
     { icon: "fa-solid fa-rocket", title: "Launch & Support", text: "Deployment, SEO, training for your team and ongoing support as your business grows." }
   ],
-  pricing: [
-    { name: "Starter", price: "GH₵ 1,000", note: "Starting from", featured: false, features: ["Landing page or small website", "Responsive, mobile-first design", "SEO-ready structure & Google indexing", "Contact form & WhatsApp integration", "1 month free support"] },
-    { name: "Business", price: "GH₵ 3,000", note: "Starting from", featured: true, features: ["Custom web app or business system", "Admin dashboard", "Database & user authentication", "Cloud hosting & media storage setup", "3 months free support"] },
-    { name: "Enterprise", price: "GH₵ 7,000", note: "Starting from", featured: false, features: ["Fully custom software platform", "Advanced roles, analytics & reports", "Assessment, LMS or management systems", "API & third-party integrations", "Long-term scalability support"] }
+  pricingNote: "Prices are starting points — your exact quote depends on features and timeline. 50% to start, 50% on delivery (milestone payments for larger projects). Mobile Money, bank transfer and card accepted. Domains and third-party fees (SMS, payment gateways) are billed at cost.",
+  pricingGroups: [
+    {
+      name: "Websites", icon: "fa-solid fa-globe",
+      plans: [
+        { name: "Starter Website", tagline: "Look professional online, fast.", prefix: "From", price: "GH₵ 4,500", priceUsd: "$450", period: "one-off", delivery: "1–2 weeks", featured: false,
+          features: ["Up to 5 pages, mobile-first design", "Contact form + WhatsApp chat button", "Google-ready SEO & Search Console setup", "Free SSL & fast hosting setup", "1 month free support"] },
+        { name: "Business Website", tagline: "A site you can update yourself.", prefix: "From", price: "GH₵ 9,500", priceUsd: "$950", period: "one-off", delivery: "3–4 weeks", featured: true,
+          features: ["Up to 12 pages + blog", "Admin dashboard to edit content", "Lead forms delivered to your inbox", "Advanced SEO, structured data & analytics", "Image/video storage (Cloudinary)", "3 months free support"] },
+        { name: "E-commerce / Booking", tagline: "Sell or take bookings online.", prefix: "From", price: "GH₵ 16,000", priceUsd: "$1,600", period: "one-off", delivery: "4–6 weeks", featured: false,
+          features: ["Products, cart & checkout or bookings", "Mobile Money & card payments (Paystack)", "Orders & stock dashboard", "Email/SMS notifications", "3 months free support"] }
+      ]
+    },
+    {
+      name: "Web Apps & Systems", icon: "fa-solid fa-layer-group",
+      plans: [
+        { name: "Business System", tagline: "POS, inventory, school, church or HR.", prefix: "From", price: "GH₵ 22,000", priceUsd: "$2,200", period: "one-off", delivery: "5–8 weeks", featured: false,
+          features: ["Multi-user roles & secure login", "Reports, exports & receipts", "Works on phone, tablet & desktop", "Staff training included", "3 months free support"] },
+        { name: "Custom Platform", tagline: "LMS, marketplace or SaaS product.", prefix: "From", price: "GH₵ 45,000", priceUsd: "$4,500", period: "one-off", delivery: "8–12 weeks", featured: true,
+          features: ["Full front end + back end + database", "Admin & analytics dashboards", "Payments, email/SMS & API integrations", "Scalable cloud architecture", "Live demo environment", "6 months free support"] },
+        { name: "Enterprise", tagline: "Multi-branch, integrations, SLAs.", prefix: "From", price: "GH₵ 90,000", priceUsd: "$9,000", period: "one-off", delivery: "Phased roadmap", featured: false,
+          features: ["Discovery & technical architecture", "Multi-branch / multi-tenant systems", "Third-party & legacy integrations", "Security review & performance tuning", "Dedicated support agreement (SLA)"] }
+      ]
+    },
+    {
+      name: "Care & Hosting", icon: "fa-solid fa-shield-heart",
+      plans: [
+        { name: "Essential Care", tagline: "Peace of mind for small sites.", prefix: "", price: "GH₵ 650", priceUsd: "$65", period: "/month", delivery: "Cancel anytime", featured: false,
+          features: ["Hosting, SSL & uptime monitoring", "Weekly backups & security updates", "2 small content edits per month", "Email support (48h)"] },
+        { name: "Growth Care", tagline: "Keep improving every month.", prefix: "", price: "GH₵ 1,500", priceUsd: "$150", period: "/month", delivery: "Cancel anytime", featured: true,
+          features: ["Everything in Essential", "Up to 6 hours of changes monthly", "Monthly SEO & analytics report", "Priority support (24h)"] },
+        { name: "Pro Partner", tagline: "Your on-call dev team.", prefix: "", price: "GH₵ 3,500", priceUsd: "$350", period: "/month", delivery: "Cancel anytime", featured: false,
+          features: ["Up to 20 hours of development", "New features & integrations", "Quarterly security & speed audits", "Same-day support"] }
+      ]
+    },
+    {
+      name: "Training", icon: "fa-solid fa-chalkboard-user",
+      plans: [
+        { name: "1-on-1 Coaching", tagline: "Learn faster with a mentor.", prefix: "", price: "GH₵ 2,500", priceUsd: "$250", period: "/month", delivery: "8 sessions", featured: false,
+          features: ["8 × 90-minute live sessions", "Personal learning roadmap", "Code reviews on your projects", "WhatsApp support between sessions"] },
+        { name: "Web Dev Bootcamp", tagline: "Zero to job-ready full-stack.", prefix: "", price: "GH₵ 6,000", priceUsd: "$600", period: "12 weeks", delivery: "Small cohorts", featured: true,
+          features: ["HTML, CSS, JavaScript, React", "Node.js, databases & Firebase", "3 portfolio projects you deploy", "Career guidance & certificate"] },
+        { name: "Corporate & Schools", tagline: "Upskill your team or students.", prefix: "From", price: "GH₵ 5,000", priceUsd: "$500", period: "/day", delivery: "Up to 25 people", featured: false,
+          features: ["Custom curriculum for your goals", "Digital skills, web, data or IT basics", "Materials & certificates", "On-site or online"] }
+      ]
+    }
   ],
+
   faqs: [
     { q: "What kind of projects do you build?", a: "Websites, web applications, admin dashboards, e-learning platforms, inventory and point-of-sale systems, and APIs. I handle both the front end and the back end, so I can deliver a complete system." },
     { q: "Which technologies do you use?", a: "HTML, CSS, JavaScript and React on the front end; Node.js, PHP, Firebase/Firestore, MySQL and REST APIs on the back end; Cloudflare, Cloudinary and Google Cloud for hosting and media. I choose the stack that fits your budget and goals." },
@@ -67,7 +115,10 @@ export const DEFAULT_SETTINGS = {
     { q: "Do you offer training?", a: "Yes. I train individuals, schools and organisations in web development, digital skills and IT, both in person and online." }
   ],
   footerText: "Building solutions. Empowering lives. Full-stack development, IT training and creative studios from Cape Coast to the world.",
-  announcement: ""                    // optional banner text shown at the top of the site
+  announcement: "",                   // optional banner text shown at the top of the site
+  showTeam: true,
+  teamTitle: "The team behind the studios",
+  teamIntro: "Skilled people across development, design and data — working together to deliver complete, high-quality solutions."
 };
 
 export const DEFAULT_SKILLS = [
@@ -254,4 +305,16 @@ export const DEFAULT_EXPERIENCE = [
   { id: "edu-it", type: "education", title: "BSc. Information Technology", org: "University", start: "", end: "", order: 5, text: "Programming, web development, databases, networking and systems analysis." },
   { id: "edu-python", type: "education", title: "Python Programming", org: "Professional course", start: "2023", end: "2024", order: 6, text: "Data types, control flow, functions, OOP and data structures through practical projects." },
   { id: "edu-php", type: "education", title: "PHP & MySQL", org: "Professional course", start: "2021", end: "2022", order: 7, text: "Dynamic web applications, databases and PHP frameworks." }
+];
+
+export const DEFAULT_TEAM = [
+  { id: "benjamin-amoako", name: "Benjamin Amoako", role: "Founder & Lead Full-Stack Developer", studio: "Digital Studio", order: 1, visible: true,
+    photo: "/assets/img/team/benjamin-amoako.webp", bio: "Builds custom software, digital platforms and admin systems for real-world applications.",
+    socials: { linkedin: "", github: "", x: "", email: "profjero947@gmail.com" } },
+  { id: "abel-eduah", name: "Abel Eduah", role: "Graphic & UI/UX Designer", studio: "Creative Studio", order: 2, visible: true,
+    photo: "/assets/img/team/abel-eduah.webp", bio: "Designs visually appealing graphics, user interfaces and branding materials.",
+    socials: { linkedin: "", github: "", x: "", email: "" } },
+  { id: "godsway-arhin", name: "Godsway Arhin", role: "Data Analyst & Robotics", studio: "Digital Studio", order: 3, visible: true,
+    photo: "/assets/img/team/godsway-arhin.webp", bio: "Analyses data, builds insights and develops robotics solutions.",
+    socials: { linkedin: "", github: "", x: "", email: "" } }
 ];

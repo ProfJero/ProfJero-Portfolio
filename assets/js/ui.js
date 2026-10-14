@@ -4,6 +4,7 @@ import { esc, yearsSince, isEmail, safeUrl } from "./utils.js";
 import { renderSocials } from "./render.js";
 import { firebase, trackVisit } from "./store.js";
 import { SITE } from "./config.js";
+import { toggleMode, setSiteLook, initCustomizer, look } from "./appearance.js";
 
 document.documentElement.classList.add("js");
 export const $ = (s, r = document) => r.querySelector(s);
@@ -11,13 +12,7 @@ export const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 // ---------- Theme ----------
 export function initTheme() {
-  const btn = $(".theme-toggle");
-  btn?.addEventListener("click", () => {
-    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = next;
-    try { localStorage.setItem("pj_theme", next); } catch { }
-    $('meta[name="theme-color"]')?.setAttribute("content", next === "dark" ? "#060B18" : "#0A60EE");
-  });
+  $$(".theme-toggle").forEach(btn => btn.addEventListener("click", toggleMode));
 }
 
 // ---------- Header / nav ----------
@@ -102,6 +97,10 @@ const get = (o, path) => path.split(".").reduce((v, k) => v?.[k], o);
  *  data-socials            -> social icon links
  */
 export function applySettings(s) {
+  if (document.querySelector(".page-wrap")) {
+    if (s._loaded) setSiteLook(s.appearance || {});   // only trust live settings, not the instant fallback paint
+    initCustomizer({ enabled: look().panel !== false });
+  }
   const years = yearsSince(s.careerStart);
   $$("[data-s]").forEach(el => {
     const v = get(s, el.dataset.s);

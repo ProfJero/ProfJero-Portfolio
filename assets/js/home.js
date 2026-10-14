@@ -1,4 +1,5 @@
 import { $, $$, initCommon, applySettings, reveal, toast } from "./ui.js";
+import { look } from "./appearance.js";
 import { loadSettings, loadCollection, loadPosts, firebase, mergeSettings, DEFAULTS, seedPosts } from "./store.js";
 import { homeSections, faqSchema, projectCover } from "./render.js";
 import { esc, safeUrl, parseVideo, isEmail, byOrder, img } from "./utils.js";
@@ -16,7 +17,7 @@ const state = {
 const containers = {
   about: "#about-body", skills: "#skills-grid", "studio-tabs": "#studio-tabs", "studio-panels": "#studio-panels",
   process: "#process-list", "project-filters": "#project-filters", projects: "#project-grid", "tl-work": "#tl-work",
-  "tl-edu": "#tl-edu", testimonials: "#testimonial-list", pricing: "#pricing-list", posts: "#latest-posts", faqs: "#faq-list"
+  "tl-edu": "#tl-edu", testimonials: "#testimonial-list", pricing: "#pricing-list", posts: "#latest-posts", faqs: "#faq-list", team: "#team-list"
 };
 
 function paint(data) {
@@ -33,7 +34,9 @@ function paint(data) {
   $("#faq-schema").textContent = faqSchema(s.faqs);
   $("#status-pill")?.classList.toggle("busy", s.available === false);
   $("#stat-students").hidden = !(Number(s.studentsTrained) > 0);
-  if (s.heroImage) $("#hero-img").src = img(s.heroImage, 900);
+  setHero(s);
+  $("#team").hidden = s.showTeam === false || !(data.team || []).some(m => m.visible !== false);
+  setCurrency(currency);
   if (s.avatar) $("#about-img").src = img(s.avatar, 700);
   const cv = $("#cv-btn");
   if (safeUrl(s.cvUrl)) { cv.href = safeUrl(s.cvUrl); cv.hidden = false; } else cv.hidden = true;
@@ -84,10 +87,72 @@ $("#services").addEventListener("click", e => {
   const link = e.target.closest("[data-service]");
   if (link) preselect(link.dataset.service);
 });
+// ---------- Pricing: tabs, currency, "Get a quote" ----------
+let currency = (() => {
+  try { const c = localStorage.getItem("pj_currency"); if (c) return c; } catch { }
+  try { return /Africa\/Accra/.test(Intl.DateTimeFormat().resolvedOptions().timeZone) ? "ghs" : "usd"; } catch { return "ghs"; }
+})();
+function setCurrency(c) {
+  currency = c;
+  $("#pricing").dataset.cur = c;
+  $$("#pricing button[data-cur]").forEach(b => b.setAttribute("aria-pressed", b.dataset.cur === c));
+}
+const budgetFor = text => {
+  const n = Number(String(text).replace(/[^\d.]/g, "")) || 0;
+  return n < 5000 ? "Below GH₵ 5,000" : n < 15000 ? "GH₵ 5,000 – 15,000" : n < 40000 ? "GH₵ 15,000 – 40,000" : n < 90000 ? "GH₵ 40,000 – 90,000" : "Above GH₵ 90,000";
+};
 $("#pricing").addEventListener("click", e => {
+  const tab = e.target.closest("[data-pgroup]");
+  if (tab) {
+    $$("#pricing [data-pgroup]").forEach(t => { t.classList.toggle("active", t === tab); t.setAttribute("aria-selected", t === tab); });
+    $$("#pricing [data-ppanel]").forEach(p => { p.hidden = p.dataset.ppanel !== tab.dataset.pgroup; if (!p.hidden) p.querySelectorAll(".reveal").forEach(x => x.classList.add("in-view")); });
+    return;
+  }
+  const cur = e.target.closest("button[data-cur]");
+  if (cur) { setCurrency(cur.dataset.cur); try { localStorage.setItem("pj_currency", cur.dataset.cur); } catch { } return; }
   const a = e.target.closest("[data-plan]");
-  if (a) { $("#c-budget").value = { Starter: "GH₵ 1,000 – 3,000", Business: "GH₵ 3,000 – 7,000", Enterprise: "Above GH₵ 7,000" }[a.dataset.plan] || ""; $("#c-subject").value ||= `${a.dataset.plan} package enquiry`; }
+  if (a) {
+    const price = a.closest(".price-card")?.querySelector(".p-ghs")?.textContent || "";
+    $("#c-budget").value = budgetFor(price);
+    $("#c-subject").value = `${a.dataset.plan} — ${a.dataset.pgroupName} enquiry`;
+    const svc = $("#c-service");
+    const guess = { "Websites": "Web Development", "Web Apps & Systems": "Software Development", "Training": "IT Training", "Care & Hosting": "Cloud & Backend" }[a.dataset.pgroupName];
+    if (guess && [...svc.options].some(o => o.value === guess)) svc.value = guess;
+    setTimeout(() => $("#c-name").focus({ preventScroll: true }), 700);
+  }
 });
+
+// ---------- Hero: background photo, overlay and water ripple ----------
+let ripples = null, rippleStarting = false;
+function setHero(s) {
+  const hero = $("#home");
+  const custom = s.heroBackground && !/\/assets\/img\/people\/hero-bg\.webp$/.test(s.heroBackground);
+  const url = custom ? img(s.heroBackground, innerWidth < 700 ? 900 : 1920) : `/assets/img/people/hero-bg${innerWidth < 700 ? "-sm" : ""}.webp`;
+  if (custom) {
+    hero.style.setProperty("--hero-bg", `url("${img(s.heroBackground, 1920)}")`);
+    hero.style.setProperty("--hero-bg-sm", `url("${img(s.heroBackground, 900)}")`);
+  }
+  hero.style.setProperty("--hero-overlay", Math.min(1, Math.max(0, Number(s.heroOverlay ?? 78) / 100)));
+  if (ripples && state.heroUrl && state.heroUrl !== url) ripples.setImage(url);
+  state.heroUrl = url;
+  state.waterSite = s.waterEffect !== false;
+  updateWater();
+}
+async function updateWater() {
+  const want = state.waterSite !== false && look().ripples !== false && !matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!want) { ripples?.destroy(); ripples = null; return; }
+  if (ripples || rippleStarting) return;
+  rippleStarting = true;
+  try {
+    const { Ripples, ripplesSupported } = await import("./ripples.js");
+    if (ripplesSupported()) {
+      const small = innerWidth < 700;
+      ripples = new Ripples($("#home"), { resolution: small ? 192 : 320, dropRadius: small ? 16 : 22, perturbance: 0.035 });
+    }
+  } catch (e) { console.warn("Water effect unavailable:", e.message); }
+  rippleStarting = false;
+}
+addEventListener("pj:look", updateWater);
 function preselect(service) {
   const sel = $("#c-service");
   if ([...sel.options].some(o => o.value === service)) sel.value = service;
@@ -236,8 +301,8 @@ paint(fallback);
 
 Promise.all([
   loadSettings(), loadCollection("skills"), loadCollection("studios"), loadCollection("projects"),
-  loadCollection("testimonials"), loadCollection("experience"), loadPosts()
-]).then(([settings, skills, studios, projects, testimonials, experience, posts]) => {
+  loadCollection("testimonials"), loadCollection("experience"), loadPosts(), loadCollection("team")
+]).then(([settings, skills, studios, projects, testimonials, experience, posts, team]) => {
   Object.assign(state, { settings, projects, studios });
-  paint({ settings, skills, studios, projects, testimonials, experience, posts });
+  paint({ settings, skills, studios, projects, testimonials, experience, posts, team });
 });

@@ -32,12 +32,13 @@
   <link rel="manifest" href="/site.webmanifest">
   <link rel="alternate" type="application/rss+xml" title="ProfJero Blog" href="/rss.xml">
 
-  <script>try{var t=localStorage.getItem("pj_theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
+  <script>try{var d=document.documentElement,j=function(k){return JSON.parse(localStorage.getItem(k)||"{}")||{}},o=Object.assign({},j("pj_site_look"),j("pj_prefs")),m=o.mode||localStorage.getItem("pj_theme")||"system";if(m!=="light"&&m!=="dark")m=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=m;if(/^#[0-9a-f]{6}$/i.test(o.color||""))d.style.setProperty("--brand-base",o.color);if(o.layout==="boxed")d.dataset.layout="boxed";if(o.bg)d.dataset.bg=o.bg;if(o.overlay)d.dataset.overlay="1"}catch(e){}</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://firestore.googleapis.com">
-  <link rel="preload" as="image" href="/assets/img/people/profjero-at-work.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="/assets/img/people/hero-bg.webp" media="(min-width: 701px)" fetchpriority="high">
+  <link rel="preload" as="image" href="/assets/img/people/hero-bg-sm.webp" media="(max-width: 700px)" fetchpriority="high">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" href="/assets/css/main.css">
@@ -88,7 +89,7 @@
         "areaServed": ["Ghana", "Worldwide"],
         "address": { "@type": "PostalAddress", "addressLocality": "Cape Coast", "addressCountry": "GH" },
         "telephone": "+233531207256",
-        "priceRange": "GH₵1,000+",
+        "priceRange": "GH₵4,500 – GH₵90,000+",
         "serviceType": ["Web development", "Software development", "Mobile app development", "Admin dashboards", "UI/UX design", "Branding", "IT training"]
       }
     ]
@@ -98,6 +99,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page-wrap">
   <div class="announce" hidden><span></span><button type="button" aria-label="Dismiss announcement"><i class="fa-solid fa-xmark"></i></button></div>
 
   <header class="site-header">
@@ -126,8 +128,8 @@
 
   <main id="main">
     <!-- ================= HERO ================= -->
-    <section class="hero" id="home">
-      <div class="hero-grid-bg"></div>
+    <section class="hero hero-water" id="home">
+      <div class="hero-overlay" aria-hidden="true"></div>
       <div class="container hero-inner">
         <div>
           <span class="status-pill" id="status-pill"><span class="pulse"></span><span data-s="availability">Available for new projects</span></span>
@@ -148,13 +150,13 @@
           </div>
           <div class="hero-socials"><span>Follow:</span><div class="socials" data-socials></div></div>
         </div>
-        <div class="hero-visual">
-          <div class="hero-photo"><img id="hero-img" src="/assets/img/people/profjero-at-work.webp" alt="Benjamin Amoako (ProfJero) coding at his desk" width="470" height="588" fetchpriority="high"></div>
+        <div class="hero-visual" aria-hidden="true">
           <div class="float-card fc-1"><i class="fa-solid fa-layer-group"></i><div>Full-Stack<small>Frontend + Backend</small></div></div>
           <div class="float-card fc-2"><i class="fa-solid fa-database"></i><div>APIs &amp; Databases<small>Node · PHP · Firebase</small></div></div>
           <div class="float-card fc-3"><i class="fa-solid fa-chalkboard-user"></i><div>IT Trainer<small>Empowering lives</small></div></div>
         </div>
       </div>
+      <a class="scroll-cue" href="#about" aria-label="Scroll to About"><span></span></a>
     </section>
 
     <div class="marquee" aria-label="Technologies I use">
@@ -819,8 +821,50 @@
       </div>
     </section>
 
+    <!-- ================= TEAM ================= -->
+    <section class="section" id="team">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><i class="fa-solid fa-people-group"></i> Team</span>
+          <h2 data-s="teamTitle">The team behind the studios</h2>
+          <p data-s="teamIntro">Skilled people across development, design and data — working together to deliver complete, high-quality solutions.</p>
+        </div>
+        <div class="team-grid" id="team-list"><!--ssr:team-->
+    <article class="team-card reveal">
+      <div class="team-photo"><img src="/assets/img/team/benjamin-amoako.webp" alt="Benjamin Amoako" loading="lazy" decoding="async">
+        <div class="team-socials"><a href="mailto:profjero947@gmail.com"  aria-label="Benjamin Amoako on email"><i class="fa-solid fa-envelope"></i></a></div></div>
+      <div class="team-body">
+        <span class="team-studio">Digital Studio</span>
+        <h3>Benjamin Amoako</h3>
+        <p class="team-role">Founder &amp; Lead Full-Stack Developer</p>
+        <p class="team-bio">Builds custom software, digital platforms and admin systems for real-world applications.</p>
+      </div>
+    </article>
+    <article class="team-card reveal">
+      <div class="team-photo"><img src="/assets/img/team/abel-eduah.webp" alt="Abel Eduah" loading="lazy" decoding="async">
+        </div>
+      <div class="team-body">
+        <span class="team-studio">Creative Studio</span>
+        <h3>Abel Eduah</h3>
+        <p class="team-role">Graphic &amp; UI/UX Designer</p>
+        <p class="team-bio">Designs visually appealing graphics, user interfaces and branding materials.</p>
+      </div>
+    </article>
+    <article class="team-card reveal">
+      <div class="team-photo"><img src="/assets/img/team/godsway-arhin.webp" alt="Godsway Arhin" loading="lazy" decoding="async">
+        </div>
+      <div class="team-body">
+        <span class="team-studio">Digital Studio</span>
+        <h3>Godsway Arhin</h3>
+        <p class="team-role">Data Analyst &amp; Robotics</p>
+        <p class="team-bio">Analyses data, builds insights and develops robotics solutions.</p>
+      </div>
+    </article><!--/ssr:team--></div>
+      </div>
+    </section>
+
     <!-- ================= TESTIMONIALS ================= -->
-    <section class="section" id="testimonials">
+    <section class="section section-alt" id="testimonials">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow"><i class="fa-solid fa-heart"></i> Testimonials</span>
@@ -847,40 +891,145 @@
     </section>
 
     <!-- ================= PRICING ================= -->
-    <section class="section section-alt" id="pricing">
+    <section class="section" id="pricing">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow"><i class="fa-solid fa-tags"></i> Pricing</span>
-          <h2>Clear packages, no surprises</h2>
-          <p>Every project is different — these starting prices help you plan. Get an exact quote in under 24 hours.</p>
+          <h2>Transparent pricing for <span class="grad-text">quality work</span></h2>
+          <p>Fair, market-rate packages for websites, custom systems, ongoing care and training. Every project gets a written scope and an exact quote within 24 hours.</p>
         </div>
-        <div class="pricing" id="pricing-list"><!--ssr:pricing-->
-    <article class="price-card reveal">
+        <div id="pricing-list"><!--ssr:pricing-->
+    <div class="pricing-top">
+      <div class="pill-tabs pricing-tabs" role="tablist" aria-label="Pricing categories"><button type="button" role="tab" class="active" aria-selected="true" data-pgroup="0"><i class="fa-solid fa-globe"></i> Websites</button><button type="button" role="tab" class="" aria-selected="false" data-pgroup="1"><i class="fa-solid fa-layer-group"></i> Web Apps &amp; Systems</button><button type="button" role="tab" class="" aria-selected="false" data-pgroup="2"><i class="fa-solid fa-shield-heart"></i> Care &amp; Hosting</button><button type="button" role="tab" class="" aria-selected="false" data-pgroup="3"><i class="fa-solid fa-chalkboard-user"></i> Training</button></div>
+      <div class="currency-switch" role="group" aria-label="Currency"><button type="button" data-cur="ghs" aria-pressed="true">GH₵</button><button type="button" data-cur="usd" aria-pressed="false">US$</button></div>
+    </div>
+    
+    <div class="pricing" data-ppanel="0">
       
-      <h3>Starter</h3>
-      <div class="price"><small>Starting from</small><strong>GH₵ 1,000</strong></div>
-      <ul><li><i class="fa-solid fa-check"></i> Landing page or small website</li><li><i class="fa-solid fa-check"></i> Responsive, mobile-first design</li><li><i class="fa-solid fa-check"></i> SEO-ready structure &amp; Google indexing</li><li><i class="fa-solid fa-check"></i> Contact form &amp; WhatsApp integration</li><li><i class="fa-solid fa-check"></i> 1 month free support</li></ul>
-      <a class="btn btn-outline" href="#contact" data-plan="Starter">Discuss your project</a>
-    </article>
-    <article class="price-card reveal featured">
-      <span class="price-flag">Most popular</span>
-      <h3>Business</h3>
-      <div class="price"><small>Starting from</small><strong>GH₵ 3,000</strong></div>
-      <ul><li><i class="fa-solid fa-check"></i> Custom web app or business system</li><li><i class="fa-solid fa-check"></i> Admin dashboard</li><li><i class="fa-solid fa-check"></i> Database &amp; user authentication</li><li><i class="fa-solid fa-check"></i> Cloud hosting &amp; media storage setup</li><li><i class="fa-solid fa-check"></i> 3 months free support</li></ul>
-      <a class="btn btn-primary" href="#contact" data-plan="Business">Discuss your project</a>
-    </article>
-    <article class="price-card reveal">
+      <article class="price-card reveal">
+        
+        <h3>Starter Website</h3>
+        <p class="price-tagline">Look professional online, fast.</p>
+        <div class="price"><small>From</small><strong><span class="p-ghs">GH₵ 4,500</span><span class="p-usd">$450</span></strong></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> 1–2 weeks</div>
+        <ul><li><i class="fa-solid fa-check"></i> Up to 5 pages, mobile-first design</li><li><i class="fa-solid fa-check"></i> Contact form + WhatsApp chat button</li><li><i class="fa-solid fa-check"></i> Google-ready SEO &amp; Search Console setup</li><li><i class="fa-solid fa-check"></i> Free SSL &amp; fast hosting setup</li><li><i class="fa-solid fa-check"></i> 1 month free support</li></ul>
+        <a class="btn btn-outline" href="#contact" data-plan="Starter Website" data-pgroup-name="Websites">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+      <article class="price-card reveal featured">
+        <span class="price-flag"><i class="fa-solid fa-star"></i> Most popular</span>
+        <h3>Business Website</h3>
+        <p class="price-tagline">A site you can update yourself.</p>
+        <div class="price"><small>From</small><strong><span class="p-ghs">GH₵ 9,500</span><span class="p-usd">$950</span></strong></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> 3–4 weeks</div>
+        <ul><li><i class="fa-solid fa-check"></i> Up to 12 pages + blog</li><li><i class="fa-solid fa-check"></i> Admin dashboard to edit content</li><li><i class="fa-solid fa-check"></i> Lead forms delivered to your inbox</li><li><i class="fa-solid fa-check"></i> Advanced SEO, structured data &amp; analytics</li><li><i class="fa-solid fa-check"></i> Image/video storage (Cloudinary)</li><li><i class="fa-solid fa-check"></i> 3 months free support</li></ul>
+        <a class="btn btn-primary" href="#contact" data-plan="Business Website" data-pgroup-name="Websites">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+      <article class="price-card reveal">
+        
+        <h3>E-commerce / Booking</h3>
+        <p class="price-tagline">Sell or take bookings online.</p>
+        <div class="price"><small>From</small><strong><span class="p-ghs">GH₵ 16,000</span><span class="p-usd">$1,600</span></strong></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> 4–6 weeks</div>
+        <ul><li><i class="fa-solid fa-check"></i> Products, cart &amp; checkout or bookings</li><li><i class="fa-solid fa-check"></i> Mobile Money &amp; card payments (Paystack)</li><li><i class="fa-solid fa-check"></i> Orders &amp; stock dashboard</li><li><i class="fa-solid fa-check"></i> Email/SMS notifications</li><li><i class="fa-solid fa-check"></i> 3 months free support</li></ul>
+        <a class="btn btn-outline" href="#contact" data-plan="E-commerce / Booking" data-pgroup-name="Websites">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+    </div>
+    <div class="pricing" data-ppanel="1" hidden>
       
-      <h3>Enterprise</h3>
-      <div class="price"><small>Starting from</small><strong>GH₵ 7,000</strong></div>
-      <ul><li><i class="fa-solid fa-check"></i> Fully custom software platform</li><li><i class="fa-solid fa-check"></i> Advanced roles, analytics &amp; reports</li><li><i class="fa-solid fa-check"></i> Assessment, LMS or management systems</li><li><i class="fa-solid fa-check"></i> API &amp; third-party integrations</li><li><i class="fa-solid fa-check"></i> Long-term scalability support</li></ul>
-      <a class="btn btn-outline" href="#contact" data-plan="Enterprise">Discuss your project</a>
-    </article><!--/ssr:pricing--></div>
+      <article class="price-card reveal">
+        
+        <h3>Business System</h3>
+        <p class="price-tagline">POS, inventory, school, church or HR.</p>
+        <div class="price"><small>From</small><strong><span class="p-ghs">GH₵ 22,000</span><span class="p-usd">$2,200</span></strong></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> 5–8 weeks</div>
+        <ul><li><i class="fa-solid fa-check"></i> Multi-user roles &amp; secure login</li><li><i class="fa-solid fa-check"></i> Reports, exports &amp; receipts</li><li><i class="fa-solid fa-check"></i> Works on phone, tablet &amp; desktop</li><li><i class="fa-solid fa-check"></i> Staff training included</li><li><i class="fa-solid fa-check"></i> 3 months free support</li></ul>
+        <a class="btn btn-outline" href="#contact" data-plan="Business System" data-pgroup-name="Web Apps &amp; Systems">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+      <article class="price-card reveal featured">
+        <span class="price-flag"><i class="fa-solid fa-star"></i> Most popular</span>
+        <h3>Custom Platform</h3>
+        <p class="price-tagline">LMS, marketplace or SaaS product.</p>
+        <div class="price"><small>From</small><strong><span class="p-ghs">GH₵ 45,000</span><span class="p-usd">$4,500</span></strong></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> 8–12 weeks</div>
+        <ul><li><i class="fa-solid fa-check"></i> Full front end + back end + database</li><li><i class="fa-solid fa-check"></i> Admin &amp; analytics dashboards</li><li><i class="fa-solid fa-check"></i> Payments, email/SMS &amp; API integrations</li><li><i class="fa-solid fa-check"></i> Scalable cloud architecture</li><li><i class="fa-solid fa-check"></i> Live demo environment</li><li><i class="fa-solid fa-check"></i> 6 months free support</li></ul>
+        <a class="btn btn-primary" href="#contact" data-plan="Custom Platform" data-pgroup-name="Web Apps &amp; Systems">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+      <article class="price-card reveal">
+        
+        <h3>Enterprise</h3>
+        <p class="price-tagline">Multi-branch, integrations, SLAs.</p>
+        <div class="price"><small>From</small><strong><span class="p-ghs">GH₵ 90,000</span><span class="p-usd">$9,000</span></strong></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> Phased roadmap</div>
+        <ul><li><i class="fa-solid fa-check"></i> Discovery &amp; technical architecture</li><li><i class="fa-solid fa-check"></i> Multi-branch / multi-tenant systems</li><li><i class="fa-solid fa-check"></i> Third-party &amp; legacy integrations</li><li><i class="fa-solid fa-check"></i> Security review &amp; performance tuning</li><li><i class="fa-solid fa-check"></i> Dedicated support agreement (SLA)</li></ul>
+        <a class="btn btn-outline" href="#contact" data-plan="Enterprise" data-pgroup-name="Web Apps &amp; Systems">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+    </div>
+    <div class="pricing" data-ppanel="2" hidden>
+      
+      <article class="price-card reveal">
+        
+        <h3>Essential Care</h3>
+        <p class="price-tagline">Peace of mind for small sites.</p>
+        <div class="price"><strong><span class="p-ghs">GH₵ 650</span><span class="p-usd">$65</span></strong><em>/month</em></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> Cancel anytime</div>
+        <ul><li><i class="fa-solid fa-check"></i> Hosting, SSL &amp; uptime monitoring</li><li><i class="fa-solid fa-check"></i> Weekly backups &amp; security updates</li><li><i class="fa-solid fa-check"></i> 2 small content edits per month</li><li><i class="fa-solid fa-check"></i> Email support (48h)</li></ul>
+        <a class="btn btn-outline" href="#contact" data-plan="Essential Care" data-pgroup-name="Care &amp; Hosting">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+      <article class="price-card reveal featured">
+        <span class="price-flag"><i class="fa-solid fa-star"></i> Most popular</span>
+        <h3>Growth Care</h3>
+        <p class="price-tagline">Keep improving every month.</p>
+        <div class="price"><strong><span class="p-ghs">GH₵ 1,500</span><span class="p-usd">$150</span></strong><em>/month</em></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> Cancel anytime</div>
+        <ul><li><i class="fa-solid fa-check"></i> Everything in Essential</li><li><i class="fa-solid fa-check"></i> Up to 6 hours of changes monthly</li><li><i class="fa-solid fa-check"></i> Monthly SEO &amp; analytics report</li><li><i class="fa-solid fa-check"></i> Priority support (24h)</li></ul>
+        <a class="btn btn-primary" href="#contact" data-plan="Growth Care" data-pgroup-name="Care &amp; Hosting">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+      <article class="price-card reveal">
+        
+        <h3>Pro Partner</h3>
+        <p class="price-tagline">Your on-call dev team.</p>
+        <div class="price"><strong><span class="p-ghs">GH₵ 3,500</span><span class="p-usd">$350</span></strong><em>/month</em></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> Cancel anytime</div>
+        <ul><li><i class="fa-solid fa-check"></i> Up to 20 hours of development</li><li><i class="fa-solid fa-check"></i> New features &amp; integrations</li><li><i class="fa-solid fa-check"></i> Quarterly security &amp; speed audits</li><li><i class="fa-solid fa-check"></i> Same-day support</li></ul>
+        <a class="btn btn-outline" href="#contact" data-plan="Pro Partner" data-pgroup-name="Care &amp; Hosting">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+    </div>
+    <div class="pricing" data-ppanel="3" hidden>
+      
+      <article class="price-card reveal">
+        
+        <h3>1-on-1 Coaching</h3>
+        <p class="price-tagline">Learn faster with a mentor.</p>
+        <div class="price"><strong><span class="p-ghs">GH₵ 2,500</span><span class="p-usd">$250</span></strong><em>/month</em></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> 8 sessions</div>
+        <ul><li><i class="fa-solid fa-check"></i> 8 × 90-minute live sessions</li><li><i class="fa-solid fa-check"></i> Personal learning roadmap</li><li><i class="fa-solid fa-check"></i> Code reviews on your projects</li><li><i class="fa-solid fa-check"></i> WhatsApp support between sessions</li></ul>
+        <a class="btn btn-outline" href="#contact" data-plan="1-on-1 Coaching" data-pgroup-name="Training">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+      <article class="price-card reveal featured">
+        <span class="price-flag"><i class="fa-solid fa-star"></i> Most popular</span>
+        <h3>Web Dev Bootcamp</h3>
+        <p class="price-tagline">Zero to job-ready full-stack.</p>
+        <div class="price"><strong><span class="p-ghs">GH₵ 6,000</span><span class="p-usd">$600</span></strong><em>12 weeks</em></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> Small cohorts</div>
+        <ul><li><i class="fa-solid fa-check"></i> HTML, CSS, JavaScript, React</li><li><i class="fa-solid fa-check"></i> Node.js, databases &amp; Firebase</li><li><i class="fa-solid fa-check"></i> 3 portfolio projects you deploy</li><li><i class="fa-solid fa-check"></i> Career guidance &amp; certificate</li></ul>
+        <a class="btn btn-primary" href="#contact" data-plan="Web Dev Bootcamp" data-pgroup-name="Training">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+      <article class="price-card reveal">
+        
+        <h3>Corporate &amp; Schools</h3>
+        <p class="price-tagline">Upskill your team or students.</p>
+        <div class="price"><small>From</small><strong><span class="p-ghs">GH₵ 5,000</span><span class="p-usd">$500</span></strong><em>/day</em></div>
+        <div class="price-delivery"><i class="fa-regular fa-clock"></i> Up to 25 people</div>
+        <ul><li><i class="fa-solid fa-check"></i> Custom curriculum for your goals</li><li><i class="fa-solid fa-check"></i> Digital skills, web, data or IT basics</li><li><i class="fa-solid fa-check"></i> Materials &amp; certificates</li><li><i class="fa-solid fa-check"></i> On-site or online</li></ul>
+        <a class="btn btn-outline" href="#contact" data-plan="Corporate &amp; Schools" data-pgroup-name="Training">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+    </div>
+    <p class="pricing-note"><i class="fa-solid fa-circle-info"></i> Prices are starting points — your exact quote depends on features and timeline. 50% to start, 50% on delivery (milestone payments for larger projects). Mobile Money, bank transfer and card accepted. Domains and third-party fees (SMS, payment gateways) are billed at cost.</p><!--/ssr:pricing--></div>
       </div>
     </section>
 
     <!-- ================= BLOG ================= -->
-    <section class="section" id="blog">
+    <section class="section section-alt" id="blog">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow"><i class="fa-solid fa-pen-nib"></i> Blog</span>
@@ -953,7 +1102,7 @@
     </section>
 
     <!-- ================= FAQ ================= -->
-    <section class="section section-alt" id="faq">
+    <section class="section" id="faq">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow"><i class="fa-solid fa-circle-question"></i> FAQ</span>
@@ -988,7 +1137,7 @@
     </section>
 
     <!-- ================= CONTACT ================= -->
-    <section class="section" id="contact">
+    <section class="section section-alt" id="contact">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow"><i class="fa-solid fa-paper-plane"></i> Contact</span>
@@ -1016,7 +1165,7 @@
                 <div class="field"><label for="c-service">Service</label><select id="c-service" name="service"><option value="">Select a service</option></select></div>
                 <div class="field"><label for="c-budget">Budget</label>
                   <select id="c-budget" name="budget">
-                    <option value="">Select a range</option><option>Below GH₵ 1,000</option><option>GH₵ 1,000 – 3,000</option><option>GH₵ 3,000 – 7,000</option><option>Above GH₵ 7,000</option><option>Not sure yet</option>
+                    <option value="">Select a range</option><option>Below GH₵ 5,000</option><option>GH₵ 5,000 – 15,000</option><option>GH₵ 15,000 – 40,000</option><option>GH₵ 40,000 – 90,000</option><option>Above GH₵ 90,000</option><option>Monthly care plan</option><option>Not sure yet</option>
                   </select></div>
                 <div class="field"><label for="c-subject">Subject</label><input id="c-subject" name="subject" maxlength="150" placeholder="What's this about?"></div>
                 <div class="field full"><label for="c-message">Message <span class="req">*</span></label><textarea id="c-message" name="message" required maxlength="5000" placeholder="Tell me about your goals, timeline and anything I should know…"></textarea></div>
@@ -1070,6 +1219,7 @@
       </div>
     </div>
   </footer>
+  </div>
 
   <a class="wa-float" href="https://wa.me/233531207256" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
   <button class="to-top" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>

@@ -1,6 +1,6 @@
 // Loads site data from Firestore with bundled defaults as a fallback.
 import { getDoc, listDocs, publishedPosts, cached } from "./firestore.js";
-import { DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_SETTINGS } from "../../assets/js/defaults.js";
+import { DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_SETTINGS, DEFAULT_TEAM } from "../../assets/js/defaults.js";
 import { SEED_POSTS } from "../../assets/js/seed-posts.js";
 import { readingTime } from "../../assets/js/utils.js";
 
@@ -14,11 +14,13 @@ export const seed = () => SEED_POSTS.map(p => normalize({ ...p, id: p.slug, _see
 export async function settings(ctx) {
   try {
     const s = await cached(ctx, "settings", TTL, () => getDoc("settings/site"));
-    return { ...DEFAULT_SETTINGS, ...(s || {}), socials: { ...DEFAULT_SETTINGS.socials, ...(s?.socials || {}) }, seo: { ...DEFAULT_SETTINGS.seo, ...(s?.seo || {}) } };
+    const out = { ...DEFAULT_SETTINGS, ...(s || {}), socials: { ...DEFAULT_SETTINGS.socials, ...(s?.socials || {}) }, seo: { ...DEFAULT_SETTINGS.seo, ...(s?.seo || {}) }, appearance: { ...DEFAULT_SETTINGS.appearance, ...(s?.appearance || {}) } };
+    if (!Array.isArray(s?.pricingGroups) || !s.pricingGroups.length) out.pricingGroups = DEFAULT_SETTINGS.pricingGroups;
+    return out;
   } catch { return DEFAULT_SETTINGS; }
 }
 
-const defaults = { skills: DEFAULT_SKILLS, studios: DEFAULT_STUDIOS, projects: DEFAULT_PROJECTS, testimonials: DEFAULT_TESTIMONIALS, experience: DEFAULT_EXPERIENCE };
+const defaults = { skills: DEFAULT_SKILLS, studios: DEFAULT_STUDIOS, projects: DEFAULT_PROJECTS, testimonials: DEFAULT_TESTIMONIALS, experience: DEFAULT_EXPERIENCE, team: DEFAULT_TEAM };
 export async function collection(ctx, name) {
   try {
     const list = await cached(ctx, "col-" + name, TTL, () => listDocs(name));

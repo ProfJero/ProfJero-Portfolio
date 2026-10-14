@@ -5,7 +5,7 @@ Live site: **https://profjero.pages.dev** · Admin: **https://profjero.pages.dev
 A full-stack developer portfolio with a blog, live project demos, an admin dashboard and a shared database for ProfJero Hub.
 
 - **Frontend:** hand-built HTML, CSS and JavaScript ES modules. There is no build step. Light and dark themes are included and it is designed mobile-first.
-- **Database:** Firebase Firestore, protected by [security rules](firestore.rules) that have 49 automated tests.
+- **Database:** Firebase Firestore, protected by [security rules](firestore.rules) that have 52 automated tests.
 - **Media:** Cloudinary, with uploads straight from the admin dashboard.
 - **Edge:** Cloudflare Pages Functions handle:
   - server-side rendering of the homepage and articles, for SEO and AI crawlers
@@ -13,7 +13,7 @@ A full-stack developer portfolio with a blog, live project demos, an admin dashb
 
 | Path | What it is |
 |---|---|
-| `index.html` | Homepage: hero, about, skills, studios & services, process, portfolio with live demos and videos, experience, testimonials, pricing, latest posts, FAQ, contact |
+| `index.html` | Homepage: water-ripple hero, about, skills, studios & services, process, portfolio with live demos and videos, experience, team, testimonials, pricing (GH₵/US$), latest posts, FAQ, contact. It also has a visitor Customize panel: theme colour, layout, mode, backgrounds. |
 | `blog.html` → `/blog` | Article list with search, categories, tags and sorting |
 | `post.html` → `/blog/<slug>` | Article page with views, likes, shares, threaded comments, table of contents and related posts |
 | `admin/` | Admin dashboard: messages, posts, comments, projects, studios, skills, testimonials, experience, profile & site, media, subscribers, settings |

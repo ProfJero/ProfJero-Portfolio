@@ -6,13 +6,14 @@ The ProfJero portfolio and **ProfJero Hub** (https://profjerohub.pages.dev) use 
 
 | Collection | Purpose | Public read | Public write |
 |---|---|---|---|
-| `settings/site` | Portfolio profile, hero, about, contact, socials, process, pricing, FAQ, SEO, announcement | ✅ | ❌ |
+| `settings/site` | Portfolio profile, hero (`heroBackground`, `heroOverlay`, `waterEffect`), about, contact, socials, process, pricing (`pricingGroups[{name, icon, plans[{name, tagline, prefix, price, priceUsd, period, delivery, featured, features[]}]}]`, `pricingNote`), team (`showTeam`, `teamTitle`, `teamIntro`), appearance (`appearance{color, layout, mode, bg, overlay, panel}`), FAQ, SEO, announcement | ✅ | ❌ |
 | `settings/hub` | *(Reserved for ProfJero Hub settings)* | ✅ | ❌ |
 | `skills/{id}` | `name, level (0–100), group, order` | ✅ | ❌ |
 | `studios/{id}` | `name, tagline, description, icon, color, url, active, order, services[{title,text}]` | ✅ | ❌ |
 | `projects/{id}` | `title, category, summary, description (md), cover, videoUrl, demoUrl, liveUrl, demoNote, repoUrl, client, year, tech[], status, featured, order` | ✅ | ❌ |
 | `testimonials/{id}` | `name, role, text, avatar, rating, visible, order` | ✅ | ❌ |
 | `experience/{id}` | `type (work/education), title, org, start, end, text, order` | ✅ | ❌ |
+| `team/{id}` | `name, role, studio, photo, bio, visible, order, linkedin, github, x, instagram, email` | ✅ | ❌ |
 | `content/{id}` | Free-form content blocks (for example Hub pages) | ✅ | ❌ |
 | `posts/{slug}` | `title, slug, excerpt, content (md), cover, category, tags[], status (draft/published), featured, publishedAt, updatedAt, sites[] ("portfolio","hub"), commentsEnabled, seoTitle, seoDescription, readingTime, author{name,avatar}, views, likes, shares, commentCount` | published only | +1 views/shares; ±1 likes and commentCount, each tied to a real like or comment |
 | `posts/{slug}/likes/{uid}` | One document per person who liked the post | ✅ | own document only |

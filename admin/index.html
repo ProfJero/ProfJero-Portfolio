@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#0A60EE">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
-  <script>try{var t=localStorage.getItem("pj_theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
+  <script>try{var d=document.documentElement,j=function(k){return JSON.parse(localStorage.getItem(k)||"{}")||{}},o=Object.assign({},j("pj_site_look"),j("pj_prefs")),m=o.mode||localStorage.getItem("pj_theme")||"system";if(m!=="light"&&m!=="dark")m=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=m;if(/^#[0-9a-f]{6}$/i.test(o.color||""))d.style.setProperty("--brand-base",o.color);}catch(e){}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
@@ -66,6 +66,7 @@
         <a class="side-link" href="#/skills"><i class="fa-solid fa-bolt"></i> Skills</a>
         <a class="side-link" href="#/testimonials"><i class="fa-solid fa-quote-left"></i> Testimonials</a>
         <a class="side-link" href="#/experience"><i class="fa-solid fa-timeline"></i> Experience</a>
+        <a class="side-link" href="#/team"><i class="fa-solid fa-people-group"></i> Team</a>
         <div class="side-group">Site</div>
         <a class="side-link" href="#/profile"><i class="fa-solid fa-id-card"></i> Profile &amp; site</a>
         <a class="side-link" href="#/media"><i class="fa-regular fa-images"></i> Media library</a>

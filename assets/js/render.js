@@ -150,15 +150,54 @@ export function renderProcess(steps = []) {
     </li>`).join("");
 }
 
-export function renderPricing(plans = []) {
-  return plans.map(p => `
-    <article class="price-card reveal${p.featured ? " featured" : ""}">
-      ${p.featured ? '<span class="price-flag">Most popular</span>' : ""}
-      <h3>${esc(p.name)}</h3>
-      <div class="price"><small>${esc(p.note || "")}</small><strong>${esc(p.price)}</strong></div>
-      <ul>${(p.features || []).map(f => `<li><i class="fa-solid fa-check"></i> ${esc(f)}</li>`).join("")}</ul>
-      <a class="btn ${p.featured ? "btn-primary" : "btn-outline"}" href="#contact" data-plan="${esc(p.name)}">Discuss your project</a>
-    </article>`).join("");
+/** Pricing: tabbed groups (websites, systems, care plans, training) with a GH₵ / US$ switch. */
+export function renderPricing(groups = [], note = "") {
+  const list = groups.filter(g => (g.plans || []).length);
+  const tabs = list.map((g, i) => `<button type="button" role="tab" class="${i === 0 ? "active" : ""}" aria-selected="${i === 0}" data-pgroup="${i}"><i class="${esc(g.icon || "fa-solid fa-tag")}"></i> ${esc(g.name)}</button>`).join("");
+  const money = p => `<span class="p-ghs">${esc(p.price)}</span><span class="p-usd">${esc(p.priceUsd || p.price)}</span>`;
+  const panels = list.map((g, i) => `
+    <div class="pricing" data-ppanel="${i}"${i === 0 ? "" : " hidden"}>
+      ${(g.plans || []).map(p => `
+      <article class="price-card reveal${p.featured ? " featured" : ""}">
+        ${p.featured ? '<span class="price-flag"><i class="fa-solid fa-star"></i> Most popular</span>' : ""}
+        <h3>${esc(p.name)}</h3>
+        ${p.tagline ? `<p class="price-tagline">${esc(p.tagline)}</p>` : ""}
+        <div class="price">${p.prefix ? `<small>${esc(p.prefix)}</small>` : ""}<strong>${money(p)}</strong>${p.period && p.period !== "one-off" ? `<em>${esc(p.period)}</em>` : ""}</div>
+        ${p.delivery ? `<div class="price-delivery"><i class="fa-regular fa-clock"></i> ${esc(p.delivery)}</div>` : ""}
+        <ul>${(p.features || []).map(f => `<li><i class="fa-solid fa-check"></i> ${esc(f)}</li>`).join("")}</ul>
+        <a class="btn ${p.featured ? "btn-primary" : "btn-outline"}" href="#contact" data-plan="${esc(p.name)}" data-pgroup-name="${esc(g.name)}">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
+      </article>`).join("")}
+    </div>`).join("");
+  return `
+    <div class="pricing-top">
+      <div class="pill-tabs pricing-tabs" role="tablist" aria-label="Pricing categories">${tabs}</div>
+      <div class="currency-switch" role="group" aria-label="Currency"><button type="button" data-cur="ghs" aria-pressed="true">GH₵</button><button type="button" data-cur="usd" aria-pressed="false">US$</button></div>
+    </div>
+    ${panels}
+    ${note ? `<p class="pricing-note"><i class="fa-solid fa-circle-info"></i> ${esc(note)}</p>` : ""}`;
+}
+
+const TEAM_ICONS = { linkedin: "fa-brands fa-linkedin-in", github: "fa-brands fa-github", x: "fa-brands fa-x-twitter", instagram: "fa-brands fa-instagram", email: "fa-solid fa-envelope" };
+export function renderTeam(team = []) {
+  return team.filter(m => m.visible !== false).sort(byOrder).map(m => {
+    const socials = { ...(m.socials || {}) };
+    for (const k of Object.keys(TEAM_ICONS)) if (m[k]) socials[k] = m[k];   // admin stores links as flat fields
+    const links = Object.entries(socials).filter(([k, v]) => TEAM_ICONS[k] && v).map(([k, v]) => {
+      const href = k === "email" ? `mailto:${v}` : safeUrl(v);
+      return href ? `<a href="${esc(href)}" ${k === "email" ? "" : 'target="_blank" rel="noopener"'} aria-label="${esc(m.name)} on ${k}"><i class="${TEAM_ICONS[k]}"></i></a>` : "";
+    }).join("");
+    return `
+    <article class="team-card reveal">
+      <div class="team-photo">${m.photo ? `<img src="${esc(img(m.photo, 600))}" alt="${esc(m.name)}" loading="lazy" decoding="async">` : `<span class="avatar-fallback" style="--h:${hueFrom(m.name)}">${esc(initials(m.name))}</span>`}
+        ${links ? `<div class="team-socials">${links}</div>` : ""}</div>
+      <div class="team-body">
+        ${m.studio ? `<span class="team-studio">${esc(m.studio)}</span>` : ""}
+        <h3>${esc(m.name)}</h3>
+        <p class="team-role">${esc(m.role || "")}</p>
+        ${m.bio ? `<p class="team-bio">${esc(m.bio)}</p>` : ""}
+      </div>
+    </article>`;
+  }).join("");
 }
 
 export function renderFaqs(faqs = []) {
@@ -210,7 +249,7 @@ export function renderPostCard(post, { big = false } = {}) {
 export const byNewest = (a, b) => (toDate(b.publishedAt)?.getTime() || 0) - (toDate(a.publishedAt)?.getTime() || 0);
 
 /** All server-renderable homepage fragments, keyed by their <!--ssr:key--> marker. */
-export function homeSections({ settings, skills, studios, projects, testimonials, experience, posts }) {
+export function homeSections({ settings, skills, studios, projects, testimonials, experience, posts, team = [] }) {
   const st = renderStudios(studios);
   const tl = renderExperience(experience);
   const latest = [...posts].sort(byNewest).slice(0, 3);
@@ -225,7 +264,8 @@ export function homeSections({ settings, skills, studios, projects, testimonials
     "tl-work": tl.work,
     "tl-edu": tl.education,
     testimonials: renderTestimonials(testimonials),
-    pricing: renderPricing(settings.pricing),
+    pricing: renderPricing(settings.pricingGroups, settings.pricingNote),
+    team: renderTeam(team),
     posts: latest.map(p => renderPostCard(p)).join(""),
     faqs: renderFaqs(settings.faqs)
   };

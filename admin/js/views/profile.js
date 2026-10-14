@@ -2,6 +2,7 @@ import { $, $$, fb, toast } from "../core.js";
 import { renderFields, bindFields, readFields } from "../forms.js";
 import { mergeSettings } from "/assets/js/store.js";
 import { yearsSince } from "/assets/js/utils.js";
+import { COLORS, BACKGROUNDS } from "/assets/js/appearance.js";
 
 const SECTIONS = [
   {
@@ -15,7 +16,9 @@ const SECTIONS = [
       { key: "heroIntro", label: "Intro paragraph", type: "textarea", full: true, rows: 3, max: 400 },
       { key: "available", label: "I'm available for new projects (green dot)", type: "toggle", full: true },
       { key: "availability", label: "Availability text", type: "text", full: true, placeholder: "Available for new projects" },
-      { key: "heroImage", label: "Hero photo", type: "image" },
+      { key: "heroBackground", label: "Hero background photo (water ripple runs on this)", type: "image", full: true, help: "A wide photo, at least 1600px. Leave the default to use your current photo." },
+      { key: "heroOverlay", label: "Hero overlay darkness", type: "range", full: true, help: "Higher = darker, more readable text." },
+      { key: "waterEffect", label: "Water ripple effect on the hero (visitors can still turn it off in Customize)", type: "toggle", full: true },
       { key: "avatar", label: "About / profile photo", type: "image", round: true },
       { key: "cvUrl", label: "CV / résumé (PDF)", type: "file", accept: "application/pdf", full: true, help: "Shows a “Download CV” button when set." }
     ]
@@ -58,11 +61,41 @@ const SECTIONS = [
       { key: "title", label: "Title", type: "text" }, { key: "icon", label: "Icon", type: "icon" }, { key: "text", label: "Description", type: "textarea", full: true, rows: 2 }] }]
   },
   {
-    id: "pricing", title: "Pricing", icon: "fa-solid fa-tags", desc: "Packages shown in the Pricing section.",
-    fields: [{ key: "pricing", label: "Plans", type: "list", full: true, itemLabel: "Plan", fields: [
-      { key: "name", label: "Plan name", type: "text" }, { key: "price", label: "Price", type: "text", placeholder: "GH₵ 3,000" },
-      { key: "note", label: "Small note", type: "text", placeholder: "Starting from" }, { key: "featured", label: "Highlight as most popular", type: "toggle" },
-      { key: "features", label: "Features", type: "strings", full: true, itemLabel: "feature" }] }]
+    id: "pricing", title: "Pricing", icon: "fa-solid fa-tags", desc: "Pricing tabs (e.g. Websites, Systems, Care plans, Training). Give each plan a GH₵ price and an optional US$ price — visitors can switch currency.",
+    fields: [
+      { key: "pricingGroups", label: "Pricing tabs", type: "list", full: true, itemLabel: "Tab", fields: [
+        { key: "name", label: "Tab name", type: "text" }, { key: "icon", label: "Icon", type: "icon" },
+        { key: "plans", label: "Plans", type: "list", full: true, itemLabel: "Plan", fields: [
+          { key: "name", label: "Plan name", type: "text" }, { key: "tagline", label: "Tagline", type: "text" },
+          { key: "prefix", label: "Prefix (e.g. From)", type: "text" }, { key: "period", label: "Period", type: "text", placeholder: "one-off, /month, /day, 12 weeks" },
+          { key: "price", label: "Price (GH₵)", type: "text", placeholder: "GH₵ 9,500" }, { key: "priceUsd", label: "Price (US$)", type: "text", placeholder: "$950" },
+          { key: "delivery", label: "Delivery / note", type: "text", placeholder: "3–4 weeks" }, { key: "featured", label: "Highlight as most popular", type: "toggle" },
+          { key: "features", label: "Features", type: "strings", full: true, itemLabel: "feature" }] }] },
+      { key: "pricingNote", label: "Payment terms note (shown under pricing)", type: "textarea", full: true, rows: 3 }
+    ]
+  },
+  {
+    id: "team", title: "Team", icon: "fa-solid fa-people-group", desc: 'Edit members in <a href="#/team">Team</a>.',
+    fields: [
+      { key: "showTeam", label: "Show the Team section on the homepage", type: "toggle", full: true },
+      { key: "teamTitle", label: "Section title", type: "text", full: true },
+      { key: "teamIntro", label: "Section intro", type: "textarea", full: true, rows: 2 }
+    ]
+  },
+  {
+    id: "appearance", title: "Appearance", icon: "fa-solid fa-palette", desc: "Default look for every visitor. Visitors can personalise it with the Customize (gear) panel unless you hide it.",
+    fields: [],
+    nested: {
+      key: "appearance", title: "",
+      fields: [
+        { key: "color", label: "Theme colour", type: "color", help: "Presets: " + COLORS.map(([c, n]) => `<span title="${n}" style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${c};vertical-align:middle"></span>`).join(" ") },
+        { key: "mode", label: "Colour mode", type: "select", options: [["system", "Auto (follow device)"], ["light", "Light"], ["dark", "Dark"]] },
+        { key: "layout", label: "Layout style", type: "select", options: [["full", "Full width"], ["boxed", "Boxed"]] },
+        { key: "bg", label: "Background (boxed layout)", type: "select", options: [["", "None"], ...BACKGROUNDS.map(b => [b.id, b.label])] },
+        { key: "overlay", label: "Darken background with overlay", type: "toggle" },
+        { key: "panel", label: "Show the Customize (gear) panel to visitors", type: "toggle", full: true }
+      ]
+    }
   },
   {
     id: "faq", title: "FAQ", icon: "fa-solid fa-circle-question", desc: "Also published as FAQ structured data for Google & AI assistants.",

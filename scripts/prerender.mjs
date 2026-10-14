@@ -4,7 +4,7 @@
 // (Cloudflare Pages Functions). Run after editing defaults:  node scripts/prerender.mjs
 import { readFile, writeFile } from "node:fs/promises";
 import { homeSections, fillMarkers, faqSchema, renderPostCard, byNewest } from "../assets/js/render.js";
-import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE } from "../assets/js/defaults.js";
+import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_TEAM } from "../assets/js/defaults.js";
 import { SEED_POSTS } from "../assets/js/seed-posts.js";
 import { readingTime } from "../assets/js/utils.js";
 
@@ -14,7 +14,7 @@ const posts = SEED_POSTS.map(p => ({ ...p, id: p.slug, views: 0, likes: 0, comme
 const home = await readFile(new URL("index.html", root), "utf8");
 let out = fillMarkers(home, homeSections({
   settings: DEFAULT_SETTINGS, skills: DEFAULT_SKILLS, studios: DEFAULT_STUDIOS, projects: DEFAULT_PROJECTS,
-  testimonials: DEFAULT_TESTIMONIALS, experience: DEFAULT_EXPERIENCE, posts
+  testimonials: DEFAULT_TESTIMONIALS, experience: DEFAULT_EXPERIENCE, posts, team: DEFAULT_TEAM
 }));
 out = out.replace(/(<script type="application\/ld\+json" id="faq-schema">)[\s\S]*?(<\/script>)/, `$1${faqSchema(DEFAULT_SETTINGS.faqs)}$2`);
 await writeFile(new URL("index.html", root), out);

@@ -38,6 +38,9 @@ await t("visitor cannot write settings", () => assertFails(setDoc(doc(alice, "se
 await t("owner writes settings", () => assertSucceeds(setDoc(doc(owner, "settings/site"), { name: "Benjamin" }, { merge: true })));
 await t("unverified owner email is rejected", () => assertFails(setDoc(doc(fakeOwner, "settings/site"), { name: "x" })));
 await t("visitor cannot write projects", () => assertFails(setDoc(doc(alice, "projects/p"), { title: "x" })));
+await t("anyone reads team", () => assertSucceeds(getDoc(doc(anon, "team/benjamin"))));
+await t("visitor cannot edit team", () => assertFails(setDoc(doc(alice, "team/benjamin"), { name: "x" })));
+await t("owner edits team", () => assertSucceeds(setDoc(doc(owner, "team/benjamin"), { name: "Benjamin" })));
 await t("private config hidden from public", () => assertFails(getDoc(doc(anon, "private/integrations"))));
 await t("owner reads private config", () => assertSucceeds(getDoc(doc(owner, "private/integrations"))));
 

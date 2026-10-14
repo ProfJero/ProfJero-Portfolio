@@ -19,7 +19,7 @@ The rules allow:
 - **Visitors who are signed in** (silently and anonymously, or with Google): like posts and comments, comment, reply, and delete their own comments. Each person can like something only once.
 - **Admins only:** read messages and subscribers, and change any content.
 
-> The rules come with 49 automated tests ([`tests/rules.test.mjs`](tests/rules.test.mjs)). Run them with `npm run test:rules`.
+> The rules come with 52 automated tests ([`tests/rules.test.mjs`](tests/rules.test.mjs)). Run them with `npm run test:rules`.
 
 ### 1.2 Turn on sign-in methods
 
@@ -83,6 +83,10 @@ In Google Cloud console → **APIs & Services → Credentials**, open the Browse
 | Change studios, their services and the **Visit studio** links | **Studios & services** |
 | Update skills, testimonials, timeline | **Skills / Testimonials / Experience** |
 | Change name, photo, intro, availability, contact, socials, pricing, FAQ, SEO, announcement bar | **Profile & site** |
+| Change the hero photo, overlay darkness or turn the water ripple off | **Profile & site → Hero & profile** |
+| Set the default theme colour, layout (full/boxed), colour mode, background, or hide the visitor Customize panel | **Profile & site → Appearance** |
+| Edit pricing tabs, plans, GH₵/US$ prices and payment terms | **Profile & site → Pricing** |
+| Add, hide or reorder team members, or hide the whole Team section | **Team** and **Profile & site → Team** |
 | Upload and reuse files | **Media library** |
 | Manage newsletter subscribers | **Subscribers** |
 | Add another admin (owner only), import content, download a backup | **Settings** |
@@ -96,6 +100,18 @@ Paste any of these into **Demo video**:
 - TikTok: `https://www.tiktok.com/@profjero/video/1234567890`. Use the full link from the browser, not the short `vm.tiktok.com` link.
 
 A preview appears right away. Visitors see a play button on the project card and can watch without leaving your site.
+
+### Water effect, Customize panel & appearance
+The hero shows a full-width photo with an interactive **water ripple**: it reacts to the mouse or touch, and adds gentle ripples on its own.
+- **Visitors:** the gear button on the left edge opens **Customize**. There they can pick a theme colour, light/dark/auto mode, full or boxed layout, a background pattern or image with an optional overlay, and switch the ripple off. Their choices are remembered on their device.
+- **You:** set the defaults everyone starts with in **Profile & site → Appearance**.
+- **Fallback:** the ripple runs only on devices that support it, and never for visitors who have turned on "reduce motion".
+
+### Pricing
+Pricing is organised in tabs: Websites, Web Apps & Systems, Care & Hosting, and Training.
+- **Currency:** each plan has a GH₵ price and an optional US$ price. Visitors in Ghana see GH₵ by default and everyone else sees US$; anyone can switch.
+- **Get a quote:** this button fills in the contact form's subject, budget range and service.
+- **Starting prices:** these are suggestions for an experienced full-stack developer in Ghana in 2026. Adjust them any time.
 
 ### Live demos
 Set **Live demo URL** to open the real system inside your portfolio, with desktop, tablet and mobile views. Use **Demo note** for demo login details.
@@ -140,6 +156,6 @@ Set **Live demo URL** to open the real system inside your portfolio, with deskto
 npm install
 npm run emulators          # Firestore + Auth emulators (needs Java)
 npm run dev                # http://localhost:8788  (add ?emulator=1 to use the emulators)
-npm run test:rules         # 49 security-rule tests
+npm run test:rules         # 52 security-rule tests
 npm run prerender          # refresh static fallback HTML/feeds after editing assets/js/defaults.js
 ```

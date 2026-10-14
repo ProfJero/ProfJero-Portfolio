@@ -15,6 +15,7 @@ const routes = {
   skills: ["Skills", () => import("./views/collections.js")],
   testimonials: ["Testimonials", () => import("./views/collections.js")],
   experience: ["Experience", () => import("./views/collections.js")],
+  team: ["Team", () => import("./views/collections.js")],
   profile: ["Profile & site", () => import("./views/profile.js")],
   media: ["Media library", () => import("./views/media.js")],
   subscribers: ["Subscribers", () => import("./views/subscribers.js")],

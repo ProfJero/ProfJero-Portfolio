@@ -36,6 +36,7 @@ service cloud.firestore {
     match /projects/{id}     { allow read: if true; allow write: if isAdmin(); }
     match /testimonials/{id} { allow read: if true; allow write: if isAdmin(); }
     match /experience/{id}   { allow read: if true; allow write: if isAdmin(); }
+    match /team/{id}         { allow read: if true; allow write: if isAdmin(); }
     match /content/{id}      { allow read: if true; allow write: if isAdmin(); }   // free-form blocks (e.g. for ProfJero Hub)
 
     // ---------- blog ----------

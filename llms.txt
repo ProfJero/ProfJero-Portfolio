@@ -50,9 +50,31 @@
 
 ## Pricing (starting from)
 
-- Starter: GH₵ 1,000 — Landing page or small website; Responsive, mobile-first design; SEO-ready structure & Google indexing; Contact form & WhatsApp integration; 1 month free support
-- Business: GH₵ 3,000 — Custom web app or business system; Admin dashboard; Database & user authentication; Cloud hosting & media storage setup; 3 months free support
-- Enterprise: GH₵ 7,000 — Fully custom software platform; Advanced roles, analytics & reports; Assessment, LMS or management systems; API & third-party integrations; Long-term scalability support
+### Websites
+
+- Starter Website: From GH₵ 4,500 ($450) — Up to 5 pages, mobile-first design; Contact form + WhatsApp chat button; Google-ready SEO & Search Console setup; Free SSL & fast hosting setup; 1 month free support
+- Business Website: From GH₵ 9,500 ($950) — Up to 12 pages + blog; Admin dashboard to edit content; Lead forms delivered to your inbox; Advanced SEO, structured data & analytics; Image/video storage (Cloudinary); 3 months free support
+- E-commerce / Booking: From GH₵ 16,000 ($1,600) — Products, cart & checkout or bookings; Mobile Money & card payments (Paystack); Orders & stock dashboard; Email/SMS notifications; 3 months free support
+
+### Web Apps & Systems
+
+- Business System: From GH₵ 22,000 ($2,200) — Multi-user roles & secure login; Reports, exports & receipts; Works on phone, tablet & desktop; Staff training included; 3 months free support
+- Custom Platform: From GH₵ 45,000 ($4,500) — Full front end + back end + database; Admin & analytics dashboards; Payments, email/SMS & API integrations; Scalable cloud architecture; Live demo environment; 6 months free support
+- Enterprise: From GH₵ 90,000 ($9,000) — Discovery & technical architecture; Multi-branch / multi-tenant systems; Third-party & legacy integrations; Security review & performance tuning; Dedicated support agreement (SLA)
+
+### Care & Hosting
+
+- Essential Care: GH₵ 650 ($65) /month — Hosting, SSL & uptime monitoring; Weekly backups & security updates; 2 small content edits per month; Email support (48h)
+- Growth Care: GH₵ 1,500 ($150) /month — Everything in Essential; Up to 6 hours of changes monthly; Monthly SEO & analytics report; Priority support (24h)
+- Pro Partner: GH₵ 3,500 ($350) /month — Up to 20 hours of development; New features & integrations; Quarterly security & speed audits; Same-day support
+
+### Training
+
+- 1-on-1 Coaching: GH₵ 2,500 ($250) /month — 8 × 90-minute live sessions; Personal learning roadmap; Code reviews on your projects; WhatsApp support between sessions
+- Web Dev Bootcamp: GH₵ 6,000 ($600) 12 weeks — HTML, CSS, JavaScript, React; Node.js, databases & Firebase; 3 portfolio projects you deploy; Career guidance & certificate
+- Corporate & Schools: From GH₵ 5,000 ($500) /day — Custom curriculum for your goals; Digital skills, web, data or IT basics; Materials & certificates; On-site or online
+
+Prices are starting points — your exact quote depends on features and timeline. 50% to start, 50% on delivery (milestone payments for larger projects). Mobile Money, bank transfer and card accepted. Domains and third-party fees (SMS, payment gateways) are billed at cost.
 
 ## FAQ
 
