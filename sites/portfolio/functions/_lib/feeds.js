@@ -8,6 +8,12 @@ const x = s => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").repl
 const newest = (a, b) => (toDate(b.publishedAt)?.getTime() || 0) - (toDate(a.publishedAt)?.getTime() || 0);
 const day = d => (toDate(d) || new Date()).toISOString().slice(0, 10);
 
+/** Cover plus every image used inside the article (for image search and the sitemap). */
+export function postImages(p) {
+  const inline = [...String(p.content || "").matchAll(/!\[[^\]]*\]\(([^)\s]+)/g)].map(m => m[1]).filter(u => /^(https?:\/\/|\/)/.test(u));
+  return [...new Set([p.cover, ...inline].filter(Boolean))];
+}
+
 export function sitemap(posts) {
   const list = [...posts].sort(newest);
   const latest = list[0] ? day(list[0].updatedAt || list[0].publishedAt) : day();
@@ -19,7 +25,7 @@ export function sitemap(posts) {
     { loc: `${SITE.url}/rural-tech-docs`, lastmod: "2026-10-13", priority: "0.5", freq: "monthly" },
     { loc: `${SITE.url}/live-demo`, lastmod: "2026-10-13", priority: "0.5", freq: "monthly" },
     { loc: `${SITE.url}/rth-admin-demo`, lastmod: "2026-10-13", priority: "0.5", freq: "monthly" },
-    ...list.map(p => ({ loc: `${SITE.url}/blog/${encodeURIComponent(p.slug)}`, lastmod: day(p.updatedAt || p.publishedAt), priority: p.featured ? "0.9" : "0.8", freq: "monthly", image: p.cover }))
+    ...list.map(p => ({ loc: `${SITE.url}/blog/${encodeURIComponent(p.slug)}`, lastmod: day(p.updatedAt || p.publishedAt), priority: p.featured ? "0.9" : "0.8", freq: "monthly", images: postImages(p) }))
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
@@ -28,8 +34,7 @@ ${urls.map(u => `  <url>
     <lastmod>${u.lastmod}</lastmod>
     <changefreq>${u.freq}</changefreq>
     <priority>${u.priority}</priority>${(u.images || []).map(i => `
-    <image:image><image:loc>${x(new URL(i, SITE.url).href)}</image:loc></image:image>`).join("")}${u.image ? `
-    <image:image><image:loc>${x(new URL(u.image, SITE.url).href)}</image:loc></image:image>` : ""}
+    <image:image><image:loc>${x(new URL(i, SITE.url).href)}</image:loc></image:image>`).join("")}
   </url>`).join("\n")}
 </urlset>
 `;
@@ -92,7 +97,7 @@ export function llms({ settings: s, studios = [], projects = [], posts = [], ski
     "",
     "## Pricing (starting from)",
     "",
-    ...(s.pricingGroups || []).flatMap(g => [`### ${g.name}`, "", ...(g.plans || []).map(p => `- ${p.name}: ${[p.prefix, p.price].filter(Boolean).join(" ")}${p.priceUsd ? ` (${p.priceUsd})` : ""}${p.period && p.period !== "one-off" ? ` ${p.period}` : ""} — ${(p.features || []).join("; ")}`), ""]),
+    ...(s.pricingGroups || []).flatMap(g => [`### ${g.name}`, "", ...(g.plans || []).map(p => `- ${p.name}: ${[p.prefix, p.price].filter(Boolean).join(" ")}${p.period && p.period !== "one-off" ? ` ${p.period}` : ""} — ${(p.features || []).join("; ")}`), ""]),
     s.pricingNote || "",
     "",
     "## FAQ",

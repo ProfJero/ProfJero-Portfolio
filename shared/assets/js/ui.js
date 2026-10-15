@@ -218,6 +218,8 @@ export function initCarousels(root = document) {
 
 export function initCommon() {
   initTheme();
+  // Show the Customize gear right away (from the cached look); live settings may hide it later.
+  if (document.querySelector(".page-wrap")) initCustomizer({ enabled: look().panel !== false });
   initNav();
   initNewsletter();
   reveal();

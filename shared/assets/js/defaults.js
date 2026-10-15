@@ -65,44 +65,44 @@ export const DEFAULT_SETTINGS = {
     {
       name: "Websites", icon: "fa-solid fa-globe",
       plans: [
-        { name: "Starter Website", tagline: "Look professional online, fast.", prefix: "From", price: "GH₵ 4,500", priceUsd: "$450", period: "one-off", delivery: "1–2 weeks", featured: false,
+        { name: "Starter Website", tagline: "Look professional online, fast.", prefix: "From", price: "GH₵ 4,500", period: "one-off", delivery: "1–2 weeks", featured: false,
           features: ["Up to 5 pages, mobile-first design", "Contact form + WhatsApp chat button", "Google-ready SEO & Search Console setup", "Free SSL & fast hosting setup", "1 month free support"] },
-        { name: "Business Website", tagline: "A site you can update yourself.", prefix: "From", price: "GH₵ 9,500", priceUsd: "$950", period: "one-off", delivery: "3–4 weeks", featured: true,
+        { name: "Business Website", tagline: "A site you can update yourself.", prefix: "From", price: "GH₵ 9,500", period: "one-off", delivery: "3–4 weeks", featured: true,
           features: ["Up to 12 pages + blog", "Admin dashboard to edit content", "Lead forms delivered to your inbox", "Advanced SEO, structured data & analytics", "Image/video storage (Cloudinary)", "3 months free support"] },
-        { name: "E-commerce / Booking", tagline: "Sell or take bookings online.", prefix: "From", price: "GH₵ 16,000", priceUsd: "$1,600", period: "one-off", delivery: "4–6 weeks", featured: false,
+        { name: "E-commerce / Booking", tagline: "Sell or take bookings online.", prefix: "From", price: "GH₵ 16,000", period: "one-off", delivery: "4–6 weeks", featured: false,
           features: ["Products, cart & checkout or bookings", "Mobile Money & card payments (Paystack)", "Orders & stock dashboard", "Email/SMS notifications", "3 months free support"] }
       ]
     },
     {
       name: "Web Apps & Systems", icon: "fa-solid fa-layer-group",
       plans: [
-        { name: "Business System", tagline: "POS, inventory, school, church or HR.", prefix: "From", price: "GH₵ 22,000", priceUsd: "$2,200", period: "one-off", delivery: "5–8 weeks", featured: false,
+        { name: "Business System", tagline: "POS, inventory, school, church or HR.", prefix: "From", price: "GH₵ 22,000", period: "one-off", delivery: "5–8 weeks", featured: false,
           features: ["Multi-user roles & secure login", "Reports, exports & receipts", "Works on phone, tablet & desktop", "Staff training included", "3 months free support"] },
-        { name: "Custom Platform", tagline: "LMS, marketplace or SaaS product.", prefix: "From", price: "GH₵ 45,000", priceUsd: "$4,500", period: "one-off", delivery: "8–12 weeks", featured: true,
+        { name: "Custom Platform", tagline: "LMS, marketplace or SaaS product.", prefix: "From", price: "GH₵ 45,000", period: "one-off", delivery: "8–12 weeks", featured: true,
           features: ["Full front end + back end + database", "Admin & analytics dashboards", "Payments, email/SMS & API integrations", "Scalable cloud architecture", "Live demo environment", "6 months free support"] },
-        { name: "Enterprise", tagline: "Multi-branch, integrations, SLAs.", prefix: "From", price: "GH₵ 90,000", priceUsd: "$9,000", period: "one-off", delivery: "Phased roadmap", featured: false,
+        { name: "Enterprise", tagline: "Multi-branch, integrations, SLAs.", prefix: "From", price: "GH₵ 90,000", period: "one-off", delivery: "Phased roadmap", featured: false,
           features: ["Discovery & technical architecture", "Multi-branch / multi-tenant systems", "Third-party & legacy integrations", "Security review & performance tuning", "Dedicated support agreement (SLA)"] }
       ]
     },
     {
       name: "Care & Hosting", icon: "fa-solid fa-shield-heart",
       plans: [
-        { name: "Essential Care", tagline: "Peace of mind for small sites.", prefix: "", price: "GH₵ 650", priceUsd: "$65", period: "/month", delivery: "Cancel anytime", featured: false,
+        { name: "Essential Care", tagline: "Peace of mind for small sites.", prefix: "", price: "GH₵ 650", period: "/month", delivery: "Cancel anytime", featured: false,
           features: ["Hosting, SSL & uptime monitoring", "Weekly backups & security updates", "2 small content edits per month", "Email support (48h)"] },
-        { name: "Growth Care", tagline: "Keep improving every month.", prefix: "", price: "GH₵ 1,500", priceUsd: "$150", period: "/month", delivery: "Cancel anytime", featured: true,
+        { name: "Growth Care", tagline: "Keep improving every month.", prefix: "", price: "GH₵ 1,500", period: "/month", delivery: "Cancel anytime", featured: true,
           features: ["Everything in Essential", "Up to 6 hours of changes monthly", "Monthly SEO & analytics report", "Priority support (24h)"] },
-        { name: "Pro Partner", tagline: "Your on-call dev team.", prefix: "", price: "GH₵ 3,500", priceUsd: "$350", period: "/month", delivery: "Cancel anytime", featured: false,
+        { name: "Pro Partner", tagline: "Your on-call dev team.", prefix: "", price: "GH₵ 3,500", period: "/month", delivery: "Cancel anytime", featured: false,
           features: ["Up to 20 hours of development", "New features & integrations", "Quarterly security & speed audits", "Same-day support"] }
       ]
     },
     {
       name: "Training", icon: "fa-solid fa-chalkboard-user",
       plans: [
-        { name: "1-on-1 Coaching", tagline: "Learn faster with a mentor.", prefix: "", price: "GH₵ 2,500", priceUsd: "$250", period: "/month", delivery: "8 sessions", featured: false,
+        { name: "1-on-1 Coaching", tagline: "Learn faster with a mentor.", prefix: "", price: "GH₵ 2,500", period: "/month", delivery: "8 sessions", featured: false,
           features: ["8 × 90-minute live sessions", "Personal learning roadmap", "Code reviews on your projects", "WhatsApp support between sessions"] },
-        { name: "Web Dev Bootcamp", tagline: "Zero to job-ready full-stack.", prefix: "", price: "GH₵ 6,000", priceUsd: "$600", period: "12 weeks", delivery: "Small cohorts", featured: true,
+        { name: "Web Dev Bootcamp", tagline: "Zero to job-ready full-stack.", prefix: "", price: "GH₵ 6,000", period: "12 weeks", delivery: "Small cohorts", featured: true,
           features: ["HTML, CSS, JavaScript, React", "Node.js, databases & Firebase", "3 portfolio projects you deploy", "Career guidance & certificate"] },
-        { name: "Corporate & Schools", tagline: "Upskill your team or students.", prefix: "From", price: "GH₵ 5,000", priceUsd: "$500", period: "/day", delivery: "Up to 25 people", featured: false,
+        { name: "Corporate & Schools", tagline: "Upskill your team or students.", prefix: "From", price: "GH₵ 5,000", period: "/day", delivery: "Up to 25 people", featured: false,
           features: ["Custom curriculum for your goals", "Digital skills, web, data or IT basics", "Materials & certificates", "On-site or online"] }
       ]
     }

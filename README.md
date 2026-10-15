@@ -25,7 +25,9 @@ scripts/build.mjs          node scripts/build.mjs portfolio | hub | all  →  si
 firestore.rules, tests/    security rules for the shared database (98 tests)
 ```
 
-**How a build works:** `shared/` is copied, then `sites/<site>/public/` is laid on top (a site's own file wins, e.g. `site.js`), then that site's build hook runs. The output is `sites/<site>/dist/`, which is git-ignored and never edited by hand.
+**How a build works:** `shared/` is copied, then `sites/<site>/public/` is laid on top (a site's own file wins, e.g. `site.js`), then that site's build hook runs. Finally every local `.js`/`.css` URL is stamped with `?v=<content hash>`, so visitors' browsers never mix files from two deployments. The output is `sites/<site>/dist/`, which is git-ignored and never edited by hand.
+
+**Installable apps (PWA):** the admin (`/admin/`) and the client portal (`/portal/`) each have their own manifest and icons. Both use one shared service worker, `shared/assets/js/pwa-sw.js`, registered with that app's scope.
 
 ## Deploying (Cloudflare Pages)
 

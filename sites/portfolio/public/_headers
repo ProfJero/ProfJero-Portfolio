@@ -11,14 +11,22 @@
 /assets/img/*
   Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
 
+# JS/CSS URLs carry ?v=<content hash> (scripts/build.mjs), so they can be cached for good.
 /assets/css/*
-  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+  Cache-Control: public, max-age=31536000, immutable
 
 /assets/js/*
-  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+  Cache-Control: public, max-age=31536000, immutable
 
 /llms.txt
   Content-Type: text/plain; charset=utf-8
 
 /llms-full.txt
   Content-Type: text/plain; charset=utf-8
+
+# One shared service worker serves the installable apps (/portal/, /admin/).
+/assets/js/pwa-sw.js
+  Service-Worker-Allowed: /
+
+/admin/manifest.webmanifest
+  Content-Type: application/manifest+json

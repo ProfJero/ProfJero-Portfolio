@@ -92,7 +92,6 @@ export const STUDIO_DETAILS = {
         tagline: "For individuals, freelancers and small businesses getting online",
         prefix: "From",
         price: "GH₵ 4,500",
-        priceUsd: "$450",
         period: "one-off",
         features: ["Up to 5 pages, mobile-friendly", "WhatsApp and contact form integration", "Basic on-page SEO and Google Business Profile", "Free hosting setup on Cloudflare Pages", "1 month of free support after launch"],
         featured: false
@@ -102,7 +101,6 @@ export const STUDIO_DETAILS = {
         tagline: "For established businesses, schools and organisations",
         prefix: "From",
         price: "GH₵ 9,500",
-        priceUsd: "$950",
         period: "one-off",
         features: ["Up to 12 pages with custom design", "Content management or admin panel", "Booking, enquiry or product catalogue features", "Domain, business email and analytics setup", "Staff training session", "3 months of free support"],
         featured: true
@@ -112,7 +110,6 @@ export const STUDIO_DETAILS = {
         tagline: "Custom web app: POS, inventory, school or records system",
         prefix: "From",
         price: "GH₵ 22,000",
-        priceUsd: "$2,200",
         period: "one-off",
         features: ["Requirements workshop and system design", "User roles, dashboards and reports", "Cloud database with backups", "Payment or SMS integration where needed", "On-site or online staff training", "3 months of support, then optional maintenance plan"],
         featured: false
@@ -221,7 +218,6 @@ export const STUDIO_DETAILS = {
         tagline: "For new businesses and small teams",
         prefix: "From",
         price: "GH₵ 1,500",
-        priceUsd: "$140",
         period: "one-off",
         features: ["Simple logo design or logo clean-up", "10 branded T-shirts", "10 branded mugs", "100 vinyl logo stickers", "Digital mockups before printing"],
         featured: false
@@ -231,7 +227,6 @@ export const STUDIO_DETAILS = {
         tagline: "Staff, client and end-of-year gifts",
         prefix: "From",
         price: "GH₵ 4,500",
-        priceUsd: "$420",
         period: "for 20 packs",
         features: ["20 gift packs in branded boxes", "Each pack: branded watch or bottle, notebook, pen and keyholder", "Optional name personalisation", "Gift tags with your message", "Delivery within Cape Coast included"],
         featured: true
@@ -241,7 +236,6 @@ export const STUDIO_DETAILS = {
         tagline: "Launches, anniversaries, weddings, funerals and programmes",
         prefix: "From",
         price: "GH₵ 3,000",
-        priceUsd: "$280",
         period: "per event",
         features: ["1 roll-up banner and 1 flex banner", "30 printed T-shirts or souvenir items", "Programme or brochure design", "Branded stickers or labels", "Production timed to your event date"],
         featured: false
@@ -342,7 +336,6 @@ export const STUDIO_DETAILS = {
         tagline: "A clear starting point for your farm",
         prefix: "From",
         price: "GH₵ 800",
-        priceUsd: "$75",
         period: "per visit",
         features: ["On-site visit within Cape Coast area", "Soil, water and practice assessment", "Soil sample collection for lab referral", "Written report with action plan", "Transport outside Cape Coast quoted separately"],
         featured: false
@@ -352,7 +345,6 @@ export const STUDIO_DETAILS = {
         tagline: "Sensor monitoring and basic irrigation automation",
         prefix: "From",
         price: "GH₵ 6,500",
-        priceUsd: "$600",
         period: "one-off",
         features: ["Soil moisture and weather sensors", "Phone dashboard and alerts", "Timer or sensor-controlled irrigation valve", "Installation and training", "3 months of remote support"],
         featured: true
@@ -362,7 +354,6 @@ export const STUDIO_DETAILS = {
         tagline: "Ongoing guidance through the growing season",
         prefix: "From",
         price: "GH₵ 1,200",
-        priceUsd: "$110",
         period: "/month",
         features: ["Monthly farm visit", "Unlimited WhatsApp advisory", "Digital farm records setup", "Seasonal planning and review", "Minimum 3-month commitment"],
         featured: false
@@ -454,7 +445,6 @@ export const STUDIO_DETAILS = {
         tagline: "One consultation and a practical plan to get going",
         prefix: "From",
         price: "GH₵ 350",
-        priceUsd: "$35",
         period: "one-off",
         features: ["60-minute consultation (in person or online)", "1-week meal plan with local foods", "Shopping list", "1 follow-up WhatsApp check-in"],
         featured: false
@@ -464,7 +454,6 @@ export const STUDIO_DETAILS = {
         tagline: "Four weeks of guided support",
         prefix: "From",
         price: "GH₵ 1,200",
-        priceUsd: "$110",
         period: "4 weeks",
         features: ["Initial consultation", "4 weekly meal plans and shopping lists", "Weekly progress check-ins", "Recipe and meal prep guide", "WhatsApp support during the programme"],
         featured: true
@@ -474,7 +463,6 @@ export const STUDIO_DETAILS = {
         tagline: "For offices, schools and organisations",
         prefix: "From",
         price: "GH₵ 2,500",
-        priceUsd: "$230",
         period: "per session",
         features: ["On-site or online nutrition talk", "Q&A for staff", "Printable wellness resources", "Healthy snack and canteen tips", "Multi-session programmes available"],
         featured: false

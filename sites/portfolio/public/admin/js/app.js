@@ -1,9 +1,14 @@
-import { $, $$, fb, state, toast, esc } from "./core.js";
+import { $, $$, fb, state, toast, esc, openDialog } from "./core.js";
 import { initTheme } from "/assets/js/ui.js";
 import { SITE } from "/assets/js/config.js";
 import { avatar } from "/assets/js/render.js";
+import { initPWA } from "/assets/js/pwa.js";
 
 initTheme();
+initPWA({
+  app: "admin", scope: "/admin/",
+  onIOSHelp: () => openDialog({ title: "Install the admin app", body: `<p>On iPhone or iPad, open this page in <b>Safari</b>, tap <b>Share</b> <i class="fa-solid fa-arrow-up-from-bracket"></i>, then <b>Add to Home Screen</b>.</p>` })
+});
 
 const routes = {
   dashboard: ["Dashboard", () => import("./views/dashboard.js")],
@@ -93,7 +98,8 @@ async function startApp(u) {
   $("#boot").hidden = true;
   $("#login").hidden = true;
   $("#app").hidden = false;
-  $("#user-chip").innerHTML = `${avatar(u.displayName || u.email, u.photoURL)}<span>${esc(u.displayName || u.email)}</span>`;
+  const role = u.email === SITE.ownerEmail ? "Super admin" : "Admin";
+  $("#user-chip").innerHTML = `${avatar(u.displayName || u.email, u.photoURL)}<span>${esc(u.displayName || u.email)}<small class="muted" style="display:block;font-size:.72rem">${role}</small></span>`;
   unsubBadge?.();
   const badge = (id, n) => { const b = $(id); if (b) { b.textContent = n || ""; b.dataset.n = n; } };
   fb.onSnapshot(fb.query(fb.collection(fb.db, "bookings"), fb.where("status", "==", "pending")), s => { state.pendingBookings = s.size; badge("#badge-bookings", s.size); }, () => { });
@@ -144,11 +150,14 @@ $("#forgot").addEventListener("click", async e => {
 });
 $("#logout").addEventListener("click", async () => { if (guardLeave()) { await fb.signOut(fb.auth); location.hash = ""; } });
 
+const WRONG_LOGIN = "Incorrect email or password. If you normally sign in with Google, use “Continue with Google”, or tap “Forgot?” to set a password.";
+
 function friendly(e) {
   const m = {
-    "auth/invalid-credential": "Incorrect email or password.",
-    "auth/wrong-password": "Incorrect email or password.",
-    "auth/user-not-found": "No account with that email.",
+    "auth/invalid-credential": WRONG_LOGIN,
+    "auth/invalid-login-credentials": WRONG_LOGIN,
+    "auth/wrong-password": WRONG_LOGIN,
+    "auth/user-not-found": WRONG_LOGIN,
     "auth/too-many-requests": "Too many attempts. Try again later.",
     "auth/operation-not-allowed": "This sign-in method isn't enabled in Firebase Authentication.",
     "auth/unauthorized-domain": "This domain isn't authorised in Firebase Authentication → Settings → Authorized domains.",

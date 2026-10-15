@@ -1,8 +1,9 @@
 // Server-side renders blog articles at /blog/<slug> with full content, meta tags
 // and BlogPosting structured data — ideal for Google and AI crawlers.
 import { posts } from "../_lib/data.js";
+import { postImages } from "../_lib/feeds.js";
 import { renderMarkdown } from "../../../../shared/assets/js/markdown.js";
-import { esc, img, formatDate, toDate } from "../../../../shared/assets/js/utils.js";
+import { esc, img, formatDate, toDate, hueFrom } from "../../../../shared/assets/js/utils.js";
 import { SITE } from "../../../../shared/assets/js/config.js";
 
 export async function onRequestGet(context) {
@@ -26,11 +27,13 @@ export async function onRequestGet(context) {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "BlogPosting", headline: p.title, description: desc, image, url: canonical, mainEntityOfPage: canonical,
+        "@type": "BlogPosting", "@id": `${canonical}#article`, headline: p.title, description: desc, url: canonical, mainEntityOfPage: canonical,
+        image: [image, ...postImages(p).slice(1).map(u => new URL(img(u, 1200), SITE.url).href)],
+        isPartOf: { "@type": "Blog", "@id": `${SITE.url}/blog#blog`, name: "ProfJero Blog", url: `${SITE.url}/blog` },
         datePublished: pub?.toISOString(), dateModified: upd?.toISOString(), articleSection: p.category,
         keywords: (p.tags || []).join(", "), wordCount: (p.content || "").split(/\s+/).length, inLanguage: "en",
-        author: { "@type": "Person", "@id": `${SITE.url}/#person`, name: "Benjamin Amoako", alternateName: "ProfJero", url: SITE.url + "/" },
-        publisher: { "@type": "Person", "@id": `${SITE.url}/#person`, name: "Benjamin Amoako" },
+        author: { "@type": "Person", "@id": `${SITE.url}/#person`, name: "Benjamin Amoako", alternateName: "ProfJero", url: SITE.url + "/", image: `${SITE.url}/assets/img/people/benjamin-amoako.webp`, jobTitle: "Full-Stack Developer & IT Trainer" },
+        publisher: { "@type": "Organization", "@id": `${SITE.url}/#organization`, name: "ProfJero", url: SITE.url + "/", logo: { "@type": "ImageObject", url: `${SITE.url}/assets/img/brand/icon-512.png`, width: 512, height: 512 } },
         interactionStatistic: [
           { "@type": "InteractionCounter", interactionType: "https://schema.org/LikeAction", userInteractionCount: p.likes || 0 },
           { "@type": "InteractionCounter", interactionType: "https://schema.org/CommentAction", userInteractionCount: p.commentCount || 0 }
@@ -62,6 +65,8 @@ export async function onRequestGet(context) {
       el.append(`<meta property="article:published_time" content="${esc(pub?.toISOString() || "")}"><meta property="article:section" content="${esc(p.category || "")}">${(p.tags || []).map(t => `<meta property="article:tag" content="${esc(t)}">`).join("")}`, { html: true });
     } })
     .on("#article-schema", { element(el) { el.setInnerContent(schema, { html: true }); } })
+    .on("#a-hero", { element(el) { el.setAttribute("style", `--h:${hueFrom(p.category || p.title)}`); if (p.cover) el.setAttribute("class", "article-hero has-cover"); } })
+    .on("#a-hero-bg", { element(el) { if (p.cover) el.setInnerContent(`<img src="${esc(img(p.cover, 1600))}" alt="${esc(p.coverAlt || p.title)}" fetchpriority="high">`, { html: true }); } })
     .on("#a-title", { element(el) { el.setInnerContent(p.title); } })
     .on("#a-excerpt", { element(el) { el.setInnerContent(p.excerpt || ""); } })
     .on("#a-cat", { element(el) { el.setInnerContent(p.category || "Article"); el.setAttribute("href", `/blog?category=${encodeURIComponent(p.category || "")}`); } })

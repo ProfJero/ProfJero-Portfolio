@@ -24,7 +24,7 @@ const TODAY = new Date().toISOString().slice(0, 10);
 
 const THEME_SCRIPT = `<script>try{var d=document.documentElement,j=function(k){return JSON.parse(localStorage.getItem(k)||"{}")||{}},o=Object.assign({},j("pj_site_look"),j("pj_prefs")),m=o.mode||localStorage.getItem("pj_theme")||"system";if(m!=="light"&&m!=="dark")m=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=m;if(/^#[0-9a-f]{6}$/i.test(o.color||""))d.style.setProperty("--brand-base",o.color);if(o.layout==="boxed")d.dataset.layout="boxed";if(o.bg)d.dataset.bg=o.bg;if(o.overlay)d.dataset.overlay="1"}catch(e){}</script>`;
 
-function head({ title, desc, path, image = "/assets/img/brand/og-hub.jpg", keywords = "", schema = [], noindex = false, preload = "" }) {
+function head({ title, desc, path, image = "/assets/img/brand/og-hub.jpg", keywords = "", schema = [], noindex = false, preload = "", app = null }) {
   const canonical = URL_BASE + path;
   const imageUrl = new URL(image, URL_BASE).href;
   return `<!DOCTYPE html>
@@ -55,8 +55,12 @@ function head({ title, desc, path, image = "/assets/img/brand/og-hub.jpg", keywo
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/icon-192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
-  <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
+  ${app ? `<link rel="apple-touch-icon" href="${app.icon}">
+  <link rel="manifest" href="${app.manifest}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="${esc(app.title)}">` : `<link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">`}
   ${THEME_SCRIPT}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -329,7 +333,6 @@ function studioPage(s) {
     <section class="section${isCreative ? "" : " section-alt"}" id="pricing">
       <div class="container">
         <div class="section-head"><span class="eyebrow"><i class="fa-solid fa-tags"></i> Packages</span><h2>Transparent starting prices</h2><p>Every request gets a written quote. Prices below are starting points.</p></div>
-        <div class="pricing-top"><div class="currency-switch" role="group" aria-label="Currency"><button type="button" data-cur="ghs" aria-pressed="true">GH₵</button><button type="button" data-cur="usd" aria-pressed="false">US$</button></div></div>
         <div class="pricing" id="package-grid">${R.renderPackages(s)}</div>
       </div>
     </section>
@@ -453,7 +456,7 @@ function bookingPage() {
 
 // ======================= CLIENT PORTAL =======================
 function portalPage() {
-  return head({ title: "Client Portal — ProfJero Hub", desc: "Sign in to the ProfJero Hub client portal to track bookings, approve quotes, follow project progress, download files and message the team.", path: "/portal/", noindex: true }) + header("portal") + `
+  return head({ title: "Client Portal — ProfJero Hub", desc: "Sign in to the ProfJero Hub client portal to track bookings, approve quotes, follow project progress, download files and message the team.", path: "/portal/", noindex: true, app: { manifest: "/portal/manifest.webmanifest", icon: "/assets/img/brand/app-portal-apple-180.png", title: "ProfJero" } }) + header("portal") + `
   <main id="main" class="portal-main">
     <div id="portal-root"><div class="boot-loader"><img src="/assets/img/brand/mark-192.png" alt="" width="56" height="56"></div></div>
   </main>` + footer(["/assets/js/portal.js"]);
@@ -493,7 +496,7 @@ function llms() {
     "",
     "## Studios",
     "",
-    ...studios.flatMap(s => [`### [ProfJero ${s.name}](${URL_BASE}${R.studioPath(s)})`, "", s.intro || s.description, "", `Delivery: ${s.mode || "—"}`, "", "Services:", ...(s.services || []).map(x => `- ${x.title}: ${x.text}`), "", "Packages (starting prices):", ...(s.packages || []).map(p => `- ${p.name}: ${[p.prefix, p.price].filter(Boolean).join(" ")}${p.priceUsd ? ` (${p.priceUsd})` : ""}${p.period && p.period !== "one-off" ? " " + p.period : ""}`), ""]),
+    ...studios.flatMap(s => [`### [ProfJero ${s.name}](${URL_BASE}${R.studioPath(s)})`, "", s.intro || s.description, "", `Delivery: ${s.mode || "—"}`, "", "Services:", ...(s.services || []).map(x => `- ${x.title}: ${x.text}`), "", "Packages (starting prices):", ...(s.packages || []).map(p => `- ${p.name}: ${[p.prefix, p.price].filter(Boolean).join(" ")}${p.period && p.period !== "one-off" ? " " + p.period : ""}`), ""]),
     "## Branded products (Creative Studio)",
     "",
     ...DEFAULT_PRODUCTS.map(p => `- ${p.name} (${p.category}): from ${p.priceFrom} ${p.unit || ""}, minimum ${p.minQty}, ready in ${p.leadTime}. Methods: ${(p.methods || []).join(", ")}.`),

@@ -62,7 +62,7 @@ const CONFIG = {
       { key: "packages", label: "Packages (pricing on the Hub studio page)", type: "list", full: true, itemLabel: "Package", fields: [
         { key: "name", label: "Name", type: "text" }, { key: "tagline", label: "Tagline", type: "text" },
         { key: "prefix", label: "Prefix", type: "text", placeholder: "From" }, { key: "period", label: "Period", type: "text", placeholder: "one-off, /month" },
-        { key: "price", label: "Price (GH₵)", type: "text" }, { key: "priceUsd", label: "Price (US$)", type: "text" },
+        { key: "price", label: "Price (GH₵)", type: "text", placeholder: "GH₵ 4,500 or just 4500" },
         { key: "featured", label: "Most popular", type: "toggle" }, { key: "features", label: "Features", type: "strings", full: true, itemLabel: "feature" }
       ] },
       { key: "highlights", label: "Why choose us", type: "list", full: true, itemLabel: "Point", fields: [
@@ -88,7 +88,7 @@ const CONFIG = {
       { key: "image", label: "Product photo (optional — an icon is shown otherwise)", type: "image", full: true },
       { key: "icon", label: "Icon", type: "icon" },
       { key: "methods", label: "Branding methods", type: "tags" },
-      { key: "priceFrom", label: "Price from", type: "text", placeholder: "GH₵ 35" },
+      { key: "priceFrom", label: "Price from (GH₵)", type: "text", placeholder: "GH₵ 35" },
       { key: "unit", label: "Unit", type: "text", placeholder: "per piece" },
       { key: "minQty", label: "Minimum quantity", type: "number", min: 1 },
       { key: "leadTime", label: "Lead time", type: "text", placeholder: "5–7 days" },

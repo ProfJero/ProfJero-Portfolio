@@ -1,7 +1,7 @@
 // ProfJero Hub renderers (pure string functions) — used by sites/hub/pages.mjs to
 // pre-render static HTML for search engines, and in the browser to show live data.
 import { esc, safeUrl, img, byOrder, yearsSince } from "./utils.js";
-import { renderProjects, renderProjectFilters, renderTestimonials, renderPostCard, renderFaqs, byNewest } from "./render.js";
+import { renderProjects, renderProjectFilters, renderTestimonials, renderPostCard, renderFaqs, byNewest, cedis } from "./render.js";
 
 export const studioPath = s => `/${s.page || s.id}`;
 const accent = s => esc(s.color || "#0A60EE");
@@ -63,7 +63,7 @@ export function renderStudioProcess(s) {
 }
 
 export function renderPackages(s) {
-  const money = p => `<span class="p-ghs">${esc(p.price)}</span><span class="p-usd">${esc(p.priceUsd || p.price)}</span>`;
+  const money = p => esc(cedis(p.price));
   return (s.packages || []).map(p => `
     <article class="price-card reveal${p.featured ? " featured" : ""}" style="--brand:${accent(s)}">
       ${p.featured ? '<span class="price-flag"><i class="fa-solid fa-star"></i> Most popular</span>' : ""}
@@ -100,7 +100,7 @@ export function renderProducts(products = []) {
         <p>${esc(p.description || "")}</p>
         <div class="product-methods">${(p.methods || []).slice(0, 3).map(m => `<span>${esc(m)}</span>`).join("")}</div>
         <dl class="product-facts">
-          <div><dt>From</dt><dd>${esc(p.priceFrom || "Quote")}<small> ${esc(p.unit || "")}</small></dd></div>
+          <div><dt>From</dt><dd>${esc(cedis(p.priceFrom) || "Quote")}<small> ${esc(p.unit || "")}</small></dd></div>
           <div><dt>Min. qty</dt><dd>${esc(p.minQty ?? 1)}</dd></div>
           <div><dt>Ready in</dt><dd>${esc(p.leadTime || "—")}</dd></div>
         </dl>
@@ -160,6 +160,7 @@ export function studioSchema(s, site = {}) {
     address: { "@type": "PostalAddress", addressLocality: "Cape Coast", addressRegion: "Central Region", addressCountry: "GH" },
     areaServed: ["Ghana", "Worldwide"],
     priceRange: (s.packages || []).length ? `${s.packages[0].price}+` : undefined,
+    currenciesAccepted: "GHS", paymentAccepted: "Mobile Money, Bank transfer, Cash",
     openingHours: "Mo-Sa 07:00-20:00",
     hasOfferCatalog: {
       "@type": "OfferCatalog", name: `${s.name} services`,

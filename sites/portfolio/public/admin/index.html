@@ -7,7 +7,12 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#0A60EE">
   <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="/assets/img/brand/app-admin-apple-180.png">
+  <link rel="manifest" href="/admin/manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="PJ Admin">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <script>try{var d=document.documentElement,j=function(k){return JSON.parse(localStorage.getItem(k)||"{}")||{}},o=Object.assign({},j("pj_site_look"),j("pj_prefs")),m=o.mode||localStorage.getItem("pj_theme")||"system";if(m!=="light"&&m!=="dark")m=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=m;if(/^#[0-9a-f]{6}$/i.test(o.color||""))d.style.setProperty("--brand-base",o.color);}catch(e){}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +42,7 @@
     <div class="login-box">
       <div class="login-card">
         <h1>Welcome back</h1>
-        <p class="muted">Sign in with your admin account.</p>
+        <p class="muted">Admins only. Sign in with the account the super admin approved.</p>
         <button class="btn btn-google" id="login-google" type="button"><i class="fa-brands fa-google" style="color:#EA4335"></i> Continue with Google</button>
         <div class="divider">or with email</div>
         <form id="login-form" class="fields" style="grid-template-columns:1fr" novalidate>
@@ -46,7 +51,9 @@
           <button class="btn btn-primary btn-block" type="submit">Sign in</button>
         </form>
         <p class="small muted" id="login-msg" style="margin-top:14px" role="alert"></p>
-        <p class="small muted" style="margin-top:22px"><a href="/"><i class="fa-solid fa-arrow-left"></i> Back to website</a></p>
+        <p class="small muted" style="margin-top:22px">Are you a client? Sign in to the <a href="https://profjerohub.pages.dev/portal/">client portal</a> instead.</p>
+        <p class="small muted" style="margin-top:8px"><a href="/"><i class="fa-solid fa-arrow-left"></i> Back to website</a></p>
+        <button class="btn btn-ghost btn-sm" type="button" data-install hidden style="margin-top:14px"><i class="fa-solid fa-mobile-screen-button"></i> Install the admin app</button>
       </div>
     </div>
   </section>
@@ -85,6 +92,7 @@
       <div class="side-foot">
         <a class="side-link" href="/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> View website</a>
         <a class="side-link" href="https://profjerohub.pages.dev" target="_blank" rel="noopener"><i class="fa-solid fa-cubes"></i> ProfJero Hub</a>
+        <button class="side-link" type="button" data-install hidden><i class="fa-solid fa-mobile-screen-button"></i> Install admin app</button>
         <button class="side-link" id="logout" type="button"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
       </div>
     </aside>

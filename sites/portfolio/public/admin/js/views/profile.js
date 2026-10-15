@@ -61,14 +61,14 @@ const SECTIONS = [
       { key: "title", label: "Title", type: "text" }, { key: "icon", label: "Icon", type: "icon" }, { key: "text", label: "Description", type: "textarea", full: true, rows: 2 }] }]
   },
   {
-    id: "pricing", title: "Pricing", icon: "fa-solid fa-tags", desc: "Pricing tabs (e.g. Websites, Systems, Care plans, Training). Give each plan a GH₵ price and an optional US$ price — visitors can switch currency.",
+    id: "pricing", title: "Pricing", icon: "fa-solid fa-tags", desc: "Pricing tabs (e.g. Websites, Systems, Care plans, Training). Prices are in Ghana cedis (GH₵): type "GH₵ 9,500" or just 9500.",
     fields: [
       { key: "pricingGroups", label: "Pricing tabs", type: "list", full: true, itemLabel: "Tab", fields: [
         { key: "name", label: "Tab name", type: "text" }, { key: "icon", label: "Icon", type: "icon" },
         { key: "plans", label: "Plans", type: "list", full: true, itemLabel: "Plan", fields: [
           { key: "name", label: "Plan name", type: "text" }, { key: "tagline", label: "Tagline", type: "text" },
           { key: "prefix", label: "Prefix (e.g. From)", type: "text" }, { key: "period", label: "Period", type: "text", placeholder: "one-off, /month, /day, 12 weeks" },
-          { key: "price", label: "Price (GH₵)", type: "text", placeholder: "GH₵ 9,500" }, { key: "priceUsd", label: "Price (US$)", type: "text", placeholder: "$950" },
+          { key: "price", label: "Price (GH₵)", type: "text", placeholder: "GH₵ 9,500" },
           { key: "delivery", label: "Delivery / note", type: "text", placeholder: "3–4 weeks" }, { key: "featured", label: "Highlight as most popular", type: "toggle" },
           { key: "features", label: "Features", type: "strings", full: true, itemLabel: "feature" }] }] },
       { key: "pricingNote", label: "Payment terms note (shown under pricing)", type: "textarea", full: true, rows: 3 }
