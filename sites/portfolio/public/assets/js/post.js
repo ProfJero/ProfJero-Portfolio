@@ -21,6 +21,31 @@ let commentLimit = 10;
 const likedComments = new Set();
 
 // ---------- Render article ----------
+// Full-width hero: the cover photo behind the title (or a branded gradient without one).
+function setHeroCover(p) {
+  const hero = $("#a-hero"), cover = postCover(p, 1600);
+  hero.style.setProperty("--h", hueFrom(p.category || p.title));
+  hero.classList.toggle("has-cover", !!cover);
+  $("#a-hero-bg").innerHTML = cover ? `<img src="${esc(cover)}" alt="${esc(p.coverAlt || p.title)}" fetchpriority="high">` : "";
+}
+
+// Tap an image in the article to view it full screen.
+function initLightbox() {
+  $("#a-body").addEventListener("click", e => {
+    const im = e.target.closest(".prose img");
+    if (!im) return;
+    const box = document.createElement("dialog");
+    box.className = "lightbox";
+    const cap = im.closest("figure")?.querySelector("figcaption")?.textContent || im.alt || "";
+    box.innerHTML = `<button type="button" class="lightbox-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button><img src="${esc(im.dataset.zoom || im.currentSrc || im.src)}" alt="${esc(im.alt)}">${cap ? `<p>${esc(cap)}</p>` : ""}`;
+    document.body.append(box);
+    box.addEventListener("click", ev => { if (ev.target === box || ev.target.closest(".lightbox-close")) box.close(); });
+    box.addEventListener("close", () => box.remove());
+    box.showModal();
+  });
+}
+initLightbox();
+
 function setMeta(p) {
   const title = `${p.seoTitle || p.title} | ProfJero Blog`;
   const desc = p.seoDescription || p.excerpt || "";
@@ -62,10 +87,7 @@ function renderArticle(p) {
   if (p.author?.avatar) $("#a-avatar").src = img(p.author.avatar, 120);
   const updated = toDate(p.updatedAt), pub = toDate(p.publishedAt);
   $("#a-meta").innerHTML = `<time datetime="${pub?.toISOString() || ""}">${formatDate(pub)}</time> · ${p.readingTime} min read${updated && pub && updated - pub > 864e5 ? ` · Updated ${formatDate(updated)}` : ""}`;
-  const cover = postCover(p, 1400);
-  const fig = $("#a-cover");
-  if (cover) { fig.innerHTML = `<img src="${esc(cover)}" alt="${esc(p.coverAlt || p.title)}" fetchpriority="high">`; fig.hidden = false; }
-  else fig.hidden = true;
+  setHeroCover(p);
   const { html, toc } = renderMarkdown(p.content || "");
   $("#a-body").innerHTML = html;
   $("#a-tags").innerHTML = (p.tags || []).map(t => `<a href="/blog?tag=${encodeURIComponent(t)}">#${esc(t)}</a>`).join("");

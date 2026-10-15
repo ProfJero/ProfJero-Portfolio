@@ -278,3 +278,15 @@ code.k { font-family: ui-monospace, monospace; font-size: .85em; background: var
 .review-card header small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .review-card .stars-row { color: #F59E0B; margin: 12px 0 6px; display: flex; gap: 2px; }
 .review-card blockquote { margin: 0 0 10px; color: var(--text-2); line-height: 1.6; }
+
+/* Blog editor: image insert dialog + drag & drop */
+.img-insert .pill-tabs { margin-bottom: 14px; }
+.drop-zone { display: grid; place-items: center; gap: 8px; padding: 34px 16px; border: 2px dashed var(--line); border-radius: 14px; color: var(--muted); cursor: pointer; text-align: center; transition: .2s; }
+.drop-zone i { font-size: 1.8rem; color: var(--brand); }
+.drop-zone:hover, .drop-zone.over { border-color: var(--brand); background: var(--brand-50); }
+.ii-preview { margin-top: 14px; }
+.ii-preview img { max-height: 220px; border-radius: 12px; display: block; margin: 0 auto; box-shadow: var(--shadow-sm); }
+.img-insert .media-grid { max-height: 320px; overflow: auto; margin-top: 0; }
+.media-card.pick.selected { outline: 3px solid var(--brand); }
+textarea.drop-hover { outline: 3px dashed var(--brand); outline-offset: -6px; background: var(--brand-50); }
+.md-preview .md-figure.is-wide { width: 100%; margin-left: 0; transform: none; }

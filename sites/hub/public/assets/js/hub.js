@@ -1,6 +1,6 @@
 // ProfJero Hub — homepage, studio pages and work page. Static HTML is already
 // rendered (sites/hub/pages.mjs); this hydrates it with live Firestore data.
-import { $, $$, reveal, bootCommon, initCurrency, initWater, setHeroImage, initProjectModals, initWorkFilters, initContactForm, initQuotes } from "./hub-common.js";
+import { $, $$, reveal, bootCommon, initWater, setHeroImage, initProjectModals, initWorkFilters, initContactForm, initQuotes } from "./hub-common.js";
 import { loadCollection, loadPosts, DEFAULTS, mergeSettings } from "./store.js";
 import * as R from "./hub-render.js";
 import { byOrder, esc } from "./utils.js";
@@ -14,7 +14,6 @@ initProjectModals(() => state.projects);
 initWorkFilters();
 initContactForm();
 initQuotes(() => state.products);
-initCurrency();
 
 /** Replace a container's HTML only when it changed, keeping revealed content visible. */
 function put(sel, html) {

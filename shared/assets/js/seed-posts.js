@@ -3,6 +3,7 @@ export const SEED_POSTS = [
   {
     slug: "full-stack-developer-roadmap-2026",
     cover: "/assets/img/blog/frontend-backend.webp",
+    coverAlt: "Diagram of a website's front end and back end working together",
     title: "The Full-Stack Developer Roadmap for 2026: What to Learn, in What Order",
     excerpt: "A practical, no-hype full-stack roadmap for 2026: the fundamentals that still matter, the tools worth learning, where AI fits, and how to build a portfolio that gets you hired.",
     category: "Web Development",
@@ -159,6 +160,8 @@ Which stage are you at right now — and what is the one thing you are stuck on?
   },
   {
     slug: "get-found-on-google-and-ai-assistants",
+    cover: "/assets/img/bg/bg-10.webp",
+    coverAlt: "A long illuminated bridge leading towards a city landmark at dusk",
     title: "Getting Found on Google and AI Assistants: SEO, Structured Data and llms.txt",
     excerpt: "How to make your website discoverable by both search engines and AI assistants in 2026: solid SEO foundations, JSON-LD structured data, generative engine optimization and llms.txt.",
     category: "SEO & Marketing",
@@ -315,6 +318,7 @@ Have you checked how AI assistants describe you or your organisation yet? Try as
   {
     slug: "ai-coding-assistants-without-losing-fundamentals",
     cover: "/assets/img/blog/coding-laptop.webp",
+    coverAlt: "A laptop showing code on the screen",
     title: "Using AI Coding Assistants Without Losing Your Fundamentals",
     excerpt: "AI coding assistants can make you faster or make you fragile. Here is how I use them day to day, and the habits that keep your own skills sharp while you do.",
     category: "AI & Productivity",
@@ -453,6 +457,8 @@ How are you using AI in your coding right now — tutor, assistant, or ghostwrit
   },
   {
     slug: "serverless-backend-firebase-firestore-security-rules",
+    cover: "/assets/img/bg/bg-2.webp",
+    coverAlt: "Abstract glowing streams of light on a dark background",
     title: "Building a Serverless Backend with Firebase Firestore (and Security Rules That Actually Protect You)",
     excerpt: "A practical guide to building a serverless backend with Firebase: data modelling in Firestore, reading and writing from the web, and writing security rules that keep your data safe.",
     category: "Backend & Databases",
@@ -648,6 +654,7 @@ Are you using Firestore in a project right now? Paste a (non-sensitive) rule you
   {
     slug: "youre-not-late-for-beginners-who-feel-behind",
     cover: "/assets/img/blog/stress-desk.webp",
+    coverAlt: "A tired learner resting their head on a desk full of books",
     title: "You're Not Late: A Letter to Every Beginner Who Feels Behind",
     excerpt: "If you feel too old, too slow or too far behind to start a career in tech, this is for you. Why comparison lies, what actually matters, and how to start from exactly where you are.",
     category: "Motivation",
@@ -755,6 +762,7 @@ If you're starting (or restarting) your journey this month, tell me in the comme
   {
     slug: "core-web-vitals-inp-performance-guide",
     cover: "/assets/img/blog/web-tech.webp",
+    coverAlt: "Icons for web technologies around a browser window",
     title: "Core Web Vitals in Practice: A Developer's Guide to LCP, INP and CLS",
     excerpt: "A hands-on guide to Core Web Vitals: what LCP, INP and CLS measure, how to diagnose them, and practical fixes that make your site feel fast, especially on mid-range phones and slow networks.",
     category: "Web Development",
@@ -916,6 +924,8 @@ Have you run your site through PageSpeed Insights recently? Share which metric g
   },
   {
     slug: "digital-skills-opportunity-young-people-ghana",
+    cover: "/assets/img/people/profjero-at-work.webp",
+    coverAlt: "A young Ghanaian developer writing code at a desk with two monitors",
     title: "Digital Skills, Real Opportunity: Why Young People in Ghana's Rural Communities Can't Be Left Behind",
     excerpt: "Talent is everywhere in Ghana, but access is not. Lessons from training young people in tech, what digital skills open up, and practical ways communities can close the gap.",
     category: "Tech in Africa",
@@ -939,6 +949,8 @@ Digital skills are no longer only for people who want to be software developers.
 - Remote and freelance work allows people to earn from clients far beyond their town.
 
 For a young person, digital literacy is the difference between being a *consumer* of technology and being a *participant* in the digital economy. And for some, it is the first step toward a career as a developer, designer, data analyst, digital marketer or IT support professional.
+
+![Benjamin Amoako (ProfJero) in Cape Coast, Ghana](/assets/img/people/hero-bg.webp "Talent is everywhere in Ghana. Opportunity is what we have to build."){wide}
 
 ## What the divide actually looks like
 
@@ -1023,6 +1035,8 @@ How did you first get access to technology, and who helped you along the way? Sh
   },
   {
     slug: "web-app-security-essentials-owasp-top-10",
+    cover: "/assets/img/bg/bg-7.webp",
+    coverAlt: "A heavy carved wooden door set in an ancient stone temple",
     title: "Web App Security Essentials: A Practical Guide Based on the OWASP Top 10",
     excerpt: "The security risks that matter most for web developers, explained with practical examples and fixes: access control, injection, authentication, misconfiguration, dependencies and more.",
     category: "Security",
@@ -1190,6 +1204,8 @@ Which of these areas do you find hardest to get right in your projects? Let me k
   },
   {
     slug: "consistency-over-talent-lessons-from-5-years-of-building",
+    cover: "/assets/img/bg/bg-1.webp",
+    coverAlt: "A person standing on the shore at sunrise, reflected in the water",
     title: "Consistency Over Talent: Lessons from 5 Years of Building Software",
     excerpt: "Five years of building software, training learners and starting organisations taught me one thing above all: consistency beats talent. Here are the lessons and habits that made the difference.",
     category: "Career & Growth",
@@ -1221,6 +1237,8 @@ What changed things was building **systems** that didn't depend on mood:
 - A visible record of progress, so I could see the streak and not want to break it
 
 Motivation comes and goes. A system carries you through the days it is gone.
+
+![Benjamin Amoako (ProfJero) writing code at his desk](/assets/img/people/profjero-at-work.webp "Most progress is quiet: a fixed time, a small task, every day.")
 
 ## Lesson 2: Shipping teaches more than studying
 

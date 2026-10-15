@@ -3,12 +3,14 @@
 // paragraphs, - and 1. lists, **bold**, *italic*, ~~strike~~, `code`, fenced code
 // blocks, > blockquotes, [links](url), ![images](url), --- rules, pipe tables and
 // video embeds written on their own line as @[video](url).
+// An image on its own line becomes a figure with an optional caption and layout:
+//   ![Alt text](https://… "Caption shown under the image"){wide|small|left|right}
 import { esc, safeUrl, slugify, parseVideo, img } from "./utils.js";
 
 function inline(s) {
   const codes = [];
   s = s.replace(/`([^`]+)`/g, (_, c) => { codes.push(c); return `\u0000${codes.length - 1}\u0000`; });
-  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, alt, url) => {
+  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+&quot;[^)]*?&quot;)?\)/g, (_, alt, url) => {
     const u = safeUrl(url.replace(/&amp;/g, "&"));
     return u ? `<img src="${esc(img(u, 1200))}" alt="${alt}" loading="lazy" decoding="async">` : "";
   });
@@ -25,6 +27,14 @@ function inline(s) {
   return s.replace(/\u0000(\d+)\u0000/g, (_, i) => `<code>${codes[i]}</code>`);
 }
 
+const FIGURE = /^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)\s*(?:\{(wide|small|left|right)\})?\s*$/;
+
+function figure(alt, url, caption = "", layout = "") {
+  const u = safeUrl(url);
+  if (!u) return "";
+  return `<figure class="md-figure${layout ? ` is-${layout}` : ""}"><img src="${esc(img(u, layout === "wide" ? 1600 : 1200))}" alt="${esc(alt)}" loading="lazy" decoding="async" data-zoom="${esc(img(u, 2000))}">${caption ? `<figcaption>${inline(esc(caption))}</figcaption>` : ""}</figure>`;
+}
+
 function videoEmbed(url) {
   const v = parseVideo(url);
   if (!v) return "";
@@ -39,7 +49,7 @@ export function renderMarkdown(md = "") {
   const lines = String(md).replace(/\r\n?/g, "\n").split("\n");
   const out = [], toc = [], used = new Set();
   let i = 0;
-  const isBlockStart = l => /^(#{1,4}\s|```|>\s?|[-*]\s|\d+\.\s|---\s*$|\|.*\|\s*$|@\[video\])/.test(l);
+  const isBlockStart = l => /^(#{1,4}\s|```|>\s?|[-*]\s|\d+\.\s|---\s*$|\|.*\|\s*$|@\[video\])/.test(l) || FIGURE.test(l.trim());
 
   while (i < lines.length) {
     const line = lines[i];
@@ -66,6 +76,7 @@ export function renderMarkdown(md = "") {
     }
     if (/^---\s*$/.test(line)) { out.push("<hr>"); i++; continue; }
     if ((m = line.match(/^@\[video\]\(([^)\s]+)\)\s*$/))) { out.push(videoEmbed(m[1])); i++; continue; }
+    if ((m = line.trim().match(FIGURE))) { out.push(figure(m[1], m[2], m[3], m[4])); i++; continue; }
     if (/^>\s?/.test(line)) {
       const buf = [];
       while (i < lines.length && /^>\s?/.test(lines[i])) buf.push(lines[i++].replace(/^>\s?/, ""));
@@ -108,7 +119,7 @@ export function renderMarkdown(md = "") {
 export function markdownToText(md = "") {
   return String(md)
     .replace(/```[\s\S]*?```/g, " ")
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)(\{\w+\})?/g, " ")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/@\[video\]\([^)]*\)/g, " ")
     .replace(/[#>*_`~|-]+/g, " ")

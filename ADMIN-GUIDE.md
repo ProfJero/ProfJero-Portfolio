@@ -4,6 +4,27 @@ This guide covers the one-time setup (about 15 minutes) and everyday use of the 
 
 ---
 
+## ✅ Go-live checklist (do these in order)
+
+| # | Where | What to do | Why |
+|---|---|---|---|
+| 1 | Firebase → Firestore → **Rules** | Paste [`firestore.rules`](firestore.rules) and click **Publish** | Until this is done the database refuses everything, so the sites show only built-in content and the admin, bookings, portal, likes and comments can't save |
+| 2 | Firebase → Authentication → **Sign-in method** | Enable **Google**, **Email/Password** and **Anonymous** | Admin login, client-portal accounts, and likes/comments |
+| 3 | Firebase → Authentication → Settings → **Authorized domains** | Add `profjero.pages.dev` and `profjerohub.pages.dev` | Sign-in only works on listed domains |
+| 4 | https://profjero.pages.dev/admin/ | Click **Continue with Google** with **profjero947@gmail.com** | Your Google account is the super admin. The *email + password* form only works if you set a password (step 4b) |
+| 4b | *(optional)* Admin login page | Type your email, click **Forgot?**, and set a password from the email you receive | Gives you password sign-in too. Firebase's “400 Bad Request” on the password form just means no password exists yet |
+| 5 | Admin → **Settings** → **Import default content** | Run it once | Copies your profile, studios, products, pricing, testimonials and the 9 blog posts into the database so you can edit them. It only adds what's missing and never overwrites your edits |
+| 6 | Admin → **Settings** → **Cloudinary storage** | Enter your cloud name and unsigned upload preset (see 1.4) | Lets you upload images and videos |
+| 7 | Cloudflare → each Pages project → Settings → **Build** | Use the settings in 1.5 | Builds each site from this one repository |
+| 8 | Google Search Console | Add **profjerohub.pages.dev** as a property too, then submit `https://profjero.pages.dev/sitemap.xml` and `https://profjerohub.pages.dev/sitemap.xml` | Gets both sites, their logo and images into Google |
+| 9 | Your phone | Open `/admin/` and the Hub's `/portal/`, then tap **Install app** (Android/Chrome) or Share → **Add to Home Screen** (iPhone) | Installs the admin and client-portal apps |
+
+**Who can sign in where.**
+- **Admin dashboard (`/admin/`):** only you (super admin) and the people you add under **Settings → Admins**. Anyone else is signed straight back out, and the database rules enforce the same thing on the server. Only you can add or remove admins.
+- **Client portal (`profjerohub.pages.dev/portal/`):** open to anyone. Clients only ever see their own bookings, quotes, projects and messages.
+
+---
+
 ## 1. One-time setup
 
 ### 1.1 Publish the Firestore security rules (required)
@@ -150,6 +171,17 @@ Set **Live demo URL** to open the real system inside your portfolio, with deskto
 
 > Some sites block being embedded. If that happens, visitors can still click **New tab**.
 
+### Blog images
+
+Every article opens with a full-width **hero**: its *Cover image* behind the title. Without a cover it uses a branded colour. To put pictures *inside* an article, click the **image button** in the editor toolbar and upload, pick from the Media library or paste a link. Then add alt text, an optional caption and a layout (normal, wide, small, left or right). You can also **drag an image onto the text** or **paste** one from your clipboard. Readers can tap any image to view it full screen.
+
+### Prices
+
+All prices are in **Ghana cedis (GH₵)**. Type “GH₵ 9,500” or just “9500”, which shows as “GH₵ 9,500”. Edit them in:
+- **Profile & site → Pricing**: portfolio packages (Websites, Systems, Care plans, Training).
+- **Studios & services → (a studio) → Packages**: each Hub studio's packages.
+- **Branded products → Price from**: the Creative Studio catalogue.
+
 ### Blog formatting cheatsheet
 ```
 ## Heading            ### Subheading
@@ -157,7 +189,8 @@ Set **Live demo URL** to open the real system inside your portfolio, with deskto
 - bullet              1. numbered
 > quote               ---  (divider)
 [link text](https://…)
-![image description](https://…)
+![image description](https://…)                          ← image inside the text
+![alt text](https://… "Caption under the image"){wide}   ← figure; layouts: wide, small, left, right
 @[video](https://www.youtube.com/watch?v=…)   ← embeds a YouTube/TikTok video
 | Table | Header |
 |---|---|

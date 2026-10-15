@@ -151,11 +151,19 @@ export function renderProcess(steps = []) {
     </li>`).join("");
 }
 
-/** Pricing: tabbed groups (websites, systems, care plans, training) with a GH₵ / US$ switch. */
+/** Prices are in Ghana cedis: a bare number such as "9500" is shown as "GH₵ 9,500". */
+export const cedis = v => {
+  const t = String(v ?? "").trim();
+  if (!t) return "";
+  if (/^[\d.,\s]+$/.test(t)) { const n = Number(t.replace(/[,\s]/g, "")); return Number.isFinite(n) ? `GH₵ ${n.toLocaleString("en-GH")}` : t; }
+  return t.replace(/^(GHS|GH¢|GHC|¢)\s*/i, "GH₵ ");
+};
+
+/** Pricing: tabbed groups (websites, systems, care plans, training), in Ghana cedis. */
 export function renderPricing(groups = [], note = "") {
   const list = groups.filter(g => (g.plans || []).length);
   const tabs = list.map((g, i) => `<button type="button" role="tab" class="${i === 0 ? "active" : ""}" aria-selected="${i === 0}" data-pgroup="${i}"><i class="${esc(g.icon || "fa-solid fa-tag")}"></i> ${esc(g.name)}</button>`).join("");
-  const money = p => `<span class="p-ghs">${esc(p.price)}</span><span class="p-usd">${esc(p.priceUsd || p.price)}</span>`;
+  const money = p => esc(cedis(p.price));
   const panels = list.map((g, i) => `
     <div class="pricing" data-ppanel="${i}"${i === 0 ? "" : " hidden"}>
       ${(g.plans || []).map(p => `
@@ -172,7 +180,6 @@ export function renderPricing(groups = [], note = "") {
   return `
     <div class="pricing-top">
       <div class="pill-tabs pricing-tabs" role="tablist" aria-label="Pricing categories">${tabs}</div>
-      <div class="currency-switch" role="group" aria-label="Currency"><button type="button" data-cur="ghs" aria-pressed="true">GH₵</button><button type="button" data-cur="usd" aria-pressed="false">US$</button></div>
     </div>
     ${panels}
     ${note ? `<p class="pricing-note"><i class="fa-solid fa-circle-info"></i> ${esc(note)}</p>` : ""}`;

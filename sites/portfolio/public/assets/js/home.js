@@ -36,7 +36,6 @@ function paint(data) {
   $("#stat-students").hidden = !(Number(s.studentsTrained) > 0);
   setHero(s);
   $("#team").hidden = s.showTeam === false || !(data.team || []).some(m => m.visible !== false);
-  setCurrency(currency);
   if (s.avatar) $("#about-img").src = img(s.avatar, 700);
   const cv = $("#cv-btn");
   if (safeUrl(s.cvUrl)) { cv.href = safeUrl(s.cvUrl); cv.hidden = false; } else cv.hidden = true;
@@ -87,16 +86,7 @@ $("#services").addEventListener("click", e => {
   const link = e.target.closest("[data-service]");
   if (link) preselect(link.dataset.service);
 });
-// ---------- Pricing: tabs, currency, "Get a quote" ----------
-let currency = (() => {
-  try { const c = localStorage.getItem("pj_currency"); if (c) return c; } catch { }
-  try { return /Africa\/Accra/.test(Intl.DateTimeFormat().resolvedOptions().timeZone) ? "ghs" : "usd"; } catch { return "ghs"; }
-})();
-function setCurrency(c) {
-  currency = c;
-  $("#pricing").dataset.cur = c;
-  $$("#pricing button[data-cur]").forEach(b => b.setAttribute("aria-pressed", b.dataset.cur === c));
-}
+// ---------- Pricing: tabs and "Get a quote" (all prices in GH₵) ----------
 const budgetFor = text => {
   const n = Number(String(text).replace(/[^\d.]/g, "")) || 0;
   return n < 5000 ? "Below GH₵ 5,000" : n < 15000 ? "GH₵ 5,000 – 15,000" : n < 40000 ? "GH₵ 15,000 – 40,000" : n < 90000 ? "GH₵ 40,000 – 90,000" : "Above GH₵ 90,000";
@@ -108,11 +98,9 @@ $("#pricing").addEventListener("click", e => {
     $$("#pricing [data-ppanel]").forEach(p => { p.hidden = p.dataset.ppanel !== tab.dataset.pgroup; if (!p.hidden) p.querySelectorAll(".reveal").forEach(x => x.classList.add("in-view")); });
     return;
   }
-  const cur = e.target.closest("button[data-cur]");
-  if (cur) { setCurrency(cur.dataset.cur); try { localStorage.setItem("pj_currency", cur.dataset.cur); } catch { } return; }
   const a = e.target.closest("[data-plan]");
   if (a) {
-    const price = a.closest(".price-card")?.querySelector(".p-ghs")?.textContent || "";
+    const price = a.closest(".price-card")?.querySelector(".price strong")?.textContent || "";
     $("#c-budget").value = budgetFor(price);
     $("#c-subject").value = `${a.dataset.plan} — ${a.dataset.pgroupName} enquiry`;
     const svc = $("#c-service");

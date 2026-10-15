@@ -5,6 +5,12 @@ import { $, $$, esc, toast, bootCommon, openModal, closeModal } from "./hub-comm
 import { firebase } from "./store.js";
 import { formatDate, timeAgo, toDate, compact, safeUrl, isEmail, initials, hueFrom } from "./utils.js";
 import { STATUS, timeline } from "./status.js";
+import { initPWA } from "./pwa.js";
+
+initPWA({
+  app: "portal", scope: "/portal/",
+  onIOSHelp: () => openModal("Install the ProfJero app", `<p>On iPhone or iPad, open this page in <b>Safari</b>, tap <b>Share</b> <i class="fa-solid fa-arrow-up-from-bracket"></i>, then <b>Add to Home Screen</b>. The portal then opens like an app, straight to your bookings, quotes and messages.</p>`, { wide: false, pad: true })
+});
 
 const STUDIO_NAMES = { "digital-studio": "Digital Studio", "creative-studio": "Creative Studio", "nourish-studio": "Nourish Studio", "agro-studio": "Agro Studio" };
 const studioName = x => x.studioName || STUDIO_NAMES[x.studio] || x.studio || "";
@@ -51,6 +57,7 @@ function authScreen(mode = "signin") {
         <button class="btn btn-primary btn-block" type="submit">${mode === "signup" ? "Create my account" : "Sign in"}</button>
       </form>
       <p class="small muted" id="p-msg" role="alert" style="margin-top:12px"></p>
+      <button type="button" class="btn btn-ghost btn-sm btn-block" data-install hidden style="margin-bottom:12px"><i class="fa-solid fa-mobile-screen-button"></i> Install the client portal app</button>
       <p class="small muted">Booked before as a guest? Create an account with the <b>same email</b> and verify it — your earlier bookings and quotes will appear automatically.</p>
     </div>
   </section>`;
@@ -172,6 +179,7 @@ function shell() {
       <div class="portal-side-foot">
         <a href="/booking/" class="btn btn-primary btn-sm btn-block"><i class="fa-regular fa-calendar-plus"></i> New booking</a>
         <a href="/creative-studio#products" class="btn btn-ghost btn-sm btn-block"><i class="fa-solid fa-file-invoice"></i> Request a quote</a>
+        <button type="button" class="btn btn-ghost btn-sm btn-block" data-install hidden><i class="fa-solid fa-mobile-screen-button"></i> Install the app</button>
         <button type="button" class="btn btn-ghost btn-sm btn-block" id="p-logout"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
       </div>
     </aside>

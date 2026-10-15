@@ -37,21 +37,6 @@ export function makeRef(prefix = "B") {
   return `PJ${prefix}${[...bytes].map(b => ALPHABET[b % ALPHABET.length]).join("")}`;
 }
 
-// ---------- Currency (GH₵ / US$) ----------
-export function initCurrency(root = document) {
-  let cur;
-  try { cur = localStorage.getItem("pj_currency"); } catch { }
-  if (!cur) { try { cur = /Africa\/Accra/.test(Intl.DateTimeFormat().resolvedOptions().timeZone) ? "ghs" : "usd"; } catch { cur = "ghs"; } }
-  const set = c => {
-    $$(".pricing, .product-grid").forEach(el => el.closest("section")?.setAttribute("data-cur", c));
-    $$("#pricing").forEach(el => el.dataset.cur = c);
-    $$("button[data-cur]").forEach(b => b.setAttribute("aria-pressed", b.dataset.cur === c));
-    try { localStorage.setItem("pj_currency", c); } catch { }
-  };
-  root.addEventListener("click", e => { const b = e.target.closest("button[data-cur]"); if (b) set(b.dataset.cur); });
-  set(cur);
-}
-
 // ---------- Water ripple on photo heroes ----------
 let ripples = null;
 export async function initWater(enabled = true) {

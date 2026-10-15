@@ -1,4 +1,4 @@
-import { $, $$, fb, esc, fmtDate, emptyState, confirmDialog, toast, uploadToCloudinary } from "../core.js";
+import { $, $$, fb, esc, fmtDate, emptyState, confirmDialog, toast, uploadToCloudinary, openDialog } from "../core.js";
 import { renderFields, bindFields, readFields } from "../forms.js";
 import { renderMarkdown } from "/assets/js/markdown.js";
 import { slugify, readingTime, wordCount, compact, img, toDate } from "/assets/js/utils.js";
@@ -140,7 +140,7 @@ async function editor(view, id) {
               <button type="button" data-md="code" title="Code block"><i class="fa-solid fa-code"></i></button>
               <span class="sep"></span>
               <button type="button" data-md="link" title="Link (Ctrl+K)"><i class="fa-solid fa-link"></i></button>
-              <label title="Upload image" style="display:grid;place-items:center;width:34px;height:32px;border-radius:8px;cursor:pointer"><i class="fa-regular fa-image"></i><input type="file" accept="image/*" hidden id="md-img"></label>
+              <button type="button" data-md="image" title="Insert image (or drag & drop / paste an image into the text)"><i class="fa-regular fa-image"></i></button>
               <button type="button" data-md="video" title="Embed YouTube/TikTok video"><i class="fa-brands fa-youtube"></i></button>
               <button type="button" data-md="table" title="Table"><i class="fa-solid fa-table"></i></button>
               <button type="button" data-md="hr" title="Divider"><i class="fa-solid fa-minus"></i></button>
@@ -217,6 +217,7 @@ async function editor(view, id) {
     code: () => wrap("\n```js\n", "\n```\n", "// code"),
     link: () => { const url = prompt("Link URL", "https://"); if (url) wrap("[", `](${url})`, "link text"); },
     video: () => { const url = prompt("Paste a YouTube or TikTok video link"); if (url) insertBlock(`@[video](${url.trim()})`); },
+    image: () => imageDialog(),
     table: () => insertBlock("| Column | Column |\n|---|---|\n| Value | Value |"),
     hr: () => insertBlock("---")
   };
@@ -232,17 +233,88 @@ async function editor(view, id) {
     if (e.key === "i") { e.preventDefault(); actions.italic(); }
     if (e.key === "k") { e.preventDefault(); actions.link(); }
   });
-  $("#md-img").addEventListener("change", async e => {
-    const file = e.target.files[0];
-    if (!file) return;
+  // ---- Images: dialog (upload / media library / link) with alt text, caption and layout ----
+  const figureMd = ({ url, alt = "", caption = "", layout = "" }) =>
+    `![${alt.replace(/[[\]]/g, "")}](${url}${caption ? ` "${caption.replace(/"/g, "'")}"` : ""})${layout ? `{${layout}}` : ""}`;
+  const altFromName = name => name.replace(/\.\w+$/, "").replace(/[-_]+/g, " ").trim();
+
+  async function uploadAndInsert(file) {
+    if (!file?.type.startsWith("image/")) return;
     toast("Uploading image…", "info");
-    try {
-      const item = await uploadToCloudinary(file, { folder: "blog" });
-      const alt = prompt("Describe the image (alt text for accessibility & SEO)", file.name.replace(/\.\w+$/, "")) || "";
-      insertBlock(`![${alt}](${item.url})`);
-    } catch (err) { toast(err.message, "error", 6000); }
-    e.target.value = "";
+    try { const item = await uploadToCloudinary(file, { folder: "blog" }); insertBlock(figureMd({ url: item.url, alt: altFromName(file.name) })); toast("Image added. Edit its alt text and caption in the text if you like."); }
+    catch (err) { toast(err.message, "error", 6000); }
+  }
+  // Drag & drop or paste an image straight into the editor.
+  ta.addEventListener("dragover", e => { if ([...e.dataTransfer.items].some(i => i.type.startsWith("image/"))) { e.preventDefault(); ta.classList.add("drop-hover"); } });
+  ta.addEventListener("dragleave", () => ta.classList.remove("drop-hover"));
+  ta.addEventListener("drop", e => {
+    const files = [...e.dataTransfer.files].filter(f => f.type.startsWith("image/"));
+    ta.classList.remove("drop-hover");
+    if (!files.length) return;
+    e.preventDefault();
+    files.reduce((p, f) => p.then(() => uploadAndInsert(f)), Promise.resolve());
   });
+  ta.addEventListener("paste", e => {
+    const file = [...(e.clipboardData?.files || [])].find(f => f.type.startsWith("image/"));
+    if (file) { e.preventDefault(); uploadAndInsert(file); }
+  });
+
+  async function imageDialog() {
+    let url = "";
+    const sel = ta.value.slice(ta.selectionStart, ta.selectionEnd);
+    await openDialog({
+      title: "Insert image", size: "wide",
+      body: `<div class="img-insert">
+        <div class="pill-tabs" role="tablist"><button type="button" class="active" data-src="upload">Upload</button><button type="button" data-src="library">Media library</button><button type="button" data-src="link">Image link</button></div>
+        <div data-pane="upload"><label class="drop-zone"><input type="file" accept="image/*" id="ii-file" hidden><i class="fa-solid fa-cloud-arrow-up"></i><span>Click to choose an image, or drop it here</span></label></div>
+        <div data-pane="library" hidden><div class="media-grid" id="ii-lib"><p class="muted small">Loading…</p></div></div>
+        <div data-pane="link" hidden><div class="f"><label for="ii-url">Image URL</label><input id="ii-url" class="input" type="url" placeholder="https://…" value="${esc(/^https?:/.test(sel) ? sel : "")}"></div></div>
+        <div class="ii-preview" id="ii-preview" hidden></div>
+        <div class="fields" style="margin-top:14px">
+          <div class="f"><label for="ii-alt">Alt text <small class="muted">(describes the image for Google and screen readers)</small></label><input id="ii-alt" class="input" maxlength="140"></div>
+          <div class="f"><label for="ii-cap">Caption <small class="muted">(optional, shown under the image)</small></label><input id="ii-cap" class="input" maxlength="200"></div>
+          <div class="f"><label for="ii-layout">Layout</label><select id="ii-layout" class="input"><option value="">Normal: text width</option><option value="wide">Wide: breaks out of the text column</option><option value="small">Small: centred</option><option value="left">Left: text wraps on the right</option><option value="right">Right: text wraps on the left</option></select></div>
+        </div></div>`,
+      actions: [{ label: "Cancel", value: null, cls: "btn-ghost" }, { label: "Insert image", value: "ok", cls: "btn-primary", handler: () => {
+        url = url || $("#ii-url").value.trim();
+        if (!url) { toast("Choose or upload an image first.", "error"); return false; }
+        insertBlock(figureMd({ url, alt: $("#ii-alt").value.trim(), caption: $("#ii-cap").value.trim(), layout: $("#ii-layout").value }));
+      } }],
+      onOpen: body => {
+        const showPreview = (u, name = "") => { url = u; $("#ii-preview", body).hidden = false; $("#ii-preview", body).innerHTML = `<img src="${esc(img(u, 600))}" alt="">`; if (!$("#ii-alt", body).value && name) $("#ii-alt", body).value = altFromName(name); };
+        body.addEventListener("click", async e => {
+          const t = e.target.closest("[data-src]");
+          if (t) {
+            $$("[data-src]", body).forEach(b => b.classList.toggle("active", b === t));
+            $$("[data-pane]", body).forEach(p => { p.hidden = p.dataset.pane !== t.dataset.src; });
+            if (t.dataset.src === "library" && !$("#ii-lib", body).dataset.loaded) {
+              $("#ii-lib", body).dataset.loaded = "1";
+              try {
+                const snap = await fb.getDocs(fb.query(fb.collection(fb.db, "media"), fb.orderBy("createdAt", "desc"), fb.limit(120)));
+                const items = snap.docs.map(d => d.data()).filter(m => m.resourceType === "image");
+                $("#ii-lib", body).innerHTML = items.map(m => `<button type="button" class="media-card pick" data-url="${esc(m.url)}" data-name="${esc(m.name || "")}" style="padding:0"><img src="${esc(img(m.url, 320))}" alt="" loading="lazy"></button>`).join("") || '<p class="muted small">No images in the library yet. Upload one first.</p>';
+              } catch { $("#ii-lib", body).innerHTML = '<p class="muted small">Couldn\'t load the media library.</p>'; }
+            }
+            return;
+          }
+          const pick = e.target.closest("[data-url]");
+          if (pick) { $$("[data-url]", body).forEach(b => b.classList.toggle("selected", b === pick)); showPreview(pick.dataset.url, pick.dataset.name); }
+        });
+        $("#ii-url", body).addEventListener("change", e => { if (e.target.value.trim()) showPreview(e.target.value.trim()); });
+        const zone = $(".drop-zone", body);
+        const upload = async file => {
+          if (!file?.type.startsWith("image/")) return;
+          zone.querySelector("span").textContent = "Uploading…";
+          try { const item = await uploadToCloudinary(file, { folder: "blog" }); showPreview(item.url, file.name); zone.querySelector("span").textContent = "Uploaded ✓ Choose another to replace it"; }
+          catch (err) { zone.querySelector("span").textContent = err.message; }
+        };
+        $("#ii-file", body).addEventListener("change", e => upload(e.target.files[0]));
+        zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("over"); });
+        zone.addEventListener("dragleave", () => zone.classList.remove("over"));
+        zone.addEventListener("drop", e => { e.preventDefault(); zone.classList.remove("over"); upload(e.dataTransfer.files[0]); });
+      }
+    });
+  }
 
   async function save(status) {
     const title = $("#e-title").value.trim();

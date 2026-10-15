@@ -65,7 +65,8 @@
   <div class="reading-progress" id="reading-progress"></div>
   <main id="main">
     <article id="article" data-slug="">
-      <header class="article-hero">
+      <header class="article-hero" id="a-hero">
+        <div class="article-hero-bg" id="a-hero-bg" aria-hidden="true"></div>
         <div class="article-wrap">
           <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/blog">Blog</a><span>/</span><span id="crumb-cat">Article</span></nav>
           <a class="post-cat" id="a-cat" href="/blog">Article</a>
@@ -78,7 +79,6 @@
           </div>
         </div>
       </header>
-      <figure class="article-cover" id="a-cover" hidden></figure>
       <div class="article-layout">
         <aside class="share-rail" aria-label="Article actions">
           <button class="rail-btn" type="button" data-like aria-label="Like this article"><i class="fa-regular fa-heart"></i></button><span class="rail-count" data-count="likes">0</span>
