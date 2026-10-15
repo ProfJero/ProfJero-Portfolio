@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Blog — Web Development, Backend, AI &amp; Motivation | ProfJero</title>
+  <meta name="description" content="Practical articles by Benjamin Amoako (ProfJero) on full-stack web development, Firebase, security, performance, SEO, AI tools, tech in Africa and motivation for your journey.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <link rel="canonical" href="https://profjero.pages.dev/blog">
+  <meta name="theme-color" content="#0A60EE">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ProfJero">
+  <meta property="og:title" content="Blog — Web Development, Backend, AI &amp; Motivation | ProfJero">
+  <meta property="og:description" content="Practical articles by Benjamin Amoako (ProfJero) on full-stack web development, Firebase, security, performance, SEO, AI tools, tech in Africa and motivation for your journey.">
+  <meta property="og:url" content="https://profjero.pages.dev/blog">
+  <meta property="og:image" content="https://profjero.pages.dev/assets/img/brand/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Blog — Web Development, Backend, AI &amp; Motivation | ProfJero">
+  <meta name="twitter:description" content="Practical articles by Benjamin Amoako (ProfJero) on full-stack web development, Firebase, security, performance, SEO, AI tools, tech in Africa and motivation for your journey.">
+  <meta name="twitter:image" content="https://profjero.pages.dev/assets/img/brand/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/icon-192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="alternate" type="application/rss+xml" title="ProfJero Blog" href="/rss.xml">
+  <script>try{var d=document.documentElement,j=function(k){return JSON.parse(localStorage.getItem(k)||"{}")||{}},o=Object.assign({},j("pj_site_look"),j("pj_prefs")),m=o.mode||localStorage.getItem("pj_theme")||"system";if(m!=="light"&&m!=="dark")m=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=m;if(/^#[0-9a-f]{6}$/i.test(o.color||""))d.style.setProperty("--brand-base",o.color);if(o.layout==="boxed")d.dataset.layout="boxed";if(o.bg)d.dataset.bg=o.bg;if(o.overlay)d.dataset.overlay="1"}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Blog","@id":"https://profjero.pages.dev/blog#blog","name":"ProfJero Blog","url":"https://profjero.pages.dev/blog","description":"Articles on full-stack web development, backend, AI, careers and motivation.","inLanguage":"en","author":{"@type":"Person","@id":"https://profjero.pages.dev/#person","name":"Benjamin Amoako","alternateName":"ProfJero","url":"https://profjero.pages.dev/"}}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page-wrap">
+  <div class="announce" hidden><span></span><button type="button" aria-label="Dismiss announcement"><i class="fa-solid fa-xmark"></i></button></div>
+
+  <header class="site-header">
+    <nav class="container nav" aria-label="Main">
+      <a class="logo" href="/" aria-label="ProfJero home">
+        <img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40">
+        <span class="logo-text">Prof<b>Jero</b></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#services">Studios</a></li>
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></button>
+        <a class="btn btn-primary btn-sm btn-hire" href="/#contact">Hire me <i class="fa-solid fa-arrow-right"></i></a>
+        <button class="icon-btn nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </nav>
+    <div class="progress-bar"></div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Blog</span></nav>
+        <h1>The <span class="grad-text">ProfJero</span> Blog</h1>
+        <p>Practical guides on full-stack development, backend &amp; databases, security, SEO and AI — plus real talk and motivation for builders at every stage.</p>
+      </div>
+    </section>
+    <section class="section" style="padding-top:10px">
+      <div class="container">
+        <div class="blog-toolbar">
+          <label class="search"><i class="fa-solid fa-magnifying-glass"></i><span class="sr-only">Search articles</span><input id="q" type="search" placeholder="Search articles, topics, tags…" autocomplete="off"></label>
+          <label class="sr-only" for="sort">Sort articles</label>
+          <select class="select" id="sort">
+            <option value="latest">Latest</option>
+            <option value="popular">Most viewed</option>
+            <option value="liked">Most liked</option>
+            <option value="discussed">Most discussed</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
+        <div class="chips blog-chips" id="cats" role="toolbar" aria-label="Filter by category"></div>
+        <p class="result-count" id="count" aria-live="polite"></p>
+        <div class="post-grid" id="blog-list"><!--ssr:blog-list-->
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/full-stack-developer-roadmap-2026" tabindex="-1" aria-hidden="true">
+      <img src="/assets/img/blog/frontend-backend.webp" alt="" loading="lazy" decoding="async">
+      <span class="pill pill-featured"><i class="fa-solid fa-bolt"></i> Featured</span>
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=Web%20Development">Web Development</a>
+        <span>12 Oct 2026</span><span>6 min read</span>
+      </div>
+      <h3><a href="/blog/full-stack-developer-roadmap-2026">The Full-Stack Developer Roadmap for 2026: What to Learn, in What Order</a></h3>
+      <p>A practical, no-hype full-stack roadmap for 2026: the fundamentals that still matter, the tools worth learning, where AI fits, and how to build a portfolio that gets you hired.</p>
+      <div class="post-stats" data-post-stats="full-stack-developer-roadmap-2026">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/full-stack-developer-roadmap-2026">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/get-found-on-google-and-ai-assistants" tabindex="-1" aria-hidden="true">
+      <div class="cover-fallback" style="--h:153"><span>SEO &amp; Marketing</span><strong>Getting Found on Google and AI Assistants: SEO, Structured Data and llms.txt</strong></div>
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=SEO%20%26%20Marketing">SEO &amp; Marketing</a>
+        <span>1 Oct 2026</span><span>5 min read</span>
+      </div>
+      <h3><a href="/blog/get-found-on-google-and-ai-assistants">Getting Found on Google and AI Assistants: SEO, Structured Data and llms.txt</a></h3>
+      <p>How to make your website discoverable by both search engines and AI assistants in 2026: solid SEO foundations, JSON-LD structured data, generative engine optimization and llms.txt.</p>
+      <div class="post-stats" data-post-stats="get-found-on-google-and-ai-assistants">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/get-found-on-google-and-ai-assistants">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/ai-coding-assistants-without-losing-fundamentals" tabindex="-1" aria-hidden="true">
+      <img src="/assets/img/blog/coding-laptop.webp" alt="" loading="lazy" decoding="async">
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=AI%20%26%20Productivity">AI &amp; Productivity</a>
+        <span>22 Sept 2026</span><span>5 min read</span>
+      </div>
+      <h3><a href="/blog/ai-coding-assistants-without-losing-fundamentals">Using AI Coding Assistants Without Losing Your Fundamentals</a></h3>
+      <p>AI coding assistants can make you faster or make you fragile. Here is how I use them day to day, and the habits that keep your own skills sharp while you do.</p>
+      <div class="post-stats" data-post-stats="ai-coding-assistants-without-losing-fundamentals">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/ai-coding-assistants-without-losing-fundamentals">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/serverless-backend-firebase-firestore-security-rules" tabindex="-1" aria-hidden="true">
+      <div class="cover-fallback" style="--h:66"><span>Backend &amp; Databases</span><strong>Building a Serverless Backend with Firebase Firestore (and Security Rules That Actually Protect You)</strong></div>
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=Backend%20%26%20Databases">Backend &amp; Databases</a>
+        <span>10 Sept 2026</span><span>4 min read</span>
+      </div>
+      <h3><a href="/blog/serverless-backend-firebase-firestore-security-rules">Building a Serverless Backend with Firebase Firestore (and Security Rules That Actually Protect You)</a></h3>
+      <p>A practical guide to building a serverless backend with Firebase: data modelling in Firestore, reading and writing from the web, and writing security rules that keep your data safe.</p>
+      <div class="post-stats" data-post-stats="serverless-backend-firebase-firestore-security-rules">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/serverless-backend-firebase-firestore-security-rules">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/youre-not-late-for-beginners-who-feel-behind" tabindex="-1" aria-hidden="true">
+      <img src="/assets/img/blog/stress-desk.webp" alt="" loading="lazy" decoding="async">
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=Motivation">Motivation</a>
+        <span>28 Aug 2026</span><span>5 min read</span>
+      </div>
+      <h3><a href="/blog/youre-not-late-for-beginners-who-feel-behind">You&#39;re Not Late: A Letter to Every Beginner Who Feels Behind</a></h3>
+      <p>If you feel too old, too slow or too far behind to start a career in tech, this is for you. Why comparison lies, what actually matters, and how to start from exactly where you are.</p>
+      <div class="post-stats" data-post-stats="youre-not-late-for-beginners-who-feel-behind">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/youre-not-late-for-beginners-who-feel-behind">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/core-web-vitals-inp-performance-guide" tabindex="-1" aria-hidden="true">
+      <img src="/assets/img/blog/web-tech.webp" alt="" loading="lazy" decoding="async">
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=Web%20Development">Web Development</a>
+        <span>18 Aug 2026</span><span>5 min read</span>
+      </div>
+      <h3><a href="/blog/core-web-vitals-inp-performance-guide">Core Web Vitals in Practice: A Developer&#39;s Guide to LCP, INP and CLS</a></h3>
+      <p>A hands-on guide to Core Web Vitals: what LCP, INP and CLS measure, how to diagnose them, and practical fixes that make your site feel fast, especially on mid-range phones and slow networks.</p>
+      <div class="post-stats" data-post-stats="core-web-vitals-inp-performance-guide">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/core-web-vitals-inp-performance-guide">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/digital-skills-opportunity-young-people-ghana" tabindex="-1" aria-hidden="true">
+      <div class="cover-fallback" style="--h:139"><span>Tech in Africa</span><strong>Digital Skills, Real Opportunity: Why Young People in Ghana&#39;s Rural Communities Can&#39;t Be Left Behind</strong></div>
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=Tech%20in%20Africa">Tech in Africa</a>
+        <span>5 Aug 2026</span><span>5 min read</span>
+      </div>
+      <h3><a href="/blog/digital-skills-opportunity-young-people-ghana">Digital Skills, Real Opportunity: Why Young People in Ghana&#39;s Rural Communities Can&#39;t Be Left Behind</a></h3>
+      <p>Talent is everywhere in Ghana, but access is not. Lessons from training young people in tech, what digital skills open up, and practical ways communities can close the gap.</p>
+      <div class="post-stats" data-post-stats="digital-skills-opportunity-young-people-ghana">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/digital-skills-opportunity-young-people-ghana">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/web-app-security-essentials-owasp-top-10" tabindex="-1" aria-hidden="true">
+      <div class="cover-fallback" style="--h:256"><span>Security</span><strong>Web App Security Essentials: A Practical Guide Based on the OWASP Top 10</strong></div>
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=Security">Security</a>
+        <span>27 Jul 2026</span><span>5 min read</span>
+      </div>
+      <h3><a href="/blog/web-app-security-essentials-owasp-top-10">Web App Security Essentials: A Practical Guide Based on the OWASP Top 10</a></h3>
+      <p>The security risks that matter most for web developers, explained with practical examples and fixes: access control, injection, authentication, misconfiguration, dependencies and more.</p>
+      <div class="post-stats" data-post-stats="web-app-security-essentials-owasp-top-10">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/web-app-security-essentials-owasp-top-10">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+  <article class="post-card reveal">
+    <a class="post-media" href="/blog/consistency-over-talent-lessons-from-5-years-of-building" tabindex="-1" aria-hidden="true">
+      <div class="cover-fallback" style="--h:11"><span>Career &amp; Growth</span><strong>Consistency Over Talent: Lessons from 5 Years of Building Software</strong></div>
+      
+    </a>
+    <div class="post-body">
+      <div class="post-meta">
+        <a class="post-cat" href="/blog?category=Career%20%26%20Growth">Career &amp; Growth</a>
+        <span>15 Jul 2026</span><span>5 min read</span>
+      </div>
+      <h3><a href="/blog/consistency-over-talent-lessons-from-5-years-of-building">Consistency Over Talent: Lessons from 5 Years of Building Software</a></h3>
+      <p>Five years of building software, training learners and starting organisations taught me one thing above all: consistency beats talent. Here are the lessons and habits that made the difference.</p>
+      <div class="post-stats" data-post-stats="consistency-over-talent-lessons-from-5-years-of-building">
+        <span title="Views"><i class="fa-regular fa-eye"></i> <b data-k="views">0</b></span>
+        <span title="Likes"><i class="fa-regular fa-heart"></i> <b data-k="likes">0</b></span>
+        <span title="Comments"><i class="fa-regular fa-comment"></i> <b data-k="commentCount">0</b></span>
+        <a class="read-more" href="/blog/consistency-over-talent-lessons-from-5-years-of-building">Read <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </article><!--/ssr:blog-list--></div>
+        <div class="center-cta"><button class="btn btn-outline" id="more" hidden>Load more articles</button></div>
+        <div class="newsletter-card reveal" style="margin-top:50px">
+          <h4><i class="fa-solid fa-envelope-open-text" style="color:var(--brand)"></i> Get new articles in your inbox</h4>
+          <p>Join readers learning web development, backend and tech careers. One email when something new is published.</p>
+          <form data-newsletter><label class="sr-only" for="nl-blog">Email</label><input id="nl-blog" type="email" placeholder="you@example.com" required><button class="btn btn-primary" type="submit">Subscribe</button></form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="logo" href="/"><img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40"><span class="logo-text">Prof<b>Jero</b></span></a>
+          <p data-s="footerText">Building solutions. Empowering lives. Full-stack development, IT training and creative studios from Cape Coast to the world.</p>
+          <div class="socials" data-socials></div>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <ul><li><a href="/#about">About</a></li><li><a href="/#work">Portfolio &amp; demos</a></li><li><a href="/#pricing">Pricing</a></li><li><a href="/blog">Blog</a></li><li><a href="/profile">Resume &amp; team</a></li></ul>
+        </div>
+        <div>
+          <h4>Studios</h4>
+          <ul id="footer-studios"><li><a href="https://profjerohub.pages.dev" target="_blank" rel="noopener">ProfJero Hub</a></li></ul>
+        </div>
+        <div>
+          <h4>Newsletter</h4>
+          <p style="font-size:.93rem;margin:0">New articles, tutorials and opportunities — no spam.</p>
+          <form class="newsletter" data-newsletter><label class="sr-only" for="nl-footer">Email address</label><input id="nl-footer" type="email" placeholder="Your email" required><button class="btn btn-primary btn-sm" type="submit">Subscribe</button></form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> ProfJero — Benjamin Amoako. All rights reserved.</span>
+        <span><a href="/sitemap.xml">Sitemap</a> · <a href="/rss.xml">RSS</a> · <a href="/llms.txt">llms.txt</a></span>
+      </div>
+    </div>
+  </footer>
+  </div>
+
+  <a class="wa-float" href="https://wa.me/233531207256" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <button class="to-top" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script type="module" src="/assets/js/blog.js"></script>
+</body>
+</html>

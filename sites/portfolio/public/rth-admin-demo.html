@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rural Tech Hub Admin — Live Demo | ProfJero</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+    }
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Slightly taller aspect ratio suitable for admin dashboards */
+      background: #0f172a;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    .iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="bg-white/90 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="flex justify-between items-center h-16 md:h-20">
+        <div class="flex items-center space-x-3">
+          <span class="text-2xl md:text-3xl font-bold text-indigo-700">RTH Admin</span>
+          <span class="text-sm md:text-base font-medium text-gray-500">Live Demo</span>
+        </div>
+
+        <div class="flex items-center gap-5 md:gap-8">
+          <a href="/#work" 
+             class="hidden md:flex items-center text-indigo-700 hover:text-indigo-900 font-medium transition">
+            ← Back to Portfolio
+          </a>
+
+          <a href="/#work" 
+             class="md:hidden flex items-center px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 transition">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Back
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-indigo-700 via-indigo-800 to-purple-900 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_25%_35%,rgba(255,255,255,0.18)_0%,transparent_55%)]"></div>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto px-5 sm:px-8 pt-20 pb-16 md:pt-28 md:pb-24 text-center">
+      <div class="inline-block mb-6 px-6 py-2.5 bg-white/15 backdrop-blur-md rounded-full text-sm md:text-base font-medium tracking-wide">
+        Secure Admin Control Center
+      </div>
+      
+      <h1 class="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight">
+        RTH Admin Dashboard
+      </h1>
+      
+      <p class="text-lg md:text-2xl text-indigo-100 max-w-3xl mx-auto leading-relaxed opacity-95">
+        The powerful backend system that powers Rural Tech Hub — manage students, programs, events, mentors, and impact tracking.
+      </p>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gray-50" style="clip-path: ellipse(160% 100% at 50% 100%)"></div>
+  </section>
+
+  <!-- Main Demo Area -->
+  <main class="max-w-7xl mx-auto px-5 sm:px-8 py-16 md:py-24">
+
+    <!-- Demo Frame -->
+    <section class="mb-24">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Live Admin Dashboard Preview
+        </h2>
+        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+          This is a real-time view of the admin interface used to manage the entire Rural Tech Hub ecosystem.
+        </p>
+      </div>
+
+      <div class="iframe-container">
+        <iframe 
+          src="https://rthadmins.pages.dev/" 
+          title="Rural Tech Hub Admin Dashboard Live Demo"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+
+      <div class="mt-8 text-center text-sm text-gray-500">
+        Note: This is an embedded live preview. Some features (login, forms, real-time updates) may be restricted in iframe mode for security reasons.
+      </div>
+    </section>
+
+    <!-- Quick Features Reminder -->
+    <section class="bg-white rounded-3xl shadow-xl p-10 md:p-16 border border-gray-100">
+      <h3 class="text-2xl md:text-3xl font-bold text-center mb-12">
+        What You Can Explore in the Admin Panel
+      </h3>
+
+      <div class="grid md:grid-cols-3 gap-8 md:gap-12">
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-6 bg-indigo-100 rounded-full flex items-center justify-center text-3xl">👥</div>
+          <h4 class="text-xl font-semibold mb-3">Student Management</h4>
+          <p class="text-gray-600">View, add, edit, and track student profiles, progress, and certificates.</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-6 bg-indigo-100 rounded-full flex items-center justify-center text-3xl">📚</div>
+          <h4 class="text-xl font-semibold mb-3">Program & Course Control</h4>
+          <p class="text-gray-600">Manage training programs, schedules, mentors, and learning materials.</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-6 bg-indigo-100 rounded-full flex items-center justify-center text-3xl">📊</div>
+          <h4 class="text-xl font-semibold mb-3">Impact & Analytics</h4>
+          <p class="text-gray-600">Monitor statistics, generate reports, and track real community impact.</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-6 bg-indigo-100 rounded-full flex items-center justify-center text-3xl">📅</div>
+          <h4 class="text-xl font-semibold mb-3">Event Management</h4>
+          <p class="text-gray-600">Create, edit, and oversee training workshops and registration flow.</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-6 bg-indigo-100 rounded-full flex items-center justify-center text-3xl">🔐</div>
+          <h4 class="text-xl font-semibold mb-3">Secure Access Control</h4>
+          <p class="text-gray-600">Role-based permissions for different admin levels and team members.</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-6 bg-indigo-100 rounded-full flex items-center justify-center text-3xl">📱</div>
+          <h4 class="text-xl font-semibold mb-3">Responsive Design</h4>
+          <p class="text-gray-600">Fully functional on desktop, tablet, and mobile devices.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-300 py-16 mt-20">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 text-center">
+      <p class="text-2xl font-bold text-white mb-4">Rural Tech Hub Admin</p>
+      <p class="text-lg mb-6">
+        The secure backbone that makes rural digital empowerment possible.
+      </p>
+      <p class="text-sm opacity-80">© January 2026 • ProfJero</p>
+    </div>
+  </footer>
+
+</body>
+</html>

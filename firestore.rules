@@ -1,0 +1,233 @@
+rules_version = '2';
+
+// Security rules for the shared ProfJero database (portfolio + ProfJero Hub).
+// Deploy: Firebase console → Firestore Database → Rules → paste → Publish
+//    or:  firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- helpers ----------
+    function signedIn() { return request.auth != null; }
+    function authEmail() { return signedIn() ? request.auth.token.get('email', '') : ''; }
+    function verifiedEmail() {
+      return signedIn() && authEmail() != '' && request.auth.token.get('email_verified', false) == true;
+    }
+    function isOwner() { return verifiedEmail() && authEmail() == 'profjero947@gmail.com'; }
+    function isAdmin() {
+      return isOwner() || (verifiedEmail() && exists(/databases/$(database)/documents/admins/$(authEmail())));
+    }
+    function data() { return request.resource.data; }
+    function changed() { return request.resource.data.diff(resource.data).affectedKeys(); }
+    function onlyChanged(keys) { return changed().hasOnly(keys); }
+    function bumped(field, n) { return data()[field] == resource.data.get(field, 0) + n; }
+    function str(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
+    function optStr(m, k, max) { return !(k in m) || (m[k] is string && m[k].size() <= max); }
+
+    // ---------- admins ----------
+    match /admins/{adminEmail} {
+      allow read: if isAdmin() || (verifiedEmail() && authEmail() == adminEmail);
+      allow write: if isOwner();
+    }
+
+    // ---------- public content managed by admins ----------
+    match /settings/{id}     { allow read: if true; allow write: if isAdmin(); }
+    match /skills/{id}       { allow read: if true; allow write: if isAdmin(); }
+    match /studios/{id}      { allow read: if true; allow write: if isAdmin(); }
+    match /projects/{id}     { allow read: if true; allow write: if isAdmin(); }
+    match /testimonials/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /experience/{id}   { allow read: if true; allow write: if isAdmin(); }
+    match /team/{id}         { allow read: if true; allow write: if isAdmin(); }
+    match /content/{id}      { allow read: if true; allow write: if isAdmin(); }   // free-form blocks (e.g. for ProfJero Hub)
+
+    // ---------- blog ----------
+    match /posts/{slug} {
+      function likePath() { return /databases/$(database)/documents/posts/$(slug)/likes/$(request.auth.uid); }
+      function commentPath() { return /databases/$(database)/documents/posts/$(slug)/comments/$(data().lastCommentId); }
+
+      allow get, list: if resource.data.status == 'published' || isAdmin();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() || (resource.data.status == 'published' && (
+           (onlyChanged(['views'])  && bumped('views', 1))
+        || (onlyChanged(['shares']) && bumped('shares', 1))
+        || (signedIn() && onlyChanged(['likes']) && bumped('likes', 1)  && !exists(likePath()) &&  existsAfter(likePath()))
+        || (signedIn() && onlyChanged(['likes']) && bumped('likes', -1) &&  exists(likePath()) && !existsAfter(likePath()))
+        || (signedIn() && onlyChanged(['commentCount', 'lastCommentId']) && bumped('commentCount', 1)  && !exists(commentPath()) &&  existsAfter(commentPath()))
+        || (signedIn() && onlyChanged(['commentCount', 'lastCommentId']) && bumped('commentCount', -1) &&  exists(commentPath()) && !existsAfter(commentPath()))
+      ));
+
+      match /likes/{uid} {
+        allow read: if true;
+        allow create: if signedIn() && request.auth.uid == uid && data().keys().hasOnly(['createdAt']) && data().createdAt == request.time;
+        allow delete: if signedIn() && request.auth.uid == uid;
+      }
+
+      match /comments/{cid} {
+        function post() { return get(/databases/$(database)/documents/posts/$(slug)).data; }
+        function cLikePath() { return /databases/$(database)/documents/posts/$(slug)/comments/$(cid)/likes/$(request.auth.uid); }
+
+        allow read: if true;
+        allow create: if signedIn()
+          && post().status == 'published' && post().get('commentsEnabled', true) != false
+          && data().keys().hasOnly(['uid', 'name', 'photo', 'text', 'parentId', 'likes', 'pinned', 'isAuthor', 'deleted', 'createdAt'])
+          && data().uid == request.auth.uid
+          && str(data().name, 2, 60) && str(data().text, 2, 2000)
+          && data().photo is string && data().photo.size() <= 500
+          && (data().parentId == null || data().parentId is string)
+          && data().likes == 0 && data().pinned == false && data().deleted == false
+          && (data().isAuthor == false || isAdmin())
+          && data().createdAt == request.time;
+        allow update: if isAdmin()
+          || (signedIn() && resource.data.uid == request.auth.uid && onlyChanged(['deleted', 'text']) && data().deleted == true && data().text == '')
+          || (signedIn() && onlyChanged(['likes']) && bumped('likes', 1)  && !exists(cLikePath()) &&  existsAfter(cLikePath()))
+          || (signedIn() && onlyChanged(['likes']) && bumped('likes', -1) &&  exists(cLikePath()) && !existsAfter(cLikePath()));
+        allow delete: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+
+        match /likes/{uid} {
+          allow read: if true;
+          allow create: if signedIn() && request.auth.uid == uid && data().keys().hasOnly(['createdAt']) && data().createdAt == request.time;
+          allow delete: if signedIn() && request.auth.uid == uid;
+        }
+      }
+    }
+
+    // Collection-group reads for the admin comment moderation screen.
+    match /{path=**}/comments/{cid} { allow read: if true; }
+
+    // ---------- form submissions (portfolio + hub) ----------
+    match /messages/{id} {
+      allow create: if data().keys().hasOnly(['name', 'email', 'phone', 'service', 'budget', 'subject', 'message', 'source', 'page', 'status', 'createdAt', 'studio', 'extra'])
+        && str(data().name, 2, 100) && str(data().email, 5, 150) && data().email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && str(data().message, 2, 5000)
+        && optStr(data(), 'phone', 30) && optStr(data(), 'service', 120) && optStr(data(), 'budget', 60)
+        && optStr(data(), 'subject', 150) && optStr(data(), 'source', 40) && optStr(data(), 'page', 300) && optStr(data(), 'studio', 80)
+        && (!('extra' in data()) || (data().extra is map && data().extra.size() <= 20))
+        && data().status == 'new' && data().createdAt == request.time;
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /subscribers/{email} {
+      allow create: if email == data().email && str(email, 5, 150) && email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && data().keys().hasOnly(['email', 'source', 'page', 'createdAt']) && data().createdAt == request.time;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ---------- analytics counters ----------
+    match /stats/{id} {
+      allow read: if isAdmin();
+      allow create: if data().keys().hasOnly(['visits']) && data().visits == 1;
+      allow update: if onlyChanged(['visits']) && bumped('visits', 1) || isAdmin();
+    }
+    match /stats_daily/{day} {
+      allow read: if isAdmin();
+      allow create: if data().keys().hasOnly(['visits', 'date']) && data().visits == 1 && data().date == day;
+      allow update: if onlyChanged(['visits']) && bumped('visits', 1) || isAdmin();
+    }
+
+    // ---------- ProfJero Hub: products, bookings, quotes/orders, client portal ----------
+    function isOwnerOf(res) {
+      return signedIn() && (res.data.get('uid', null) == request.auth.uid
+        || (verifiedEmail() && res.data.get('email', '') == authEmail()));
+    }
+    function contactOk(d) {
+      return str(d.name, 2, 100) && str(d.email, 5, 150) && d.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && optStr(d, 'phone', 30) && optStr(d, 'company', 120) && optStr(d, 'notes', 3000)
+        && (d.get('uid', null) == null || (signedIn() && d.get('uid', null) == request.auth.uid));
+    }
+
+    match /products/{id} { allow read: if true; allow write: if isAdmin(); }
+
+    // Booking id = its reference code (random, unguessable) so guests can track with it.
+    match /bookings/{ref} {
+      allow get: if true;
+      allow list: if isAdmin() || isOwnerOf(resource);
+      allow create: if data().keys().hasOnly(['ref', 'studio', 'studioName', 'service', 'mode', 'date', 'time', 'name', 'email', 'phone', 'company', 'notes', 'uid', 'status', 'source', 'createdAt'])
+        && data().ref == ref && ref.size() >= 8 && ref.size() <= 20
+        && str(data().studio, 2, 40) && str(data()['service'], 2, 120) && optStr(data(), 'studioName', 60)
+        && str(data().mode, 2, 20) && str(data().date, 10, 10) && str(data().time, 3, 20)
+        && optStr(data(), 'source', 20)
+        && contactOk(data()) && data().status == 'pending' && data().createdAt == request.time;
+      allow update: if isAdmin()
+        || (isOwnerOf(resource) && onlyChanged(['status', 'clientNote', 'updatedAt']) && data().status == 'cancelled'
+            && resource.data.status in ['pending', 'confirmed'] && optStr(data(), 'clientNote', 500))
+        || (isOwnerOf(resource) && onlyChanged(['rescheduleRequest', 'updatedAt']) && data().rescheduleRequest is map
+            && data().rescheduleRequest.size() <= 4 && resource.data.status in ['pending', 'confirmed']);
+      allow delete: if isAdmin();
+    }
+
+    // Product-branding quote requests and orders.
+    match /orders/{ref} {
+      allow get: if true;
+      allow list: if isAdmin() || isOwnerOf(resource);
+      allow create: if data().keys().hasOnly(['ref', 'productId', 'product', 'category', 'quantity', 'method', 'colors', 'artworkUrl', 'deadline', 'budget', 'name', 'email', 'phone', 'company', 'notes', 'uid', 'status', 'source', 'createdAt'])
+        && data().ref == ref && ref.size() >= 8 && ref.size() <= 20
+        && str(data().product, 2, 120) && data().quantity is int && data().quantity >= 1 && data().quantity <= 100000
+        && optStr(data(), 'productId', 80) && optStr(data(), 'category', 60) && optStr(data(), 'method', 80) && optStr(data(), 'colors', 120)
+        && optStr(data(), 'artworkUrl', 500) && optStr(data(), 'deadline', 20) && optStr(data(), 'budget', 60) && optStr(data(), 'source', 20)
+        && contactOk(data()) && data().status == 'requested' && data().createdAt == request.time;
+      allow update: if isAdmin()
+        || (isOwnerOf(resource) && onlyChanged(['status', 'clientNote', 'updatedAt']) && optStr(data(), 'clientNote', 500) && (
+             (resource.data.status == 'quoted' && data().status in ['approved', 'declined'])
+          || (resource.data.status in ['requested', 'quoted'] && data().status == 'cancelled')));
+      allow delete: if isAdmin();
+    }
+
+    // Client accounts (portal). Admin rights never come from here (see /admins).
+    match /users/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && data().keys().hasOnly(['name', 'email', 'phone', 'company', 'photo', 'notify', 'createdAt', 'updatedAt'])
+        && str(data().name, 1, 100) && optStr(data(), 'phone', 30) && optStr(data(), 'company', 120) && optStr(data(), 'photo', 500)
+        || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Projects the admin tracks for a client (progress, milestones, files, invoices).
+    // Client testimonials submitted from the Hub client portal. One per client (id = uid).
+    // Clients with a verified email write their own (always back to "pending");
+    // the admin approves, which publishes a copy into /testimonials.
+    match /reviews/{uid} {
+      function reviewOk() {
+        return data().keys().hasOnly(['uid', 'email', 'name', 'role', 'text', 'rating', 'studio', 'photo', 'status', 'createdAt', 'updatedAt'])
+          && data().uid == uid && data().email == authEmail() && data().status == 'pending'
+          && str(data().name, 2, 80) && optStr(data(), 'role', 100) && str(data().text, 20, 700)
+          && data().rating is int && data().rating >= 1 && data().rating <= 5
+          && optStr(data(), 'studio', 40) && optStr(data(), 'photo', 500)
+          && data().updatedAt == request.time;
+      }
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create: if verifiedEmail() && request.auth.uid == uid && reviewOk() && data().createdAt == request.time;
+      allow update: if (verifiedEmail() && request.auth.uid == uid && reviewOk() && data().createdAt == resource.data.createdAt) || isAdmin();
+      allow delete: if isAdmin() || (signedIn() && request.auth.uid == uid);
+    }
+
+    match /clientProjects/{id} {
+      allow read: if isAdmin() || isOwnerOf(resource);
+      allow write: if isAdmin();
+    }
+
+    // One support thread per client; messages between client and admin.
+    match /threads/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create: if signedIn() && request.auth.uid == uid
+        && data().keys().hasOnly(['uid', 'name', 'email', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient'])
+        && data().uid == uid || isAdmin();
+      allow update: if isAdmin() || (signedIn() && request.auth.uid == uid
+        && onlyChanged(['name', 'email', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient'])
+        && data().get('unreadClient', 0) <= resource.data.get('unreadClient', 0));
+      allow delete: if isAdmin();
+      match /messages/{mid} {
+        allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+        allow create: if data().keys().hasOnly(['from', 'text', 'name', 'createdAt', 'attachment'])
+          && str(data().text, 1, 4000) && data().createdAt == request.time && optStr(data(), 'attachment', 500)
+          && ((signedIn() && request.auth.uid == uid && data().from == 'client') || (isAdmin() && data().from == 'admin'));
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    // ---------- media library & private admin config (Cloudinary) ----------
+    match /media/{id}   { allow read, write: if isAdmin(); }
+    match /private/{id} { allow read, write: if isAdmin(); }
+
+    // Everything else is closed by default.
+  }
+}

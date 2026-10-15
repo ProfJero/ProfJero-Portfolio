@@ -1,0 +1,3 @@
+# Article URLs render post.html (Pages Functions serve a fully rendered version when enabled).
+/blog/:slug   /post   200
+/admin        /admin/   301

@@ -1,0 +1,9 @@
+# Old pages → new homes
+/creative-studio2      /creative-studio   301
+/creative-studio2.html /creative-studio   301
+/admin                 https://profjero.pages.dev/admin/   302
+/admin/*               https://profjero.pages.dev/admin/   302
+/portal                /portal/   301
+/booking               /booking/  301
+/book                  /booking/  301
+/track                 /booking/#track  302

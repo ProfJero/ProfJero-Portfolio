@@ -1,0 +1,22 @@
+{
+  "name": "profjero",
+  "private": true,
+  "description": "ProfJero monorepo \u2014 the portfolio (profjero.pages.dev) and ProfJero Hub (profjerohub.pages.dev) with one shared codebase, admin dashboard and Firestore database.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs all",
+    "build:portfolio": "node scripts/build.mjs portfolio",
+    "build:hub": "node scripts/build.mjs hub",
+    "dev:portfolio": "node scripts/build.mjs portfolio && cd sites/portfolio && wrangler pages dev dist --port 8788",
+    "dev:hub": "node scripts/build.mjs hub && cd sites/hub && wrangler pages dev dist --port 8789",
+    "emulators": "firebase emulators:start --only firestore,auth",
+    "test:rules": "firebase emulators:exec --only firestore \"node tests/rules.test.mjs\"",
+    "deploy:rules": "firebase deploy --only firestore:rules"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^3.0.4",
+    "firebase": "10.12.2",
+    "firebase-tools": "^13.0.0",
+    "wrangler": "^3.0.0"
+  }
+}

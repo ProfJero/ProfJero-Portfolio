@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Article | ProfJero Blog</title>
+  <meta name="description" content="Read this article on the ProfJero blog.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <link rel="canonical" href="https://profjero.pages.dev/blog">
+  <meta name="theme-color" content="#0A60EE">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ProfJero">
+  <meta property="og:title" content="Article | ProfJero Blog">
+  <meta property="og:description" content="Read this article on the ProfJero blog.">
+  <meta property="og:url" content="https://profjero.pages.dev/blog">
+  <meta property="og:image" content="https://profjero.pages.dev/assets/img/brand/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Article | ProfJero Blog">
+  <meta name="twitter:description" content="Read this article on the ProfJero blog.">
+  <meta name="twitter:image" content="https://profjero.pages.dev/assets/img/brand/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/icon-192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="alternate" type="application/rss+xml" title="ProfJero Blog" href="/rss.xml">
+  <script>try{var d=document.documentElement,j=function(k){return JSON.parse(localStorage.getItem(k)||"{}")||{}},o=Object.assign({},j("pj_site_look"),j("pj_prefs")),m=o.mode||localStorage.getItem("pj_theme")||"system";if(m!=="light"&&m!=="dark")m=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=m;if(/^#[0-9a-f]{6}$/i.test(o.color||""))d.style.setProperty("--brand-base",o.color);if(o.layout==="boxed")d.dataset.layout="boxed";if(o.bg)d.dataset.bg=o.bg;if(o.overlay)d.dataset.overlay="1"}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script type="application/ld+json" id="article-schema">{}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page-wrap">
+  <div class="announce" hidden><span></span><button type="button" aria-label="Dismiss announcement"><i class="fa-solid fa-xmark"></i></button></div>
+
+  <header class="site-header">
+    <nav class="container nav" aria-label="Main">
+      <a class="logo" href="/" aria-label="ProfJero home">
+        <img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40">
+        <span class="logo-text">Prof<b>Jero</b></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#services">Studios</a></li>
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></button>
+        <a class="btn btn-primary btn-sm btn-hire" href="/#contact">Hire me <i class="fa-solid fa-arrow-right"></i></a>
+        <button class="icon-btn nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </nav>
+    
+  </header>
+
+  <div class="reading-progress" id="reading-progress"></div>
+  <main id="main">
+    <article id="article" data-slug="">
+      <header class="article-hero">
+        <div class="article-wrap">
+          <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/blog">Blog</a><span>/</span><span id="crumb-cat">Article</span></nav>
+          <a class="post-cat" id="a-cat" href="/blog">Article</a>
+          <h1 id="a-title"><span class="skeleton" style="display:block;height:1.1em;width:90%"></span></h1>
+          <p class="article-sub" id="a-excerpt"></p>
+          <div class="author-row">
+            <img class="avatar" id="a-avatar" src="/assets/img/people/benjamin-amoako.webp" alt="" width="48" height="48">
+            <div><strong id="a-author">Benjamin Amoako (ProfJero)</strong><span id="a-meta"></span></div>
+            <a class="btn btn-outline btn-sm follow" href="/#contact">Work with me</a>
+          </div>
+        </div>
+      </header>
+      <figure class="article-cover" id="a-cover" hidden></figure>
+      <div class="article-layout">
+        <aside class="share-rail" aria-label="Article actions">
+          <button class="rail-btn" type="button" data-like aria-label="Like this article"><i class="fa-regular fa-heart"></i></button><span class="rail-count" data-count="likes">0</span>
+          <a class="rail-btn" href="#comments" aria-label="Jump to comments"><i class="fa-regular fa-comment"></i></a><span class="rail-count" data-count="commentCount">0</span>
+          <button class="rail-btn" type="button" data-share aria-label="Share this article"><i class="fa-solid fa-share-nodes"></i></button><span class="rail-count" data-count="shares">0</span>
+        </aside>
+        <div>
+          <div class="prose" id="a-body"><!--ssr:article--><p class="skeleton" style="height:16px"></p><p class="skeleton" style="height:16px;width:80%"></p><p class="skeleton" style="height:16px;width:92%"></p><!--/ssr:article--></div>
+          <div class="article-tags" id="a-tags"></div>
+          <div class="action-bar">
+            <button class="act" type="button" data-like><i class="fa-regular fa-heart"></i> <span data-count="likes">0</span> <span class="sr-only">likes</span></button>
+            <a class="act" href="#comments"><i class="fa-regular fa-comment"></i> <span data-count="commentCount">0</span> <span class="sr-only">comments</span></a>
+            <button class="act" type="button" data-share><i class="fa-solid fa-share-nodes"></i> Share</button>
+            <span class="act-views"><i class="fa-regular fa-eye"></i> <span data-count="views">0</span> views</span>
+          </div>
+          <div class="author-box">
+            <img src="/assets/img/people/benjamin-amoako.webp" alt="Benjamin Amoako" width="72" height="72" loading="lazy">
+            <div>
+              <h4>Written by Benjamin Amoako (ProfJero)</h4>
+              <p>Full-stack developer and IT trainer from Cape Coast, Ghana. Co-Founder of Digital Bridge Initiative and Founder of ProfJero Hub. I write about building real software and growing in tech.</p>
+              <div class="socials" data-socials></div>
+            </div>
+          </div>
+          <section class="comments" id="comments" aria-label="Comments">
+            <div class="comments-head">
+              <h2><span data-count="commentCount">0</span> Comments</h2>
+              <label class="sr-only" for="c-sort">Sort comments</label>
+              <select class="select" id="c-sort"><option value="top">Top comments</option><option value="new">Newest first</option></select>
+            </div>
+            <form class="composer" id="composer" novalidate>
+              <span class="avatar avatar-fallback" id="me-avatar" style="--h:210"><i class="fa-solid fa-user"></i></span>
+              <div class="composer-main">
+                <label class="sr-only" for="c-text">Add a comment</label>
+                <textarea id="c-text" rows="1" maxlength="2000" placeholder="Add a comment…"></textarea>
+                <div class="composer-row">
+                  <label class="sr-only" for="c-name">Your name</label>
+                  <input id="c-name" maxlength="60" placeholder="Your name" autocomplete="name">
+                  <button class="btn btn-ghost btn-sm" type="button" id="g-signin"><i class="fa-brands fa-google"></i> Use Google</button>
+                  <span class="spacer"></span>
+                  <small id="c-chars">0/2000</small>
+                  <button class="btn btn-ghost btn-sm" type="button" id="c-cancel">Cancel</button>
+                  <button class="btn btn-primary btn-sm" type="submit" id="c-submit">Comment</button>
+                </div>
+              </div>
+            </form>
+            <div id="comment-list"></div>
+            <button class="btn btn-outline more-comments" id="c-more" hidden>Show more comments</button>
+          </section>
+          <div class="newsletter-card">
+            <h4>Enjoyed this article?</h4>
+            <p>Get the next one in your inbox. No spam — unsubscribe anytime.</p>
+            <form data-newsletter><label class="sr-only" for="nl-post">Email</label><input id="nl-post" type="email" placeholder="you@example.com" required><button class="btn btn-primary" type="submit">Subscribe</button></form>
+          </div>
+        </div>
+        <nav class="toc" id="toc" aria-label="On this page"></nav>
+      </div>
+    </article>
+    <section class="related section-alt">
+      <div class="container">
+        <div class="section-head left" style="margin-bottom:26px"><h2>Keep reading</h2></div>
+        <div class="post-grid" id="related"></div>
+        <div class="center-cta"><a class="btn btn-primary" href="/blog">Browse all articles</a></div>
+      </div>
+    </section>
+  </main>
+
+<footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="logo" href="/"><img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40"><span class="logo-text">Prof<b>Jero</b></span></a>
+          <p data-s="footerText">Building solutions. Empowering lives. Full-stack development, IT training and creative studios from Cape Coast to the world.</p>
+          <div class="socials" data-socials></div>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <ul><li><a href="/#about">About</a></li><li><a href="/#work">Portfolio &amp; demos</a></li><li><a href="/#pricing">Pricing</a></li><li><a href="/blog">Blog</a></li><li><a href="/profile">Resume &amp; team</a></li></ul>
+        </div>
+        <div>
+          <h4>Studios</h4>
+          <ul id="footer-studios"><li><a href="https://profjerohub.pages.dev" target="_blank" rel="noopener">ProfJero Hub</a></li></ul>
+        </div>
+        <div>
+          <h4>Newsletter</h4>
+          <p style="font-size:.93rem;margin:0">New articles, tutorials and opportunities — no spam.</p>
+          <form class="newsletter" data-newsletter><label class="sr-only" for="nl-footer">Email address</label><input id="nl-footer" type="email" placeholder="Your email" required><button class="btn btn-primary btn-sm" type="submit">Subscribe</button></form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> ProfJero — Benjamin Amoako. All rights reserved.</span>
+        <span><a href="/sitemap.xml">Sitemap</a> · <a href="/rss.xml">RSS</a> · <a href="/llms.txt">llms.txt</a></span>
+      </div>
+    </div>
+  </footer>
+  </div>
+
+  <a class="wa-float" href="https://wa.me/233531207256" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <button class="to-top" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <dialog class="modal" id="share-modal" aria-labelledby="share-title" style="max-width:520px">
+    <div class="modal-box">
+      <div class="modal-head"><h3 id="share-title">Share this article</h3><button class="icon-btn" type="button" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="modal-body pad">
+        <div class="share-sheet" id="share-sheet"></div>
+        <div class="share-link"><label class="sr-only" for="share-url">Link</label><input class="input" id="share-url" readonly><button class="btn btn-primary btn-sm" type="button" id="copy-link">Copy</button></div>
+      </div>
+    </div>
+  </dialog>
+  <script type="module" src="/assets/js/post.js"></script>
+</body>
+</html>
