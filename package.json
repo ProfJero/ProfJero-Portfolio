@@ -1,11 +1,14 @@
 {
-  "name": "profjero-portfolio",
+  "name": "profjero",
   "private": true,
-  "description": "ProfJero portfolio — static site + Cloudflare Pages Functions + Firebase Firestore + Cloudinary. No build step required.",
+  "description": "ProfJero monorepo \u2014 the portfolio (profjero.pages.dev) and ProfJero Hub (profjerohub.pages.dev) with one shared codebase, admin dashboard and Firestore database.",
   "type": "module",
   "scripts": {
-    "dev": "wrangler pages dev . --port 8788",
-    "prerender": "node scripts/prerender.mjs",
+    "build": "node scripts/build.mjs all",
+    "build:portfolio": "node scripts/build.mjs portfolio",
+    "build:hub": "node scripts/build.mjs hub",
+    "dev:portfolio": "node scripts/build.mjs portfolio && cd sites/portfolio && wrangler pages dev dist --port 8788",
+    "dev:hub": "node scripts/build.mjs hub && cd sites/hub && wrangler pages dev dist --port 8789",
     "emulators": "firebase emulators:start --only firestore,auth",
     "test:rules": "firebase emulators:exec --only firestore \"node tests/rules.test.mjs\"",
     "deploy:rules": "firebase deploy --only firestore:rules"

@@ -163,5 +163,21 @@ await t("admin replies", () => assertSucceeds(setDoc(doc(owner, "threads/alice/m
 await t("anyone reads products", () => assertSucceeds(getDocs(collection(anon, "products"))));
 await t("visitor cannot add product", () => assertFails(setDoc(doc(alice, "products/x"), { name: "x" })));
 
+console.log("Hub: client testimonials");
+const review = (extra = {}) => ({ uid: "kofi", email: "kofi@example.com", name: "Kofi Mensah", role: "Head, Bright Future School", text: "ProfJero built our school system on time and trained our staff well.", rating: 5, studio: "digital-studio", photo: "", status: "pending", createdAt: serverTimestamp(), updatedAt: serverTimestamp(), ...extra });
+const unverified = env.authenticatedContext("ama", { email: "ama@example.com", email_verified: false }).firestore();
+await t("verified client submits testimonial", () => assertSucceeds(setDoc(doc(kofi, "reviews/kofi"), review())));
+await t("unverified client cannot submit", () => assertFails(setDoc(doc(unverified, "reviews/ama"), review({ uid: "ama", email: "ama@example.com" }))));
+await t("anonymous cannot submit", () => assertFails(setDoc(doc(anon, "reviews/anon"), review({ uid: "anon" }))));
+await t("cannot self-approve", () => assertFails(setDoc(doc(kofi, "reviews/kofi"), review({ status: "approved" }))));
+await t("cannot write for someone else", () => assertFails(setDoc(doc(kofi, "reviews/alice"), review({ uid: "alice" }))));
+await t("rating must be 1-5", () => assertFails(setDoc(doc(kofi, "reviews/kofi"), review({ rating: 9 }))));
+await t("text too short rejected", () => assertFails(setDoc(doc(kofi, "reviews/kofi"), review({ text: "Great" }))));
+await t("bob cannot read kofi's review", () => assertFails(getDoc(doc(bob, "reviews/kofi"))));
+await t("admin approves", () => assertSucceeds(updateDoc(doc(owner, "reviews/kofi"), { status: "approved" })));
+await t("client edit goes back to pending", () => assertSucceeds(updateDoc(doc(kofi, "reviews/kofi"), { text: "Updated: fantastic work on our school system and staff training.", status: "pending", updatedAt: serverTimestamp() })));
+await t("client cannot publish testimonial directly", () => assertFails(setDoc(doc(kofi, "testimonials/review-kofi"), { name: "Kofi", text: "x", visible: true })));
+await t("admin publishes testimonial", () => assertSucceeds(setDoc(doc(owner, "testimonials/review-kofi"), { name: "Kofi", text: "x", visible: true })));
+
 await env.cleanup();
 console.log(`\n${passed} passed${process.exitCode ? ", some FAILED" : ""}`);

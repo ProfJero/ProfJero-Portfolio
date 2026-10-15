@@ -27,6 +27,7 @@ The ProfJero portfolio and **ProfJero Hub** (https://profjerohub.pages.dev) use 
 | `orders/{ref}` | Product quotes and orders, with id `PJO…`. Fields: `product, quantity, options, name, email, phone, company, uid, status (requested/quoted/approved/declined/in-production/ready/delivered/cancelled), quoteAmount, quoteNote, createdAt` | get by reference only | create (validated); the owner can approve or decline a quote, or cancel |
 | `users/{uid}` | Client portal profile: `name, email, phone, company, photo, notify` | owner, admins | owner |
 | `clientProjects/{id}` | `title, uid, email, studio, status, progress, stages[], nextStep, files[], updates[], invoice{total, paid}` | owner (uid or verified email), admins | admins |
+| `reviews/{uid}` | Client-portal testimonial: `uid, email, name, role, text (20–700), rating (1–5), studio, photo, status (pending/approved/rejected), createdAt, updatedAt`. Approving copies it to `testimonials/review-{uid}`. | owner, admins | owner with a verified email (always back to `pending`); admins set the status |
 | `threads/{uid}` and `threads/{uid}/messages/{id}` | Client ↔ admin chat | owner, admins | owner (`from: "client"`), admins |
 | `media/{id}` | Cloudinary upload library | admins | admins |
 | `private/integrations` | Cloudinary cloud name and upload preset | admins | admins |
@@ -36,35 +37,10 @@ All admin screens are in the portfolio dashboard at `/admin/`, including the Pro
 
 "Owner" means the signed-in user whose `uid` matches the document, or whose **verified** email matches its `email`. Bookings and quotes made as a guest therefore appear in the portal once the client verifies the same email address.
 
-## Using the database from ProfJero Hub
+## How the two sites share code
 
-The Hub repo keeps its own copies of the shared modules (`ProfJero-Hub/assets/js/`) with `SITE.id = "hub"`. These are the same files as in this repo. When you change `store.js`, `render.js`, `firebase.js`, `utils.js`, `appearance.js`, `ripples.js`, `ui.js`, `defaults.js` or `studio-content.js` here, copy the file over there too.
+Both sites live in this repository (see [README](README.md)). Shared modules exist once, in `shared/assets/js/`. `config.js` holds the Firebase config and both sites' settings (`SITES.portfolio`, `SITES.hub`). `SITE` is chosen by `site.js`: the shared default says `"portfolio"`, and the Hub build replaces it with `sites/hub/public/assets/js/site.js` (`"hub"`). Everything a site writes is tagged with `SITE.id` (for example `messages.source`, `bookings.source`, `stats/{site}`), and posts are shown on a site when `posts.sites` includes its id.
 
-The shared modules allow cross-origin imports (`Access-Control-Allow-Origin: *` on `/assets/js/*`), so the Hub can use them directly:
+Article links on the Hub point to the portfolio (`SITE.blogBase`): `https://profjero.pages.dev/blog/<slug>`. They include likes, comments and shares.
 
-```html
-<script type="module">
-  import { db, collection, getDocs, query, where, addDoc, serverTimestamp } from "https://profjero.pages.dev/assets/js/firebase.js";
-
-  // Studios + services (managed in the portfolio admin)
-  const studios = (await getDocs(collection(db, "studios"))).docs.map(d => ({ id: d.id, ...d.data() }));
-
-  // Blog posts marked "Show on: ProfJero Hub"
-  const posts = (await getDocs(query(collection(db, "posts"), where("status", "==", "published"))))
-    .docs.map(d => ({ id: d.id, ...d.data() }))
-    .filter(p => !p.sites || p.sites.includes("hub"));
-
-  // Send a Hub form submission into the same admin inbox
-  async function sendEnquiry(form) {
-    await addDoc(collection(db, "messages"), {
-      name: form.name, email: form.email, phone: form.phone || "", service: form.service || "",
-      studio: form.studio || "", message: form.message, subject: form.subject || "",
-      source: "hub", page: location.href, status: "new", createdAt: serverTimestamp()
-    });
-  }
-</script>
-```
-
-Article links for Hub readers: `https://profjero.pages.dev/blog/<slug>`. They include likes, comments and shares.
-
-**Studio links.** Each studio's **Visit studio** button uses its `url` field. Point it at the matching section or page on the Hub, for example `https://profjerohub.pages.dev/digital-studio`. Each studio has its own page on the Hub.
+**Studio links.** Each studio's **Visit studio** button uses its `url` field, for example `https://profjerohub.pages.dev/digital-studio`. Each studio has its own page on the Hub.

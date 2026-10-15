@@ -182,6 +182,24 @@ service cloud.firestore {
     }
 
     // Projects the admin tracks for a client (progress, milestones, files, invoices).
+    // Client testimonials submitted from the Hub client portal. One per client (id = uid).
+    // Clients with a verified email write their own (always back to "pending");
+    // the admin approves, which publishes a copy into /testimonials.
+    match /reviews/{uid} {
+      function reviewOk() {
+        return data().keys().hasOnly(['uid', 'email', 'name', 'role', 'text', 'rating', 'studio', 'photo', 'status', 'createdAt', 'updatedAt'])
+          && data().uid == uid && data().email == authEmail() && data().status == 'pending'
+          && str(data().name, 2, 80) && optStr(data(), 'role', 100) && str(data().text, 20, 700)
+          && data().rating is int && data().rating >= 1 && data().rating <= 5
+          && optStr(data(), 'studio', 40) && optStr(data(), 'photo', 500)
+          && data().updatedAt == request.time;
+      }
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create: if verifiedEmail() && request.auth.uid == uid && reviewOk() && data().createdAt == request.time;
+      allow update: if (verifiedEmail() && request.auth.uid == uid && reviewOk() && data().createdAt == resource.data.createdAt) || isAdmin();
+      allow delete: if isAdmin() || (signedIn() && request.auth.uid == uid);
+    }
+
     match /clientProjects/{id} {
       allow read: if isAdmin() || isOwnerOf(resource);
       allow write: if isAdmin();

@@ -1,0 +1,20 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Frame-Options: SAMEORIGIN
+
+/portal/*
+  Cache-Control: no-cache
+
+/assets/img/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/assets/css/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+
+/assets/js/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8

@@ -1,25 +1,55 @@
-# ProfJero — Portfolio of Benjamin Amoako
+# ProfJero: portfolio + ProfJero Hub (one repo, one dashboard)
 
-Live site: **https://profjero.pages.dev** · Admin: **https://profjero.pages.dev/admin/**
+| Site | Live URL | Source |
+|---|---|---|
+| Portfolio of Benjamin Amoako, plus the **admin dashboard for both sites** | https://profjero.pages.dev · admin: https://profjero.pages.dev/admin/ | `sites/portfolio/` |
+| ProfJero Hub: four studios, booking, branded products and the client portal | https://profjerohub.pages.dev | `sites/hub/` |
 
-A full-stack developer portfolio with a blog, live project demos, an admin dashboard and a shared database for ProfJero Hub.
+Both sites share one codebase, one Firestore database (`jerohub-1`), one Cloudinary account and one admin dashboard. Each shared file exists **once**, in `shared/`, and a small build script assembles each site for its own Cloudflare Pages project.
 
-- **Frontend:** hand-built HTML, CSS and JavaScript ES modules. There is no build step. Light and dark themes are included and it is designed mobile-first.
-- **Database:** Firebase Firestore, protected by [security rules](firestore.rules) that have 52 automated tests.
-- **Media:** Cloudinary, with uploads straight from the admin dashboard.
-- **Edge:** Cloudflare Pages Functions handle:
-  - server-side rendering of the homepage and articles, for SEO and AI crawlers
-  - a live `sitemap.xml`, `rss.xml`, `llms.txt` and `llms-full.txt`
+```
+shared/                    used by BOTH sites (one copy)
+  assets/js/               config, firebase, store, render, ui, utils, markdown, appearance, ripples,
+                           defaults, studio-content, hub-defaults, seed-posts, site.js (default: portfolio)
+  assets/css/main.css      design system
+  assets/img/              logo, photos, project and blog images
+  favicon.ico, google…html (Search Console verification)
+sites/portfolio/
+  public/                  portfolio pages, admin/ dashboard, home/blog/post JS, _headers, _redirects …
+  functions/               Cloudflare Pages Functions (SSR, sitemap, rss, llms.txt)
+  prerender.mjs            build hook: pre-renders HTML and feed fallbacks
+sites/hub/
+  public/                  Hub-only JS (hub, booking, portal …), hub.css, site.js (= "hub"), _headers …
+  pages.mjs                build hook: generates every Hub page with SEO markup
+scripts/build.mjs          node scripts/build.mjs portfolio | hub | all  →  sites/<site>/dist
+firestore.rules, tests/    security rules for the shared database (98 tests)
+```
 
-| Path | What it is |
-|---|---|
-| `index.html` | Homepage: water-ripple hero, about, skills, studios & services, process, portfolio with live demos and videos, experience, team, testimonials, pricing (GH₵/US$), latest posts, FAQ, contact. It also has a visitor Customize panel: theme colour, layout, mode, backgrounds. |
-| `blog.html` → `/blog` | Article list with search, categories, tags and sorting |
-| `post.html` → `/blog/<slug>` | Article page with views, likes, shares, threaded comments, table of contents and related posts |
-| `admin/` | Admin dashboard: messages, posts, comments, projects, studios, skills, testimonials, experience, profile & site, media, subscribers, settings |
-| `assets/js/` | Shared modules (`config`, `firebase`, `store`, `render`, `markdown`, `utils`) plus the default content in `defaults.js` and `seed-posts.js` |
-| `functions/` | Cloudflare Pages Functions for SSR and feeds |
-| `profile.html`, `docs.html`, `*-demo.html` | Resume page and the project documentation and demo pages |
+**How a build works:** `shared/` is copied, then `sites/<site>/public/` is laid on top (a site's own file wins, e.g. `site.js`), then that site's build hook runs. The output is `sites/<site>/dist/`, which is git-ignored and never edited by hand.
 
-📘 **Start here:** [ADMIN-GUIDE.md](ADMIN-GUIDE.md) covers one-time setup (rules, sign-in, Cloudinary) and everyday use.
-🗄️ **Data model and ProfJero Hub integration:** [DATABASE.md](DATABASE.md)
+## Deploying (Cloudflare Pages)
+
+Both Pages projects connect to **this repository** and differ only in their folder:
+
+| Setting | `profjero` project | `profjerohub` project |
+|---|---|---|
+| Production branch | `main` | `main` |
+| Framework preset | None | None |
+| Build command | `node ../../scripts/build.mjs portfolio` | `node ../../scripts/build.mjs hub` |
+| Build output directory | `dist` | `dist` |
+| Root directory (advanced) | `sites/portfolio` | `sites/hub` |
+
+Optional: under **Build watch paths**, include `shared/*`, `scripts/*` and that site's own `sites/<site>/*` so each site only rebuilds when something it uses changes.
+
+## Local development
+
+```bash
+npm install
+npm run emulators        # Firestore + Auth emulators (needs Java)
+npm run dev:portfolio    # build + http://localhost:8788  (add ?emulator=1 to use the emulators)
+npm run dev:hub          # build + http://localhost:8789
+npm run build            # build both sites
+npm run test:rules       # security-rule tests
+```
+
+📘 **Setup and everyday use:** [ADMIN-GUIDE.md](ADMIN-GUIDE.md) · 🗄️ **Data model:** [DATABASE.md](DATABASE.md)
