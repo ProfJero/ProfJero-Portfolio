@@ -10,8 +10,10 @@ Both sites share one codebase, one Firestore database (`jerohub-1`), one Cloudin
 ```
 shared/                    used by BOTH sites (one copy)
   assets/js/               config, firebase, store, render, ui, utils, markdown, appearance, ripples,
-                           defaults, studio-content, hub-defaults, seed-posts, site.js (default: portfolio)
-  assets/css/main.css      design system
+                           defaults, studio-content, hub-defaults, seed-posts, site.js (default: portfolio),
+                           chat-kit (WhatsApp-style chat used by admin + portal), invoice-doc (invoice layout + totals)
+  assets/css/              main.css design system, chat.css, invoice.css
+  assets/vendor/           self-hosted Font Awesome 6.5.1
   assets/img/              logo, photos, project and blog images
   favicon.ico, google…html (Search Console verification)
 sites/portfolio/
@@ -22,10 +24,10 @@ sites/hub/
   public/                  Hub-only JS (hub, booking, portal …), hub.css, site.js (= "hub"), _headers …
   pages.mjs                build hook: generates every Hub page with SEO markup
 scripts/build.mjs          node scripts/build.mjs portfolio | hub | all  →  sites/<site>/dist
-firestore.rules, tests/    security rules for the shared database (98 tests)
+firestore.rules, tests/    security rules for the shared database (141 tests)
 ```
 
-**How a build works:** `shared/` is copied, then `sites/<site>/public/` is laid on top (a site's own file wins, e.g. `site.js`), then that site's build hook runs. Finally every local `.js`/`.css` URL is stamped with `?v=<content hash>`, so visitors' browsers never mix files from two deployments. The output is `sites/<site>/dist/`, which is git-ignored and never edited by hand.
+**How a build works:** every JS module is first syntax-checked (`node --check`), so a typo fails the build instead of breaking the live site. `shared/` is copied, then `sites/<site>/public/` is laid on top (a site's own file wins, e.g. `site.js`), then that site's build hook runs. Finally every local `.js`/`.css` URL is stamped with `?v=<content hash>`, so visitors' browsers never mix files from two deployments. The output is `sites/<site>/dist/`, which is git-ignored and never edited by hand.
 
 **Installable apps (PWA):** the admin (`/admin/`) and the client portal (`/portal/`) each have their own manifest and icons. Both use one shared service worker, `shared/assets/js/pwa-sw.js`, registered with that app's scope.
 
