@@ -40,7 +40,8 @@ function renderTimes() {
   }).join("");
 }
 
-function canContinue() {
+function canContinue(at = step) {
+  const step = at;
   if (step === 1) return !!sel.studio;
   if (step === 2) return !!sel.service;
   if (step === 3) return !!sel.date && !!sel.time;
@@ -48,10 +49,22 @@ function canContinue() {
   return true;
 }
 
+// The furthest step the visitor can jump to: every step before it is filled in.
+const reachable = () => { let k = 1; while (k < 5 && canContinue(k)) k++; return k; };
+function paintSteps(n = step) {
+  const far = n === 6 ? 0 : reachable();
+  $$(".wz-steps li").forEach(li => {
+    const k = +li.dataset.stepLabel, open = k !== n && k <= far;
+    li.classList.toggle("active", k === n); li.classList.toggle("done", n === 6 || (k < n && canContinue(k)) || (k > n && k < far));
+    li.classList.toggle("can-go", open); li.tabIndex = open ? 0 : -1;
+    if (open) { li.setAttribute("role", "button"); li.title = `Go to step ${k}`; } else { li.removeAttribute("role"); li.removeAttribute("title"); }
+    if (k === n) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
+  });
+}
 function go(n) {
   step = n;
   $$(".wz-panel").forEach(p => p.classList.toggle("active", +p.dataset.step === n));
-  $$(".wz-steps li").forEach(li => { const k = +li.dataset.stepLabel; li.classList.toggle("active", k === n); li.classList.toggle("done", k < n); });
+  paintSteps(n);
   $("#wz-back").hidden = n === 1 || n === 6;
   $("#wz-next").hidden = n === 1 || n === 2 || n === 6;
   $("#wz-next").innerHTML = n === 5 ? '<i class="fa-solid fa-check"></i> Confirm booking' : 'Continue <i class="fa-solid fa-arrow-right"></i>';
@@ -129,6 +142,15 @@ dateInput.addEventListener("change", () => {
   else sel.date = dateInput.value;
   sel.time = ""; renderTimes();
 });
+const stepJump = e => {
+  const li = e.target.closest(".wz-steps li.can-go"); if (!li) return;
+  if (e.type === "keydown" && !["Enter", " "].includes(e.key)) return;
+  e.preventDefault(); go(+li.dataset.stepLabel);
+  $(".wz-panel.active h2")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+};
+$(".wz-steps").addEventListener("click", stepJump);
+["input", "change", "click"].forEach(ev => $(".wz-body").addEventListener(ev, () => queueMicrotask(() => paintSteps())));
+$(".wz-steps").addEventListener("keydown", stepJump);
 $("#wz-back").addEventListener("click", () => go(Math.max(1, step - 1)));
 $("#wz-next").addEventListener("click", () => {
   if (!canContinue()) {

@@ -1,5 +1,5 @@
 // Shared browser behaviour for every ProfJero Hub page.
-import { $, $$, initCommon, applySettings, toast, reveal } from "./ui.js";
+import { $, $$, initCommon, applySettings, toast, reveal, guardModal } from "./ui.js";
 import { look } from "./appearance.js";
 import { loadSettings, loadDoc, firebase } from "./store.js";
 import { esc, safeUrl, parseVideo, isEmail, img } from "./utils.js";
@@ -76,10 +76,7 @@ export function openModal(title, body, { tools = "", wide = true, pad = false } 
   return b;
 }
 export const closeModal = () => modal()?.open && modal().close();
-document.addEventListener("click", e => {
-  const m = modal();
-  if (m && (e.target === m || e.target.closest("#modal [data-close]"))) closeModal();
-});
+guardModal(modal(), { onClose: closeModal });
 document.addEventListener("close", e => { if (e.target === modal()) $(".modal-body", modal()).innerHTML = ""; }, true);
 
 // ---------- Projects: demo / video / details ----------

@@ -1,4 +1,4 @@
-import { $, $$, initCommon, applySettings, reveal, toast, initCopyButtons } from "./ui.js";
+import { $, $$, initCommon, applySettings, reveal, toast, initCopyButtons, guardModal } from "./ui.js";
 import { loadPost, loadPosts, loadSettings, firebase } from "./store.js";
 import { renderPostCard, postCover, avatar, byNewest } from "./render.js";
 import { renderMarkdown } from "./markdown.js";
@@ -123,11 +123,15 @@ function initToc() {
   }
 }
 const bar = $("#reading-progress");
+let readTick = false;
 addEventListener("scroll", () => {
-  const body = $("#a-body");
-  const r = body.getBoundingClientRect();
-  const pct = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight * .6)));
-  bar.style.width = pct * 100 + "%";
+  if (readTick) return;
+  readTick = true;
+  requestAnimationFrame(() => {
+    const r = $("#a-body").getBoundingClientRect();
+    bar.style.setProperty("--p", Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight * .6))).toFixed(4));
+    readTick = false;
+  });
 }, { passive: true });
 
 // ---------- Auth helpers ----------
@@ -237,7 +241,7 @@ $("#copy-link").addEventListener("click", async () => {
   toast("Link copied to clipboard");
   countShare();
 });
-shareModal.addEventListener("click", e => { if (e.target === shareModal || e.target.closest("[data-close]")) shareModal.close(); });
+guardModal(shareModal);
 
 // ---------- Views (one per browser session) ----------
 async function countView() {

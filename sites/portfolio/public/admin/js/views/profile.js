@@ -61,7 +61,7 @@ const SECTIONS = [
       { key: "title", label: "Title", type: "text" }, { key: "icon", label: "Icon", type: "icon" }, { key: "text", label: "Description", type: "textarea", full: true, rows: 2 }] }]
   },
   {
-    id: "pricing", title: "Pricing", icon: "fa-solid fa-tags", desc: "Pricing tabs (e.g. Websites, Systems, Care plans, Training). Prices are in Ghana cedis (GH₵): type "GH₵ 9,500" or just 9500.",
+    id: "pricing", title: "Pricing", icon: "fa-solid fa-tags", desc: "Pricing tabs (e.g. Websites, Systems, Care plans, Training). Prices are in Ghana cedis (GH₵): type GH₵ 9,500 or just 9500.",
     fields: [
       { key: "pricingGroups", label: "Pricing tabs", type: "list", full: true, itemLabel: "Tab", fields: [
         { key: "name", label: "Tab name", type: "text" }, { key: "icon", label: "Icon", type: "icon" },

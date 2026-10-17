@@ -1,14 +1,26 @@
 // Schema-driven form builder for the admin dashboard.
 // Field: { key, label, type, help, options, placeholder, full, max, round, fields (list), min, step }
-// Types: text email url number tel textarea markdown select toggle range image file tags color icon month datetime video list strings
+// Types: text email url number tel textarea markdown select toggle range image file tags color icon
+//        date time month datetime (real date/time pickers) combo (pick an existing value or add a new one)
+//        client (Hub client picker) video list strings
 import { $, $$, esc, uploadToCloudinary, toast, openDialog, fb, fileSize } from "./core.js";
 import { parseVideo, img } from "/assets/js/utils.js";
+import { clientPickerHtml, readClientPicker, bindClientPickers } from "./clientpicker.js";
 
 const specs = new Map(); // repeater id -> fields
 let uid = 0;
 const nid = () => "f" + (++uid);
 
 function attr(v) { return esc(v ?? ""); }
+
+/** Accepts "2026-10-20", a Date or a Firestore Timestamp; returns "YYYY-MM-DD" for <input type=date>. */
+function toDateInput(v) {
+  if (!v) return "";
+  if (typeof v === "string" && /^\d{4}-\d{2}-\d{2}/.test(v)) return v.slice(0, 10);
+  const d = v?.toDate ? v.toDate() : new Date(v);
+  if (isNaN(d)) return "";
+  return new Date(d - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+}
 
 function toLocalInput(v) {
   const d = v?.toDate ? v.toDate() : v ? new Date(v) : null;
@@ -65,6 +77,16 @@ function fieldHtml(f, value) {
       return wrap(`<div class="f-inline"><input id="${id}" value="${attr(v)}" placeholder="fa-solid fa-laptop-code"><span class="icon-preview"><i class="${attr(v)}"></i></span></div>`);
     case "month":
       return wrap(`<input id="${id}" type="month" value="${attr(v)}">`);
+    case "date":
+      return wrap(`<div class="picker-row"><input id="${id}" type="date" value="${attr(toDateInput(v))}"${f.min ? ` min="${attr(f.min)}"` : ""}>${f.quick ? `<span class="date-quick">${f.quick.map(([l, d]) => `<button type="button" class="chip-btn" data-quick-days="${d}">${esc(l)}</button>`).join("")}</span>` : ""}</div>`);
+    case "time":
+      return wrap(`<input id="${id}" type="time" value="${attr(v)}" step="${f.step || 300}">`);
+    case "combo": {
+      const lid = nid();
+      return wrap(`<div class="combo"><input id="${id}" value="${attr(v)}" list="${lid}" autocomplete="off"${ph}${mx}><datalist id="${lid}">${(f.options || []).map(o => `<option value="${attr(o)}"></option>`).join("")}</datalist><i class="fa-solid fa-chevron-down combo-caret" aria-hidden="true"></i></div>`);
+    }
+    case "client":
+      return `<div class="f full" data-field="${esc(f.key)}" data-type="client">${f.label ? `<label>${esc(f.label)}</label>` : ""}${clientPickerHtml(v || {}, { extra: f.extra || [] })}${help}</div>`;
     case "datetime":
       return wrap(`<input id="${id}" type="datetime-local" value="${attr(toLocalInput(v))}">`);
     case "video":
@@ -107,6 +129,16 @@ function renumber(rep) { $$(":scope > .rep-item", rep).forEach((it, i) => { cons
 
 /** Wires up dynamic behaviour. Call once per form root (event delegation). */
 export function bindFields(root, onChange = () => { }) {
+  bindClientPickers(root);
+  // Quick date buttons: "Today", "+7 days"…
+  root.addEventListener("click", e => {
+    const q = e.target.closest("[data-quick-days]");
+    if (!q) return;
+    const d = new Date(); d.setDate(d.getDate() + Number(q.dataset.quickDays));
+    const input = q.closest(".picker-row").querySelector("input");
+    input.value = new Date(d - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+  });
   root.addEventListener("input", e => {
     const t = e.target;
     const cnt = t.id && $(`[data-count-for="${t.id}"]`, root);
@@ -237,6 +269,7 @@ export function readFields(fields, root) {
       case "range": out[f.key] = Number($("input", el).value); break;
       case "tags": out[f.key] = $$(".tag", el).map(t => t.dataset.v); break;
       case "datetime": out[f.key] = input.value ? new Date(input.value) : null; break;
+      case "client": out[f.key] = readClientPicker(el); break;
       case "strings": out[f.key] = $$(":scope > .repeater > .rep-item", el).map(it => $("[data-str]", it).value.trim()).filter(Boolean); break;
       case "list": out[f.key] = $$(":scope > .repeater > .rep-item", el).map(it => readFields(f.fields, it)); break;
       default: out[f.key] = (input?.value ?? "").trim();
@@ -247,6 +280,11 @@ export function readFields(fields, root) {
 
 /** Validates required fields; focuses the first invalid one. */
 export function validate(fields, root) {
+  for (const f of fields.filter(x => x.type === "client")) {
+    const v = readClientPicker(fieldEls(root, f.key)[0]);
+    if (!v?.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email)) { $('[data-cp="email"]', fieldEls(root, f.key)[0])?.focus(); toast("Choose a client or enter their email address.", "error"); return false; }
+    if (!v.name) { $('[data-cp="name"]', fieldEls(root, f.key)[0])?.focus(); toast("Enter the client's name.", "error"); return false; }
+  }
   for (const f of fields.filter(x => x.required)) {
     const el = fieldEls(root, f.key)[0];
     const input = el && $("input, textarea, select", el);

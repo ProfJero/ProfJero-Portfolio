@@ -37,6 +37,11 @@ export async function render(view, { params }) {
 }
 
 function detail(view, u) {
+  view.addEventListener("click", e => {
+    if (!e.target.closest("[data-new-invoice]")) return;
+    sessionStorage.setItem("pj_invoice_prefill", JSON.stringify({ uid: u.id || null, clientName: u.name || "", email: u.email, clientPhone: u.phone || "", clientCompany: u.company || "" }));
+    location.hash = "#/invoices/new";
+  });
   const row = (r, col) => `<a class="list-item" href="#/${col}/${esc(r.id)}" style="color:inherit"><div class="grow"><div class="title">${esc(col === "bookings" ? r.service : col === "orders" ? `${r.quantity} × ${r.product}` : r.title)}</div><div class="sub">${esc(r.ref || "")} ${col === "bookings" ? `· ${fmtDate(r.date)} ${esc(r.time)}` : col === "clientProjects" ? `· ${Number(r.progress) || 0}%` : r.quoteAmount ? `· GH₵ ${Number(r.quoteAmount).toLocaleString()}` : ""}</div></div><span class="status ${esc(r.status)}">${esc(r.status || "")}</span></a>`;
   const wa = String(u.phone || "").replace(/\D/g, "").replace(/^0/, "233");
   view.innerHTML = `
@@ -44,7 +49,7 @@ function detail(view, u) {
     <div class="card"><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
       <span class="avatar avatar-fallback" style="--h:${hueFrom(u.email)};width:64px;height:64px;font-size:1.3rem">${esc(initials(u.name))}</span>
       <div style="flex:1;min-width:200px"><h2 style="margin:0">${esc(u.name || u.email)} ${u.guest ? '<span class="status">guest</span>' : ""}</h2><p class="muted" style="margin:0">${esc(u.company || "")} · ${esc(u.email)} · ${esc(u.phone || "")}</p></div>
-      <div class="btn-row"><a class="btn btn-ghost btn-sm" href="mailto:${esc(u.email)}"><i class="fa-solid fa-envelope"></i> Email</a>${wa ? `<a class="btn btn-ghost btn-sm" href="https://wa.me/${wa}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ""}${u.id ? `<a class="btn btn-primary btn-sm" href="#/chat/${esc(u.id)}"><i class="fa-regular fa-comments"></i> Chat</a>` : ""}</div>
+      <div class="btn-row"><a class="btn btn-ghost btn-sm" href="mailto:${esc(u.email)}"><i class="fa-solid fa-envelope"></i> Email</a>${wa ? `<a class="btn btn-ghost btn-sm" href="https://wa.me/${wa}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ""}${u.id ? `<a class="btn btn-primary btn-sm" href="#/chat/${esc(u.id)}"><i class="fa-regular fa-comments"></i> Chat</a>` : ""}<button class="btn btn-ghost btn-sm" type="button" data-new-invoice><i class="fa-solid fa-file-invoice-dollar"></i> New invoice</button></div>
     </div></div>
     <div class="grid-2" style="margin-top:18px">
       <div class="card"><div class="card-head"><h3>Bookings (${u.b.length})</h3></div><div class="list">${u.b.map(r => row(r, "bookings")).join("") || '<p class="muted small">None</p>'}</div></div>

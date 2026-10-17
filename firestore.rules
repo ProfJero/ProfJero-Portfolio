@@ -12,41 +12,59 @@ service cloud.firestore {
     function verifiedEmail() {
       return signedIn() && authEmail() != '' && request.auth.token.get('email_verified', false) == true;
     }
+    // The super admin (owner) can do everything, including managing other admins.
     function isOwner() { return verifiedEmail() && authEmail() == 'profjero947@gmail.com'; }
-    function isAdmin() {
-      return isOwner() || (verifiedEmail() && exists(/databases/$(database)/documents/admins/$(authEmail())));
+    function adminPath() { return /databases/$(database)/documents/admins/$(authEmail()); }
+    function adminRec() { return get(adminPath()).data; }
+    // Any active admin (whatever their permissions).
+    function isStaff() {
+      return isOwner() || (verifiedEmail() && exists(adminPath()) && adminRec().get('disabled', false) != true);
     }
+    // Permission areas: blog, portfolio, hub, requests, clients, invoices, chat, messages, media, settings.
+    // Role "full" (or the older "admin") has every area; other roles list their areas in `perms`.
+    function can(area) {
+      return isOwner() || (isStaff() && (adminRec().get('role', 'full') in ['full', 'admin'] || adminRec().get('perms', {}).get(area, false) == true));
+    }
+    function isAdmin() { return isStaff(); }
     function data() { return request.resource.data; }
     function changed() { return request.resource.data.diff(resource.data).affectedKeys(); }
     function onlyChanged(keys) { return changed().hasOnly(keys); }
     function bumped(field, n) { return data()[field] == resource.data.get(field, 0) + n; }
     function str(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
     function optStr(m, k, max) { return !(k in m) || (m[k] is string && m[k].size() <= max); }
+    // Small profile photos are stored inline as compressed data URLs (≤ ~150 KB) or as a URL.
+    function photoOk(m, k) { return !(k in m) || (m[k] is string && m[k].size() <= 200000); }
 
-    // ---------- admins ----------
+    // ---------- admins (managed by the super admin only) ----------
     match /admins/{adminEmail} {
-      allow read: if isAdmin() || (verifiedEmail() && authEmail() == adminEmail);
-      allow write: if isOwner();
+      allow read: if isStaff() || (verifiedEmail() && authEmail() == adminEmail);
+      allow create, delete: if isOwner();
+      // The super admin manages roles; an admin may only update their own display name.
+      allow update: if isOwner() || (verifiedEmail() && authEmail() == adminEmail && onlyChanged(['name', 'updatedAt']) && str(data().name, 1, 80));
     }
 
     // ---------- public content managed by admins ----------
-    match /settings/{id}     { allow read: if true; allow write: if isAdmin(); }
-    match /skills/{id}       { allow read: if true; allow write: if isAdmin(); }
-    match /studios/{id}      { allow read: if true; allow write: if isAdmin(); }
-    match /projects/{id}     { allow read: if true; allow write: if isAdmin(); }
-    match /testimonials/{id} { allow read: if true; allow write: if isAdmin(); }
-    match /experience/{id}   { allow read: if true; allow write: if isAdmin(); }
-    match /team/{id}         { allow read: if true; allow write: if isAdmin(); }
-    match /content/{id}      { allow read: if true; allow write: if isAdmin(); }   // free-form blocks (e.g. for ProfJero Hub)
+    match /settings/{id} {
+      allow read: if true;
+      allow write: if (id == 'hub' && can('hub')) || (id == 'invoice' && can('invoices')) || (id != 'hub' && id != 'invoice' && can('portfolio'));
+    }
+    match /skills/{id}       { allow read: if true; allow write: if can('portfolio'); }
+    match /projects/{id}     { allow read: if true; allow write: if can('portfolio'); }
+    match /testimonials/{id} { allow read: if true; allow write: if can('portfolio') || can('clients'); }
+    match /experience/{id}   { allow read: if true; allow write: if can('portfolio'); }
+    match /team/{id}         { allow read: if true; allow write: if can('portfolio'); }
+    match /content/{id}      { allow read: if true; allow write: if can('portfolio'); }   // free-form blocks
+    match /studios/{id}      { allow read: if true; allow write: if can('hub'); }
+    match /products/{id}     { allow read: if true; allow write: if can('hub'); }
 
     // ---------- blog ----------
     match /posts/{slug} {
       function likePath() { return /databases/$(database)/documents/posts/$(slug)/likes/$(request.auth.uid); }
       function commentPath() { return /databases/$(database)/documents/posts/$(slug)/comments/$(data().lastCommentId); }
 
-      allow get, list: if resource.data.status == 'published' || isAdmin();
-      allow create, delete: if isAdmin();
-      allow update: if isAdmin() || (resource.data.status == 'published' && (
+      allow get, list: if resource.data.status == 'published' || can('blog');
+      allow create, delete: if can('blog');
+      allow update: if can('blog') || (resource.data.status == 'published' && (
            (onlyChanged(['views'])  && bumped('views', 1))
         || (onlyChanged(['shares']) && bumped('shares', 1))
         || (signedIn() && onlyChanged(['likes']) && bumped('likes', 1)  && !exists(likePath()) &&  existsAfter(likePath()))
@@ -74,13 +92,13 @@ service cloud.firestore {
           && data().photo is string && data().photo.size() <= 500
           && (data().parentId == null || data().parentId is string)
           && data().likes == 0 && data().pinned == false && data().deleted == false
-          && (data().isAuthor == false || isAdmin())
+          && (data().isAuthor == false || can('blog'))
           && data().createdAt == request.time;
-        allow update: if isAdmin()
+        allow update: if can('blog')
           || (signedIn() && resource.data.uid == request.auth.uid && onlyChanged(['deleted', 'text']) && data().deleted == true && data().text == '')
           || (signedIn() && onlyChanged(['likes']) && bumped('likes', 1)  && !exists(cLikePath()) &&  existsAfter(cLikePath()))
           || (signedIn() && onlyChanged(['likes']) && bumped('likes', -1) &&  exists(cLikePath()) && !existsAfter(cLikePath()));
-        allow delete: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+        allow delete: if can('blog') || (signedIn() && resource.data.uid == request.auth.uid);
 
         match /likes/{uid} {
           allow read: if true;
@@ -102,28 +120,28 @@ service cloud.firestore {
         && optStr(data(), 'subject', 150) && optStr(data(), 'source', 40) && optStr(data(), 'page', 300) && optStr(data(), 'studio', 80)
         && (!('extra' in data()) || (data().extra is map && data().extra.size() <= 20))
         && data().status == 'new' && data().createdAt == request.time;
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if can('messages');
     }
 
     match /subscribers/{email} {
       allow create: if email == data().email && str(email, 5, 150) && email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
         && data().keys().hasOnly(['email', 'source', 'page', 'createdAt']) && data().createdAt == request.time;
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if can('messages');
     }
 
     // ---------- analytics counters ----------
     match /stats/{id} {
-      allow read: if isAdmin();
+      allow read: if isStaff();
       allow create: if data().keys().hasOnly(['visits']) && data().visits == 1;
-      allow update: if onlyChanged(['visits']) && bumped('visits', 1) || isAdmin();
+      allow update: if onlyChanged(['visits']) && bumped('visits', 1) || can('settings');
     }
     match /stats_daily/{day} {
-      allow read: if isAdmin();
+      allow read: if isStaff();
       allow create: if data().keys().hasOnly(['visits', 'date']) && data().visits == 1 && data().date == day;
-      allow update: if onlyChanged(['visits']) && bumped('visits', 1) || isAdmin();
+      allow update: if onlyChanged(['visits']) && bumped('visits', 1) || can('settings');
     }
 
-    // ---------- ProfJero Hub: products, bookings, quotes/orders, client portal ----------
+    // ---------- ProfJero Hub: bookings, quotes/orders, client portal ----------
     function isOwnerOf(res) {
       return signedIn() && (res.data.get('uid', null) == request.auth.uid
         || (verifiedEmail() && res.data.get('email', '') == authEmail()));
@@ -134,54 +152,52 @@ service cloud.firestore {
         && (d.get('uid', null) == null || (signedIn() && d.get('uid', null) == request.auth.uid));
     }
 
-    match /products/{id} { allow read: if true; allow write: if isAdmin(); }
-
     // Booking id = its reference code (random, unguessable) so guests can track with it.
     match /bookings/{ref} {
       allow get: if true;
-      allow list: if isAdmin() || isOwnerOf(resource);
+      allow list: if can('requests') || isOwnerOf(resource);
       allow create: if data().keys().hasOnly(['ref', 'studio', 'studioName', 'service', 'mode', 'date', 'time', 'name', 'email', 'phone', 'company', 'notes', 'uid', 'status', 'source', 'createdAt'])
         && data().ref == ref && ref.size() >= 8 && ref.size() <= 20
         && str(data().studio, 2, 40) && str(data()['service'], 2, 120) && optStr(data(), 'studioName', 60)
         && str(data().mode, 2, 20) && str(data().date, 10, 10) && str(data().time, 3, 20)
         && optStr(data(), 'source', 20)
         && contactOk(data()) && data().status == 'pending' && data().createdAt == request.time;
-      allow update: if isAdmin()
+      allow update: if can('requests')
         || (isOwnerOf(resource) && onlyChanged(['status', 'clientNote', 'updatedAt']) && data().status == 'cancelled'
             && resource.data.status in ['pending', 'confirmed'] && optStr(data(), 'clientNote', 500))
         || (isOwnerOf(resource) && onlyChanged(['rescheduleRequest', 'updatedAt']) && data().rescheduleRequest is map
             && data().rescheduleRequest.size() <= 4 && resource.data.status in ['pending', 'confirmed']);
-      allow delete: if isAdmin();
+      allow delete: if can('requests');
     }
 
     // Product-branding quote requests and orders.
     match /orders/{ref} {
       allow get: if true;
-      allow list: if isAdmin() || isOwnerOf(resource);
+      allow list: if can('requests') || isOwnerOf(resource);
       allow create: if data().keys().hasOnly(['ref', 'productId', 'product', 'category', 'quantity', 'method', 'colors', 'artworkUrl', 'deadline', 'budget', 'name', 'email', 'phone', 'company', 'notes', 'uid', 'status', 'source', 'createdAt'])
         && data().ref == ref && ref.size() >= 8 && ref.size() <= 20
         && str(data().product, 2, 120) && data().quantity is int && data().quantity >= 1 && data().quantity <= 100000
         && optStr(data(), 'productId', 80) && optStr(data(), 'category', 60) && optStr(data(), 'method', 80) && optStr(data(), 'colors', 120)
         && optStr(data(), 'artworkUrl', 500) && optStr(data(), 'deadline', 20) && optStr(data(), 'budget', 60) && optStr(data(), 'source', 20)
         && contactOk(data()) && data().status == 'requested' && data().createdAt == request.time;
-      allow update: if isAdmin()
+      allow update: if can('requests')
         || (isOwnerOf(resource) && onlyChanged(['status', 'clientNote', 'updatedAt']) && optStr(data(), 'clientNote', 500) && (
              (resource.data.status == 'quoted' && data().status in ['approved', 'declined'])
           || (resource.data.status in ['requested', 'quoted'] && data().status == 'cancelled')));
-      allow delete: if isAdmin();
+      allow delete: if can('requests');
     }
 
     // Client accounts (portal). Admin rights never come from here (see /admins).
+    // Any admin may read them (to pick a client for a project or invoice).
     match /users/{uid} {
-      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow read: if isStaff() || (signedIn() && request.auth.uid == uid);
       allow create, update: if signedIn() && request.auth.uid == uid
-        && data().keys().hasOnly(['name', 'email', 'phone', 'company', 'photo', 'notify', 'createdAt', 'updatedAt'])
-        && str(data().name, 1, 100) && optStr(data(), 'phone', 30) && optStr(data(), 'company', 120) && optStr(data(), 'photo', 500)
-        || isAdmin();
-      allow delete: if isAdmin();
+        && data().keys().hasOnly(['name', 'email', 'phone', 'company', 'photo', 'notify', 'online', 'lastSeen', 'createdAt', 'updatedAt'])
+        && str(data().name, 1, 100) && optStr(data(), 'phone', 30) && optStr(data(), 'company', 120) && photoOk(data(), 'photo')
+        || can('clients');
+      allow delete: if can('clients');
     }
 
-    // Projects the admin tracks for a client (progress, milestones, files, invoices).
     // Client testimonials submitted from the Hub client portal. One per client (id = uid).
     // Clients with a verified email write their own (always back to "pending");
     // the admin approves, which publishes a copy into /testimonials.
@@ -191,42 +207,108 @@ service cloud.firestore {
           && data().uid == uid && data().email == authEmail() && data().status == 'pending'
           && str(data().name, 2, 80) && optStr(data(), 'role', 100) && str(data().text, 20, 700)
           && data().rating is int && data().rating >= 1 && data().rating <= 5
-          && optStr(data(), 'studio', 40) && optStr(data(), 'photo', 500)
+          && optStr(data(), 'studio', 40) && photoOk(data(), 'photo')
           && data().updatedAt == request.time;
       }
-      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow read: if can('clients') || (signedIn() && request.auth.uid == uid);
       allow create: if verifiedEmail() && request.auth.uid == uid && reviewOk() && data().createdAt == request.time;
-      allow update: if (verifiedEmail() && request.auth.uid == uid && reviewOk() && data().createdAt == resource.data.createdAt) || isAdmin();
-      allow delete: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow update: if (verifiedEmail() && request.auth.uid == uid && reviewOk() && data().createdAt == resource.data.createdAt) || can('clients');
+      allow delete: if can('clients') || (signedIn() && request.auth.uid == uid);
     }
 
+    // Projects the admin tracks for a client, registered or not. Matched to the
+    // client's account by uid or by their verified email.
     match /clientProjects/{id} {
-      allow read: if isAdmin() || isOwnerOf(resource);
-      allow write: if isAdmin();
+      allow read: if isStaff() || isOwnerOf(resource);
+      allow write: if can('clients');
     }
 
-    // One support thread per client; messages between client and admin.
+    // ---------- invoices ----------
+    // The document id is long and random, so the "view invoice" link can be shared
+    // like a hosted invoice page. Drafts stay private to admins.
+    match /invoices/{id} {
+      allow get: if can('invoices') || isStaff() || (resource.data.status != 'draft' && id.size() >= 20);
+      allow list: if can('invoices') || isStaff() || (isOwnerOf(resource) && resource.data.status != 'draft');
+      allow create, delete: if can('invoices');
+      allow update: if can('invoices')
+        // The client (or anyone holding the link) may only record that it was viewed.
+        || (resource.data.status != 'draft' && onlyChanged(['viewedAt', 'viewCount'])
+            && data().viewedAt == request.time && data().viewCount == resource.data.get('viewCount', 0) + 1);
+    }
+    // Sequential numbers (INV-2026-0001) handed out in a transaction.
+    match /counters/{id} { allow read, write: if can('invoices') || can('requests'); }
+
+    // ---------- chat: one thread per client ----------
+    function chatAdmin() { return can('chat'); }
     match /threads/{uid} {
-      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
-      allow create: if signedIn() && request.auth.uid == uid
-        && data().keys().hasOnly(['uid', 'name', 'email', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient'])
-        && data().uid == uid || isAdmin();
-      allow update: if isAdmin() || (signedIn() && request.auth.uid == uid
-        && onlyChanged(['name', 'email', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient'])
-        && data().get('unreadClient', 0) <= resource.data.get('unreadClient', 0));
-      allow delete: if isAdmin();
+      allow read: if chatAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create: if (signedIn() && request.auth.uid == uid
+        && data().keys().hasOnly(['uid', 'name', 'email', 'photo', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient', 'clientReadAt', 'clientSeenAt', 'clientTyping', 'clientOnline'])
+        && data().uid == uid && photoOk(data(), 'photo')) || chatAdmin();
+      // The client can update their own presence, typing and read markers, and bump
+      // the admin's unread count — never reset it or touch admin-side fields.
+      allow update: if chatAdmin() || (signedIn() && request.auth.uid == uid
+        && onlyChanged(['name', 'email', 'photo', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient', 'clientReadAt', 'clientSeenAt', 'clientTyping', 'clientOnline'])
+        && data().get('unreadClient', 0) <= resource.data.get('unreadClient', 0)
+        && data().get('unreadAdmin', 0) >= resource.data.get('unreadAdmin', 0)
+        && photoOk(data(), 'photo'));
+      allow delete: if chatAdmin();
+
       match /messages/{mid} {
-        allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
-        allow create: if data().keys().hasOnly(['from', 'text', 'name', 'createdAt', 'attachment'])
-          && str(data().text, 1, 4000) && data().createdAt == request.time && optStr(data(), 'attachment', 500)
-          && ((signedIn() && request.auth.uid == uid && data().from == 'client') || (isAdmin() && data().from == 'admin'));
-        allow update, delete: if isAdmin();
+        function mine() {
+          return (signedIn() && request.auth.uid == uid && resource.data.from == 'client') || (chatAdmin() && resource.data.from == 'admin');
+        }
+        allow read: if chatAdmin() || (signedIn() && request.auth.uid == uid);
+        allow create: if data().keys().hasOnly(['from', 'text', 'name', 'createdAt', 'attachment', 'replyTo', 'reactions', 'clientId'])
+          && data().text is string && data().text.size() <= 4000
+          && (data().text.size() > 0 || data().get('attachment', null) != null)
+          && data().createdAt == request.time
+          && (!('attachment' in data()) || data().attachment == null || (data().attachment is map && data().attachment.size() <= 10
+               && ((data().attachment.get('url', null) is string && data().attachment.url.size() <= 1000) || (data().attachment.get('fileId', null) is string && data().attachment.fileId.size() <= 64))
+               && data().attachment.get('thumb', '').size() <= 4000))
+          && (!('replyTo' in data()) || data().replyTo == null || (data().replyTo is map && data().replyTo.size() <= 4))
+          && (!('reactions' in data()) || data().reactions == {})
+          && ((signedIn() && request.auth.uid == uid && data().from == 'client') || (chatAdmin() && data().from == 'admin'));
+        allow update: if
+          // Edit your own message within 15 minutes (like WhatsApp).
+          (mine() && onlyChanged(['text', 'editedAt']) && str(data().text, 1, 4000) && data().editedAt == request.time
+            && resource.data.get('deleted', false) != true && request.time < resource.data.createdAt + duration.value(15, 'm'))
+          // Delete your own message for everyone within 48 hours.
+          || (mine() && onlyChanged(['text', 'attachment', 'replyTo', 'deleted', 'deletedAt']) && data().deleted == true
+            && data().text == '' && data().attachment == null && data().deletedAt == request.time
+            && request.time < resource.data.createdAt + duration.value(48, 'h'))
+          // React with one emoji: each side only changes its own key.
+          || (signedIn() && request.auth.uid == uid && onlyChanged(['reactions'])
+            && data().reactions.diff(resource.data.get('reactions', {})).affectedKeys().hasOnly(['client'])
+            && (!('client' in data().reactions) || str(data().reactions.client, 1, 16)))
+          || (chatAdmin() && onlyChanged(['reactions'])
+            && data().reactions.diff(resource.data.get('reactions', {})).affectedKeys().hasOnly(['admin'])
+            && (!('admin' in data().reactions) || str(data().reactions.admin, 1, 16)));
+        allow delete: if chatAdmin();
+      }
+      // Chat attachments (photos, documents, voice notes) stored inline, compressed, ≤ ~700 KB each.
+      match /files/{fid} {
+        allow read: if chatAdmin() || (signedIn() && request.auth.uid == uid);
+        allow create: if data().keys().hasOnly(['data', 'mime', 'name', 'size', 'by', 'createdAt'])
+          && data().data is string && data().data.size() <= 960000 && str(data().mime, 3, 100) && optStr(data(), 'name', 200)
+          && data().createdAt == request.time
+          && ((signedIn() && request.auth.uid == uid && data().by == 'client') || (chatAdmin() && data().by == 'admin'));
+        allow delete: if chatAdmin();
       }
     }
 
-    // ---------- media library & private admin config (Cloudinary) ----------
-    match /media/{id}   { allow read, write: if isAdmin(); }
-    match /private/{id} { allow read, write: if isAdmin(); }
+    // ---------- media library & private admin config ----------
+    match /media/{id} {
+      allow read, create: if isStaff();
+      allow update, delete: if can('media');
+    }
+    // Integrations (Cloudinary, stored encrypted) and alert thresholds: any admin may read
+    // (uploads need them); only admins with the Settings permission may change them.
+    match /private/{id} {
+      allow read: if isStaff();
+      // Chat quick replies can be edited by anyone who answers chats.
+      allow write: if can('settings') || (id == 'chat' && can('chat'));
+    }
 
     // Everything else is closed by default.
   }

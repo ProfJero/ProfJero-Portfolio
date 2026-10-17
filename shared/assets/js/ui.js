@@ -31,14 +31,19 @@ export function initNav() {
     toggle?.setAttribute("aria-expanded", "false");
     if (toggle) toggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
   }));
-  let ticking = false;
+  let ticking = false, lastY = scrollY;
   const onScroll = () => {
     const y = scrollY;
     header?.classList.toggle("scrolled", y > 8);
+    // Phones: tuck the floating buttons away while reading down, bring them back on scroll up or at the end.
+    const atEnd = y + innerHeight >= document.documentElement.scrollHeight - 4;
+    if (y - lastY > 8 && y > 240 && !atEnd) document.body.classList.add("floats-away");
+    else if (lastY - y > 8 || y < 240) document.body.classList.remove("floats-away");
+    if (Math.abs(y - lastY) > 8) lastY = y;
     toTop?.classList.toggle("show", y > 700);
     if (bar) {
       const h = document.documentElement.scrollHeight - innerHeight;
-      bar.style.width = (h > 0 ? (y / h) * 100 : 0) + "%";
+      bar.style.setProperty("--p", h > 0 ? Math.min(1, y / h).toFixed(4) : 0);
     }
     ticking = false;
   };
@@ -157,6 +162,26 @@ export function initCopyButtons(root = document) {
     const code = btn.closest(".code-block")?.querySelector("code")?.innerText || "";
     try { await navigator.clipboard.writeText(code); btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied'; setTimeout(() => btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy', 1800); } catch { }
   });
+}
+
+/**
+ * Pop-ups close only with their close button: clicking the empty space around them
+ * never closes them (entries can't be lost by accident), and Esc asks first when
+ * something has been typed. A gentle shake shows the click was noticed.
+ */
+export function guardModal(dialog, { onClose } = {}) {
+  if (!dialog || dialog.dataset.guarded) return;
+  dialog.dataset.guarded = "1";
+  const dirty = () => dialog.dataset.dirty === "1";
+  const close = () => { if (!dirty() || confirm("Discard what you've entered?")) { dialog.dataset.dirty = ""; onClose ? onClose() : dialog.close(); } };
+  dialog.addEventListener("input", () => { dialog.dataset.dirty = "1"; });
+  dialog.addEventListener("submit", () => { dialog.dataset.dirty = ""; });
+  dialog.addEventListener("close", () => { dialog.dataset.dirty = ""; });
+  dialog.addEventListener("click", e => {
+    if (e.target.closest("[data-close]")) { close(); return; }
+    if (e.target === dialog) { dialog.classList.remove("nudge"); void dialog.offsetWidth; dialog.classList.add("nudge"); }
+  });
+  dialog.addEventListener("cancel", e => { e.preventDefault(); close(); });
 }
 
 // Auto-sliding carousel for any [data-carousel] track (testimonials on both sites).

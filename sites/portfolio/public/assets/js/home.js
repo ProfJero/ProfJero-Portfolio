@@ -1,4 +1,4 @@
-import { $, $$, initCommon, applySettings, reveal, toast } from "./ui.js";
+import { $, $$, initCommon, applySettings, reveal, toast, guardModal } from "./ui.js";
 import { look } from "./appearance.js";
 import { loadSettings, loadCollection, loadPosts, firebase, mergeSettings, DEFAULTS, seedPosts } from "./store.js";
 import { homeSections, faqSchema, projectCover } from "./render.js";
@@ -169,7 +169,7 @@ function openModal(title, body, { tools = "", wide = true, pad = false } = {}) {
 }
 function closeModal() { modal.close(); }
 modal.addEventListener("close", () => { $(".modal-body", modal).innerHTML = ""; });
-modal.addEventListener("click", e => { if (e.target === modal || e.target.closest("[data-close]")) closeModal(); });
+guardModal(modal, { onClose: closeModal });
 
 function videoHtml(v) {
   if (!v.embed) return `<div class="modal-body pad" style="text-align:center;padding:40px"><p>This video opens on ${esc(v.provider)}.</p><a class="btn btn-primary" href="${esc(v.url)}" target="_blank" rel="noopener">Watch on ${v.provider === "tiktok" ? "TikTok" : "the platform"}</a></div>`;

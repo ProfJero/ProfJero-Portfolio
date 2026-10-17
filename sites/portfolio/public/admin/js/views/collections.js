@@ -100,45 +100,53 @@ const CONFIG = {
   },
   clientProjects: {
     singular: "client project", idFrom: "title", noDefaults: true,
-    intro: "Projects you're delivering for clients. The client sees progress, milestones, files and invoice balance in their <b>Client portal</b> on ProfJero Hub. Use the client's account email so it appears for them.",
-    toForm: p => ({ ...p, invoiceTotal: p.invoice?.total ?? "", invoicePaid: p.invoice?.paid ?? "" }),
+    intro: "Projects you're delivering for clients. Pick a client from ProfJero Hub, or type the details of someone who hasn't signed up yet. When they create a client-portal account with that email, they'll see the project's progress, milestones, files and updates. Bill them from <a href=\"#/invoices\">Invoices</a>.",
+    toForm: p => ({ ...p, client: { uid: p.uid || "", name: p.clientName || "", email: p.email || "", phone: p.clientPhone || "", company: p.clientCompany || "" } }),
     beforeSave: async v => {
-      v.email = String(v.email || "").trim().toLowerCase();
-      try {
-        const snap = await fb.getDocs(fb.query(fb.collection(fb.db, "users"), fb.where("email", "==", v.email)));
-        v.uid = snap.docs[0]?.id || v.uid || null;
-      } catch { }
-      v.invoice = { total: Number(v.invoiceTotal) || 0, paid: Number(v.invoicePaid) || 0 };
-      delete v.invoiceTotal; delete v.invoicePaid;
+      const c = v.client || {};
+      Object.assign(v, { email: c.email, clientName: c.name, clientPhone: c.phone || "", clientCompany: c.company || "", uid: c.uid || null });
+      delete v.client;
+      if (!v.uid) {
+        try { const snap = await fb.getDocs(fb.query(fb.collection(fb.db, "users"), fb.where("email", "==", v.email))); v.uid = snap.docs[0]?.id || null; } catch { }
+      }
       return v;
     },
     fields: [
-      { key: "title", label: "Project title", type: "text", required: true },
-      { key: "email", label: "Client email (their portal account)", type: "email", required: true },
-      { key: "clientName", label: "Client name", type: "text" },
+      { key: "title", label: "Project title", type: "text", required: true, full: true },
+      { key: "client", label: "Client", type: "client" },
       { key: "studio", label: "Studio", type: "select", options: [["digital-studio", "Digital Studio"], ["creative-studio", "Creative Studio"], ["agro-studio", "Agro Studio"], ["nourish-studio", "Nourish Studio"]] },
-      { key: "status", label: "Status", type: "select", options: [["active", "Active"], ["on-hold", "On hold"], ["completed", "Completed"]] },
+      { key: "status", label: "Status", type: "select", options: [["active", "Active"], ["on-hold", "On hold"], ["completed", "Completed"], ["cancelled", "Cancelled"]] },
+      { key: "startDate", label: "Start date", type: "date", quick: [["Today", 0]] },
+      { key: "dueDate", label: "Deadline", type: "date", quick: [["+1 week", 7], ["+2 weeks", 14], ["+1 month", 30]], help: "You'll get an alert before this date (set how early in Alerts)." },
       { key: "progress", label: "Progress", type: "range", full: true },
       { key: "summary", label: "Summary", type: "textarea", full: true, rows: 2 },
       { key: "nextStep", label: "Next step", type: "text", full: true },
-      { key: "startDate", label: "Start date", type: "text", placeholder: "2026-10-20" },
-      { key: "dueDate", label: "Due date", type: "text", placeholder: "2026-11-30" },
       { key: "demoUrl", label: "Preview / demo link", type: "url", full: true },
-      { key: "invoiceTotal", label: "Invoice total (GH₵)", type: "number", min: 0 },
-      { key: "invoicePaid", label: "Amount paid (GH₵)", type: "number", min: 0 },
-      { key: "stages", label: "Milestones", type: "list", full: true, itemLabel: "Milestone", fields: [{ key: "name", label: "Milestone", type: "text" }, { key: "done", label: "Done", type: "toggle" }] },
+      { key: "stages", label: "Milestones", type: "list", full: true, itemLabel: "Milestone", fields: [{ key: "name", label: "Milestone", type: "text" }, { key: "due", label: "Due", type: "date" }, { key: "done", label: "Done", type: "toggle" }] },
       { key: "files", label: "Files & deliverables", type: "list", full: true, itemLabel: "File", fields: [{ key: "name", label: "Name", type: "text" }, { key: "url", label: "File", type: "file" }] },
-      { key: "updates", label: "Progress updates (newest last)", type: "list", full: true, itemLabel: "Update", fields: [{ key: "date", label: "Date", type: "text", placeholder: "2026-10-20" }, { key: "text", label: "Update", type: "textarea", full: true, rows: 2 }] }
+      { key: "updates", label: "Progress updates (newest last)", type: "list", full: true, itemLabel: "Update", fields: [{ key: "date", label: "Date", type: "date" }, { key: "text", label: "Update", type: "textarea", full: true, rows: 2 }] }
     ],
-    card: p => `<div class="grow"><div class="title">${esc(p.title)} <span class="status ${esc(p.status)}">${esc(p.status || "active")}</span></div><div class="sub">${esc(p.clientName || p.email || "")} · ${Number(p.progress) || 0}% · ${esc(p.nextStep || "")}</div></div>
-      <div style="width:140px" class="bar in-view"><span style="--w:${Number(p.progress) || 0}%"></span></div>`
+    card: p => {
+      const due = p.dueDate ? new Date(`${String(p.dueDate).slice(0, 10)}T23:59`) : null, late = due && due < new Date() && !["completed", "cancelled"].includes(p.status);
+      return `<div class="grow"><div class="title">${esc(p.title)} <span class="status ${esc(p.status)}">${esc(p.status || "active")}</span>${late ? ' <span class="status cancelled">overdue</span>' : ""}</div><div class="sub">${esc(p.clientName || p.email || "")}${p.uid ? ' <i class="fa-solid fa-circle-check" style="color:var(--green)" title="Has a portal account"></i>' : ' <i class="fa-solid fa-user-clock" style="color:#b07a00" title="Not registered yet"></i>'} · ${Number(p.progress) || 0}%${due ? ` · due ${due.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}` : ""}${p.nextStep ? ` · ${esc(p.nextStep)}` : ""}</div></div>
+      <div style="width:140px" class="bar in-view"><span style="--w:${Number(p.progress) || 0}%"></span></div>`;
+    }
   },
   skills: {
     singular: "skill", idFrom: "name",
-    intro: "Skills are grouped into cards on the website. Use the groups <b>Frontend</b>, <b>Backend</b>, <b>Databases & Cloud</b> and <b>Tools & Design</b> (or create your own).",
+    intro: "Skills are grouped into cards on the website. Choose an existing group from the list so spellings stay identical, or type a new group name.",
+    // Offer the groups already in use so "Frontend" and "Front-end" never become two cards.
+    fieldsFor: items => CONFIG.skills.fields.map(f => f.key !== "group" ? f : { ...f, options: [...new Set([...items.map(i => String(i.group || "").trim()), ...DEFAULTS.skills.map(i => i.group)].filter(Boolean))].sort() }),
+    beforeSave: async v => {
+      // Snap near-duplicates ("frontend ", "FrontEnd") onto the existing spelling.
+      const norm = x => String(x || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const known = (await fb.getDocs(fb.collection(fb.db, "skills"))).docs.map(d => d.data().group).filter(Boolean);
+      v.group = known.find(g => norm(g) === norm(v.group)) || String(v.group || "").trim();
+      return v;
+    },
     fields: [
       { key: "name", label: "Skill", type: "text", required: true },
-      { key: "group", label: "Group", type: "text", placeholder: "Frontend, Backend, Databases & Cloud, Tools & Design" },
+      { key: "group", label: "Group", type: "combo", placeholder: "Pick a group or type a new one", help: "Click the box to see existing groups." },
       { key: "level", label: "Level", type: "range", full: true }
     ],
     card: s => `<div class="grow"><div class="title">${esc(s.name)}</div><div class="sub">${esc(s.group || "")}</div></div>
@@ -179,19 +187,23 @@ const CONFIG = {
   experience: {
     singular: "entry", idFrom: "title",
     intro: "Your work experience and education timeline.",
+    toForm: e => ({ ...e, start: monthValue(e.start), end: monthValue(e.end) }),
     fields: [
       { key: "type", label: "Type", type: "select", options: [["work", "Work experience"], ["education", "Education / training"]] },
       { key: "title", label: "Title / role", type: "text", required: true },
       { key: "org", label: "Organisation / school", type: "text" },
-      { key: "start", label: "Start (e.g. 2023)", type: "text" },
-      { key: "end", label: "End (e.g. Present)", type: "text" },
+      { key: "start", label: "Started", type: "month" },
+      { key: "end", label: "Ended", type: "month", help: "Leave empty if you're still there (shows “Present”)." },
       { key: "text", label: "Description", type: "textarea", full: true, rows: 3 }
     ],
     card: e => `<div class="grow"><div class="title">${esc(e.title)} <span class="muted">· ${esc(e.org || "")}</span></div><div class="sub"><span class="status">${esc(e.type)}</span> ${esc([e.start, e.end].filter(Boolean).join(" — "))}</div></div>`
   }
 };
 
-export async function render(view, { name }) {
+// "2023" → "2023-01", "Present"/"" → "" (for <input type=month>); "2023-05" stays.
+const monthValue = v => /^\d{4}-\d{2}/.test(String(v || "")) ? String(v).slice(0, 7) : /^\d{4}$/.test(String(v || "")) ? `${v}-01` : "";
+
+export async function render(view, { name, params = [] }) {
   const cfg = CONFIG[name];
   const col = fb.collection(fb.db, name);
   let items = (await fb.getDocs(col)).docs.map(d => ({ id: d.id, ...d.data() })).sort(byOrder);
@@ -219,9 +231,10 @@ export async function render(view, { name }) {
   async function edit(item) {
     const isNew = !item;
     const data = item || { order: items.length + 1 };
+    const fields = cfg.fieldsFor ? cfg.fieldsFor(items) : cfg.fields;
     await openDialog({
       title: isNew ? `Add ${cfg.singular}` : `Edit ${cfg.singular}`, size: "wide",
-      body: `<form data-scope id="c-form" novalidate>${renderFields(cfg.fields, cfg.toForm ? cfg.toForm(data) : data)}</form>`,
+      body: `<form data-scope id="c-form" novalidate>${renderFields(fields, cfg.toForm ? cfg.toForm(data) : data)}</form>`,
       onOpen: body => { bindFields($("#c-form", body)); $("input, textarea", body)?.focus(); },
       actions: [
         { label: "Cancel", value: null, cls: "btn-ghost" },
@@ -229,8 +242,8 @@ export async function render(view, { name }) {
           label: isNew ? `Add ${cfg.singular}` : "Save changes", value: "saved", cls: "btn-primary",
           handler: async body => {
             const form = $("#c-form", body);
-            if (!validate(cfg.fields, form)) return false;
-            const values = readFields(cfg.fields, form);
+            if (!validate(fields, form)) return false;
+            const values = readFields(fields, form);
             let id = item?.id;
             if (!id) {
               const base = slugify(values[cfg.idFrom]) || `${cfg.singular}-${Date.now()}`;
@@ -258,6 +271,9 @@ export async function render(view, { name }) {
     items.forEach((it, i) => { it.order = i + 1; b.update(fb.doc(fb.db, name, it.id), { order: i + 1 }); });
     try { await b.commit(); } catch (e) { toast(e.message, "error"); }
   }
+
+  // Deep link (e.g. from an alert): #/clientProjects/<id> opens that item.
+  if (params[0]) { const hit = items.find(x => x.id === decodeURIComponent(params[0])); if (hit) setTimeout(() => edit(hit), 0); }
 
   view.addEventListener("click", async e => {
     if (e.target.closest("#c-add")) return edit(null);

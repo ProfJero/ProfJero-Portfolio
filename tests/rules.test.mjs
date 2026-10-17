@@ -179,5 +179,70 @@ await t("client edit goes back to pending", () => assertSucceeds(updateDoc(doc(k
 await t("client cannot publish testimonial directly", () => assertFails(setDoc(doc(kofi, "testimonials/review-kofi"), { name: "Kofi", text: "x", visible: true })));
 await t("admin publishes testimonial", () => assertSucceeds(setDoc(doc(owner, "testimonials/review-kofi"), { name: "Kofi", text: "x", visible: true })));
 
+console.log("Roles & permissions");
+await t("owner adds a blog-only admin", () => assertSucceeds(setDoc(doc(owner, "admins/writer@gmail.com"), { role: "custom", perms: { blog: true, media: true }, name: "Writer" })));
+const writer = env.authenticatedContext("wr", { email: "writer@gmail.com", email_verified: true }).firestore();
+await t("blog admin creates a post", () => assertSucceeds(setDoc(doc(writer, "posts/new-post"), { title: "New", status: "draft" })));
+await t("blog admin cannot edit pricing/settings", () => assertFails(setDoc(doc(writer, "settings/site"), { name: "x" }, { merge: true })));
+await t("blog admin cannot read contact messages", () => assertFails(getDoc(doc(writer, "messages/m1"))));
+await t("blog admin cannot confirm bookings", () => assertFails(updateDoc(doc(writer, "bookings/PJB7K2M9QX"), { status: "confirmed" })));
+await t("blog admin cannot create invoices", () => assertFails(setDoc(doc(writer, "invoices/abcdefghijklmnopqrstu"), { status: "draft" })));
+await t("blog admin can read client list (for pickers)", () => assertSucceeds(getDoc(doc(writer, "users/alice"))));
+await t("admin may rename self", () => assertSucceeds(updateDoc(doc(writer, "admins/writer@gmail.com"), { name: "Ama Writer" })));
+await t("admin cannot grant self permissions", () => assertFails(updateDoc(doc(writer, "admins/writer@gmail.com"), { perms: { blog: true, settings: true } })));
+await t("disabled admin loses access", async () => {
+  await setDoc(doc(owner, "admins/writer@gmail.com"), { disabled: true }, { merge: true });
+  await assertFails(setDoc(doc(writer, "posts/another"), { title: "x", status: "draft" }));
+  await setDoc(doc(owner, "admins/writer@gmail.com"), { disabled: false }, { merge: true });
+});
+await t("legacy 'admin' role keeps full access", () => assertSucceeds(setDoc(doc(editor, "settings/hub"), { heroTitle: "x" }, { merge: true })));
+
+console.log("Invoices");
+const INV = "inv_k3J9xQ2mZr8LpT5wYb7N";
+const invoice = (extra = {}) => ({ number: "INV-2026-0001", status: "sent", uid: "alice", email: "a@x.com", clientName: "Alice", items: [], total: 1200, ...extra });
+await t("owner creates invoice", () => assertSucceeds(setDoc(doc(owner, `invoices/${INV}`), invoice())));
+await t("owner creates a draft", () => assertSucceeds(setDoc(doc(owner, "invoices/inv_DRAFTdraftDRAFTdraft1"), invoice({ status: "draft" }))));
+await t("anyone with the link views a sent invoice", () => assertSucceeds(getDoc(doc(anon, `invoices/${INV}`))));
+await t("drafts are private", () => assertFails(getDoc(doc(anon, "invoices/inv_DRAFTdraftDRAFTdraft1"))));
+await t("viewer records a view", () => assertSucceeds(updateDoc(doc(anon, `invoices/${INV}`), { viewedAt: serverTimestamp(), viewCount: 1 })));
+await t("viewer cannot mark it paid", () => assertFails(updateDoc(doc(anon, `invoices/${INV}`), { status: "paid" })));
+await t("client lists own invoices", () => assertSucceeds(getDocs(query(collection(alice, "invoices"), where("uid", "==", "alice"), where("status", "in", ["sent", "paid", "partial", "overdue"])))));
+await t("bob cannot list alice's invoices", () => assertFails(getDocs(query(collection(bob, "invoices"), where("uid", "==", "alice")))));
+await t("owner uses invoice counter", () => assertSucceeds(setDoc(doc(owner, "counters/invoices"), { year: 2026, next: 2 })));
+await t("visitor cannot touch counter", () => assertFails(setDoc(doc(alice, "counters/invoices"), { next: 1 })));
+
+console.log("Chat: edit, delete, react, presence");
+await env.withSecurityRulesDisabled(async ctx => {
+  const db = ctx.firestore();
+  await setDoc(doc(db, "threads/alice/messages/old"), { from: "client", text: "Old", createdAt: new Date(Date.now() - 3 * 864e5) });
+});
+await t("client edits own message within 15 min", () => assertSucceeds(updateDoc(doc(alice, "threads/alice/messages/m1"), { text: "Hello (edited)", editedAt: serverTimestamp() })));
+await t("client cannot edit admin's message", () => assertFails(updateDoc(doc(alice, "threads/alice/messages/m3"), { text: "x", editedAt: serverTimestamp() })));
+await t("cannot edit after 15 minutes", () => assertFails(updateDoc(doc(alice, "threads/alice/messages/old"), { text: "late", editedAt: serverTimestamp() })));
+await t("cannot delete for everyone after 48h", () => assertFails(updateDoc(doc(alice, "threads/alice/messages/old"), { text: "", attachment: null, replyTo: null, deleted: true, deletedAt: serverTimestamp() })));
+await t("client deletes own message for everyone", () => assertSucceeds(updateDoc(doc(alice, "threads/alice/messages/m1"), { text: "", attachment: null, replyTo: null, deleted: true, deletedAt: serverTimestamp() })));
+await t("client reacts to admin message", () => assertSucceeds(updateDoc(doc(alice, "threads/alice/messages/m3"), { reactions: { client: "👍" } })));
+await t("client cannot react as admin", () => assertFails(updateDoc(doc(alice, "threads/alice/messages/m3"), { reactions: { client: "👍", admin: "❤️" } })));
+await t("client sends a photo", () => assertSucceeds(setDoc(doc(alice, "threads/alice/messages/m4"), { from: "client", text: "", name: "Alice", createdAt: serverTimestamp(), attachment: { url: "https://res.cloudinary.com/x/image/upload/a.jpg", type: "image", name: "a.jpg" }, replyTo: { id: "m3", text: "Hi Alice", from: "admin" }, reactions: {} })));
+await t("empty message rejected", () => assertFails(setDoc(doc(alice, "threads/alice/messages/m5"), { from: "client", text: "", name: "Alice", createdAt: serverTimestamp() })));
+await t("client sets typing and read markers", () => assertSucceeds(updateDoc(doc(alice, "threads/alice"), { clientTyping: serverTimestamp(), clientReadAt: serverTimestamp(), clientOnline: true })));
+await t("client cannot clear admin unread count", () => assertFails(updateDoc(doc(alice, "threads/alice"), { unreadAdmin: 0 })));
+await t("client cannot set admin read marker", () => assertFails(updateDoc(doc(alice, "threads/alice"), { adminReadAt: serverTimestamp() })));
+await t("blog-only admin cannot read chats", () => assertFails(getDocs(collection(writer, "threads/alice/messages"))));
+
+console.log("Chat files & quick replies");
+await t("client uploads a chat file", () => assertSucceeds(setDoc(doc(alice, "threads/alice/files/f1"), { data: "data:image/jpeg;base64,AAAA", mime: "image/jpeg", name: "a.jpg", size: 3, by: "client", createdAt: serverTimestamp() })));
+await t("client sends a message pointing at the file", () => assertSucceeds(setDoc(doc(alice, "threads/alice/messages/m6"), { from: "client", text: "", name: "Alice", createdAt: serverTimestamp(), attachment: { fileId: "f1", type: "image", name: "a.jpg", size: 3, thumb: "data:image/jpeg;base64,AA" }, reactions: {} })));
+await t("client cannot upload as admin", () => assertFails(setDoc(doc(alice, "threads/alice/files/f2"), { data: "x", mime: "image/jpeg", by: "admin", createdAt: serverTimestamp() })));
+await t("oversized chat file rejected", () => assertFails(setDoc(doc(alice, "threads/alice/files/f3"), { data: "A".repeat(970000), mime: "application/pdf", by: "client", createdAt: serverTimestamp() })));
+await t("bob cannot read alice's files", () => assertFails(getDoc(doc(bob, "threads/alice/files/f1"))));
+await t("chat admin edits quick replies", () => assertSucceeds(setDoc(doc(owner, "private/chat"), { quickReplies: [{ key: "hi", text: "Hello!" }] })));
+await t("blog admin cannot edit quick replies", () => assertFails(setDoc(doc(writer, "private/chat"), { quickReplies: [] })));
+
+console.log("Photos");
+const photo = "data:image/jpeg;base64," + "A".repeat(60000);
+await t("client saves a profile photo (data URL)", () => assertSucceeds(setDoc(doc(alice, "users/alice"), { name: "Alice", email: "a@x.com", photo }, { merge: true })));
+await t("oversized photo rejected", () => assertFails(setDoc(doc(alice, "users/alice"), { name: "Alice", photo: "data:image/jpeg;base64," + "A".repeat(210000) }, { merge: true })));
+
 await env.cleanup();
 console.log(`\n${passed} passed${process.exitCode ? ", some FAILED" : ""}`);

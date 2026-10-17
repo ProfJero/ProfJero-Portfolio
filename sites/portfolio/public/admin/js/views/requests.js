@@ -1,5 +1,5 @@
 // Admin: ProfJero Hub bookings and product-branding quotes/orders (live).
-import { $, $$, fb, esc, fmtDate, emptyState, confirmDialog, toast, downloadCsv } from "../core.js";
+import { $, $$, fb, esc, fmtDate, emptyState, confirmDialog, toast, downloadCsv, can } from "../core.js";
 import { timeAgo, toDate } from "/assets/js/utils.js";
 
 let unsub = null;
@@ -55,6 +55,7 @@ export async function render(view, { name, params }) {
         <span class="status ${esc(r.status)}">${esc(r.status)}</span><code class="k">${esc(r.ref || r.id)}</code><span class="spacer" style="flex:1"></span>
         <a class="btn btn-primary btn-sm" href="mailto:${esc(r.email)}?subject=${encodeURIComponent(`ProfJero Hub — ${r.ref}`)}"><i class="fa-solid fa-envelope"></i> Email</a>
         ${wa ? `<a class="btn btn-ghost btn-sm" href="https://wa.me/${wa}?text=${encodeURIComponent(waText)}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ""}
+        ${can("invoices") ? `<button class="btn btn-ghost btn-sm" type="button" data-invoice><i class="fa-solid fa-file-invoice-dollar"></i> ${name === "orders" ? "Create invoice" : "Invoice this"}</button>` : ""}
         <button class="icon-btn sm danger" data-del title="Delete"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h2 style="margin:18px 0 4px;font-size:1.35rem">${esc(cfg.title(r))}</h2>
@@ -74,6 +75,8 @@ export async function render(view, { name, params }) {
       <form class="card" id="r-form" style="margin-top:8px" novalidate>
         <div class="fields">
           <div class="f"><label for="r-status">Status</label><select id="r-status">${cfg.statuses.map(s => `<option${s === r.status ? " selected" : ""}>${s}</option>`).join("")}</select></div>
+          ${name === "bookings" ? `<div class="f"><label for="r-date">Date</label><input id="r-date" type="date" value="${esc(r.date || "")}"></div><div class="f"><label for="r-time">Time</label><input id="r-time" type="time" step="900" value="${esc(r.time || "")}"></div>`
+            : `<div class="f"><label for="r-deadline">Needed by</label><input id="r-deadline" type="date" value="${esc(r.deadline || "")}"></div>`}
           ${name === "orders" ? `<div class="f"><label for="r-amount">Quote amount (GH₵)</label><input id="r-amount" type="number" min="0" step="0.01" value="${esc(r.quoteAmount ?? "")}"></div>
             <div class="f full"><label for="r-qnote">Quote details for the client</label><textarea id="r-qnote" rows="3" placeholder="What's included, delivery, payment terms…">${esc(r.quoteNote || "")}</textarea></div>` : ""}
           <div class="f full"><label for="r-note">Note to client (shown on tracking & portal)</label><textarea id="r-note" rows="2">${esc(r.adminNote || "")}</textarea></div>
@@ -90,6 +93,10 @@ export async function render(view, { name, params }) {
   async function save(extra = {}) {
     const r = all.find(x => x.id === selected);
     const upd = { status: $("#r-status").value, adminNote: $("#r-note").value.trim(), internalNote: $("#r-internal").value.trim(), updatedAt: fb.serverTimestamp(), ...extra };
+    if (name === "bookings") {
+      const d = $("#r-date").value, t = $("#r-time").value;
+      if (d && t && (d !== r.date || t !== r.time)) { upd.date = d; upd.time = t; if (!upd.adminNote || upd.adminNote === r.adminNote) upd.adminNote = `Moved to ${d} at ${t}.`; }
+    } else upd.deadline = $("#r-deadline").value || null;
     if (name === "orders") { const a = $("#r-amount").value; upd.quoteAmount = a === "" ? null : Number(a); upd.quoteNote = $("#r-qnote").value.trim(); }
     try { await fb.updateDoc(fb.doc(fb.db, name, r.id), upd); toast("Saved — the client sees the update"); } catch (e) { toast(e.message, "error"); }
   }
@@ -100,6 +107,18 @@ export async function render(view, { name, params }) {
     if (e.target.closest("#r-back")) { selected = null; paint(); return; }
     const r = all.find(x => x.id === selected); if (!r) return;
     const quick = e.target.closest("[data-quick]"); if (quick) { $("#r-status").value = quick.dataset.quick; return save(); }
+    if (e.target.closest("[data-invoice]")) {
+      // Hand the client and the item over to the invoice builder.
+      const qty = Number(r.quantity) || 1, total = Number(r.quoteAmount) || 0;
+      sessionStorage.setItem("pj_invoice_prefill", JSON.stringify({
+        uid: r.uid || null, clientName: r.name, email: r.email, clientPhone: r.phone || "", clientCompany: r.company || "", reference: r.ref || "",
+        subject: name === "orders" ? r.product : r.service,
+        items: name === "orders" ? [{ description: r.product, details: [r.method, r.colors && `${r.colors} colours`].filter(Boolean).join(" · "), qty, unit: "pcs", rate: total ? Math.round((total / qty) * 100) / 100 : 0 }]
+          : [{ description: r.service, details: `${r.studioName || r.studio || ""} · ${r.date || ""} ${r.time || ""}`.trim(), qty: 1, rate: 0 }]
+      }));
+      location.hash = "#/invoices/new";
+      return;
+    }
     if (e.target.closest("#r-send-quote")) {
       if (!$("#r-amount").value) return toast("Enter the quote amount first", "error");
       $("#r-status").value = "quoted"; return save();

@@ -11,12 +11,28 @@
 // `node ../../scripts/build.mjs <site>`, output directory `dist`.
 import { cp, rm, readdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { spawnSync } from "node:child_process";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const ROOT = new URL("../", import.meta.url);
 const HOOKS = { portfolio: "prerender.mjs", hub: "pages.mjs" };
 const skip = src => !/(^|[\\/])(\.DS_Store|\.wrangler|node_modules)$/.test(src);
+
+// Every module we ship is syntax-checked first, so a typo fails the build
+// instead of breaking a page in production.
+async function checkSyntax(dirs) {
+  const bad = [];
+  for (const d of dirs) {
+    let files = [];
+    try { files = (await walk(fileURLToPath(new URL(d, ROOT)))).filter(f => /\.m?js$/.test(f)); } catch { continue; }
+    for (const f of files) {
+      const r = spawnSync(process.execPath, ["--check", f], { encoding: "utf8" });
+      if (r.status !== 0) bad.push(`${f}\n${(r.stderr || "").split("\n").slice(0, 5).join("\n")}`);
+    }
+  }
+  if (bad.length) throw new Error(`Syntax errors:\n\n${bad.join("\n\n")}`);
+}
 
 async function build(site) {
   const t = Date.now();
@@ -74,6 +90,7 @@ async function countFiles(dir) {
 
 const arg = process.argv[2] || "all";
 const sites = arg === "all" ? Object.keys(HOOKS) : [arg];
+await checkSyntax(["shared/assets/js/", ...sites.flatMap(s => [`sites/${s}/public/assets/js/`, `sites/${s}/public/admin/js/`, `sites/${s}/functions/`]), "scripts/"]);
 for (const s of sites) {
   if (!HOOKS[s]) { console.error(`Unknown site "${s}". Use: ${Object.keys(HOOKS).join(" | ")} | all`); process.exit(1); }
   await build(s);
