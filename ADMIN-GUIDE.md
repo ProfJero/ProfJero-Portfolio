@@ -8,7 +8,7 @@ This guide covers the one-time setup (about 15 minutes) and everyday use of the 
 
 | # | Where | What to do | Why |
 |---|---|---|---|
-| 1 | Firebase → Firestore → **Rules** | Paste [`firestore.rules`](firestore.rules) and click **Publish** | Until this is done the database refuses everything, so the sites show only built-in content and the admin, bookings, portal, likes and comments can't save |
+| 1 | Firebase → Firestore → **Rules** | Paste [`firestore.rules`](firestore.rules) and click **Publish**. **Do this again every time `firestore.rules` changes**, including this update (invoices, roles, chat, alerts) | Until this is done the database refuses everything, so the sites show only built-in content and the admin, bookings, portal, likes and comments can't save. With old rules, new screens show “Missing or insufficient permissions” |
 | 2 | Firebase → Authentication → **Sign-in method** | Enable **Google**, **Email/Password** and **Anonymous** | Admin login, client-portal accounts, and likes/comments |
 | 3 | Firebase → Authentication → Settings → **Authorized domains** | Add `profjero.pages.dev` and `profjerohub.pages.dev` | Sign-in only works on listed domains |
 | 4 | https://profjero.pages.dev/admin/ | Click **Continue with Google** with **profjero947@gmail.com** | Your Google account is the super admin. The *email + password* form only works if you set a password (step 4b) |
@@ -20,7 +20,7 @@ This guide covers the one-time setup (about 15 minutes) and everyday use of the 
 | 9 | Your phone | Open `/admin/` and the Hub's `/portal/`, then tap **Install app** (Android/Chrome) or Share → **Add to Home Screen** (iPhone) | Installs the admin and client-portal apps |
 
 **Who can sign in where.**
-- **Admin dashboard (`/admin/`):** only you (super admin) and the people you add under **Settings → Admins**. Anyone else is signed straight back out, and the database rules enforce the same thing on the server. Only you can add or remove admins.
+- **Admin dashboard (`/admin/`):** only you (super admin) and the people you add under **Admins** (sidebar → Media & settings). Each admin gets a role or a custom set of permissions and only sees the screens they are allowed to use. Anyone else is signed straight back out, and the database rules enforce the same thing on the server. Only you can add, change or remove admins.
 - **Client portal (`profjerohub.pages.dev/portal/`):** open to anyone. Clients only ever see their own bookings, quotes, projects and messages.
 
 ---
@@ -38,9 +38,9 @@ Your Firestore database is currently locked, so the website shows its built-in d
 The rules allow:
 - **Anyone:** read published content, send contact forms, subscribe to the newsletter, and add +1 to views/shares.
 - **Visitors who are signed in** (silently and anonymously, or with Google): like posts and comments, comment, reply, and delete their own comments. Each person can like something only once.
-- **Admins only:** read messages and subscribers, and change any content.
+- **Admins only:** read messages and subscribers, and change content, each limited to the areas their role allows (see *Admins, roles & permissions*).
 
-> The rules come with 98 automated tests ([`tests/rules.test.mjs`](tests/rules.test.mjs)). Run them with `npm run test:rules`.
+> The rules come with 141 automated tests ([`tests/rules.test.mjs`](tests/rules.test.mjs)). Run them with `npm run test:rules`.
 
 ### 1.2 Turn on sign-in methods
 
@@ -71,6 +71,8 @@ Then go to **Authentication → Settings → Authorized domains** and add:
    - Folder: `profjero` (optional)
    - Recommended: restrict **Allowed formats** to `jpg, png, webp, gif, mp4, pdf` and set a **max file size**.
 4. In the admin, go to **Settings → Cloudinary storage**, enter the cloud name and preset name, then click **Save**. Use **Test upload** to check that it works.
+
+Once saved, the cloud name, preset and folder are **stored encrypted** and shown as dots (••••). To see them, click **Show values** and confirm it's you (your password, or a Google pop-up). They hide again after 60 seconds. Click **Change** to replace them.
 
 Uploads from any image field, the blog editor or the **Media library** go to Cloudinary. Images are served automatically as WebP/AVIF and resized for speed.
 
@@ -119,7 +121,11 @@ In Google Cloud console → **APIs & Services → Credentials**, open the Browse
 | Add, hide or reorder team members, or hide the whole Team section | **Team** and **Profile & site → Team** |
 | Upload and reuse files | **Media library** |
 | Manage newsletter subscribers | **Subscribers** |
-| Add another admin (owner only), import content, download a backup | **Settings** |
+| Create, send and track **invoices and quotations**, record payments | **Invoices** |
+| See what needs attention (deadlines, unanswered chats, overdue invoices) and set how early to be warned | **Alerts** (and the 🔔 bell at the top) |
+| Add an admin and choose exactly what they can do (owner only) | **Admins** |
+| Change your display name or your password | **My account** (click your name at the top right) |
+| Import content, download a backup, Cloudinary settings | **Settings** |
 
 ### ProfJero Hub: bookings, quotes, clients and chat
 
@@ -127,16 +133,73 @@ The **ProfJero Hub** group in the sidebar manages the Hub:
 
 | Screen | What you do there |
 |---|---|
-| **Bookings** | Review appointments from the Hub booking wizard. Confirm, complete or cancel them, add a note the client sees, and accept or decline reschedule requests. You can also reply by WhatsApp or email. |
+| **Bookings** | Review appointments from the Hub booking wizard. Confirm, complete or cancel them, change the date and time with the date and time pickers, add a note the client sees, and accept or decline reschedule requests. You can also reply by WhatsApp or email, or click **Invoice this**. |
 | **Quotes & orders** | Product quote requests (mugs, shirts, awards and so on). Enter an amount and a note, then click **Send quote**. The client approves or declines it in their portal. After that, move the order through *in production → ready → delivered*. |
-| **Client chat** | Live chat with signed-in clients. Badges show unread messages. |
+| **Client chat** | WhatsApp-style live chat with signed-in clients (see *Client chat* below). Badges show unread messages. |
 | **Client testimonials** | Testimonials that clients write in their portal (**Testimonial** tab). **Approve & publish** adds one to the auto-sliding testimonial carousel on both websites. **Unpublish** takes it down again. If a client edits their testimonial it comes back here for approval, and the live version stays until you approve the new one. |
 | **Clients** | Everyone who has a portal account, booked or requested a quote, with their full history. |
-| **Client projects** | Projects that clients follow in their portal: progress %, stages, next step, files, updates and invoice (total and paid). Use the client's email, and the project appears in their portal. |
+| **Client projects** | Projects that clients follow in their portal: status, progress %, start date and deadline (date pickers), milestones with due dates, next step, files and updates. **Choose the client** by typing their name: you can pick someone who already has a portal account, or click **New client** and enter the name, email and phone of someone who hasn't signed up yet. When they later create an account with that email (and verify it), the project appears in their portal automatically. Money is handled in **Invoices**, and linked invoices show on the project. |
 | **Branded products** | The Creative Studio product catalogue (prices, MOQ, delivery time, images). |
 | **Hub homepage** | The Hub hero (photo, overlay, water effect), about section, values, process steps and FAQ. |
 
 Studios (services, packages, FAQs and highlights for each studio page) are edited in **Studios & services**.
+
+### Invoices and quotations
+
+**Invoices** in the sidebar (Clients & sales). Everything is in Ghana cedis (GH₵).
+
+1. First, open **Invoices → Business details** once and enter your business name, logo, address, TIN, Mobile Money and bank details, default notes and terms. These appear on every invoice.
+2. Click **New invoice** (or **New quotation**). Choose the client (registered or new, same picker as projects), the payment terms (due date fills in by itself), and add items. **Add from your services & products** pulls in your pricing plans, studio packages and products.
+3. Pick the tax: **No tax**, **Ghana VAT 2026** (VAT 15% + NHIL 2.5% + GETFund 2.5% = 20%, under the VAT Act 2025), **VAT only**, or **Custom**. Add a discount if you want. The preview on the right updates as you type. Choose a design (Modern, Classic, Minimal) and colour.
+4. Click **Save & send**. Send it by **WhatsApp**, **email**, or copy the link. The client opens a clean, printable page (they can save it as PDF) and you can see when they viewed it. Registered clients also see it in the **Invoices** tab of their portal.
+5. When money comes in, click **Record a payment** (Mobile Money, bank, cash, card…). The status changes by itself: *Sent → Part paid → Paid*. Past the due date it shows **Overdue**.
+
+Other actions: **Duplicate**, **Convert quotation to invoice**, mark a quote **Accepted/Declined**, **Void** (numbers are never reused), **Print/PDF**, and **Export CSV** of the list. Numbers look like `INV-2026-0001` and `QT-2026-0001` and restart each year.
+
+> These are professional invoices, but they are **not GRA E-VAT certified invoices**. If you are VAT-registered and issue an E-VAT invoice through GRA's system, put its number in the **E-VAT invoice no.** field.
+
+### Alerts (deadlines and things waiting on you)
+
+The 🔔 bell at the top and the **Alerts** page list what needs your attention: bookings starting soon or not yet confirmed, quote requests not answered, quotes to follow up, invoices due soon or overdue, drafts not sent, project deadlines and milestones, client chats waiting for a reply, unread inbox messages and testimonials waiting for approval. Each alert has a **Snooze** button.
+
+**Set your thresholds** on the Alerts page, for example “warn me **3 days** before an invoice is due” or “a chat waiting more than **30 minutes**”. On the same page you can turn on **desktop notifications** and a **sound** for this device. Alerts are checked while the admin dashboard is open (in a browser tab or the installed app); they are not sent when it is closed.
+
+### Client chat
+
+Works like WhatsApp, for you and the client:
+- ✓ sent, ✓✓ delivered, blue ✓✓ read; “typing…”; online / last seen.
+- Reply to a specific message, react with an emoji, edit your message (within 15 minutes), delete for everyone (within 48 hours).
+- Send photos, documents (PDF, Word, Excel…) and **voice notes** (tap the mic). Paste or drag images straight in.
+- Search inside a conversation, jump to the newest message, unread divider.
+- Label each conversation **New / Open / Waiting on client / Resolved** and filter by label.
+- **Quick replies:** type `/` to insert a saved answer (e.g. `/pay` for payment details). Edit them with the ⚡ button.
+
+Files sent in chat are stored in the database itself (about 680 KB each after compression), so keep large files to email or Cloudinary links.
+
+### Admins, roles & permissions (owner only)
+
+**Admins** page: click **Add admin**, enter their Google email, then pick a role:
+
+| Role | Can use |
+|---|---|
+| Full admin | Everything except managing admins |
+| Content editor | Blog, both websites' content and media |
+| Hub manager | Bookings, quotes, clients, invoices, chat, inbox, Hub content, media |
+| Support agent | Client chat, inbox and bookings |
+| Accounts | Invoices and the client list |
+| Custom | Tick exactly the areas they need |
+
+Ticking or unticking a box switches the role to *Custom*. **Pause access** stops someone signing in without deleting them. The database enforces the same permissions, so a hidden screen really is off-limits. They sign in with **Continue with Google** using that email (or set a password with **Forgot?** on the login page).
+
+### Your account
+
+Click your name at the top right (**My account**): change the name used in the greeting (“Good morning, Benjamin”), **change your password** (you confirm the current one first), or, if you only use Google, **add a password** so you can also sign in with email.
+
+### Small things that save mistakes
+- Pop-up forms close **only** with their **×** or **Cancel** button. Clicking outside won't close them, and if you typed something you're asked before it's discarded.
+- All dates use a **date picker** (with quick buttons like *Today* or *+2 weeks*). Times use a time picker.
+- **Skills → Group**: pick an existing group from the list (so “Frontend” isn't added again as “Front-end”); type a new name to create a new group.
+- The sidebar groups open and close, the « button shrinks it to icons, and **Ctrl K** (⌘K on Mac) jumps to any page. The coloured tags show which site a page affects: **HUB**, **PORTFOLIO** or **BOTH**.
 
 Clients can track a booking or quote without an account at `https://profjerohub.pages.dev/booking/#track` by entering the reference code (PJB… or PJO…).
 
@@ -222,5 +285,5 @@ npm install
 npm run emulators          # Firestore + Auth emulators (needs Java)
 npm run dev:portfolio      # builds, then http://localhost:8788  (add ?emulator=1 to use the emulators)
 npm run dev:hub            # builds, then http://localhost:8789
-npm run test:rules         # 98 security-rule tests
+npm run test:rules         # 141 security-rule tests
 ```

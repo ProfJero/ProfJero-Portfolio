@@ -5,12 +5,13 @@ import {
   initializeFirestore, persistentLocalCache, persistentMultipleTabManager, connectFirestoreEmulator,
   collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
   query, where, orderBy, limit, writeBatch, increment, serverTimestamp,
-  Timestamp, onSnapshot, collectionGroup, getCountFromServer
+  Timestamp, onSnapshot, collectionGroup, getCountFromServer, runTransaction, arrayUnion, deleteField
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getAuth, onAuthStateChanged, signInAnonymously, signInWithPopup, GoogleAuthProvider,
   signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail,
-  signOut, updateProfile, connectAuthEmulator, createUserWithEmailAndPassword, updatePassword
+  signOut, updateProfile, connectAuthEmulator, createUserWithEmailAndPassword, updatePassword,
+  EmailAuthProvider, reauthenticateWithCredential, reauthenticateWithPopup, linkWithCredential
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { firebaseConfig } from "./config.js";
 
@@ -55,10 +56,11 @@ export function startAnalytics() {
 export {
   collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
   query, where, orderBy, limit, writeBatch, increment, serverTimestamp,
-  Timestamp, onSnapshot, collectionGroup, getCountFromServer,
+  Timestamp, onSnapshot, collectionGroup, getCountFromServer, runTransaction, arrayUnion, deleteField,
   onAuthStateChanged, signInAnonymously, signInWithPopup, GoogleAuthProvider,
   signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail,
-  signOut, updateProfile, createUserWithEmailAndPassword
+  signOut, updateProfile, createUserWithEmailAndPassword, updatePassword,
+  EmailAuthProvider, reauthenticateWithCredential, reauthenticateWithPopup, linkWithCredential
 };
 
 /** Resolves with the current user once Firebase has restored the session. */

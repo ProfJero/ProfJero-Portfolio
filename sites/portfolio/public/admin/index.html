@@ -17,9 +17,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="stylesheet" href="/admin/admin.css">
+  <link rel="stylesheet" href="/assets/css/invoice.css">
+  <link rel="stylesheet" href="/assets/css/chat.css">
 </head>
 <body class="admin">
   <div class="boot" id="boot"><img src="/assets/img/brand/mark-192.png" alt="Loading"></div>
@@ -60,48 +62,33 @@
 
   <!-- ============ APP ============ -->
   <div class="admin-shell" id="app" hidden>
-    <aside class="sidebar" aria-label="Admin navigation">
-      <a class="logo" href="#/dashboard"><img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40"><span class="logo-text">Prof<b>Jero</b><small>Admin</small></span></a>
-      <nav id="side-nav">
-        <a class="side-link" href="#/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
-        <a class="side-link" href="#/messages"><i class="fa-solid fa-inbox"></i> Messages <span class="side-badge" id="badge-messages"></span></a>
-        <div class="side-group">ProfJero Hub</div>
-        <a class="side-link" href="#/bookings"><i class="fa-regular fa-calendar-check"></i> Bookings <span class="side-badge" id="badge-bookings"></span></a>
-        <a class="side-link" href="#/orders"><i class="fa-solid fa-file-invoice"></i> Quotes &amp; orders <span class="side-badge" id="badge-orders"></span></a>
-        <a class="side-link" href="#/chat"><i class="fa-regular fa-comments"></i> Client chat <span class="side-badge" id="badge-chat"></span></a>
-        <a class="side-link" href="#/reviews"><i class="fa-regular fa-star"></i> Client testimonials <span class="side-badge" id="badge-reviews"></span></a>
-        <a class="side-link" href="#/clients"><i class="fa-solid fa-user-group"></i> Clients</a>
-        <a class="side-link" href="#/clientProjects"><i class="fa-solid fa-bars-progress"></i> Client projects</a>
-        <a class="side-link" href="#/products"><i class="fa-solid fa-gift"></i> Branded products</a>
-        <a class="side-link" href="#/hub"><i class="fa-solid fa-cubes"></i> Hub homepage</a>
-        <div class="side-group">Content</div>
-        <a class="side-link" href="#/posts"><i class="fa-solid fa-pen-nib"></i> Blog posts</a>
-        <a class="side-link" href="#/comments"><i class="fa-regular fa-message"></i> Blog comments</a>
-        <a class="side-link" href="#/projects"><i class="fa-solid fa-briefcase"></i> Projects &amp; demos</a>
-        <a class="side-link" href="#/studios"><i class="fa-solid fa-building"></i> Studios &amp; services</a>
-        <a class="side-link" href="#/skills"><i class="fa-solid fa-bolt"></i> Skills</a>
-        <a class="side-link" href="#/testimonials"><i class="fa-solid fa-quote-left"></i> Testimonials</a>
-        <a class="side-link" href="#/experience"><i class="fa-solid fa-timeline"></i> Experience</a>
-        <a class="side-link" href="#/team"><i class="fa-solid fa-people-group"></i> Team</a>
-        <div class="side-group">Site</div>
-        <a class="side-link" href="#/profile"><i class="fa-solid fa-id-card"></i> Profile &amp; site</a>
-        <a class="side-link" href="#/media"><i class="fa-regular fa-images"></i> Media library</a>
-        <a class="side-link" href="#/subscribers"><i class="fa-solid fa-users"></i> Subscribers</a>
-        <a class="side-link" href="#/settings"><i class="fa-solid fa-gear"></i> Settings</a>
-      </nav>
+    <aside class="sidebar" id="sidebar" aria-label="Admin navigation">
+      <div class="side-head">
+        <a class="logo" href="#/dashboard"><img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="" width="40" height="40"><span class="logo-text">Prof<b>Jero</b><small>Admin</small></span></a>
+        <button class="icon-btn rail-btn" id="rail-btn" type="button" aria-label="Collapse menu" aria-pressed="false" data-tip="Collapse menu"><i class="fa-solid fa-angles-left"></i></button>
+      </div>
+      <label class="nav-search"><i class="fa-solid fa-magnifying-glass"></i><input id="nav-q" type="search" placeholder="Find a page…" autocomplete="off" aria-label="Find a page"><kbd>Ctrl K</kbd></label>
+      <div class="scope-legend" aria-label="Which website each page manages">
+        <span class="scope-tag hub" title="ProfJero Hub only">Hub</span><span class="scope-tag portfolio" title="Portfolio only">Portfolio</span><span class="scope-tag both" title="Used by both websites">Both</span>
+      </div>
+      <nav id="side-nav" aria-label="Pages"></nav>
       <div class="side-foot">
-        <a class="side-link" href="/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> View website</a>
-        <a class="side-link" href="https://profjerohub.pages.dev" target="_blank" rel="noopener"><i class="fa-solid fa-cubes"></i> ProfJero Hub</a>
-        <button class="side-link" type="button" data-install hidden><i class="fa-solid fa-mobile-screen-button"></i> Install admin app</button>
-        <button class="side-link" id="logout" type="button"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
+        <a class="side-link" href="/" target="_blank" rel="noopener" data-tip="View portfolio"><i class="fa-solid fa-arrow-up-right-from-square"></i><span>View portfolio</span></a>
+        <a class="side-link" href="https://profjerohub.pages.dev" target="_blank" rel="noopener" data-tip="View ProfJero Hub"><i class="fa-solid fa-cubes"></i><span>View ProfJero Hub</span></a>
+        <button class="side-link" type="button" data-install hidden data-tip="Install admin app"><i class="fa-solid fa-mobile-screen-button"></i><span>Install admin app</span></button>
+        <button class="side-link" id="logout" type="button" data-tip="Sign out"><i class="fa-solid fa-right-from-bracket"></i><span>Sign out</span></button>
       </div>
     </aside>
     <div class="admin-main">
       <header class="topbar">
         <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
         <h1 id="page-title">Dashboard</h1>
+        <div class="bell-wrap">
+          <button class="icon-btn bell" id="bell" type="button" aria-label="Alerts" aria-haspopup="true" aria-expanded="false"><i class="fa-regular fa-bell"></i><span class="bell-count" id="bell-count" hidden></span></button>
+          <div class="bell-pop" id="bell-pop" hidden></div>
+        </div>
         <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></button>
-        <div class="user-chip" id="user-chip"></div>
+        <a class="user-chip" id="user-chip" href="#/account" title="My account"></a>
       </header>
       <main class="content" id="view" tabindex="-1"></main>
     </div>

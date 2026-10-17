@@ -5,7 +5,9 @@ import { $, $$, esc, toast, bootCommon, openModal, closeModal } from "./hub-comm
 import { firebase } from "./store.js";
 import { formatDate, timeAgo, toDate, compact, safeUrl, isEmail, initials, hueFrom } from "./utils.js";
 import { STATUS, timeline } from "./status.js";
+import { computeTotals, displayStatus, STATUS_LABEL, fmtDay, money as gh } from "./invoice-doc.js";
 import { initPWA } from "./pwa.js";
+import { mountChat } from "./chat-kit.js";
 
 initPWA({
   app: "portal", scope: "/portal/",
@@ -19,7 +21,7 @@ bootCommon();
 const root = $("#portal-root");
 const next = new URLSearchParams(location.search).get("next");
 let fb, user, profile = {}, unsub = [];
-const data = { bookings: [], orders: [], projects: [], messages: [], thread: null, review: undefined };
+const data = { bookings: [], orders: [], projects: [], invoices: [], messages: [], thread: null, review: undefined };
 
 const money = n => `GH₵ ${Number(n || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 const friendly = e => ({
@@ -56,33 +58,42 @@ function authScreen(mode = "signin") {
         <div class="field"><label for="p-pass">Password ${mode === "signin" ? '<a href="#" id="p-forgot" class="small" style="float:right">Forgot?</a>' : ""}</label><input id="p-pass" type="password" autocomplete="${mode === "signup" ? "new-password" : "current-password"}" required minlength="6"></div>
         <button class="btn btn-primary btn-block" type="submit">${mode === "signup" ? "Create my account" : "Sign in"}</button>
       </form>
-      <p class="small muted" id="p-msg" role="alert" style="margin-top:12px"></p>
+      <div id="p-msg" class="auth-msg" role="alert" aria-live="assertive" hidden></div>
       <button type="button" class="btn btn-ghost btn-sm btn-block" data-install hidden style="margin-bottom:12px"><i class="fa-solid fa-mobile-screen-button"></i> Install the client portal app</button>
       <p class="small muted">Booked before as a guest? Create an account with the <b>same email</b> and verify it — your earlier bookings and quotes will appear automatically.</p>
     </div>
   </section>`;
   $$(".seg button", root).forEach(b => b.onclick = () => authScreen(b.dataset.mode));
+  // Show sign-in feedback: errors in red (and the fields outlined), confirmations in green.
+  const say = (text, kind = "error") => {
+    const m = $("#p-msg"); if (!m) return;
+    m.hidden = !text; m.className = `auth-msg ${kind}`;
+    m.innerHTML = text ? `<i class="fa-solid ${kind === "error" ? "fa-circle-exclamation" : "fa-circle-check"}"></i><span>${esc(text)}</span>` : "";
+    if (kind === "error" && text) { m.classList.remove("shake"); void m.offsetWidth; m.classList.add("shake"); }
+  };
+  const markBad = (...ids) => ids.forEach(id => { const el = $(id); if (el) { el.setAttribute("aria-invalid", "true"); el.addEventListener("input", () => { el.removeAttribute("aria-invalid"); say(""); }, { once: true }); } });
   $("#p-google").onclick = async () => {
     try { await fb.signInWithPopup(fb.auth, new fb.GoogleAuthProvider()); }
-    catch (e) { const m = friendly(e); if (m) $("#p-msg").textContent = m; }
+    catch (e) { const m = friendly(e); if (m) say(m); }
   };
   $("#p-forgot")?.addEventListener("click", async e => {
     e.preventDefault();
     const email = $("#p-email").value.trim();
-    if (!isEmail(email)) { $("#p-msg").textContent = "Enter your email above first."; return; }
-    try { await fb.sendPasswordResetEmail(fb.auth, email); $("#p-msg").textContent = "Password reset email sent — check your inbox."; }
-    catch (err) { $("#p-msg").textContent = friendly(err); }
+    if (!isEmail(email)) { say("Enter your email above first."); markBad("#p-email"); return; }
+    try { await fb.sendPasswordResetEmail(fb.auth, email); say("Password reset email sent — check your inbox.", "ok"); }
+    catch (err) { say(friendly(err)); }
   });
   $("#p-auth").onsubmit = async e => {
     e.preventDefault();
     const email = $("#p-email").value.trim(), pass = $("#p-pass").value;
     const btn = $("button[type=submit]", e.target);
-    if (!isEmail(email) || pass.length < 6) { $("#p-msg").textContent = "Enter a valid email and a password of at least 6 characters."; return; }
+    if (!isEmail(email) || pass.length < 6) { say(!isEmail(email) ? "That email address doesn't look right." : "Your password must be at least 6 characters."); markBad(!isEmail(email) ? "#p-email" : "#p-pass"); return; }
+    say("");
     btn.disabled = true;
     try {
       if (mode === "signup") {
         const name = $("#p-name").value.trim(), phone = $("#p-phone").value.trim().slice(0, 30);
-        if (name.length < 2) { $("#p-msg").textContent = "Please enter your name."; btn.disabled = false; return; }
+        if (name.length < 2) { say("Please enter your name."); markBad("#p-name"); btn.disabled = false; return; }
         const cred = await fb.createUserWithEmailAndPassword(fb.auth, email, pass);
         await fb.updateProfile(cred.user, { displayName: name });
         // The auth listener may already have swapped the form out, so use captured values only.
@@ -93,23 +104,30 @@ function authScreen(mode = "signin") {
       } else {
         await fb.signInWithEmailAndPassword(fb.auth, email, pass);
       }
-    } catch (err) { const m = $("#p-msg"); if (m) m.textContent = friendly(err); btn.disabled = false; }
+    } catch (err) {
+      say(friendly(err) || "Something went wrong. Please try again.");
+      if (/credential|wrong-password|user-not-found|invalid-email/.test(err.code || "")) markBad("#p-email", "#p-pass");
+      btn.disabled = false;
+    }
   };
 }
 
 // ======================= DATA =======================
-async function queryMine(col) {
+async function queryMine(col, statuses = null) {
   const out = new Map();
   const add = snap => snap.docs.forEach(d => out.set(d.id, { id: d.id, ...d.data() }));
-  const tasks = [fb.getDocs(fb.query(fb.collection(fb.db, col), fb.where("uid", "==", user.uid))).then(add)];
-  if (user.emailVerified && user.email) tasks.push(fb.getDocs(fb.query(fb.collection(fb.db, col), fb.where("email", "==", user.email.toLowerCase()))).then(add));
+  const q = w => statuses ? fb.query(fb.collection(fb.db, col), w, fb.where("status", "in", statuses)) : fb.query(fb.collection(fb.db, col), w);
+  const tasks = [fb.getDocs(q(fb.where("uid", "==", user.uid))).then(add)];
+  if (user.emailVerified && user.email) tasks.push(fb.getDocs(q(fb.where("email", "==", user.email.toLowerCase()))).then(add));
   await Promise.allSettled(tasks);
   return [...out.values()].sort((a, b) => (toDate(b.createdAt)?.getTime() || 0) - (toDate(a.createdAt)?.getTime() || 0));
 }
 
+// Invoices are listed only once sent (drafts stay private), so the query must say so.
+const SENT = ["sent", "partial", "paid", "void", "accepted", "declined", "converted"];
 async function loadAll() {
-  const [bookings, orders, projects] = await Promise.all([queryMine("bookings"), queryMine("orders"), queryMine("clientProjects")]);
-  Object.assign(data, { bookings, orders, projects });
+  const [bookings, orders, projects, invoices] = await Promise.all([queryMine("bookings"), queryMine("orders"), queryMine("clientProjects"), queryMine("invoices", SENT)]);
+  Object.assign(data, { bookings, orders, projects, invoices });
   listenData();
 }
 
@@ -117,14 +135,14 @@ async function loadAll() {
 let dataUnsub = [];
 function listenData() {
   dataUnsub.forEach(u => u()); dataUnsub = [];
-  const KEY = { bookings: "bookings", orders: "orders", clientProjects: "projects" };
+  const KEY = { bookings: "bookings", orders: "orders", clientProjects: "projects", invoices: "invoices" };
   let timer;
   for (const col of Object.keys(KEY)) {
     const parts = {};
     const queries = { uid: fb.where("uid", "==", user.uid) };
     if (user.emailVerified && user.email) queries.email = fb.where("email", "==", user.email.toLowerCase());
     for (const [k, w] of Object.entries(queries)) {
-      dataUnsub.push(fb.onSnapshot(fb.query(fb.collection(fb.db, col), w), snap => {
+      dataUnsub.push(fb.onSnapshot(col === "invoices" ? fb.query(fb.collection(fb.db, col), w, fb.where("status", "in", SENT)) : fb.query(fb.collection(fb.db, col), w), snap => {
         parts[k] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         const merged = new Map(); Object.values(parts).flat().forEach(x => merged.set(x.id, x));
         data[KEY[col]] = [...merged.values()].sort((a, b) => (toDate(b.createdAt)?.getTime() || 0) - (toDate(a.createdAt)?.getTime() || 0));
@@ -142,28 +160,30 @@ function listenData() {
 
 function listenMessages() {
   unsub.forEach(u => u()); unsub = [];
-  unsub.push(fb.onSnapshot(fb.query(fb.collection(fb.db, "threads", user.uid, "messages"), fb.orderBy("createdAt", "asc"), fb.limit(300)), snap => {
-    data.messages = snap.docs.map(d => ({ id: d.id, ...d.data({ serverTimestamps: "estimate" }) }));
-    if (route() === "messages") renderMessages(true);
-  }, () => { }));
   unsub.push(fb.onSnapshot(fb.doc(fb.db, "reviews", user.uid), snap => {
     const first = data.review === undefined;
     data.review = snap.exists() ? snap.data({ serverTimestamps: "estimate" }) : null;
     if (route() === "review" && (first || !$("#rv-form")?.contains(document.activeElement))) renderReview();
   }, () => { data.review = null; }));
+  let prevUnread = null;
   unsub.push(fb.onSnapshot(fb.doc(fb.db, "threads", user.uid), snap => {
     data.thread = snap.exists() ? snap.data() : null;
     const n = data.thread?.unreadClient || 0;
     const b = $("#badge-msg");
     if (b) { b.textContent = n || ""; b.hidden = !n; }
-    if (n && route() === "messages") markRead();
+    if (prevUnread !== null && n > prevUnread && route() !== "messages") toast(`New message from ProfJero: “${String(data.thread.lastMessage || "").slice(0, 60)}”`, "info");
+    prevUnread = n;
   }, () => { }));
+  // While the portal is open, tell the team we're here, so their messages show ✓✓ delivered.
+  const beat = () => { if (data.thread && document.visibilityState === "visible") fb.updateDoc(fb.doc(fb.db, "threads", user.uid), { clientSeenAt: fb.serverTimestamp(), clientOnline: true }).catch(() => { }); };
+  const hb = setInterval(beat, 60000); setTimeout(beat, 2500);
+  unsub.push(() => clearInterval(hb));
 }
 
 // ======================= SHELL =======================
 const TABS = [
   ["overview", "fa-solid fa-gauge-high", "Overview"], ["bookings", "fa-regular fa-calendar-check", "Bookings"],
-  ["orders", "fa-solid fa-file-invoice", "Quotes & orders"], ["projects", "fa-solid fa-bars-progress", "Projects"],
+  ["orders", "fa-solid fa-file-invoice", "Quotes & orders"], ["invoices", "fa-solid fa-file-invoice-dollar", "Invoices"], ["projects", "fa-solid fa-bars-progress", "Projects"],
   ["messages", "fa-regular fa-comments", "Messages"], ["review", "fa-regular fa-star", "Testimonial"], ["profile", "fa-regular fa-id-card", "Profile"]
 ];
 const route = () => (location.hash.replace(/^#\/?/, "") || "overview").split("/")[0];
@@ -173,7 +193,7 @@ function shell() {
   root.innerHTML = `
   <div class="portal container">
     <aside class="portal-side">
-      <div class="portal-me">${user.photoURL ? `<img class="avatar" src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">` : `<span class="avatar avatar-fallback" style="--h:${hueFrom(name)}">${esc(initials(name))}</span>`}
+      <div class="portal-me">${photoTag(myPhoto(), name, 44)}
         <div><strong>${esc(name)}</strong><small>${esc(user.email || "")}</small></div></div>
       <nav>${TABS.map(([k, i, l]) => `<a href="#/${k}" data-tab="${k}"><i class="${i}"></i> ${l}${k === "messages" ? ' <span class="side-badge" id="badge-msg" hidden></span>' : ""}</a>`).join("")}</nav>
       <div class="portal-side-foot">
@@ -194,11 +214,14 @@ function verifyBanner() {
   return `<div class="callout warn" style="margin-bottom:18px"><i class="fa-solid fa-envelope-circle-check"></i><div><strong>Please verify your email.</strong> Once verified, bookings and quotes you made as a guest with <b>${esc(user.email)}</b> will appear here. <button class="linklike" id="p-resend">Resend email</button> · <button class="linklike" id="p-reload">I've verified</button></div></div>`;
 }
 
+let chatRoom = null;
 function render() {
   const r = route();
+  if (r !== "messages") { chatRoom?.destroy(); chatRoom = null; }
+  document.body.dataset.ptab = r;
   $$(".portal-side nav a").forEach(a => a.classList.toggle("active", a.dataset.tab === r));
   const view = $("#pv");
-  ({ overview, bookings: renderBookings, orders: renderOrders, projects: renderProjects, messages: () => renderMessages(), review: renderReview, profile: renderProfile }[r] || overview)();
+  ({ overview, bookings: renderBookings, orders: renderOrders, invoices: renderInvoices, projects: renderProjects, messages: renderMessages, review: renderReview, profile: renderProfile }[r] || overview)();
   view.focus({ preventScroll: true });
 }
 addEventListener("hashchange", () => user && render());
@@ -214,6 +237,28 @@ root.addEventListener("click", async e => {
   }
 });
 
+// Client photo: the one they uploaded, else their Google photo.
+const myPhoto = () => profile.photo || user.photoURL || "";
+const photoTag = (src, name, size = 88) => src ? `<img class="avatar" src="${esc(src)}" alt="" referrerpolicy="no-referrer" style="width:${size}px;height:${size}px">` : `<span class="avatar avatar-fallback" style="--h:${hueFrom(name)};width:${size}px;height:${size}px;font-size:${size / 2.6}px">${esc(initials(name))}</span>`;
+// Square-crop and shrink a chosen image to a small JPEG data URL (≈20–40 KB) that can live in Firestore.
+async function squarePhoto(file, size = 320) {
+  if (!file || !file.type.startsWith("image/")) throw new Error("Please choose an image file (JPG, PNG or WebP).");
+  if (file.size > 15e6) throw new Error("That image is too large. Please choose one under 15 MB.");
+  const bmp = await createImageBitmap(file);
+  const side = Math.min(bmp.width, bmp.height), c = document.createElement("canvas");
+  c.width = c.height = Math.min(size, side);
+  c.getContext("2d").drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) / 2, side, side, 0, 0, c.width, c.height);
+  let q = .85, out = c.toDataURL("image/jpeg", q);
+  while (out.length > 150000 && q > .4) { q -= .1; out = c.toDataURL("image/jpeg", q); }
+  return out;
+}
+async function savePhoto(photo) {
+  await fb.setDoc(fb.doc(fb.db, "users", user.uid), { name: profile.name || user.displayName || user.email, photo, updatedAt: fb.serverTimestamp() }, { merge: true });
+  profile.photo = photo;
+  if (data.thread) fb.updateDoc(fb.doc(fb.db, "threads", user.uid), { photo }).catch(() => { });
+  const me = $(".portal-me .avatar"); if (me) me.outerHTML = photoTag(myPhoto(), profile.name || user.email, 44);
+}
+
 const empty = (icon, text, action = "") => `<div class="empty"><i class="${icon}"></i><p>${text}</p>${action}</div>`;
 
 // ======================= OVERVIEW =======================
@@ -221,7 +266,8 @@ function overview() {
   const upcoming = data.bookings.filter(b => ["pending", "confirmed"].includes(b.status) && b.date >= new Date().toISOString().slice(0, 10)).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
   const openQuotes = data.orders.filter(o => ["requested", "quoted", "approved", "in-production", "ready"].includes(o.status));
   const active = data.projects.filter(p => p.status !== "completed");
-  const balance = data.projects.reduce((a, p) => a + Math.max(0, Number(p.invoice?.total || 0) - Number(p.invoice?.paid || 0)), 0);
+  const invBalance = data.invoices.filter(i => i.kind !== "quote" && i.status !== "void").reduce((a, i) => a + computeTotals(i).balance, 0);
+  const balance = invBalance + data.projects.reduce((a, p) => a + Math.max(0, Number(p.invoice?.total || 0) - Number(p.invoice?.paid || 0)), 0);
   const needs = data.orders.filter(o => o.status === "quoted");
   const hello = new Date().getHours() < 12 ? "Good morning" : new Date().getHours() < 17 ? "Good afternoon" : "Good evening";
   $("#pv").innerHTML = `${verifyBanner()}
@@ -231,7 +277,7 @@ function overview() {
       <a class="kpi" href="#/bookings" style="--c:var(--brand)"><i class="fa-regular fa-calendar-check"></i><small>Upcoming bookings</small><strong>${upcoming.length}</strong></a>
       <a class="kpi" href="#/orders" style="--c:#7C3AED"><i class="fa-solid fa-file-invoice"></i><small>Open quotes & orders</small><strong>${openQuotes.length}</strong></a>
       <a class="kpi" href="#/projects" style="--c:var(--green)"><i class="fa-solid fa-bars-progress"></i><small>Active projects</small><strong>${active.length}</strong></a>
-      <a class="kpi" href="#/projects" style="--c:#D97706"><i class="fa-solid fa-wallet"></i><small>Balance due</small><strong>${money(balance)}</strong></a>
+      <a class="kpi" href="#/invoices" style="--c:#D97706"><i class="fa-solid fa-wallet"></i><small>Balance due</small><strong>${money(balance)}</strong></a>
     </div>
     <div class="pv-grid">
       <div class="card"><div class="card-head"><h3>Next booking</h3><a class="small" href="#/bookings">All bookings</a></div>
@@ -285,6 +331,25 @@ function renderOrders() {
     <div class="p-list">${data.orders.map(orderCard).join("") || empty("fa-solid fa-file-invoice", "No quotes or orders yet.", '<a class="btn btn-primary btn-sm" href="/creative-studio#products">Browse branded products</a>')}</div>`;
 }
 
+// ======================= INVOICES =======================
+function invoiceCard(i) {
+  const t = computeTotals(i), st = displayStatus(i), quote = i.kind === "quote";
+  return `<article class="p-item inv-card">
+    <header><div><small>${quote ? "Quotation" : "Invoice"} · ${esc(i.number || "")}</small><h3>${esc(i.subject || (i.items || [])[0]?.description || "Invoice")}</h3>
+      <p class="muted small">Issued ${fmtDay(i.issueDate)}${!quote && i.dueDate ? ` · due ${i.terms === "receipt" ? "on receipt" : fmtDay(i.dueDate)}` : ""}</p></div>
+      <span class="inv-pill st-${st}">${STATUS_LABEL[st] || st}</span></header>
+    <dl class="inv"><div><dt>Total</dt><dd>${gh(t.total)}</dd></div>${quote ? "" : `<div><dt>Paid</dt><dd>${gh(t.paid)}</dd></div><div><dt>Balance</dt><dd class="${t.balance > 0 ? "due" : "ok"}">${gh(t.balance)}</dd></div>`}</dl>
+    <div class="btn-row"><a class="btn btn-primary btn-sm" href="/invoice/?id=${encodeURIComponent(i.id)}" target="_blank" rel="noopener"><i class="fa-regular fa-file-lines"></i> View &amp; download</a>${!quote && t.balance > 0 ? '<a class="btn btn-ghost btn-sm" href="#/messages"><i class="fa-regular fa-comments"></i> Ask about this invoice</a>' : ""}</div>
+  </article>`;
+}
+function renderInvoices() {
+  const list = data.invoices.filter(i => i.status !== "converted");
+  const due = list.filter(i => i.kind !== "quote" && i.status !== "void").reduce((a, i) => a + computeTotals(i).balance, 0);
+  $("#pv").innerHTML = `${verifyBanner()}<div class="pv-head"><h1>Invoices</h1><p>Your invoices and quotations from ProfJero. Open one to view, print or download it as a PDF.</p></div>
+    ${due > 0 ? `<div class="callout warn" style="margin-bottom:16px"><i class="fa-solid fa-wallet"></i><div>You have <b>${gh(due)}</b> to pay. Payment details (MoMo and bank) are on each invoice. Please use the invoice number as your reference.</div></div>` : ""}
+    <div class="p-list">${list.map(invoiceCard).join("") || empty("fa-solid fa-file-invoice-dollar", "No invoices yet. When we send you an invoice or quotation, it appears here.")}</div>`;
+}
+
 // ======================= PROJECTS =======================
 function renderProjects() {
   $("#pv").innerHTML = `${verifyBanner()}<div class="pv-head"><h1>Projects</h1><p>Progress, milestones, files and invoices for the work we're doing with you.</p></div>
@@ -298,6 +363,7 @@ function renderProjects() {
         <div class="proj-grid">
           ${(p.stages || []).length ? `<div><h4>Milestones</h4><ul class="stages">${p.stages.map(s => `<li class="${s.done ? "done" : ""}"><i class="fa-${s.done ? "solid fa-circle-check" : "regular fa-circle"}"></i> ${esc(s.name)}</li>`).join("")}</ul></div>` : ""}
           ${(p.files || []).length || safeUrl(p.demoUrl) ? `<div><h4>Files & links</h4><ul class="files">${safeUrl(p.demoUrl) ? `<li><a href="${esc(safeUrl(p.demoUrl))}" target="_blank" rel="noopener"><i class="fa-solid fa-display"></i> Preview / live demo</a></li>` : ""}${(p.files || []).map(f => `<li><a href="${esc(safeUrl(f.url))}" target="_blank" rel="noopener"><i class="fa-regular fa-file"></i> ${esc(f.name || "File")}</a></li>`).join("")}</ul></div>` : ""}
+          ${data.invoices.some(i => i.projectId === p.id) ? `<div><h4>Invoices</h4><ul class="files">${data.invoices.filter(i => i.projectId === p.id).map(i => `<li><a href="/invoice/?id=${encodeURIComponent(i.id)}" target="_blank" rel="noopener"><i class="fa-solid fa-file-invoice-dollar"></i> ${esc(i.number)} · ${gh(computeTotals(i).balance)} due</a></li>`).join("")}</ul></div>` : ""}
           ${total ? `<div><h4>Invoice</h4><dl class="inv"><div><dt>Total</dt><dd>${money(total)}</dd></div><div><dt>Paid</dt><dd>${money(paid)}</dd></div><div><dt>Balance</dt><dd class="${total - paid > 0 ? "due" : "ok"}">${money(Math.max(0, total - paid))}</dd></div></dl>
             ${total - paid > 0 ? `<p class="small muted">Pay via Mobile Money or bank transfer — <a href="#/messages">ask us for payment details</a>.</p>` : '<p class="small" style="color:var(--green)"><i class="fa-solid fa-circle-check"></i> Fully paid — thank you!</p>'}</div>` : ""}
         </div>
@@ -307,37 +373,18 @@ function renderProjects() {
 }
 
 // ======================= MESSAGES =======================
-async function markRead() {
-  if (data.thread?.unreadClient) { try { await fb.updateDoc(fb.doc(fb.db, "threads", user.uid), { unreadClient: 0 }); } catch { } }
-}
-function renderMessages(keepDraft = false) {
-  const draft = keepDraft ? $("#m-text")?.value || "" : "";
-  $("#pv").innerHTML = `<div class="pv-head"><h1>Messages</h1><p>Chat directly with the ProfJero Hub team. We usually reply within a few hours.</p></div>
-    <div class="chat card">
-      <div class="chat-log" id="chat-log">${data.messages.length ? data.messages.map(m => `
-        <div class="bubble ${m.from === "client" ? "me" : "them"}"><p>${esc(m.text)}</p><time>${m.from === "admin" ? "ProfJero · " : ""}${toDate(m.createdAt) ? timeAgo(m.createdAt) : "sending…"}</time></div>`).join("")
-        : `<div class="empty" style="border:0"><i class="fa-regular fa-comments"></i><p>Start a conversation — ask a question, share an idea or send files via a link.</p></div>`}</div>
-      <form class="chat-form" id="chat-form"><label class="sr-only" for="m-text">Message</label><textarea id="m-text" rows="1" maxlength="4000" placeholder="Write a message…">${esc(draft)}</textarea><button class="btn btn-primary" type="submit" aria-label="Send"><i class="fa-solid fa-paper-plane"></i></button></form>
-    </div>`;
-  const log = $("#chat-log"); log.scrollTop = log.scrollHeight;
-  const ta = $("#m-text");
-  ta.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#chat-form").requestSubmit(); } });
-  $("#chat-form").onsubmit = async e => {
-    e.preventDefault();
-    const text = ta.value.trim();
-    if (!text) return;
-    ta.value = "";
-    const name = profile.name || user.displayName || user.email;
-    try {
-      const msgRef = fb.doc(fb.collection(fb.db, "threads", user.uid, "messages"));
-      await fb.setDoc(msgRef, { from: "client", text: text.slice(0, 4000), name: name.slice(0, 100), createdAt: fb.serverTimestamp() });
-      const tRef = fb.doc(fb.db, "threads", user.uid);
-      if (data.thread) await fb.updateDoc(tRef, { lastMessage: text.slice(0, 200), lastAt: fb.serverTimestamp(), lastFrom: "client", unreadAdmin: fb.increment(1) });
-      else await fb.setDoc(tRef, { uid: user.uid, name: name.slice(0, 100), email: user.email || "", lastMessage: text.slice(0, 200), lastAt: fb.serverTimestamp(), lastFrom: "client", unreadAdmin: 1, unreadClient: 0 });
-    } catch (err) { console.error(err); toast("Message not sent. Please try again.", "error"); ta.value = text; }
-  };
-  markRead();
-  ta.focus();
+function renderMessages() {
+  if (chatRoom && $("#pv .ck")) return;   // already open (live updates come from the chat itself)
+  chatRoom?.destroy();
+  $("#pv").innerHTML = `<div class="pv-head chat-head-row"><div><h1>Messages</h1><p>Chat with the ProfJero Hub team. Send photos, documents and voice notes. We usually reply within a few hours (Mon–Sat, 7am–8pm).</p></div></div>
+    <div class="portal-chat card"></div>`;
+  chatRoom = mountChat($("#pv .portal-chat"), {
+    fb, threadId: user.uid, me: "client", toast,
+    myName: profile.name || user.displayName || user.email,
+    peer: { name: "ProfJero Hub team", sub: "Typically replies within a few hours", avatar: '<img src="/assets/img/brand/mark-192.png" alt="" class="avatar" style="background:#fff;padding:4px">' },
+    threadDefaults: { name: (profile.name || user.displayName || user.email || "").slice(0, 100), email: user.email || "", ...(profile.photo ? { photo: profile.photo } : {}) },
+    notify: { title: "ProfJero Hub", icon: "/assets/img/brand/app-portal-192.png" }
+  });
 }
 
 // ======================= PROFILE =======================
@@ -362,13 +409,28 @@ function renderReview() {
         <div class="field"><label for="rv-name">Name to show</label><input id="rv-name" maxlength="80" value="${esc(r?.name || profile.name || user.displayName || "")}" ${verified ? "" : "disabled"}></div>
         <div class="field"><label for="rv-role">Role & organisation <small class="muted">(optional)</small></label><input id="rv-role" maxlength="100" placeholder="e.g. Director, Bright Future School" value="${esc(role)}" ${verified ? "" : "disabled"}></div>
         <div class="field"><label for="rv-studio">Which studio did you work with?</label><select id="rv-studio" ${verified ? "" : "disabled"}><option value="">Choose (optional)</option>${Object.entries(STUDIO_NAMES).map(([k, v]) => `<option value="${k}"${r?.studio === k ? " selected" : ""}>${v}</option>`).join("")}</select></div>
-        ${user.photoURL ? `<div class="field"><label>Photo</label><label class="switch"><input type="checkbox" id="rv-photo" ${r && !r.photo ? "" : "checked"} ${verified ? "" : "disabled"}><span class="track"></span>Show my profile photo</label></div>` : ""}
+        <div class="field full"><label>Your photo <small class="muted">(optional — testimonials with a face are trusted more)</small></label>
+          <div class="photo-pick sm" id="rv-photo-box"></div></div>
         <div class="field full"><label for="rv-text">Your testimonial</label><textarea id="rv-text" rows="6" minlength="20" maxlength="700" placeholder="What did we do for you, and what difference did it make?" ${verified ? "" : "disabled"}>${esc(r?.text || "")}</textarea><small class="muted" id="rv-count"></small></div>
       </div>
       <div class="form-foot">${r ? `<button type="button" class="btn btn-ghost btn-sm danger" id="rv-delete"><i class="fa-regular fa-trash-can"></i> Delete</button>` : "<span></span>"}
         <button class="btn btn-primary" type="submit" ${verified ? "" : "disabled"}><i class="fa-solid fa-paper-plane"></i> ${r ? "Update testimonial" : "Submit testimonial"}</button></div>
       ${verified ? "" : '<p class="muted small" style="margin:10px 0 0">Verify your email to write a testimonial.</p>'}
     </form>`;
+  // The photo shown with the testimonial: what they used before, else their profile photo.
+  let rvPhoto = r ? (r.photo || "") : myPhoto();
+  const paintPhoto = () => {
+    $("#rv-photo-box").innerHTML = `${photoTag(rvPhoto, $("#rv-name")?.value || profile.name || user.email, 64)}<div class="btn-row">
+      <label class="btn btn-ghost btn-sm${verified ? "" : " disabled"}"><i class="fa-solid fa-camera"></i> ${rvPhoto ? "Change" : "Add a photo"}<input type="file" accept="image/*" hidden id="rv-photo-in" ${verified ? "" : "disabled"}></label>
+      ${!rvPhoto && myPhoto() ? '<button type="button" class="btn btn-ghost btn-sm" data-rvp="profile">Use my profile photo</button>' : ""}
+      ${rvPhoto ? '<button type="button" class="btn btn-ghost btn-sm danger" data-rvp="none"><i class="fa-regular fa-trash-can"></i> Remove</button>' : ""}</div>`;
+    $("#rv-photo-in").onchange = async e => {
+      try { rvPhoto = await squarePhoto(e.target.files[0]); if (!profile.photo) savePhoto(rvPhoto).catch(() => { }); paintPhoto(); toast("Photo added — remember to save your testimonial", "info"); }
+      catch (err) { toast(err.message, "error"); }
+    };
+  };
+  paintPhoto();
+  $("#rv-photo-box").addEventListener("click", e => { const b = e.target.closest("[data-rvp]"); if (!b) return; rvPhoto = b.dataset.rvp === "profile" ? myPhoto() : ""; paintPhoto(); });
   const ta = $("#rv-text"), count = () => { $("#rv-count").textContent = `${ta.value.trim().length}/700 · at least 20 characters`; };
   ta.addEventListener("input", count); count();
   $("#rv-delete")?.addEventListener("click", async () => {
@@ -384,7 +446,7 @@ function renderReview() {
     const doc = {
       uid: user.uid, email: user.email, name: name.slice(0, 80), role: $("#rv-role").value.trim().slice(0, 100), text: text.slice(0, 700),
       rating: Number($("input[name=rv-rating]:checked")?.value) || 5, studio: $("#rv-studio").value,
-      photo: user.photoURL && $("#rv-photo")?.checked ? user.photoURL.slice(0, 500) : "",
+      photo: rvPhoto.length <= 200000 ? rvPhoto : "",
       status: "pending", updatedAt: fb.serverTimestamp()
     };
     // Updates merge so the original createdAt is kept exactly as stored.
@@ -397,7 +459,11 @@ function renderReview() {
 function renderProfile() {
   const n = profile.notify || {};
   $("#pv").innerHTML = `${verifyBanner()}<div class="pv-head"><h1>Profile</h1><p>Keep your details up to date so we can reach you.</p></div>
-    <form class="card" id="prof-form" novalidate><div class="form-grid">
+    <form class="card" id="prof-form" novalidate>
+      <div class="photo-pick" id="pf-photo">${photoTag(myPhoto(), profile.name || user.email)}
+        <div><strong>Profile photo</strong><p class="muted small">Shown to the ProfJero team in chat and on your testimonial. A clear, friendly face photo works best.</p>
+        <div class="btn-row"><label class="btn btn-ghost btn-sm"><i class="fa-solid fa-camera"></i> ${myPhoto() ? "Change photo" : "Upload photo"}<input type="file" accept="image/*" hidden id="pf-photo-in"></label>${profile.photo ? '<button type="button" class="btn btn-ghost btn-sm danger" id="pf-photo-rm"><i class="fa-regular fa-trash-can"></i> Remove</button>' : ""}</div></div></div>
+      <div class="form-grid">
       <div class="field"><label for="pf-name">Full name</label><input id="pf-name" maxlength="100" value="${esc(profile.name || user.displayName || "")}"></div>
       <div class="field"><label for="pf-email">Email</label><input id="pf-email" value="${esc(user.email || "")}" disabled></div>
       <div class="field"><label for="pf-phone">Phone / WhatsApp</label><input id="pf-phone" type="tel" maxlength="30" value="${esc(profile.phone || "")}"></div>
@@ -406,6 +472,11 @@ function renderProfile() {
         <label class="switch"><input type="checkbox" id="pf-n-email" ${n.email !== false ? "checked" : ""}><span class="track"></span>Email me about bookings, quotes and projects</label>
         <label class="switch" style="margin-top:8px"><input type="checkbox" id="pf-n-wa" ${n.whatsapp !== false ? "checked" : ""}><span class="track"></span>WhatsApp updates are OK</label></div>
     </div><div class="form-foot"><button type="button" class="btn btn-ghost btn-sm" id="pf-reset"><i class="fa-solid fa-key"></i> Change password</button><button class="btn btn-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save profile</button></div></form>`;
+  $("#pf-photo-in").onchange = async e => {
+    try { const p = await squarePhoto(e.target.files[0]); await savePhoto(p); toast("Photo updated"); renderProfile(); }
+    catch (err) { toast(err.message, "error"); }
+  };
+  $("#pf-photo-rm")?.addEventListener("click", async () => { try { await savePhoto(""); toast("Photo removed"); renderProfile(); } catch (err) { toast(err.message, "error"); } });
   $("#pf-reset").onclick = async () => { try { await fb.sendPasswordResetEmail(fb.auth, user.email); toast("Password reset link sent to your email"); } catch (e) { toast(friendly(e), "error"); } };
   $("#prof-form").onsubmit = async e => {
     e.preventDefault();

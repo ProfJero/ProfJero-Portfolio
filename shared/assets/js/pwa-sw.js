@@ -21,9 +21,9 @@ self.addEventListener("activate", e => {
 });
 
 const cacheable = url =>
-  (url.origin === self.location.origin && (/^\/assets\/(img|fonts)\//.test(url.pathname) || url.searchParams.has("v"))) ||
+  (url.origin === self.location.origin && (/^\/assets\/(img|fonts|vendor)\//.test(url.pathname) || url.searchParams.has("v"))) ||
   /^https:\/\/www\.gstatic\.com\/firebasejs\//.test(url.href) ||
-  /^https:\/\/(cdnjs\.cloudflare\.com|fonts\.(googleapis|gstatic)\.com)\//.test(url.href);
+  /^https:\/\/fonts\.(googleapis|gstatic)\.com\//.test(url.href);
 
 self.addEventListener("fetch", e => {
   const req = e.request;

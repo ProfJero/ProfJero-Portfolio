@@ -24,7 +24,7 @@ const TODAY = new Date().toISOString().slice(0, 10);
 
 const THEME_SCRIPT = `<script>try{var d=document.documentElement,j=function(k){return JSON.parse(localStorage.getItem(k)||"{}")||{}},o=Object.assign({},j("pj_site_look"),j("pj_prefs")),m=o.mode||localStorage.getItem("pj_theme")||"system";if(m!=="light"&&m!=="dark")m=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=m;if(/^#[0-9a-f]{6}$/i.test(o.color||""))d.style.setProperty("--brand-base",o.color);if(o.layout==="boxed")d.dataset.layout="boxed";if(o.bg)d.dataset.bg=o.bg;if(o.overlay)d.dataset.overlay="1"}catch(e){}</script>`;
 
-function head({ title, desc, path, image = "/assets/img/brand/og-hub.jpg", keywords = "", schema = [], noindex = false, preload = "", app = null }) {
+function head({ title, desc, path, image = "/assets/img/brand/og-hub.jpg", keywords = "", schema = [], noindex = false, preload = "", app = null, css = [] }) {
   const canonical = URL_BASE + path;
   const imageUrl = new URL(image, URL_BASE).href;
   return `<!DOCTYPE html>
@@ -67,9 +67,10 @@ function head({ title, desc, path, image = "/assets/img/brand/og-hub.jpg", keywo
   <link rel="preconnect" href="https://firestore.googleapis.com">
   ${preload}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/assets/css/main.css">
-  <link rel="stylesheet" href="/assets/css/hub.css">
+  <link rel="stylesheet" href="/assets/css/hub.css">${css.map(c => `
+  <link rel="stylesheet" href="${c}">`).join("")}
   ${R.ldJson([R.orgSchema(site), { "@type": "WebSite", "@id": URL_BASE + "/#website", url: URL_BASE + "/", name: "ProfJero Hub", publisher: { "@id": R.HUB_ORG_ID } }, ...schema])}
 </head>`;
 }
@@ -456,10 +457,31 @@ function bookingPage() {
 
 // ======================= CLIENT PORTAL =======================
 function portalPage() {
-  return head({ title: "Client Portal — ProfJero Hub", desc: "Sign in to the ProfJero Hub client portal to track bookings, approve quotes, follow project progress, download files and message the team.", path: "/portal/", noindex: true, app: { manifest: "/portal/manifest.webmanifest", icon: "/assets/img/brand/app-portal-apple-180.png", title: "ProfJero" } }) + header("portal") + `
+  return head({ title: "Client Portal — ProfJero Hub", desc: "Sign in to the ProfJero Hub client portal to track bookings, approve quotes, follow project progress, download files and message the team.", path: "/portal/", noindex: true, css: ["/assets/css/invoice.css", "/assets/css/chat.css"], app: { manifest: "/portal/manifest.webmanifest", icon: "/assets/img/brand/app-portal-apple-180.png", title: "ProfJero" } }) + header("portal") + `
   <main id="main" class="portal-main">
     <div id="portal-root"><div class="boot-loader"><img src="/assets/img/brand/mark-192.png" alt="" width="56" height="56"></div></div>
   </main>` + footer(["/assets/js/portal.js"]);
+}
+
+// Public invoice / quotation page (opened from the link the admin sends). Not indexed.
+function invoicePage() {
+  return head({ title: "Invoice — ProfJero Hub", desc: "View, print or download your invoice from ProfJero.", path: "/invoice/", noindex: true, css: ["/assets/css/invoice.css"] }) + `
+<body data-page="invoice">
+  <div class="page-wrap invoice-page">
+  <header class="inv-bar no-print">
+    <a class="logo" href="/"><img class="logo-mark" src="/assets/img/brand/mark-192.png" alt="ProfJero Hub" width="36" height="36"><span class="logo-text">Prof<b>Jero</b> <em class="logo-hub">Hub</em></span></a>
+    <div class="inv-bar-actions" id="inv-actions" hidden>
+      <button class="btn btn-primary btn-sm" type="button" id="inv-print"><i class="fa-solid fa-file-arrow-down"></i> Download PDF</button>
+      <a class="btn btn-ghost btn-sm" href="/portal/#/invoices"><i class="fa-regular fa-user"></i> Client portal</a>
+    </div>
+  </header>
+  <main id="main" class="inv-main">
+    <div id="inv-root"><div class="boot-loader"><img src="/assets/img/brand/mark-192.png" alt="" width="56" height="56"></div></div>
+  </main>
+  </div>
+  <script type="module" src="/assets/js/invoice-view.js"></script>
+</body>
+</html>`;
 }
 
 // ======================= FEEDS =======================
@@ -514,11 +536,13 @@ const files = {
   ...Object.fromEntries(studios.map(s => [`${s.page || s.id}.html`, studioPage(s)])),
   "booking/index.html": bookingPage(),
   "portal/index.html": portalPage(),
+  "invoice/index.html": invoicePage(),
   "sitemap.xml": sitemap(),
   "llms.txt": llms()
 };
 export default async function buildPages() {
   await mkdir(new URL("booking/", OUT), { recursive: true });
   await mkdir(new URL("portal/", OUT), { recursive: true });
+  await mkdir(new URL("invoice/", OUT), { recursive: true });
   for (const [name, html] of Object.entries(files)) await writeFile(new URL(name, OUT), html);
 }

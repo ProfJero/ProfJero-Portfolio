@@ -129,11 +129,15 @@ export function renderTestimonials(list = []) {
     </figure>`).join("");
 }
 
+// "2023-05" → "May 2023"; older plain text ("2023", "Present") is shown as typed.
+const tlMonth = v => /^\d{4}-\d{2}$/.test(String(v || "")) ? new Date(`${v}-01T12:00`).toLocaleDateString("en-GB", { month: "short", year: "numeric" }) : String(v || "");
+const tlWhen = e => e.start ? `${tlMonth(e.start)} — ${e.end ? tlMonth(e.end) : "Present"}` : tlMonth(e.end);
+
 export function renderExperience(list = []) {
   const col = type => list.filter(e => e.type === type).sort(byOrder).map(e => `
     <li class="tl-item reveal">
       <span class="tl-dot"></span>
-      <div class="tl-when">${esc([e.start, e.end].filter(Boolean).join(" — "))}</div>
+      <div class="tl-when">${esc(tlWhen(e))}</div>
       <h4>${esc(e.title)}</h4>
       <div class="tl-org">${esc(e.org || "")}</div>
       <p>${esc(e.text || "")}</p>

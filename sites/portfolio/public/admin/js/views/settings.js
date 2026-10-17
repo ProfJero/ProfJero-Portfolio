@@ -1,4 +1,4 @@
-import { $, $$, fb, esc, toast, confirmDialog, download, cloudinaryConfig, uploadToCloudinary, state } from "../core.js";
+import { $, $$, fb, esc, toast, confirmDialog, download, cloudinaryConfig, saveCloudinary, uploadToCloudinary, confirmIdentity, state } from "../core.js";
 import { renderFields, bindFields, readFields } from "../forms.js";
 import { DEFAULT_SETTINGS, DEFAULT_SKILLS, DEFAULT_STUDIOS, DEFAULT_PROJECTS, DEFAULT_TESTIMONIALS, DEFAULT_EXPERIENCE, DEFAULT_TEAM, DEFAULT_PRODUCTS } from "/assets/js/defaults.js";
 import { HUB_SETTINGS } from "/assets/js/hub-defaults.js";
@@ -12,30 +12,43 @@ const cloudFields = [
   { key: "folder", label: "Folder (optional)", type: "text", placeholder: "profjero", full: true }
 ];
 
-const COLLECTIONS = ["settings", "skills", "studios", "projects", "testimonials", "experience", "team", "products", "bookings", "orders", "users", "clientProjects", "threads", "posts", "messages", "subscribers", "media", "admins"];
+const COLLECTIONS = ["settings", "skills", "studios", "projects", "testimonials", "experience", "team", "products", "bookings", "orders", "invoices", "users", "clientProjects", "reviews", "threads", "posts", "messages", "subscribers", "media", "admins"];
+const mask = v => v ? "•".repeat(Math.min(14, Math.max(8, String(v).length))) : "—";
 
 export async function render(view) {
   const cfg = await cloudinaryConfig(true);
-  const isOwner = state.user.email === SITE.ownerEmail;
-  let admins = [];
-  try { admins = (await fb.getDocs(fb.collection(fb.db, "admins"))).docs.map(d => ({ id: d.id, ...d.data() })); } catch { }
+  const configured = !!(cfg.cloudName && cfg.uploadPreset);
+  let revealed = false;
 
   view.innerHTML = `
     <div class="grid-2">
       <section class="card">
         <div class="card-head"><h3><i class="fa-solid fa-cloud" style="color:#3448C5"></i> Cloudinary storage</h3><p>Images, videos and files you upload are stored on Cloudinary and optimised automatically (WebP/AVIF, resized).</p></div>
-        <form id="cl-form" data-scope novalidate>${renderFields(cloudFields, cfg)}
-          <div class="btn-row" style="margin-top:16px"><button class="btn btn-primary btn-sm" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-          <label class="btn btn-ghost btn-sm" style="cursor:pointer"><i class="fa-solid fa-vial"></i> Test upload<input type="file" accept="image/*" hidden id="cl-test"></label>
-          <span class="small" id="cl-status">${cfg.cloudName && cfg.uploadPreset ? '<span style="color:var(--green)"><i class="fa-solid fa-circle-check"></i> Configured</span>' : '<span style="color:#b07a00"><i class="fa-solid fa-triangle-exclamation"></i> Not configured</span>'}</span></div>
+        <div id="cl-view">
+          <div class="secret-list">
+            <div class="secret"><span>Cloud name</span><code data-secret="cloudName">${mask(cfg.cloudName)}</code></div>
+            <div class="secret"><span>Upload preset</span><code data-secret="uploadPreset">${mask(cfg.uploadPreset)}</code></div>
+            <div class="secret"><span>Folder</span><code data-secret="folder">${cfg.folder ? mask(cfg.folder) : "—"}</code></div>
+          </div>
+          <div class="btn-row" style="margin-top:14px">
+            ${configured ? `<button class="btn btn-ghost btn-sm" type="button" id="cl-reveal"><i class="fa-regular fa-eye"></i> Show values</button>` : ""}
+            <button class="btn ${configured ? "btn-ghost" : "btn-primary"} btn-sm" type="button" id="cl-edit"><i class="fa-solid fa-pen"></i> ${configured ? "Change" : "Set up Cloudinary"}</button>
+            <label class="btn btn-ghost btn-sm" style="cursor:pointer"><i class="fa-solid fa-vial"></i> Test upload<input type="file" accept="image/*" hidden id="cl-test"></label>
+            <span class="small" id="cl-status">${configured ? '<span style="color:var(--green)"><i class="fa-solid fa-lock"></i> Configured &amp; encrypted</span>' : '<span style="color:#b07a00"><i class="fa-solid fa-triangle-exclamation"></i> Not configured</span>'}</span>
+          </div>
+        </div>
+        <form id="cl-form" data-scope novalidate hidden>${renderFields(cloudFields, {})}
+          <div class="btn-row" style="margin-top:16px"><button class="btn btn-ghost btn-sm" type="button" id="cl-cancel">Cancel</button><button class="btn btn-primary btn-sm" type="submit"><i class="fa-solid fa-lock"></i> Save encrypted</button></div>
         </form>
-        <div class="callout" style="margin-top:16px"><i class="fa-solid fa-shield-halved"></i><div class="small">Tip: in the upload preset, limit <b>allowed formats</b> (jpg, png, webp, gif, mp4, pdf) and set a <b>max file size</b>. These values are stored privately — only admins can read them.</div></div>
+        <div class="callout" style="margin-top:16px"><i class="fa-solid fa-shield-halved"></i><div class="small">These details are stored <b>encrypted</b> (AES-256) and only admins can read them. They stay hidden here until you confirm it's you. In Cloudinary, also limit the upload preset's <b>allowed formats</b> (jpg, png, webp, gif, mp4, pdf) and set a <b>max file size</b>.</div></div>
       </section>
 
       <section class="card">
-        <div class="card-head"><h3><i class="fa-solid fa-user-shield" style="color:var(--brand)"></i> Admins</h3><p>People who can sign in to this dashboard (portfolio and ProfJero Hub). The owner account <b>${esc(SITE.ownerEmail)}</b> always has access.</p></div>
-        <div class="list" id="admin-list"><div class="list-item"><div class="grow"><div class="title">${esc(SITE.ownerEmail)}</div><div class="sub"><i class="fa-solid fa-crown" style="color:#F59E0B"></i> Super admin (owner): can add and remove admins</div></div></div>${admins.map(a => `<div class="list-item" data-email="${esc(a.id)}"><div class="grow"><div class="title">${esc(a.id)}</div><div class="sub">Admin${a.addedBy ? ` · added by ${esc(a.addedBy)}` : ""}</div></div>${isOwner ? '<button class="icon-btn sm danger" data-rm title="Remove"><i class="fa-regular fa-trash-can"></i></button>' : ""}</div>`).join("") || ""}</div>
-        ${isOwner ? `<form id="admin-form" class="f-inline" style="margin-top:12px"><input class="input" type="email" id="admin-email" placeholder="new.admin@gmail.com" required><button class="btn btn-primary btn-sm" type="submit">Add</button></form><p class="small muted">Admins can manage content, bookings, quotes, clients and chat, but only you can add or remove admins. They sign in at this page with Google (or a verified email/password account) using exactly that address. Nobody else can open the dashboard: client accounts only work in the Hub client portal.</p>` : '<p class="small muted">Only the super admin can add or remove admins.</p>'}
+        <div class="card-head"><h3><i class="fa-solid fa-user-shield" style="color:var(--brand)"></i> Admins &amp; roles</h3><p>${state.access.owner ? "Add people to the dashboard and choose exactly what each one can do." : "Only the super admin can add or change admins."}</p></div>
+        ${state.access.owner ? '<a class="btn btn-primary btn-sm" href="#/admins"><i class="fa-solid fa-user-plus"></i> Manage admins &amp; roles</a>' : ""}
+        <hr style="margin:20px 0;border:0;border-top:1px solid var(--line)">
+        <div class="card-head"><h3><i class="fa-regular fa-bell" style="color:var(--brand)"></i> Alerts</h3><p>Choose when you're alerted about deadlines, overdue invoices, waiting clients and more.</p></div>
+        <a class="btn btn-ghost btn-sm" href="#/alerts"><i class="fa-solid fa-sliders"></i> Alert thresholds</a>
       </section>
     </div>
 
@@ -52,21 +65,34 @@ export async function render(view) {
       <button class="btn btn-ghost" id="backup"><i class="fa-solid fa-download"></i> Download backup</button>
     </section>
 
-    <section class="card">
-      <div class="card-head"><h3><i class="fa-solid fa-cubes" style="color:#D97706"></i> ProfJero Hub integration</h3><p>ProfJero Hub uses this same Firebase project. Content is shared: studios, blog posts (choose “Show on” per post), testimonials and the <code class="k">messages</code> inbox (tagged with <code class="k">source: "hub"</code>). See <b>DATABASE.md</b> in the repository for the schema and a copy-paste snippet for the Hub.</p></div>
-      <div class="callout"><i class="fa-solid fa-circle-info"></i><div class="small">Firebase config to use in ProfJero Hub: project <code class="k">jerohub-1</code>. Import <code class="k">https://profjero.pages.dev/assets/js/firebase.js</code> or copy <code class="k">assets/js/config.js</code>.</div></div>
-    </section>`;
+`;
 
   const clForm = $("#cl-form");
   bindFields(clForm);
+  const showForm = on => { clForm.hidden = !on; $("#cl-view").hidden = on; };
+  $("#cl-edit").addEventListener("click", async () => {
+    if (configured) {
+      try { if (!await confirmIdentity("Confirm it's you to change the storage settings.")) return; } catch (err) { return toast(err.code === "auth/popup-closed-by-user" ? "Cancelled" : err.message, "error"); }
+      cloudFields.forEach(f => { const i = clForm.querySelector(`[data-field="${f.key}"] input`); if (i) i.value = cfg[f.key] || ""; });
+    }
+    showForm(true);
+  });
+  $("#cl-cancel").addEventListener("click", () => showForm(false));
+  $("#cl-reveal")?.addEventListener("click", async () => {
+    if (revealed) { $$("[data-secret]").forEach(c => { c.textContent = cfg[c.dataset.secret] ? mask(cfg[c.dataset.secret]) : "—"; }); revealed = false; $("#cl-reveal").innerHTML = '<i class="fa-regular fa-eye"></i> Show values'; return; }
+    try { if (!await confirmIdentity("Confirm it's you to view the storage settings.")) return; } catch (err) { return toast(err.code === "auth/popup-closed-by-user" ? "Cancelled" : err.message, "error"); }
+    $$("[data-secret]").forEach(c => { c.textContent = cfg[c.dataset.secret] || "—"; });
+    revealed = true; $("#cl-reveal").innerHTML = '<i class="fa-regular fa-eye-slash"></i> Hide values';
+    setTimeout(() => { if (revealed && $("#cl-reveal")) $("#cl-reveal").click(); }, 60000);   // re-mask after a minute
+  });
   clForm.addEventListener("submit", async e => {
     e.preventDefault();
     const v = readFields(cloudFields, clForm);
+    if (!v.cloudName || !v.uploadPreset) return toast("Enter the cloud name and the upload preset.", "error");
     try {
-      await fb.setDoc(fb.doc(fb.db, "private", "integrations"), { ...v, updatedAt: fb.serverTimestamp() }, { merge: true });
-      await cloudinaryConfig(true);
-      $("#cl-status").innerHTML = '<span style="color:var(--green)"><i class="fa-solid fa-circle-check"></i> Saved</span>';
-      toast("Cloudinary settings saved");
+      Object.assign(cfg, await saveCloudinary(v));
+      toast("Cloudinary settings saved (encrypted)");
+      render(view);
     } catch (err) { toast(err.message, "error"); }
   });
   $("#cl-test").addEventListener("change", async e => {
@@ -76,21 +102,6 @@ export async function render(view) {
     try { const r = await uploadToCloudinary(f, { onProgress: p => $("#cl-status").textContent = `Uploading… ${p}%` }); $("#cl-status").innerHTML = `<span style="color:var(--green)"><i class="fa-solid fa-circle-check"></i> Works! <a href="${esc(r.url)}" target="_blank">View file</a></span>`; }
     catch (err) { $("#cl-status").innerHTML = `<span style="color:var(--red)">${esc(err.message)}</span>`; }
     e.target.value = "";
-  });
-
-  $("#admin-form")?.addEventListener("submit", async e => {
-    e.preventDefault();
-    const email = $("#admin-email").value.trim().toLowerCase();
-    if (!email) return;
-    await fb.setDoc(fb.doc(fb.db, "admins", email), { role: "admin", addedBy: state.user.email, createdAt: fb.serverTimestamp() });
-    toast(`${email} is now an admin`);
-    render(view);
-  });
-  $("#admin-list").addEventListener("click", async e => {
-    const row = e.target.closest("[data-email]");
-    if (row && e.target.closest("[data-rm]") && await confirmDialog(`Remove admin access for <b>${esc(row.dataset.email)}</b>?`, { ok: "Remove" })) {
-      await fb.deleteDoc(fb.doc(fb.db, "admins", row.dataset.email)); row.remove(); toast("Removed");
-    }
   });
 
   $("#seed").addEventListener("click", async () => {
