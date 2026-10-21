@@ -121,7 +121,7 @@ export function mountChat(root, opts) {
     if (m._pending) return '<i class="fa-regular fa-clock ck-tick" title="Sending"></i>';
     const t = ms(m.createdAt);
     if (peerRead() >= t) return '<span class="ck-tick read" title="Read"><i class="fa-solid fa-check"></i><i class="fa-solid fa-check"></i></span>';
-    if (peerSeen() >= t) return '<span class="ck-tick" title="Delivered"><i class="fa-solid fa-check"></i><i class="fa-solid fa-check"></i></span>';
+    if (peerSeen() >= t || Date.now() - ms(thread?.[`${peerSide}SeenAt`]) < ONLINE_MS) return '<span class="ck-tick" title="Delivered / recipient online"><i class="fa-solid fa-check"></i><i class="fa-solid fa-check"></i></span>';
     return '<span class="ck-tick" title="Sent"><i class="fa-solid fa-check"></i></span>';
   };
   const attHtml = (a, m) => {
