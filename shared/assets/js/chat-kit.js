@@ -260,6 +260,7 @@ export function mountChat(root, opts) {
   async function requestAiReply(userText) {
     if (me !== "client" || thread?.handoffRequested) return;
     if (!AI_CHAT_ENDPOINT) { toast("AI chat is not connected yet. Please tap “Talk to a person” so Benjamin can help.", "info", 7000); return; }
+    const status = $(".ck-status"); if (status) status.textContent = "ProfJero AI is replying…";
     try {
       const [site, hub, projects, products, studios] = await Promise.all([
         fb.getDoc(fb.doc(fb.db, "settings", "site")).catch(() => null),
@@ -280,6 +281,7 @@ export function mountChat(root, opts) {
       await fb.setDoc(fb.doc(mCol), {from: "ai", text: "🤖 ProfJero AI (automated reply)\n" + String(result.answer).slice(0, 3900), name: "ProfJero AI", createdAt: fb.serverTimestamp(), reactions: {}, clientId: "profjero-ai"});
       await fb.updateDoc(tRef, {lastMessage: String(result.answer).slice(0, 200), lastAt: fb.serverTimestamp(), lastFrom: "ai"});
     } catch (error) { toast(error.message || "AI chat is not configured. Please request a human reply.", "error", 6000); }
+    finally { paintStatus(); }
   }
 
   // ---------- sending ----------
