@@ -74,7 +74,7 @@ document.addEventListener("click", e => { if (document.body.classList.contains("
 
 // ---------- Sidebar: grouped, collapsible, searchable, with a slim "rail" mode ----------
 const store = { get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } } };
-let openGroups = store.get("pj_nav_open", { overview: true, sales: true });
+let openGroups = store.get("pj_nav_open", {});
 const badgeCounts = {};
 
 function renderNav() {
@@ -84,7 +84,7 @@ function renderNav() {
     if (!items.length) return "";
     const scopes = [...new Set(items.map(i => i.scope))];
     const scope = scopes.length === 1 ? scopes[0] : "mixed";
-    const open = openGroups[g.id] !== false && (openGroups[g.id] || g.id === "overview");
+    const open = openGroups[g.id] === true;
     return `<section class="nav-group${open ? " open" : ""}" data-group="${g.id}">
       <button class="nav-group-head" type="button" aria-expanded="${open}" aria-controls="ng-${g.id}" data-tip="${esc(g.label)}">
         <i class="${g.icon} g-icon"></i><span class="g-label">${esc(g.label)}</span>
@@ -105,8 +105,7 @@ function renderNav() {
 
 function markActive(key) {
   $$("#side-nav .side-link").forEach(a => a.classList.toggle("active", a.dataset.key === key));
-  const g = $(`#side-nav .side-link[data-key="${key}"]`)?.closest(".nav-group");
-  if (g && !g.classList.contains("open")) toggleGroup(g, true, false);
+
 }
 
 function toggleGroup(g, open = !g.classList.contains("open"), remember = true) {
@@ -140,7 +139,7 @@ $("#nav-q").addEventListener("input", e => {
     let hit = false;
     $$(".side-link", g).forEach(a => { const m = !q || a.dataset.label.includes(q); a.hidden = !m; hit ||= m; });
     g.hidden = !hit; any ||= hit;
-    if (q) g.classList.toggle("open", hit); else g.classList.toggle("open", openGroups[g.dataset.group] !== false && (openGroups[g.dataset.group] || g.dataset.group === "overview"));
+    if (q) g.classList.toggle("open", hit); else g.classList.toggle("open", openGroups[g.dataset.group] === true);
   });
   $(".nav-empty").hidden = any;
 });

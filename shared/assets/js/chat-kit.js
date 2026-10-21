@@ -78,6 +78,7 @@ export function mountChat(root, opts) {
       ${opts.onBack ? '<button type="button" class="ck-ib ck-back" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></button>' : ""}
       <span class="ck-av">${opts.peer.avatar || ""}</span>
       <div class="ck-who"><strong>${esc(opts.peer.name)}</strong><small class="ck-status">${esc(opts.peer.sub || "")}</small></div>
+      ${me === "client" ? `<button type="button" class="ck-ib ck-human-btn" data-request-human title="Request a human reply" aria-label="Request a human reply"><i class="fa-solid fa-headset"></i></button>` : ""}
       ${opts.header || ""}
       <button type="button" class="ck-ib ck-search-btn" aria-label="Search this chat" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
     </header>
@@ -400,6 +401,14 @@ export function mountChat(root, opts) {
     if (!t.closest(".ck-menu") && !t.closest(".ck-more")) closeMenu();
     if (!t.closest(".ck-pop") && !t.closest(".ck-emoji-btn") && !t.closest(".ck-attach-btn")) { $(".ck-emoji").hidden = true; $(".ck-attach").hidden = true; }
     if (t.closest(".ck-back")) return opts.onBack?.();
+    if (t.closest("[data-request-human]") && me === "client") {
+      try {
+        await writeThread({ handoffRequested: true, handoffRequestedAt: fb.serverTimestamp(), handoffStatus: "requested", label: "pending", unreadAdmin: fb.increment(1) });
+        toast("Your request has been sent. A member of the ProfJero team will reply here.");
+        const btn = $(".ck-human-btn"); if (btn) { btn.disabled = true; btn.title = "Human reply requested"; }
+      } catch (err) { toast(err.message || "Could not request a human reply."); }
+      return;
+    }
     if (t.closest(".ck-search-btn")) { $(".ck-search").hidden = false; $(".ck-search input").focus(); return; }
     if (t.closest(".ck-search-close")) { $(".ck-search").hidden = true; $(".ck-search input").value = ""; runSearch(); return; }
     const sNav = t.closest("[data-s]"); if (sNav && searchHits.length) { searchIdx = (searchIdx + Number(sNav.dataset.s) + searchHits.length) % searchHits.length; focusHit(); return; }

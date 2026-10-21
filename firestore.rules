@@ -243,14 +243,20 @@ service cloud.firestore {
     match /threads/{uid} {
       allow read: if chatAdmin() || (signedIn() && request.auth.uid == uid);
       allow create: if (signedIn() && request.auth.uid == uid
-        && data().keys().hasOnly(['uid', 'name', 'email', 'photo', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient', 'clientReadAt', 'clientSeenAt', 'clientTyping', 'clientOnline'])
-        && data().uid == uid && photoOk(data(), 'photo')) || chatAdmin();
+        && data().keys().hasOnly(['uid', 'name', 'email', 'photo', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient', 'clientReadAt', 'clientSeenAt', 'clientTyping', 'clientOnline', 'handoffRequested', 'handoffRequestedAt', 'handoffStatus', 'label'])
+        && data().uid == uid && photoOk(data(), 'photo')
+        && (!('handoffRequested' in data()) || data().handoffRequested == true)
+        && (!('handoffStatus' in data()) || data().handoffStatus == 'requested')
+        && (!('label' in data()) || data().label == 'pending')) || chatAdmin();
       // The client can update their own presence, typing and read markers, and bump
       // the admin's unread count — never reset it or touch admin-side fields.
       allow update: if chatAdmin() || (signedIn() && request.auth.uid == uid
-        && onlyChanged(['name', 'email', 'photo', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient', 'clientReadAt', 'clientSeenAt', 'clientTyping', 'clientOnline'])
+        && onlyChanged(['name', 'email', 'photo', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient', 'clientReadAt', 'clientSeenAt', 'clientTyping', 'clientOnline', 'handoffRequested', 'handoffRequestedAt', 'handoffStatus', 'label'])
         && data().get('unreadClient', 0) <= resource.data.get('unreadClient', 0)
         && data().get('unreadAdmin', 0) >= resource.data.get('unreadAdmin', 0)
+        && (!changed().hasAny(['handoffRequested']) || data().handoffRequested == true)
+        && (!changed().hasAny(['handoffStatus']) || data().handoffStatus == 'requested')
+        && (!changed().hasAny(['label']) || data().label == 'pending')
         && photoOk(data(), 'photo'));
       allow delete: if chatAdmin();
 
