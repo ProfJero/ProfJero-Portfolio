@@ -243,8 +243,32 @@ export function mountChat(root, opts) {
     }
   }
 
+  async function requestAiReply(userText) {
+    if (me !== "client" || !window.PROFJERO_CHAT_API || thread?.handoffRequested) return;
+    try {
+      const [site, hub, projects, products, studios] = await Promise.all([
+        fb.getDoc(fb.doc(fb.db, "settings", "site")).catch(() => null),
+        fb.getDoc(fb.doc(fb.db, "settings", "hub")).catch(() => null),
+        fb.getDocs(fb.query(fb.collection(fb.db, "projects"), fb.limit(40))).catch(() => null),
+        fb.getDocs(fb.query(fb.collection(fb.db, "products"), fb.limit(40))).catch(() => null),
+        fb.getDocs(fb.query(fb.collection(fb.db, "studios"), fb.limit(20))).catch(() => null)
+      ]);
+      const data = snap => snap?.docs?.map(d => ({ id: d.id, ...d.data() })) || [];
+      const safe = value => JSON.stringify(value, (k, v) => /password|secret|token|apiKey|email|phone|uid|credential/i.test(k) ? undefined : v).slice(0, 10000);
+      const context = ["Portfolio settings and pricing: " + safe(site?.data?.() || {}), "Hub information: " + safe(hub?.data?.() || {}), "Projects: " + safe(data(projects).map(p => ({title:p.title,category:p.category,categories:p.categories,summary:p.summary,description:p.description,status:p.status,tech:p.tech}))), "Products: " + safe(data(products).filter(p => p.visible !== false).map(p => ({name:p.name,category:p.category,description:p.description,priceFrom:p.priceFrom,originalPrice:p.originalPrice,salePrice:p.salePrice,unit:p.unit,minQty:p.minQty,leadTime:p.leadTime}))), "Studios: " + safe(data(studios).map(s => ({name:s.name,description:s.description,services:s.services,packages:s.packages,faqs:s.faqs})))].join("\\n");
+      const history = msgs.filter(m => !m.deleted && m.text && ["client", "ai", "admin"].includes(m.from)).slice(-8).map(m => ({role: m.from === "client" ? "user" : "assistant", content: String(m.text).slice(0, 1000)}));
+      const response = await fetch(window.PROFJERO_CHAT_API, {method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify({message: userText, context, history})});
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.answer) throw new Error(result.error || "AI could not respond.");
+      const latest = await fb.getDoc(tRef).catch(() => null);
+      if (latest?.exists() && latest.data().handoffRequested) return;
+      await fb.setDoc(fb.doc(mCol), {from: "ai", text: String(result.answer).slice(0, 4000), name: "ProfJero AI", createdAt: fb.serverTimestamp(), reactions: {}, clientId: "profjero-ai"});
+      await fb.updateDoc(tRef, {lastMessage: String(result.answer).slice(0, 200), lastAt: fb.serverTimestamp(), lastFrom: "ai"});
+    } catch (error) { toast(error.message || "AI chat is not configured. Please request a human reply.", "error", 6000); }
+  }
+
   // ---------- sending ----------
-  async function send({ text = "", attachment = null } = {}) {
+  async function send({ text = "", attachment = null } = {})
     text = text.trim().slice(0, 4000);
     if (!text && !attachment) return;
     const ref = fb.doc(mCol);
@@ -261,6 +285,7 @@ export function mountChat(root, opts) {
       await fb.updateDoc(tRef, patch);
       unreadFrom = null;
       log.scrollTop = log.scrollHeight;
+      if (me === "client" && text && !thread?.handoffRequested) requestAiReply(text);
     } catch (e) { toast("Message not sent: " + (e.message || e), "error"); if (text) ta.value = text; }
   }
   async function sendFile(file, kind) {
