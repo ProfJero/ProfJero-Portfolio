@@ -244,7 +244,8 @@ export function mountChat(root, opts) {
   }
 
   async function requestAiReply(userText) {
-    if (me !== "client" || !window.PROFJERO_CHAT_API || thread?.handoffRequested) return;
+    if (me !== "client" || thread?.handoffRequested) return;
+    if (!window.PROFJERO_CHAT_API) { toast("AI chat is not connected yet. Please tap “Talk to a person” so Benjamin can help.", "info", 7000); return; }
     try {
       const [site, hub, projects, products, studios] = await Promise.all([
         fb.getDoc(fb.doc(fb.db, "settings", "site")).catch(() => null),
