@@ -11,6 +11,7 @@ import { esc, toDate } from "./utils.js";
 
 const EDIT_MS = 15 * 6e4, DELETE_MS = 48 * 36e5, TYPING_MS = 6000, ONLINE_MS = 2.5 * 6e4;
 const MAX_FILE = 680 * 1024;
+const AI_CHAT_ENDPOINT = window.PROFJERO_CHAT_API || "";
 const REACTIONS = ["👍", "❤️", "😂", "😮", "🙏", "🎉"];
 const EMOJI = "😀 😁 😂 🤣 😊 😍 🥰 😘 😎 🤩 🤔 🙄 😅 😉 🙂 😇 🥳 😢 😭 😡 😴 🤝 👍 👎 👏 🙌 🙏 💪 👌 ✌️ 🤞 👋 ❤️ 💙 💚 🔥 ⭐ ✨ 🎉 ✅ ❌ ⚠️ 📌 📎 📷 📄 💡 💰 📅 ⏰ 🚀 🇬🇭".split(" ");
 
@@ -78,7 +79,7 @@ export function mountChat(root, opts) {
       ${opts.onBack ? '<button type="button" class="ck-ib ck-back" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></button>' : ""}
       <span class="ck-av">${opts.peer.avatar || ""}</span>
       <div class="ck-who"><strong>${esc(opts.peer.name)}</strong><small class="ck-status">${esc(opts.peer.sub || "")}</small></div>
-      ${me === "client" ? `<button type="button" class="ck-ib ck-human-btn" data-request-human title="Request a human reply" aria-label="Request a human reply"><i class="fa-solid fa-headset"></i></button>` : ""}
+      ${me === "client" ? `<button type="button" class="ck-human-btn" data-request-human title="Talk to a person"><i class="fa-solid fa-headset"></i><span>Talk to a person</span></button>` : ""}
       ${opts.header || ""}
       <button type="button" class="ck-ib ck-search-btn" aria-label="Search this chat" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
     </header>
