@@ -79,8 +79,10 @@ body.admin { background: var(--bg); min-height: 100vh; }
 .nav-tip { position: fixed; z-index: 400; pointer-events: none; padding: 7px 10px; border-radius: 9px; background: var(--text); color: var(--bg); font-size: .8rem; font-weight: 600; white-space: nowrap; box-shadow: var(--shadow); opacity: 0; transform: translateX(-4px); transition: opacity .15s, transform .15s; }
 .nav-tip.show { opacity: 1; transform: none; }
 
-/* ---------- Topbar ---------- */
-.admin-main { min-width: 0; display: flex; flex-direction: column; }
+/* ---------- Main content / Topbar ---------- */
+/* The sidebar is fixed and therefore removed from grid auto-placement. Explicitly
+   reserve the first track for it so the dashboard content starts beside it. */
+.admin-main { grid-column: 2; min-width: 0; width: 100%; max-width: 100%; display: flex; flex-direction: column; }
 .topbar { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px; padding: 14px clamp(16px, 3vw, 32px); background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
 .topbar h1 { font-size: 1.25rem; margin: 0; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .topbar .menu-btn { display: none; }
@@ -114,7 +116,8 @@ body.admin { background: var(--bg); min-height: 100vh; }
 .user-chip img, .user-chip .avatar { width: 32px; height: 32px; font-size: .75rem; }
 .content { padding: clamp(16px, 3vw, 32px); width: 100%; max-width: 1400px; margin: 0 auto; flex: 1; }
 @media (max-width: 960px) {
-  .admin-shell, .nav-rail .admin-shell { grid-template-columns: 1fr; }
+  .admin-shell, .nav-rail .admin-shell { grid-template-columns: minmax(0, 1fr); }
+  .admin-main { grid-column: 1; min-width: 0; width: 100%; }
   .sidebar { position: fixed; left: 0; top: 0; width: 290px; transform: translateX(-105%); transition: transform .3s var(--ease); box-shadow: var(--shadow-lg); }
   .rail-btn { display: none; }
   .side-open .sidebar { transform: none; }
