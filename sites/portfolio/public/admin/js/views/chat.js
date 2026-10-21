@@ -13,6 +13,7 @@ const DEFAULT_QR = [
   { key: "hours", text: "We're available Monday to Saturday, 7am to 8pm. We'll reply as soon as we can." }
 ];
 let unsubs = [], chat = null;
+const notifiedHandoffs = new Set();
 export function destroy() { unsubs.forEach(u => u()); unsubs = []; chat?.destroy(); chat = null; }
 
 const avatarOf = (t, size = 44) => t.photo ? `<img class="avatar" src="${esc(t.photo)}" alt="" style="width:${size}px;height:${size}px">` : `<span class="avatar avatar-fallback" style="--h:${hueFrom(t.email || t.id)};width:${size}px;height:${size}px;font-size:${size / 2.6}px">${esc(initials(t.name || t.email))}</span>`;
@@ -54,7 +55,7 @@ export async function render(view, { params }) {
     $("#inbox").classList.add("detail-open");
     const pane = $("#t-detail");
     chat = mountChat(pane, {
-      fb, threadId: id, me: "admin", myName: firstName() || "ProfJero", toast,
+      fb, threadId: id, me: "admin", myName: "Benjamin (ProfJero)", toast,
       peer: { name: t.name || t.email || "Client", avatar: avatarOf(t, 40), sub: t.email || "" },
       onBack: () => { chat?.destroy(); chat = null; selected = null; $("#inbox").classList.remove("detail-open"); pane.innerHTML = emptyState("fa-regular fa-comment-dots", "Select a conversation."); history.replaceState(null, "", "#/chat"); paintList(); },
       quickReplies,
@@ -101,6 +102,15 @@ export async function render(view, { params }) {
   unsubs.push(fb.onSnapshot(fb.query(fb.collection(fb.db, "threads"), fb.orderBy("lastAt", "desc"), fb.limit(300)), snap => {
     threads = snap.docs.map(d => ({ id: d.id, ...d.data({ serverTimestamps: "estimate" }) }));
     if (!view.isConnected) return;
+    threads.filter(t => t.handoffRequested && !notifiedHandoffs.has(t.id)).forEach(t => {
+      notifiedHandoffs.add(t.id);
+      toast(`Human reply requested by ${t.name || t.email || "a client"}.`, "info");
+      if ("Notification" in window && Notification.permission === "granted") {
+        const n = new Notification("ProfJero Chat — human reply requested", { body: `${t.name || t.email || "A client"} is waiting for a human reply.` });
+        n.onclick = () => { focus(); location.hash = `#/chat/${t.id}`; n.close(); };
+      }
+    });
+    threads.filter(t => !t.handoffRequested).forEach(t => notifiedHandoffs.delete(t.id));
     paintList();
     if (selected && !chat) open(selected);
     // Let clients see their messages were delivered (✓✓) as soon as the admin's chat list has them.
