@@ -72,7 +72,7 @@ export function mountChat(root, opts) {
   const mCol = fb.collection(fb.db, "threads", threadId, "messages");
   const fileCache = new Map();
   let msgs = [], thread = null, unsubs = [], replyTo = null, editing = null, firstPaint = true, unreadFrom = null, newBelow = 0;
-  let lastTyping = 0, heartbeat, searchHits = [], searchIdx = 0, recorder = null, recChunks = [], recStart = 0, recTimer = null, recCancel = false;
+  let lastTyping = 0, heartbeat, searchHits = [], searchIdx = 0, recorder = null, recChunks = [], recStart = 0, recTimer = null, recCancel = false, aiThinking = false;
   const toast = opts.toast || ((m) => console.log(m));
 
   root.innerHTML = `<div class="ck">
@@ -172,6 +172,7 @@ export function mountChat(root, opts) {
   }
   function paintStatus() {
     const st = $(".ck-status");
+    if (aiThinking && me === "client") { st.textContent = "ProfJero AI is replying…"; st.classList.remove("on"); return; }
     const typing = Date.now() - ms(thread?.[`${peerSide}Typing`]) < TYPING_MS;
     if (typing) { st.innerHTML = '<span class="ck-typing">typing<i></i><i></i><i></i></span>'; return; }
     const seen = ms(thread?.[`${peerSide}SeenAt`]);
@@ -260,7 +261,7 @@ export function mountChat(root, opts) {
   async function requestAiReply(userText) {
     if (me !== "client" || thread?.handoffRequested) return;
     if (!AI_CHAT_ENDPOINT) { toast("AI chat is not connected yet. Please tap “Talk to a person” so Benjamin can help.", "info", 7000); return; }
-    const status = $(".ck-status"); if (status) status.textContent = "ProfJero AI is replying…";
+    aiThinking = true; paintStatus();
     try {
       const [site, hub, projects, products, studios] = await Promise.all([
         fb.getDoc(fb.doc(fb.db, "settings", "site")).catch(() => null),
@@ -281,7 +282,7 @@ export function mountChat(root, opts) {
       await fb.setDoc(fb.doc(mCol), {from: "ai", text: "🤖 ProfJero AI (automated reply)\n" + String(result.answer).slice(0, 3900), name: "ProfJero AI", createdAt: fb.serverTimestamp(), reactions: {}, clientId: "profjero-ai"});
       await fb.updateDoc(tRef, {lastMessage: String(result.answer).slice(0, 200), lastAt: fb.serverTimestamp(), lastFrom: "ai"});
     } catch (error) { toast(error.message || "AI chat is not configured. Please request a human reply.", "error", 6000); }
-    finally { paintStatus(); }
+    finally { aiThinking = false; paintStatus(); }
   }
 
   // ---------- sending ----------
