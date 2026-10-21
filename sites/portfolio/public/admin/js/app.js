@@ -221,6 +221,24 @@ async function startApp(u, rec) {
     count(fb.query(fb.collection(fb.db, "orders"), fb.where("status", "==", "requested")), "orders", n => state.newOrders = n);
   }
   if (can("chat")) count(fb.query(fb.collection(fb.db, "threads"), fb.where("unreadAdmin", ">", 0)), "chat", n => state.unreadChats = n);
+  if (can("chat")) {
+    const seenHandoffs = new Set();
+    subs.push(fb.onSnapshot(fb.query(fb.collection(fb.db, "threads"), fb.where("handoffRequested", "==", true)), snap => {
+      snap.docChanges().filter(change => change.type === "added" || change.type === "modified").forEach(change => {
+        const t = change.doc.data();
+        if (seenHandoffs.has(change.doc.id) || !t.handoffRequested) return;
+        seenHandoffs.add(change.doc.id);
+        if (!location.hash.startsWith("#/chat")) {
+          toast(`Human support requested by ${t.name || t.email || "a client"}. Open Chat to reply.`, "info", 7000);
+          if ("Notification" in window && Notification.permission === "granted") {
+            const n = new Notification("ProfJero Chat — human reply requested", { body: `${t.name || t.email || "A client"} is waiting for a human reply.` });
+            n.onclick = () => { focus(); location.hash = `#/chat/${change.doc.id}`; n.close(); };
+          }
+        }
+      });
+      snap.docs.filter(d => !d.data().handoffRequested).forEach(d => seenHandoffs.delete(d.id));
+    }, err => console.warn("Chat handoff notifications unavailable:", err.message)));
+  }
   if (can("clients")) count(fb.query(fb.collection(fb.db, "reviews"), fb.where("status", "==", "pending")), "reviews", n => state.pendingReviews = n);
   if (can("messages")) count(fb.query(fb.collection(fb.db, "messages"), fb.where("status", "==", "new")), "messages", n => {
     state.unread = n;
