@@ -153,7 +153,7 @@ $("#project-filters").addEventListener("click", e => {
   if (!chip) return;
   $$("#project-filters .chip").forEach(c => c.classList.toggle("active", c === chip));
   const f = chip.dataset.filter;
-  $$("#project-grid .project-card").forEach(card => card.classList.toggle("hide", f !== "*" && card.dataset.cat !== f));
+  $$("#project-grid .project-card").forEach(card => card.classList.toggle("hide", f !== "*" && !(card.dataset.cat || "").split("|").includes(f)));
 });
 
 // ---------- Modal (demo / video / details) ----------
