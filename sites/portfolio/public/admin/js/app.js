@@ -74,7 +74,7 @@ document.addEventListener("click", e => { if (document.body.classList.contains("
 
 // ---------- Sidebar: grouped, collapsible, searchable, with a slim "rail" mode ----------
 const store = { get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } } };
-let openGroups = store.get("pj_nav_open", {});
+let openGroups = store.get("pj_nav_open_v2", {});
 const badgeCounts = {};
 
 function renderNav() {
@@ -111,7 +111,7 @@ function markActive(key) {
 function toggleGroup(g, open = !g.classList.contains("open"), remember = true) {
   g.classList.toggle("open", open);
   $(".nav-group-head", g).setAttribute("aria-expanded", open);
-  if (remember) { openGroups[g.dataset.group] = open; store.set("pj_nav_open", openGroups); }
+  if (remember) { openGroups[g.dataset.group] = open; store.set("pj_nav_open_v2", openGroups); }
 }
 
 $("#side-nav").addEventListener("click", e => {
