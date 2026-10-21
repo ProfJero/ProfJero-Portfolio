@@ -8,7 +8,7 @@ This Worker replaces Firebase Cloud Functions for the public AI chat. Firestore 
 2. From `workers/chat-api`, run `npx wrangler login` if needed.
 3. Deploy: `npx wrangler deploy`.
 4. In Cloudflare Workers & Pages, open the Worker settings and ensure the Workers AI binding named `AI` is enabled (the `wrangler.toml` declares it).
-5. Copy the deployed Worker URL and set `window.PROFJERO_CHAT_API` to that URL plus `/api/chat` in each site's shared site bootstrap, or use a same-origin route/proxy to forward `/api/chat` to this Worker.
+5. Copy the deployed Worker URL ending in `/api/chat` and paste it into `CHAT_API_URL` in `shared/assets/js/config.js`. That is the single shared setting used by both the Portfolio and Hub. You can optionally override it with `window.PROFJERO_CHAT_API` before the chat module loads.
 6. The allowed origin list in `src/index.js` intentionally permits only the two production sites. Add local development origins only while testing, then remove them.
 
 The Worker has no Firebase Admin credentials and does not use Firebase Cloud Functions. AI answers are written to the visitor's own thread by the browser, subject to Firestore rules. Human handoff stops automatic AI replies for that thread.
