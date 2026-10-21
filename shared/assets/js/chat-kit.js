@@ -208,7 +208,20 @@ export function mountChat(root, opts) {
       else notify(added.filter(m => m.from === peerSide).pop());
     } else if (!before) markRead();
   }, err => { log.innerHTML = `<div class="ck-empty"><i class="fa-solid fa-triangle-exclamation"></i><p>${esc(err.message)}</p></div>`; }));
-  unsubs.push(fb.onSnapshot(tRef, s => { thread = s.exists() ? s.data({ serverTimestamps: "estimate" }) : null; opts.onThread?.(thread); paintTicksAndStatus(); }, () => { }));
+  unsubs.push(fb.onSnapshot(tRef, s => {
+    thread = s.exists() ? s.data({ serverTimestamps: "estimate" }) : null;
+    opts.onThread?.(thread);
+    const handoff = $(".ck-human-btn");
+    if (handoff) {
+      handoff.disabled = !!thread?.handoffRequested;
+      handoff.classList.toggle("requested", !!thread?.handoffRequested);
+      handoff.innerHTML = thread?.handoffRequested ? '<i class="fa-solid fa-hourglass-half"></i><span>Human reply requested</span>' : '<i class="fa-solid fa-headset"></i><span>Talk to a person</span>';
+    }
+    const banner = $(".ck-handoff-banner");
+    if (thread?.handoffRequested && !banner) log.insertAdjacentHTML("afterbegin", '<div class="ck-handoff-banner"><i class="fa-solid fa-user-check"></i><div><strong>Human support requested</strong><span>Benjamin (ProfJero) has been notified. Replies will appear here.</span></div></div>');
+    if (!thread?.handoffRequested) banner?.remove();
+    paintTicksAndStatus();
+  }, () => { }));
   const statusTimer = setInterval(paintStatus, 4000);
   function paintTicksAndStatus() {
     // Re-render only the meta of my messages (cheap) so ticks turn blue live.
@@ -432,8 +445,10 @@ export function mountChat(root, opts) {
     if (t.closest("[data-request-human]") && me === "client") {
       try {
         await writeThread({ handoffRequested: true, handoffRequestedAt: fb.serverTimestamp(), handoffStatus: "requested", label: "pending", unreadAdmin: fb.increment(1) });
-        toast("Your request has been sent. A member of the ProfJero team will reply here.");
-        const btn = $(".ck-human-btn"); if (btn) { btn.disabled = true; btn.title = "Human reply requested"; }
+        toast("Request sent. Benjamin (ProfJero) will reply in this chat.");
+        const btn = $(".ck-human-btn");
+        if (btn) { btn.disabled = true; btn.title = "Human reply requested"; btn.classList.add("requested"); btn.innerHTML = '<i class="fa-solid fa-hourglass-half"></i><span>Human reply requested</span>'; }
+        if (!$(".ck-handoff-banner")) log.insertAdjacentHTML("afterbegin", '<div class="ck-handoff-banner"><i class="fa-solid fa-user-check"></i><div><strong>Human support requested</strong><span>Benjamin (ProfJero) has been notified. Replies will appear here.</span></div></div>');
       } catch (err) { toast(err.message || "Could not request a human reply."); }
       return;
     }
