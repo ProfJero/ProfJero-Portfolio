@@ -422,3 +422,8 @@ a.kpi:hover { border-color: var(--c); color: var(--text); transform: translateY(
 .photo-pick .btn.disabled { opacity: .6; pointer-events: none; }
 .photo-pick.sm { padding: 0; margin: 0; border: 0; gap: 14px; }
 @media (max-width: 520px) { .photo-pick:not(.sm) { flex-direction: column; text-align: center; } .photo-pick .btn-row { justify-content: center; } }
+
+/* Product discount presentation */
+.product-facts dd .price-was { display: inline-block; color: var(--muted); font-size: .82rem; text-decoration: line-through; margin-right: 5px; }
+.product-facts dd .price-sale { display: inline-block; color: var(--text); font-size: 1.05rem; font-weight: 850; }
+.product-facts dd .price-discount { display: block; margin-top: 3px; color: var(--green, #0f8b58); font-size: .65rem; font-weight: 800; letter-spacing: .07em; }
