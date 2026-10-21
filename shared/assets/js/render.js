@@ -169,8 +169,8 @@ export const cedis = v => {
 export function renderPricing(groups = [], note = "") {
   const list = groups.filter(g => (g.plans || []).length);
   const tabs = list.map((g, i) => `<button type="button" role="tab" class="${i === 0 ? "active" : ""}" aria-selected="${i === 0}" data-pgroup="${i}"><i class="${esc(g.icon || "fa-solid fa-tag")}"></i> ${esc(g.name)}</button>`).join("");
-  const money = p => esc(cedis(p.salePrice ?? p.discountPrice ?? p.price));
-  const originalMoney = p => p.originalPrice != null && String(p.originalPrice).trim() !== "" ? esc(cedis(p.originalPrice)) : "";
+  const money = p => esc(cedis(p.salePrice || p.discountPrice || p.price));
+  const originalMoney = p => p.salePrice && p.originalPrice != null && String(p.originalPrice).trim() !== "" ? esc(cedis(p.originalPrice)) : "";
   const panels = list.map((g, i) => `
     <div class="pricing" data-ppanel="${i}"${i === 0 ? "" : " hidden"}>
       ${(g.plans || []).map(p => `
