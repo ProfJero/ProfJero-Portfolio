@@ -8,10 +8,11 @@
 //       threads/{uid}/messages/{id} { from, text, name, createdAt, attachment, replyTo, reactions, editedAt, deleted }
 //       threads/{uid}/files/{id}    { data (compressed data URL), mime, name, size, by }
 import { esc, toDate } from "./utils.js";
+import { CHAT_API_URL } from "./config.js";
 
 const EDIT_MS = 15 * 6e4, DELETE_MS = 48 * 36e5, TYPING_MS = 6000, ONLINE_MS = 2.5 * 6e4;
 const MAX_FILE = 680 * 1024;
-const AI_CHAT_ENDPOINT = window.PROFJERO_CHAT_API || "";
+const AI_CHAT_ENDPOINT = window.PROFJERO_CHAT_API || CHAT_API_URL;
 const REACTIONS = ["👍", "❤️", "😂", "😮", "🙏", "🎉"];
 const EMOJI = "😀 😁 😂 🤣 😊 😍 🥰 😘 😎 🤩 🤔 🙄 😅 😉 🙂 😇 🥳 😢 😭 😡 😴 🤝 👍 👎 👏 🙌 🙏 💪 👌 ✌️ 🤞 👋 ❤️ 💙 💚 🔥 ⭐ ✨ 🎉 ✅ ❌ ⚠️ 📌 📎 📷 📄 💡 💰 📅 ⏰ 🚀 🇬🇭".split(" ");
 
@@ -245,7 +246,7 @@ export function mountChat(root, opts) {
 
   async function requestAiReply(userText) {
     if (me !== "client" || thread?.handoffRequested) return;
-    if (!window.PROFJERO_CHAT_API) { toast("AI chat is not connected yet. Please tap “Talk to a person” so Benjamin can help.", "info", 7000); return; }
+    if (!AI_CHAT_ENDPOINT) { toast("AI chat is not connected yet. Please tap “Talk to a person” so Benjamin can help.", "info", 7000); return; }
     try {
       const [site, hub, projects, products, studios] = await Promise.all([
         fb.getDoc(fb.doc(fb.db, "settings", "site")).catch(() => null),
@@ -258,7 +259,7 @@ export function mountChat(root, opts) {
       const safe = value => JSON.stringify(value, (k, v) => /password|secret|token|apiKey|email|phone|uid|credential/i.test(k) ? undefined : v).slice(0, 10000);
       const context = ["Portfolio settings and pricing: " + safe(site?.data?.() || {}), "Hub information: " + safe(hub?.data?.() || {}), "Projects: " + safe(data(projects).map(p => ({title:p.title,category:p.category,categories:p.categories,summary:p.summary,description:p.description,status:p.status,tech:p.tech}))), "Products: " + safe(data(products).filter(p => p.visible !== false).map(p => ({name:p.name,category:p.category,description:p.description,priceFrom:p.priceFrom,originalPrice:p.originalPrice,salePrice:p.salePrice,unit:p.unit,minQty:p.minQty,leadTime:p.leadTime}))), "Studios: " + safe(data(studios).map(s => ({name:s.name,description:s.description,services:s.services,packages:s.packages,faqs:s.faqs})))].join("\\n");
       const history = msgs.filter(m => !m.deleted && m.text && ["client", "ai", "admin"].includes(m.from)).slice(-8).map(m => ({role: m.from === "client" ? "user" : "assistant", content: String(m.text).slice(0, 1000)}));
-      const response = await fetch(window.PROFJERO_CHAT_API, {method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify({message: userText, context, history})});
+      const response = await fetch(AI_CHAT_ENDPOINT, {method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify({message: userText, context, history})});
       const result = await response.json().catch(() => ({}));
       if (!response.ok || !result.answer) throw new Error(result.error || "AI could not respond.");
       const latest = await fb.getDoc(tRef).catch(() => null);
