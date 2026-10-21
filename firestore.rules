@@ -248,7 +248,7 @@ service cloud.firestore {
       // The client can update their own presence, typing and read markers, and bump
       // the admin's unread count — never reset it or touch admin-side fields.
       allow update: if chatAdmin() || (signedIn() && request.auth.uid == uid
-        && onlyChanged(['name', 'email', 'photo', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient', 'clientReadAt', 'clientSeenAt', 'clientTyping', 'clientOnline'])
+        && onlyChanged(['name', 'email', 'photo', 'lastMessage', 'lastAt', 'lastFrom', 'unreadAdmin', 'unreadClient', 'clientReadAt', 'clientSeenAt', 'clientTyping', 'clientOnline', 'handoffRequested', 'handoffRequestedAt', 'handoffStatus', 'label'])
         && data().get('unreadClient', 0) <= resource.data.get('unreadClient', 0)
         && data().get('unreadAdmin', 0) >= resource.data.get('unreadAdmin', 0)
         && photoOk(data(), 'photo'));
