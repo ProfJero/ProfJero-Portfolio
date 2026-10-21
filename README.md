@@ -45,6 +45,18 @@ Both Pages projects connect to **this repository** and differ only in their fold
 
 Optional: under **Build watch paths**, include `shared/*`, `scripts/*` and that site's own `sites/<site>/*` so each site only rebuilds when something it uses changes.
 
+## AI chat backend (Cloudflare Workers, not Firebase Functions)
+
+The visitor chat calls `workers/chat-api/`, which uses the Cloudflare Workers AI binding and returns a business-grounded answer. Firestore continues to store conversations. After deploying the Worker, set `CHAT_API_URL` in `shared/assets/js/config.js` to the full deployed URL ending in `/api/chat`; the same setting is used by the Portfolio and Hub. Until that URL is set and the Worker is deployed with its `AI` binding, the chat will clearly tell visitors that AI is not connected and direct them to the human-support button.
+
+```bash
+cd workers/chat-api
+npx wrangler login
+npx wrangler deploy
+```
+
+See [`workers/chat-api/README.md`](workers/chat-api/README.md) for setup, CORS and troubleshooting.
+
 ## Local development
 
 ```bash

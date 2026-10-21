@@ -11,6 +11,7 @@
     "dev:hub": "node scripts/build.mjs hub && cd sites/hub && wrangler pages dev dist --port 8789",
     "emulators": "firebase emulators:start --only firestore,auth",
     "test:rules": "firebase emulators:exec --only firestore \"node tests/rules.test.mjs\"",
+    "test:chat-worker": "node --test workers/chat-api/src/index.test.js",
     "deploy:rules": "firebase deploy --only firestore:rules"
   },
   "devDependencies": {

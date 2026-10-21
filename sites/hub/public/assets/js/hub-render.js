@@ -100,7 +100,7 @@ export function renderProducts(products = []) {
         <p>${esc(p.description || "")}</p>
         <div class="product-methods">${(p.methods || []).slice(0, 3).map(m => `<span>${esc(m)}</span>`).join("")}</div>
         <dl class="product-facts">
-          <div><dt>From</dt><dd>${esc(cedis(p.priceFrom) || "Quote")}<small> ${esc(p.unit || "")}</small></dd></div>
+          <div><dt>From</dt><dd>${p.originalPrice && p.salePrice ? `<s class="price-was">${esc(cedis(p.originalPrice))}</s> ` : ""}<strong class="${p.salePrice ? "price-sale" : ""}">${esc(cedis(p.salePrice || p.priceFrom) || "Quote")}</strong><small> ${esc(p.unit || "")}</small>${p.originalPrice && p.salePrice ? '<span class="price-discount">SPECIAL PRICE</span>' : ""}</dd></div>
           <div><dt>Min. qty</dt><dd>${esc(p.minQty ?? 1)}</dd></div>
           <div><dt>Ready in</dt><dd>${esc(p.leadTime || "—")}</dd></div>
         </dl>

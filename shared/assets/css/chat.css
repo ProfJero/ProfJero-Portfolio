@@ -41,7 +41,7 @@
 .ck-msg.me .ck-b::after { right: -6px; clip-path: polygon(0 0, 100% 0, 0 100%); }
 .ck-msg.them .ck-b::after { left: -6px; clip-path: polygon(0 0, 100% 0, 100% 100%); }
 .ck-name { display: block; font-size: .76rem; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
-.ck-text { white-space: normal; }
+.ck-text { white-space: pre-line; }
 .ck-text a { color: var(--brand); text-decoration: underline; }
 .ck-meta { float: right; margin: 6px 0 -4px 10px; font-size: .68rem; color: var(--muted); display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
 .ck-meta em { font-style: italic; }
@@ -126,3 +126,16 @@
 .ck-viewer-x, .ck-viewer-dl { position: fixed; top: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgb(255 255 255 / .15); color: #fff; display: grid; place-items: center; font-size: 1.1rem; cursor: pointer; }
 .ck-viewer-x { right: 16px; } .ck-viewer-dl { right: 70px; }
 @media (prefers-reduced-motion: reduce) { .ck-msg, .ck-pop, .ck-menu { animation: none; } .ck-log { scroll-behavior: auto; } }
+
+
+/* Accessible, obvious human handoff (especially for visitors unfamiliar with chat icons). */
+.ck-human-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 38px; padding: 0 13px; border: 1px solid color-mix(in srgb, var(--brand) 35%, var(--line)); border-radius: 999px; color: var(--brand); background: color-mix(in srgb, var(--brand) 7%, var(--surface)); font: inherit; font-size: .82rem; font-weight: 750; cursor: pointer; white-space: nowrap; }
+.ck-human-btn:hover { background: color-mix(in srgb, var(--brand) 13%, var(--surface)); }
+.ck-human-btn:disabled { cursor: default; opacity: .85; }
+.ck-human-btn.requested { color: #92400e; background: #fff7ed; border-color: #fdba74; }
+.ck-handoff-banner { display: flex; align-items: center; gap: 11px; padding: 12px 14px; margin: 4px 0 12px; border: 1px solid #fdba74; border-radius: 14px; background: #fff7ed; color: #7c2d12; }
+.ck-handoff-banner > i { font-size: 1.25rem; }
+.ck-handoff-banner strong, .ck-handoff-banner span { display: block; }
+.ck-handoff-banner strong { font-size: .88rem; }
+.ck-handoff-banner span { font-size: .78rem; margin-top: 2px; }
+@media (max-width: 520px) { .ck-human-btn { padding: 0 9px; font-size: .72rem; gap: 5px; } .ck-head { gap: 6px; } }

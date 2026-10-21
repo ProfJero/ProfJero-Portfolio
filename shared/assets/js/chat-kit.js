@@ -8,9 +8,11 @@
 //       threads/{uid}/messages/{id} { from, text, name, createdAt, attachment, replyTo, reactions, editedAt, deleted }
 //       threads/{uid}/files/{id}    { data (compressed data URL), mime, name, size, by }
 import { esc, toDate } from "./utils.js";
+import { CHAT_API_URL } from "./config.js";
 
 const EDIT_MS = 15 * 6e4, DELETE_MS = 48 * 36e5, TYPING_MS = 6000, ONLINE_MS = 2.5 * 6e4;
 const MAX_FILE = 680 * 1024;
+const AI_CHAT_ENDPOINT = window.PROFJERO_CHAT_API || CHAT_API_URL;
 const REACTIONS = ["👍", "❤️", "😂", "😮", "🙏", "🎉"];
 const EMOJI = "😀 😁 😂 🤣 😊 😍 🥰 😘 😎 🤩 🤔 🙄 😅 😉 🙂 😇 🥳 😢 😭 😡 😴 🤝 👍 👎 👏 🙌 🙏 💪 👌 ✌️ 🤞 👋 ❤️ 💙 💚 🔥 ⭐ ✨ 🎉 ✅ ❌ ⚠️ 📌 📎 📷 📄 💡 💰 📅 ⏰ 🚀 🇬🇭".split(" ");
 
@@ -70,7 +72,7 @@ export function mountChat(root, opts) {
   const mCol = fb.collection(fb.db, "threads", threadId, "messages");
   const fileCache = new Map();
   let msgs = [], thread = null, unsubs = [], replyTo = null, editing = null, firstPaint = true, unreadFrom = null, newBelow = 0;
-  let lastTyping = 0, heartbeat, searchHits = [], searchIdx = 0, recorder = null, recChunks = [], recStart = 0, recTimer = null, recCancel = false;
+  let lastTyping = 0, heartbeat, searchHits = [], searchIdx = 0, recorder = null, recChunks = [], recStart = 0, recTimer = null, recCancel = false, aiThinking = false;
   const toast = opts.toast || ((m) => console.log(m));
 
   root.innerHTML = `<div class="ck">
@@ -78,7 +80,7 @@ export function mountChat(root, opts) {
       ${opts.onBack ? '<button type="button" class="ck-ib ck-back" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></button>' : ""}
       <span class="ck-av">${opts.peer.avatar || ""}</span>
       <div class="ck-who"><strong>${esc(opts.peer.name)}</strong><small class="ck-status">${esc(opts.peer.sub || "")}</small></div>
-      ${me === "client" ? `<button type="button" class="ck-ib ck-human-btn" data-request-human title="Request a human reply" aria-label="Request a human reply"><i class="fa-solid fa-headset"></i></button>` : ""}
+      ${me === "client" ? `<button type="button" class="ck-human-btn" data-request-human title="Talk to a person"><i class="fa-solid fa-headset"></i><span>Talk to a person</span></button>` : ""}
       ${opts.header || ""}
       <button type="button" class="ck-ib ck-search-btn" aria-label="Search this chat" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
     </header>
@@ -119,7 +121,7 @@ export function mountChat(root, opts) {
     if (m._pending) return '<i class="fa-regular fa-clock ck-tick" title="Sending"></i>';
     const t = ms(m.createdAt);
     if (peerRead() >= t) return '<span class="ck-tick read" title="Read"><i class="fa-solid fa-check"></i><i class="fa-solid fa-check"></i></span>';
-    if (peerSeen() >= t) return '<span class="ck-tick" title="Delivered"><i class="fa-solid fa-check"></i><i class="fa-solid fa-check"></i></span>';
+    if (peerSeen() >= t || Date.now() - ms(thread?.[`${peerSide}SeenAt`]) < ONLINE_MS) return '<span class="ck-tick" title="Delivered / recipient online"><i class="fa-solid fa-check"></i><i class="fa-solid fa-check"></i></span>';
     return '<span class="ck-tick" title="Sent"><i class="fa-solid fa-check"></i></span>';
   };
   const attHtml = (a, m) => {
@@ -170,6 +172,7 @@ export function mountChat(root, opts) {
   }
   function paintStatus() {
     const st = $(".ck-status");
+    if (aiThinking && me === "client") { st.textContent = "ProfJero AI is replying…"; st.classList.remove("on"); return; }
     const typing = Date.now() - ms(thread?.[`${peerSide}Typing`]) < TYPING_MS;
     if (typing) { st.innerHTML = '<span class="ck-typing">typing<i></i><i></i><i></i></span>'; return; }
     const seen = ms(thread?.[`${peerSide}SeenAt`]);
@@ -206,7 +209,20 @@ export function mountChat(root, opts) {
       else notify(added.filter(m => m.from === peerSide).pop());
     } else if (!before) markRead();
   }, err => { log.innerHTML = `<div class="ck-empty"><i class="fa-solid fa-triangle-exclamation"></i><p>${esc(err.message)}</p></div>`; }));
-  unsubs.push(fb.onSnapshot(tRef, s => { thread = s.exists() ? s.data({ serverTimestamps: "estimate" }) : null; opts.onThread?.(thread); paintTicksAndStatus(); }, () => { }));
+  unsubs.push(fb.onSnapshot(tRef, s => {
+    thread = s.exists() ? s.data({ serverTimestamps: "estimate" }) : null;
+    opts.onThread?.(thread);
+    const handoff = $(".ck-human-btn");
+    if (handoff) {
+      handoff.disabled = !!thread?.handoffRequested;
+      handoff.classList.toggle("requested", !!thread?.handoffRequested);
+      handoff.innerHTML = thread?.handoffRequested ? '<i class="fa-solid fa-hourglass-half"></i><span>Human reply requested</span>' : '<i class="fa-solid fa-headset"></i><span>Talk to a person</span>';
+    }
+    const banner = $(".ck-handoff-banner");
+    if (thread?.handoffRequested && !banner) log.insertAdjacentHTML("afterbegin", '<div class="ck-handoff-banner"><i class="fa-solid fa-user-check"></i><div><strong>Human support requested</strong><span>Benjamin (ProfJero) has been notified. Replies will appear here.</span></div></div>');
+    if (!thread?.handoffRequested) banner?.remove();
+    paintTicksAndStatus();
+  }, () => { }));
   const statusTimer = setInterval(paintStatus, 4000);
   function paintTicksAndStatus() {
     // Re-render only the meta of my messages (cheap) so ticks turn blue live.
@@ -242,6 +258,33 @@ export function mountChat(root, opts) {
     }
   }
 
+  async function requestAiReply(userText) {
+    if (me !== "client" || thread?.handoffRequested) return;
+    if (!AI_CHAT_ENDPOINT) { toast("AI chat is not connected yet. Please tap “Talk to a person” so Benjamin can help.", "info", 7000); return; }
+    aiThinking = true; paintStatus();
+    try {
+      const [site, hub, projects, products, studios] = await Promise.all([
+        fb.getDoc(fb.doc(fb.db, "settings", "site")).catch(() => null),
+        fb.getDoc(fb.doc(fb.db, "settings", "hub")).catch(() => null),
+        fb.getDocs(fb.query(fb.collection(fb.db, "projects"), fb.limit(40))).catch(() => null),
+        fb.getDocs(fb.query(fb.collection(fb.db, "products"), fb.limit(40))).catch(() => null),
+        fb.getDocs(fb.query(fb.collection(fb.db, "studios"), fb.limit(20))).catch(() => null)
+      ]);
+      const data = snap => snap?.docs?.map(d => ({ id: d.id, ...d.data() })) || [];
+      const safe = value => JSON.stringify(value, (k, v) => /password|secret|token|apiKey|email|phone|uid|credential/i.test(k) ? undefined : v).slice(0, 10000);
+      const context = ["Portfolio settings and pricing: " + safe(site?.data?.() || {}), "Hub information: " + safe(hub?.data?.() || {}), "Projects: " + safe(data(projects).map(p => ({title:p.title,category:p.category,categories:p.categories,summary:p.summary,description:p.description,status:p.status,tech:p.tech}))), "Products: " + safe(data(products).filter(p => p.visible !== false).map(p => ({name:p.name,category:p.category,description:p.description,priceFrom:p.priceFrom,originalPrice:p.originalPrice,salePrice:p.salePrice,unit:p.unit,minQty:p.minQty,leadTime:p.leadTime}))), "Studios: " + safe(data(studios).map(s => ({name:s.name,description:s.description,services:s.services,packages:s.packages,faqs:s.faqs})))].join("\\n");
+      const history = msgs.filter(m => !m.deleted && m.text && ["client", "ai", "admin"].includes(m.from) && !(m.from === "client" && m.text === userText)).slice(-8).map(m => ({role: m.from === "client" ? "user" : "assistant", content: String(m.text).slice(0, 1000)}));
+      const response = await fetch(AI_CHAT_ENDPOINT, {method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify({message: userText, context, history})});
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.answer) throw new Error(result.error || "AI could not respond.");
+      const latest = await fb.getDoc(tRef).catch(() => null);
+      if (latest?.exists() && latest.data().handoffRequested) return;
+      await fb.setDoc(fb.doc(mCol), {from: "ai", text: "🤖 ProfJero AI (automated reply)\n" + String(result.answer).slice(0, 3900), name: "ProfJero AI", createdAt: fb.serverTimestamp(), reactions: {}, clientId: "profjero-ai"});
+      await fb.updateDoc(tRef, {lastMessage: String(result.answer).slice(0, 200), lastAt: fb.serverTimestamp(), lastFrom: "ai"});
+    } catch (error) { toast(error.message || "AI chat is not configured. Please request a human reply.", "error", 6000); }
+    finally { aiThinking = false; paintStatus(); }
+  }
+
   // ---------- sending ----------
   async function send({ text = "", attachment = null } = {}) {
     text = text.trim().slice(0, 4000);
@@ -260,6 +303,7 @@ export function mountChat(root, opts) {
       await fb.updateDoc(tRef, patch);
       unreadFrom = null;
       log.scrollTop = log.scrollHeight;
+      if (me === "client" && text && !thread?.handoffRequested) requestAiReply(text);
     } catch (e) { toast("Message not sent: " + (e.message || e), "error"); if (text) ta.value = text; }
   }
   async function sendFile(file, kind) {
@@ -404,8 +448,10 @@ export function mountChat(root, opts) {
     if (t.closest("[data-request-human]") && me === "client") {
       try {
         await writeThread({ handoffRequested: true, handoffRequestedAt: fb.serverTimestamp(), handoffStatus: "requested", label: "pending", unreadAdmin: fb.increment(1) });
-        toast("Your request has been sent. A member of the ProfJero team will reply here.");
-        const btn = $(".ck-human-btn"); if (btn) { btn.disabled = true; btn.title = "Human reply requested"; }
+        toast("Request sent. Benjamin (ProfJero) will reply in this chat.");
+        const btn = $(".ck-human-btn");
+        if (btn) { btn.disabled = true; btn.title = "Human reply requested"; btn.classList.add("requested"); btn.innerHTML = '<i class="fa-solid fa-hourglass-half"></i><span>Human reply requested</span>'; }
+        if (!$(".ck-handoff-banner")) log.insertAdjacentHTML("afterbegin", '<div class="ck-handoff-banner"><i class="fa-solid fa-user-check"></i><div><strong>Human support requested</strong><span>Benjamin (ProfJero) has been notified. Replies will appear here.</span></div></div>');
       } catch (err) { toast(err.message || "Could not request a human reply."); }
       return;
     }

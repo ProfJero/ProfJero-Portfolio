@@ -274,7 +274,7 @@ service cloud.firestore {
                && data().attachment.get('thumb', '').size() <= 4000))
           && (!('replyTo' in data()) || data().replyTo == null || (data().replyTo is map && data().replyTo.size() <= 4))
           && (!('reactions' in data()) || data().reactions == {})
-          && ((signedIn() && request.auth.uid == uid && data().from == 'client') || (chatAdmin() && data().from == 'admin'));
+          && ((signedIn() && request.auth.uid == uid && data().from == 'client') || (chatAdmin() && data().from == 'admin') || (signedIn() && request.auth.uid == uid && data().from == 'ai' && data().name == 'ProfJero AI' && data().get('clientId', '') == 'profjero-ai' && get(/databases/$(database)/documents/threads/$(uid)).data.get('handoffRequested', false) != true));
         allow update: if
           // Edit your own message within 15 minutes (like WhatsApp).
           (mine() && onlyChanged(['text', 'editedAt']) && str(data().text, 1, 4000) && data().editedAt == request.time

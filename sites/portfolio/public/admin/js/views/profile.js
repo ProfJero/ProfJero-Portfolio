@@ -68,7 +68,9 @@ const SECTIONS = [
         { key: "plans", label: "Plans", type: "list", full: true, itemLabel: "Plan", fields: [
           { key: "name", label: "Plan name", type: "text" }, { key: "tagline", label: "Tagline", type: "text" },
           { key: "prefix", label: "Prefix (e.g. From)", type: "text" }, { key: "period", label: "Period", type: "text", placeholder: "one-off, /month, /day, 12 weeks" },
-          { key: "price", label: "Price (GH₵)", type: "text", placeholder: "GH₵ 9,500" },
+          { key: "price", label: "Current price (GH₵)", type: "text", placeholder: "GH₵ 9,500" },
+          { key: "originalPrice", label: "Original price before discount (optional)", type: "text", placeholder: "GH₵ 16,000", help: "Leave empty when there is no discount. When set, this is crossed out on the public page." },
+          { key: "salePrice", label: "Discounted price (optional)", type: "text", placeholder: "GH₵ 12,000", help: "Set this to the sale price. It will be shown in bold next to the crossed-out original price." },
           { key: "delivery", label: "Delivery / note", type: "text", placeholder: "3–4 weeks" }, { key: "featured", label: "Highlight as most popular", type: "toggle" },
           { key: "features", label: "Features", type: "strings", full: true, itemLabel: "feature" }] }] },
       { key: "pricingNote", label: "Payment terms note (shown under pricing)", type: "textarea", full: true, rows: 3 }

@@ -6,7 +6,7 @@ body.admin { background: var(--bg); min-height: 100vh; }
 
 /* ---------- Sidebar ---------- */
 .sidebar { --hub: #7C3AED; --pf: var(--brand); --both: #0D9488;
-  position: sticky; top: 0; align-self: start; height: 100vh; height: 100dvh; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent;
+  position: fixed; inset: 0 auto 0 0; width: var(--side-w, 276px); z-index: 50; height: 100vh; height: 100dvh; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent;
   background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 5%, var(--surface)) 0, var(--surface) 220px);
   border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; padding: 16px 12px; z-index: 50; }
 .side-head { display: flex; align-items: center; gap: 8px; padding: 2px 4px 6px; }

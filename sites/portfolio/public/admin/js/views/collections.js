@@ -11,7 +11,7 @@ const CONFIG = {
     intro: "Projects appear in the Portfolio section. Add a <b>live demo URL</b> to let visitors try the system inside your site, and a <b>YouTube or TikTok link</b> to show a video walkthrough.",
     fields: [
       { key: "title", label: "Project name", type: "text", required: true, max: 80 },
-      { key: "category", label: "Category (filter tab)", type: "text", placeholder: "Web Apps, Dashboards, Business Systems…" },
+      { key: "category", label: "Categories (comma-separated)", type: "text", placeholder: "Web Apps, E-commerce, Dashboards", help: "Enter one or more categories separated by commas. A project can appear under every matching filter." },
       { key: "studio", label: "Studio (ProfJero Hub)", type: "select", options: [["digital-studio", "Digital Studio"], ["creative-studio", "Creative Studio"], ["agro-studio", "Agro Studio"], ["nourish-studio", "Nourish Studio"], ["", "None"]] },
       { key: "summary", label: "Short summary (card)", type: "textarea", full: true, rows: 2, max: 200 },
       { key: "description", label: "Full description (Markdown — shown in Details)", type: "markdown", full: true, rows: 7, help: "Use - for bullet lists of features." },
@@ -88,7 +88,9 @@ const CONFIG = {
       { key: "image", label: "Product photo (optional — an icon is shown otherwise)", type: "image", full: true },
       { key: "icon", label: "Icon", type: "icon" },
       { key: "methods", label: "Branding methods", type: "tags" },
-      { key: "priceFrom", label: "Price from (GH₵)", type: "text", placeholder: "GH₵ 35" },
+      { key: "priceFrom", label: "Current price from (GH₵)", type: "text", placeholder: "GH₵ 35" },
+      { key: "originalPrice", label: "Original price before discount (optional)", type: "text", placeholder: "GH₵ 50", help: "Leave empty when not discounted." },
+      { key: "salePrice", label: "Discounted price from (optional)", type: "text", placeholder: "GH₵ 35", help: "When set, the public product card shows the original price crossed out and the sale price in bold." },
       { key: "unit", label: "Unit", type: "text", placeholder: "per piece" },
       { key: "minQty", label: "Minimum quantity", type: "number", min: 1 },
       { key: "leadTime", label: "Lead time", type: "text", placeholder: "5–7 days" },
@@ -251,6 +253,7 @@ export async function render(view, { name, params = [] }) {
               while (items.some(x => x.id === id)) id = `${base}-${n++}`;
             }
             const vals = cfg.beforeSave ? await cfg.beforeSave({ ...values }) : values;
+            if (name === "projects") { const cats = [...new Set(String(vals.category || "").split(",").map(x => x.trim()).filter(Boolean))]; vals.category = cats.join(", "); vals.categories = cats; }
             const doc = { ...vals, order: data.order ?? items.length + 1, updatedAt: fb.serverTimestamp() };
             try {
               await fb.setDoc(fb.doc(fb.db, name, id), doc, { merge: true });
