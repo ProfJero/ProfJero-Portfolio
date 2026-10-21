@@ -224,7 +224,9 @@ async function startApp(u, rec) {
   if (can("chat")) {
     const seenHandoffs = new Set();
     subs.push(fb.onSnapshot(fb.query(fb.collection(fb.db, "threads"), fb.where("handoffRequested", "==", true)), snap => {
-      snap.docChanges().filter(change => change.type === "added" || change.type === "modified").forEach(change => {
+      snap.docChanges().forEach(change => {
+        if (change.type === "removed") { seenHandoffs.delete(change.doc.id); return; }
+        if (change.type !== "added" && change.type !== "modified") return;
         const t = change.doc.data();
         if (seenHandoffs.has(change.doc.id) || !t.handoffRequested) return;
         seenHandoffs.add(change.doc.id);
