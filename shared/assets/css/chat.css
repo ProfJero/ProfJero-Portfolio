@@ -41,7 +41,7 @@
 .ck-msg.me .ck-b::after { right: -6px; clip-path: polygon(0 0, 100% 0, 0 100%); }
 .ck-msg.them .ck-b::after { left: -6px; clip-path: polygon(0 0, 100% 0, 100% 100%); }
 .ck-name { display: block; font-size: .76rem; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
-.ck-text { white-space: normal; }
+.ck-text { white-space: pre-line; }
 .ck-text a { color: var(--brand); text-decoration: underline; }
 .ck-meta { float: right; margin: 6px 0 -4px 10px; font-size: .68rem; color: var(--muted); display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
 .ck-meta em { font-style: italic; }
