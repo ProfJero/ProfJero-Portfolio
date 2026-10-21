@@ -167,7 +167,8 @@ export const cedis = v => {
 export function renderPricing(groups = [], note = "") {
   const list = groups.filter(g => (g.plans || []).length);
   const tabs = list.map((g, i) => `<button type="button" role="tab" class="${i === 0 ? "active" : ""}" aria-selected="${i === 0}" data-pgroup="${i}"><i class="${esc(g.icon || "fa-solid fa-tag")}"></i> ${esc(g.name)}</button>`).join("");
-  const money = p => esc(cedis(p.price));
+  const money = p => esc(cedis(p.salePrice ?? p.discountPrice ?? p.price));
+  const originalMoney = p => p.originalPrice != null && String(p.originalPrice).trim() !== "" ? esc(cedis(p.originalPrice)) : "";
   const panels = list.map((g, i) => `
     <div class="pricing" data-ppanel="${i}"${i === 0 ? "" : " hidden"}>
       ${(g.plans || []).map(p => `
@@ -175,7 +176,7 @@ export function renderPricing(groups = [], note = "") {
         ${p.featured ? '<span class="price-flag"><i class="fa-solid fa-star"></i> Most popular</span>' : ""}
         <h3>${esc(p.name)}</h3>
         ${p.tagline ? `<p class="price-tagline">${esc(p.tagline)}</p>` : ""}
-        <div class="price">${p.prefix ? `<small>${esc(p.prefix)}</small>` : ""}<strong>${money(p)}</strong>${p.period && p.period !== "one-off" ? `<em>${esc(p.period)}</em>` : ""}</div>
+        <div class="price">${p.prefix ? `<small>${esc(p.prefix)}</small>` : ""}${originalMoney(p) ? `<small class="price-was">${originalMoney(p)}</small>` : ""}<strong class="${originalMoney(p) ? "price-sale" : ""}">${money(p)}</strong>${originalMoney(p) ? `<span class="price-discount">SPECIAL PRICE</span>` : ""}${p.period && p.period !== "one-off" ? `<em>${esc(p.period)}</em>` : ""}</div>
         ${p.delivery ? `<div class="price-delivery"><i class="fa-regular fa-clock"></i> ${esc(p.delivery)}</div>` : ""}
         <ul>${(p.features || []).map(f => `<li><i class="fa-solid fa-check"></i> ${esc(f)}</li>`).join("")}</ul>
         <a class="btn ${p.featured ? "btn-primary" : "btn-outline"}" href="#contact" data-plan="${esc(p.name)}" data-pgroup-name="${esc(g.name)}">Get a quote <i class="fa-solid fa-arrow-right"></i></a>
