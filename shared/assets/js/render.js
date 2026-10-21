@@ -71,10 +71,12 @@ export function projectCover(p, w = 800) {
   return "";
 }
 
+const projectCategories = p => [...new Set((Array.isArray(p.categories) ? p.categories : String(p.category || "").split(",")).map(c => String(c).trim()).filter(Boolean))];
+
 export function renderProjectFilters(projects = []) {
-  const cats = [...new Set(projects.map(p => p.category).filter(Boolean))];
+  const cats = [...new Set(projects.flatMap(projectCategories))];
   return [`<button class="chip active" data-filter="*">All <span>${projects.length}</span></button>`]
-    .concat(cats.map(c => `<button class="chip" data-filter="${esc(c)}">${esc(c)} <span>${projects.filter(p => p.category === c).length}</span></button>`)).join("");
+    .concat(cats.map(c => `<button class="chip" data-filter="${esc(c)}">${esc(c)} <span>${projects.filter(p => projectCategories(p).includes(c)).length}</span></button>`)).join("");
 }
 
 export function renderProjects(projects = []) {
@@ -84,7 +86,7 @@ export function renderProjects(projects = []) {
     const live = safeUrl(p.liveUrl);
     const statusLabel = { live: "Live", "in-progress": "In progress", concept: "Concept", delivered: "Delivered" }[p.status] || "";
     return `
-    <article class="project-card reveal" data-cat="${esc(p.category || "")}" data-studio="${esc(p.studio || "")}" data-id="${esc(p.id)}">
+    <article class="project-card reveal" data-cat="${esc(projectCategories(p).join("|"))}" data-studio="${esc(p.studio || "")}" data-id="${esc(p.id)}">
       <div class="project-media" style="--h:${hueFrom(p.title)}">
         <div class="project-fallback"><i class="fa-solid fa-window-maximize"></i><span>${esc(p.title)}</span></div>
         ${cover ? `<img src="${esc(cover)}" alt="${esc(p.title)} preview" loading="lazy" decoding="async" onerror="this.remove()">` : ""}
@@ -95,7 +97,7 @@ export function renderProjects(projects = []) {
         ${video ? `<button class="play-btn" data-action="video" data-id="${esc(p.id)}" aria-label="Watch ${esc(p.title)} demo video"><i class="fa-solid fa-play"></i></button>` : ""}
       </div>
       <div class="project-body">
-        <div class="project-meta"><span>${esc(p.category || "")}</span>${p.year ? `<span>${esc(p.year)}</span>` : ""}</div>
+        <div class="project-meta"><span>${projectCategories(p).map(esc).join(" · ")}</span>${p.year ? `<span>${esc(p.year)}</span>` : ""}</div>
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.summary || "")}</p>
         <div class="tags">${(p.tech || []).slice(0, 5).map(t => `<span>${esc(t)}</span>`).join("")}</div>
