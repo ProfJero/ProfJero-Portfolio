@@ -41,7 +41,7 @@ export async function render(view, { params }) {
         <span class="cl-av">${avatarOf(t)}${online ? '<i class="cl-online" title="Online"></i>' : ""}</span>
         <div style="flex:1;min-width:0"><div style="display:flex;gap:8px;align-items:center"><span class="title" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t.name || t.email)}</span><span class="when">${timeAgo(t.lastAt)}</span></div>
         <div class="sub" style="display:flex;gap:6px;align-items:center">${typing ? '<span class="ck-typing">typing<i></i><i></i><i></i></span>' : `<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.lastFrom === "admin" ? "You: " : ""}${esc(t.lastMessage || "")}</span>`}
-          <span class="cl-label" style="--c:${lab[1]}">${lab[0]}</span>${t.unreadAdmin ? `<span class="side-badge" style="background:var(--green)">${t.unreadAdmin}</span>` : ""}</div></div>
+          <span class="cl-label" style="--c:${lab[1]}">${lab[0]}</span>${t.handoffRequested ? '<span class="cl-label" style="--c:#D97706">Human requested</span>' : ""}${t.unreadAdmin ? `<span class="side-badge" style="background:var(--green)">${t.unreadAdmin}</span>` : ""}</div></div>
       </div>`;
     }).join("") : emptyState("fa-regular fa-comments", threads.length ? "No chats match." : "No conversations yet. Clients can message you from the ProfJero Hub client portal.");
   }
@@ -58,7 +58,7 @@ export async function render(view, { params }) {
       peer: { name: t.name || t.email || "Client", avatar: avatarOf(t, 40), sub: t.email || "" },
       onBack: () => { chat?.destroy(); chat = null; selected = null; $("#inbox").classList.remove("detail-open"); pane.innerHTML = emptyState("fa-regular fa-comment-dots", "Select a conversation."); history.replaceState(null, "", "#/chat"); paintList(); },
       quickReplies,
-      header: `<select class="cl-label-select" aria-label="Conversation label" title="Label">${Object.entries(LABELS).map(([k, [l]]) => `<option value="${k}"${(t.label || "new") === k ? " selected" : ""}>${l}</option>`).join("")}</select>
+      header: `${t.handoffRequested ? '<button type="button" class="btn btn-primary btn-sm" data-handoff-clear title="Mark human handoff as handled"><i class="fa-solid fa-check"></i> Mark handled</button>' : ""}<select class="cl-label-select" aria-label="Conversation label" title="Label">${Object.entries(LABELS).map(([k, [l]]) => `<option value="${k}"${(t.label || "new") === k ? " selected" : ""}>${l}</option>`).join("")}</select>
         <button type="button" class="ck-ib" data-qr-edit title="Edit quick replies" aria-label="Edit quick replies"><i class="fa-solid fa-bolt"></i></button>
         <a class="ck-ib" href="#/clients/${esc(t.id)}" title="Client profile" aria-label="Client profile"><i class="fa-regular fa-id-card"></i></a>`,
       notify: { title: t.name || "Client", icon: "/assets/img/brand/app-admin-192.png" }
@@ -69,6 +69,11 @@ export async function render(view, { params }) {
   view.addEventListener("click", async e => {
     const f = e.target.closest("[data-f]"); if (f) { filter = f.dataset.f; paintList(); return; }
     const it = e.target.closest(".msg-item"); if (it) return open(it.dataset.id);
+    if (e.target.closest("[data-handoff-clear]") && selected) {
+      try { await fb.updateDoc(fb.doc(fb.db, "threads", selected), { handoffRequested: false, handoffStatus: "handled", handoffHandledAt: fb.serverTimestamp(), label: "open" }); toast("Human handoff marked as handled"); }
+      catch (err) { toast(err.message || "Could not update handoff.", "error"); }
+      return;
+    }
     if (e.target.closest("[data-qr-edit]")) {
       let saved = null;
       await openDialog({
