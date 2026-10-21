@@ -2,7 +2,8 @@
 // paint never waits on the SDK.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  initializeFirestore, persistentLocalCache, persistentMultipleTabManager, connectFirestoreEmulator,
+  initializeFirestore, getFirestore,
+  persistentLocalCache, persistentMultipleTabManager, connectFirestoreEmulator,
   collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
   query, where, orderBy, limit, writeBatch, increment, serverTimestamp,
   Timestamp, onSnapshot, collectionGroup, getCountFromServer, runTransaction, arrayUnion, deleteField
@@ -26,20 +27,34 @@ try {
   useEmulator = local && sessionStorage.getItem("pj_emulator") === "1";
 } catch { }
 
+// initializeFirestore() must run AT MOST ONCE per app. If the first call throws
+// (e.g. persistent cache is blocked), the app may already be registered — so the
+// fallback MUST use getFirestore() to reuse that instance. Calling
+// initializeFirestore() a second time with different options always throws
+// "initializeFirestore() has already been called with different options".
 let db;
 if (useEmulator) {
-  db = initializeFirestore(app, {});
-  connectFirestoreEmulator(db, "127.0.0.1", 8080);
-} else try {
-  db = initializeFirestore(app, {
-    localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
-  });
-} catch {
-  db = initializeFirestore(app, {});
+  try {
+    db = initializeFirestore(app, {});
+  } catch {
+    db = getFirestore(app);
+  }
+  try { connectFirestoreEmulator(db, "127.0.0.1", 8080); } catch { /* already connected */ }
+} else {
+  try {
+    db = initializeFirestore(app, {
+      localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+    });
+  } catch {
+    db = getFirestore(app);
+  }
 }
 export { db };
+
 export const auth = getAuth(app);
-if (useEmulator) connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true });
+if (useEmulator) {
+  try { connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true }); } catch { /* already connected */ }
+}
 
 // Analytics loads after the page is idle and only where supported.
 export function startAnalytics() {
