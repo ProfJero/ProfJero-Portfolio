@@ -160,6 +160,8 @@ await t("alice sends message", () => assertSucceeds(setDoc(doc(alice, "threads/a
 await t("alice cannot fake admin message", () => assertFails(setDoc(doc(alice, "threads/alice/messages/m2"), { from: "admin", text: "Paid", createdAt: serverTimestamp() })));
 await t("bob cannot read alice thread", () => assertFails(getDocs(collection(bob, "threads/alice/messages"))));
 await t("admin replies", () => assertSucceeds(setDoc(doc(owner, "threads/alice/messages/m3"), { from: "admin", text: "Hi Alice", createdAt: serverTimestamp() })));
+await t("AI reply is allowed in the client's own thread before handoff", () => assertSucceeds(setDoc(doc(alice, "threads/alice/messages/ai1"), { from: "ai", text: "Hello", name: "ProfJero AI", clientId: "profjero-ai", createdAt: serverTimestamp(), reactions: {} }))); 
+await t("AI reply is blocked after human handoff is requested", async () => { await updateDoc(doc(alice, "threads/alice"), { handoffRequested: true, handoffRequestedAt: serverTimestamp(), handoffStatus: "requested", label: "pending" }); await assertFails(setDoc(doc(alice, "threads/alice/messages/ai2"), { from: "ai", text: "This should not send", name: "ProfJero AI", clientId: "profjero-ai", createdAt: serverTimestamp(), reactions: {} })); });
 await t("anyone reads products", () => assertSucceeds(getDocs(collection(anon, "products"))));
 await t("visitor cannot add product", () => assertFails(setDoc(doc(alice, "products/x"), { name: "x" })));
 
