@@ -29,7 +29,7 @@ export const SITE = SITES[SITE_ID] || SITES.portfolio;
 
 // Set this to the deployed Cloudflare Worker URL ending in /api/chat.
 // Example: "https://profjero-chat-api.<your-subdomain>.workers.dev/api/chat"
-export const CHAT_API_URL = "";
+export const CHAT_API_URL = "https://profjero-chat-api.profjero947.workers.dev/api/chat";
 
 // Firebase JS SDK served from Google's CDN (no bundler needed).
 export const FIREBASE_SDK = "https://www.gstatic.com/firebasejs/10.12.2";
