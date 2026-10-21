@@ -262,7 +262,7 @@ export function mountChat(root, opts) {
       if (!response.ok || !result.answer) throw new Error(result.error || "AI could not respond.");
       const latest = await fb.getDoc(tRef).catch(() => null);
       if (latest?.exists() && latest.data().handoffRequested) return;
-      await fb.setDoc(fb.doc(mCol), {from: "ai", text: String(result.answer).slice(0, 4000), name: "ProfJero AI", createdAt: fb.serverTimestamp(), reactions: {}, clientId: "profjero-ai"});
+      await fb.setDoc(fb.doc(mCol), {from: "ai", text: "🤖 ProfJero AI (automated reply)\n" + String(result.answer).slice(0, 3900), name: "ProfJero AI", createdAt: fb.serverTimestamp(), reactions: {}, clientId: "profjero-ai"});
       await fb.updateDoc(tRef, {lastMessage: String(result.answer).slice(0, 200), lastAt: fb.serverTimestamp(), lastFrom: "ai"});
     } catch (error) { toast(error.message || "AI chat is not configured. Please request a human reply.", "error", 6000); }
   }
