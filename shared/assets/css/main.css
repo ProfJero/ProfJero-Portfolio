@@ -892,3 +892,9 @@ input, select, textarea { font: inherit; color: inherit; }
 /* Pop-ups ignore clicks on the empty space around them; a small shake shows that. */
 dialog.nudge > * { animation: nudge .32s var(--ease); }
 @keyframes nudge { 20% { transform: translateX(-6px); } 45% { transform: translateX(5px); } 70% { transform: translateX(-3px); } 100% { transform: none; } }
+
+
+/* Sale pricing — show the original amount crossed out and the active price prominently. */
+.price .price-was { display: block; margin-bottom: 3px; color: var(--muted); font-size: .86rem; font-weight: 500; text-decoration: line-through; }
+.price .price-sale { display: inline-block; color: var(--text); font-size: 1.14em; font-weight: 900; }
+.price .price-discount { display: inline-flex; margin-left: 7px; padding: 3px 7px; border-radius: 999px; background: color-mix(in srgb, var(--green) 12%, transparent); color: var(--green); font-size: .62rem; font-weight: 850; letter-spacing: .06em; vertical-align: middle; }
