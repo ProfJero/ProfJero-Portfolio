@@ -271,7 +271,7 @@ export function mountChat(root, opts) {
       const data = snap => snap?.docs?.map(d => ({ id: d.id, ...d.data() })) || [];
       const safe = value => JSON.stringify(value, (k, v) => /password|secret|token|apiKey|email|phone|uid|credential/i.test(k) ? undefined : v).slice(0, 10000);
       const context = ["Portfolio settings and pricing: " + safe(site?.data?.() || {}), "Hub information: " + safe(hub?.data?.() || {}), "Projects: " + safe(data(projects).map(p => ({title:p.title,category:p.category,categories:p.categories,summary:p.summary,description:p.description,status:p.status,tech:p.tech}))), "Products: " + safe(data(products).filter(p => p.visible !== false).map(p => ({name:p.name,category:p.category,description:p.description,priceFrom:p.priceFrom,originalPrice:p.originalPrice,salePrice:p.salePrice,unit:p.unit,minQty:p.minQty,leadTime:p.leadTime}))), "Studios: " + safe(data(studios).map(s => ({name:s.name,description:s.description,services:s.services,packages:s.packages,faqs:s.faqs})))].join("\\n");
-      const history = msgs.filter(m => !m.deleted && m.text && ["client", "ai", "admin"].includes(m.from)).slice(-8).map(m => ({role: m.from === "client" ? "user" : "assistant", content: String(m.text).slice(0, 1000)}));
+      const history = msgs.filter(m => !m.deleted && m.text && ["client", "ai", "admin"].includes(m.from) && !(m.from === "client" && m.text === userText)).slice(-8).map(m => ({role: m.from === "client" ? "user" : "assistant", content: String(m.text).slice(0, 1000)}));
       const response = await fetch(AI_CHAT_ENDPOINT, {method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify({message: userText, context, history})});
       const result = await response.json().catch(() => ({}));
       if (!response.ok || !result.answer) throw new Error(result.error || "AI could not respond.");
@@ -283,7 +283,7 @@ export function mountChat(root, opts) {
   }
 
   // ---------- sending ----------
-  async function send({ text = "", attachment = null } = {})
+  async function send({ text = "", attachment = null } = {}) {
     text = text.trim().slice(0, 4000);
     if (!text && !attachment) return;
     const ref = fb.doc(mCol);
