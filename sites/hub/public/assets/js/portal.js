@@ -8,6 +8,7 @@ import { STATUS, timeline } from "./status.js";
 import { computeTotals, displayStatus, STATUS_LABEL, fmtDay, money as gh } from "./invoice-doc.js";
 import { initPWA } from "./pwa.js";
 import { mountChat } from "./chat-kit.js";
+import { plainText } from "./chat-format.js";
 
 initPWA({
   app: "portal", scope: "/portal/",
@@ -171,7 +172,7 @@ function listenMessages() {
     const n = data.thread?.unreadClient || 0;
     const b = $("#badge-msg");
     if (b) { b.textContent = n || ""; b.hidden = !n; }
-    if (prevUnread !== null && n > prevUnread && route() !== "messages") toast(`New message from ProfJero: “${String(data.thread.lastMessage || "").slice(0, 60)}”`, "info");
+    if (prevUnread !== null && n > prevUnread && route() !== "messages") toast(`New message from ProfJero: “${plainText(String(data.thread.lastMessage || "")).slice(0, 60)}”`, "info");
     prevUnread = n;
   }, () => { }));
   // While the portal is open, tell the team we're here, so their messages show ✓✓ delivered.

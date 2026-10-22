@@ -2,7 +2,8 @@
 // conversation (shared chat-kit used by the client portal too) with quick replies.
 import { $, $$, fb, esc, emptyState, toast, state, openDialog, firstName } from "../core.js";
 import { timeAgo, toDate, initials, hueFrom } from "/assets/js/utils.js";
-import { mountChat, lastSeen } from "/assets/js/chat-kit.js";
+import { mountChat, lastSeen, AI_NAME } from "/assets/js/chat-kit.js";
+import { plainText } from "/assets/js/chat-format.js";
 
 const LABELS = { new: ["New", "#2563EB"], open: ["Open", "#0D9488"], pending: ["Waiting on client", "#D97706"], resolved: ["Resolved", "#64748B"] };
 const DEFAULT_QR = [
@@ -41,7 +42,7 @@ export async function render(view, { params }) {
       return `<div class="msg-item${t.unreadAdmin ? " unread" : ""}${t.id === selected ? " active" : ""}" data-id="${esc(t.id)}" tabindex="0" role="button">
         <span class="cl-av">${avatarOf(t)}${online ? '<i class="cl-online" title="Online"></i>' : ""}</span>
         <div style="flex:1;min-width:0"><div style="display:flex;gap:8px;align-items:center"><span class="title" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t.name || t.email)}</span><span class="when">${timeAgo(t.lastAt)}</span></div>
-        <div class="sub" style="display:flex;gap:6px;align-items:center">${typing ? '<span class="ck-typing">typing<i></i><i></i><i></i></span>' : `<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.lastFrom === "admin" ? "You: " : ""}${esc(t.lastMessage || "")}</span>`}
+        <div class="sub" style="display:flex;gap:6px;align-items:center">${typing ? '<span class="ck-typing">typing<i></i><i></i><i></i></span>' : `<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.lastFrom === "admin" ? "You: " : t.lastFrom === "ai" ? '<i class="fa-solid fa-wand-magic-sparkles" style="color:#7C3AED" title="' + esc(AI_NAME) + '"></i> ' : ""}${esc(plainText(t.lastMessage || ""))}</span>`}
           <span class="cl-label" style="--c:${lab[1]}">${lab[0]}</span>${t.handoffRequested ? '<span class="cl-label" style="--c:#D97706">Human requested</span>' : ""}${t.unreadAdmin ? `<span class="side-badge" style="background:var(--green)">${t.unreadAdmin}</span>` : ""}</div></div>
       </div>`;
     }).join("") : emptyState("fa-regular fa-comments", threads.length ? "No chats match." : "No conversations yet. Clients can message you from the ProfJero Hub client portal.");
@@ -55,13 +56,14 @@ export async function render(view, { params }) {
     $("#inbox").classList.add("detail-open");
     const pane = $("#t-detail");
     chat = mountChat(pane, {
-      fb, threadId: id, me: "admin", myName: "Benjamin (ProfJero)", toast,
+      fb, threadId: id, me: "admin", myName: firstName() === "there" ? "ProfJero" : firstName(), toast,
       peer: { name: t.name || t.email || "Client", avatar: avatarOf(t, 40), sub: t.email || "" },
       onBack: () => { chat?.destroy(); chat = null; selected = null; $("#inbox").classList.remove("detail-open"); pane.innerHTML = emptyState("fa-regular fa-comment-dots", "Select a conversation."); history.replaceState(null, "", "#/chat"); paintList(); },
       quickReplies,
-      header: `${t.handoffRequested ? '<button type="button" class="btn btn-primary btn-sm" data-handoff-clear title="Mark human handoff as handled"><i class="fa-solid fa-check"></i> Mark handled</button>' : ""}<select class="cl-label-select" aria-label="Conversation label" title="Label">${Object.entries(LABELS).map(([k, [l]]) => `<option value="${k}"${(t.label || "new") === k ? " selected" : ""}>${l}</option>`).join("")}</select>
-        <button type="button" class="ck-ib" data-qr-edit title="Edit quick replies" aria-label="Edit quick replies"><i class="fa-solid fa-bolt"></i></button>
-        <a class="ck-ib" href="#/clients/${esc(t.id)}" title="Client profile" aria-label="Client profile"><i class="fa-regular fa-id-card"></i></a>`,
+      onThread: th => { const b = pane.querySelector("[data-handoff-clear]"); if (b) b.hidden = !th?.handoffRequested; },
+      header: `<button type="button" class="btn btn-primary btn-sm ck-handled" data-handoff-clear title="The client asked for a person. Click when you've taken over." ${t.handoffRequested ? "" : "hidden"}><i class="fa-solid fa-check"></i> Mark handled</button><select class="cl-label-select" aria-label="Conversation label" title="Label">${Object.entries(LABELS).map(([k, [l]]) => `<option value="${k}"${(t.label || "new") === k ? " selected" : ""}>${l}</option>`).join("")}</select>
+        <button type="button" class="ck-ib" data-qr-edit title="Edit quick replies" aria-label="Edit quick replies"><i class="fa-solid fa-bolt"></i><span class="ck-tool-label">Quick replies</span></button>
+        <a class="ck-ib" href="#/clients/${esc(t.id)}" title="Client profile" aria-label="Client profile"><i class="fa-regular fa-id-card"></i><span class="ck-tool-label">Client profile</span></a>`,
       notify: { title: t.name || "Client", icon: "/assets/img/brand/app-admin-192.png" }
     });
     paintList();
