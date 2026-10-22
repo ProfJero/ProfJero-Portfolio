@@ -96,6 +96,12 @@
 			}
 		}
 
+		html, body { overflow-x: hidden; max-width: 100%; }
+		/* Timeline artwork tiles (replace the template's photos) */
+		.tl-art { aspect-ratio: 4 / 3; max-height: 220px; border-radius: 16px; display: grid; place-items: center; font-size: 3.2rem; color: #0B5FFF; background: linear-gradient(135deg, rgba(11, 95, 255, .1), rgba(124, 58, 237, .12)); border: 1px solid rgba(11, 95, 255, .12); }
+		@media (max-width: 991px) { .tl-art { aspect-ratio: auto; height: 120px; font-size: 2.4rem; margin: 14px 0 6px; } }
+		/* Phones: the section dots sat on top of the text; the menu and swiping still move between sections. */
+		@media (max-width: 767px) { #pp-nav { display: none !important; } }
 		/* Sidebar */
 		.sidebar {
 			position: fixed;
@@ -335,7 +341,7 @@
 								  			<p>Contributed to the success of Aquila Apex, a multidisciplinary group of companies offering expert services in IT, Graphic Design, Visual Design and branding, UX/UI and consulting. Leveraged skills in IT, Graphic Design etc to drive project delivery, client satisfaction, and business growth. Collaborated with cross-funtional teams to develop innovative solutions.</p>
 								  		</div>
 								  		<div class="col-md-12 col-lg-4">
-								  			<img src="images/education/01.jpg" alt="image">
+								  			<div class="tl-art" aria-hidden="true"><i class="fa-solid fa-briefcase"></i></div>
 								  		</div>
 							  		</div>
 							  	</div>
@@ -345,7 +351,7 @@
 								  			<p>Collaborated with the Hubtel team to design and develop innovative digital solutions, utilizing expertise in Web Development, UX/UI Design, frameworks etc... Contributed to the creation of cuuting-edge web and mobile applications, driving business growth and customer engagement. Successfully delivered projects on time, exceeding client expectiations.</p>
 								  		</div>
 								  		<div class="col-md-12 col-lg-4">
-								  			<img src="images/education/02.jpg" alt="image">
+								  			<div class="tl-art" aria-hidden="true"><i class="fa-solid fa-mobile-screen-button"></i></div>
 								  		</div>
 								  		<div class="col-md-12 col-lg-4">
 								  			<h1 class="color_lightgray font-weight-bold">02.</h1>
@@ -357,7 +363,7 @@
 							  	<div class="company pb_60">
 							  		<div class="row">
 							  			<div class="col-md-12 col-lg-4">
-								  			<img src="images/education/03.jpg" alt="image">
+								  			<div class="tl-art" aria-hidden="true"><i class="fa-solid fa-computer"></i></div>
 								  		</div>
 								  		<div class="col-md-12 col-lg-4">
 								  			<h1 class="color_lightgray font-weight-bold">03.</h1>
@@ -375,7 +381,7 @@
 							  	<div class="company pb_60">
 							  		<div class="row">
 								  		<div class="col-md-12 col-lg-4">
-								  			<img src="images/education/04.jpg" alt="image">
+								  			<div class="tl-art" aria-hidden="true"><i class="fa-solid fa-graduation-cap"></i></div>
 								  		</div>
 								  		<div class="col-md-12 col-lg-4">
 								  			<p>Aquired comprehensive knowledge of Python programming language, including data types, control structures, fuctions, object-oriented programming concepts, and data structures. Developed hands-on skills through projects and exerices, focusing on practical applications and problems- solving.</p>
@@ -396,7 +402,7 @@
 								  			<span class="color_secondery">2021 - 2022</span>
 								  		</div>
 								  		<div class="col-md-12 col-lg-4">
-								  			<img src="images/education/05.jpg" alt="image">
+								  			<div class="tl-art" aria-hidden="true"><i class="fa-solid fa-school"></i></div>
 								  		</div>
 								  		<div class="col-md-12 col-lg-4">
 								  			<p>Aquired in-depth knowledge of PHP programming language. Developed skills in building dynamic web applications using PHP and MySQL, Creating interactive web pages with PHP and HTML/CSS, Managing and manipulating databases with PHP and MySQL, Using popular PHP frameworks and libraries to strealine development</p>
@@ -416,7 +422,7 @@
 								  			<span class="color_secondery">2019 - 2021</span>
 								  		</div>
 								  		<div class="col-md-12 col-lg-4">
-								  			<img src="images/education/06.jpg" alt="image">
+								  			<div class="tl-art" aria-hidden="true"><i class="fa-solid fa-certificate"></i></div>
 								  		</div>
 								  	</div>
 							  	</div>

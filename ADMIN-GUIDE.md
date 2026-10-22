@@ -167,6 +167,10 @@ The 🔔 bell at the top and the **Alerts** page list what needs your attention:
 ### Client chat
 
 Works like WhatsApp, for you and the client:
+- **Who said what is always clear.** Your own messages are solid blue bubbles on the right; the other person's are white bubbles on the left with their photo. Messages from the same person in a row are grouped.
+- **ProfJero Assistant** (the automated AI reply) has its own violet bubble with an **Automated reply** badge. In the admin it sits on your side (right), because it answers for the business. Clients see your replies under your name with a **ProfJero team** badge.
+- The assistant answers clients instantly, but stays quiet once you've replied (for 2 hours) and as soon as the client taps **Talk to a person**. A handoff shows a banner and a **Human requested** tag in the chat list; click **Mark handled** when you've taken over.
+- **Formatting:** click the **A** button for bold, italic, underline, strikethrough, 7 text colours, bullet and numbered lists, quotes and code. Ctrl+B / Ctrl+I / Ctrl+U work too, and a preview shows the result before you send.
 - ✓ sent, ✓✓ delivered, blue ✓✓ read; “typing…”; online / last seen.
 - Reply to a specific message, react with an emoji, edit your message (within 15 minutes), delete for everyone (within 48 hours).
 - Send photos, documents (PDF, Word, Excel…) and **voice notes** (tap the mic). Paste or drag images straight in.

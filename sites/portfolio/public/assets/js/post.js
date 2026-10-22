@@ -108,7 +108,8 @@ function notFound() {
   $("#a-body").innerHTML = `<p><a class="btn btn-primary" href="/blog">Browse all articles</a></p>`;
   $(".action-bar").hidden = true;
   $("#comments").hidden = true;
-  $(".share-rail").hidden = true;
+  // Keep the rail's grid column (hiding it would drop the article into that narrow column).
+  $(".share-rail").style.visibility = "hidden";
 }
 
 // ---------- Table of contents scroll-spy & reading progress ----------

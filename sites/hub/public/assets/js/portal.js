@@ -8,6 +8,7 @@ import { STATUS, timeline } from "./status.js";
 import { computeTotals, displayStatus, STATUS_LABEL, fmtDay, money as gh } from "./invoice-doc.js";
 import { initPWA } from "./pwa.js";
 import { mountChat } from "./chat-kit.js";
+import { plainText } from "./chat-format.js";
 
 initPWA({
   app: "portal", scope: "/portal/",
@@ -171,7 +172,7 @@ function listenMessages() {
     const n = data.thread?.unreadClient || 0;
     const b = $("#badge-msg");
     if (b) { b.textContent = n || ""; b.hidden = !n; }
-    if (prevUnread !== null && n > prevUnread && route() !== "messages") toast(`New message from ProfJero: “${String(data.thread.lastMessage || "").slice(0, 60)}”`, "info");
+    if (prevUnread !== null && n > prevUnread && route() !== "messages") toast(`New message from ProfJero: “${plainText(String(data.thread.lastMessage || "")).slice(0, 60)}”`, "info");
     prevUnread = n;
   }, () => { }));
   // While the portal is open, tell the team we're here, so their messages show ✓✓ delivered.
@@ -220,6 +221,9 @@ function render() {
   if (r !== "messages") { chatRoom?.destroy(); chatRoom = null; }
   document.body.dataset.ptab = r;
   $$(".portal-side nav a").forEach(a => a.classList.toggle("active", a.dataset.tab === r));
+  // On phones the tabs are a sideways row: bring the current one into view.
+  const nav = $(".portal-side nav"), act = $(".portal-side nav a.active");
+  if (nav && act && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: act.offsetLeft - nav.clientWidth / 2 + act.offsetWidth / 2, behavior: "smooth" });
   const view = $("#pv");
   ({ overview, bookings: renderBookings, orders: renderOrders, invoices: renderInvoices, projects: renderProjects, messages: renderMessages, review: renderReview, profile: renderProfile }[r] || overview)();
   view.focus({ preventScroll: true });
