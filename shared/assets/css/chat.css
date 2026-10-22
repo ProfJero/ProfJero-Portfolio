@@ -38,8 +38,8 @@
   .ck-tools .ck-tool-label { display: inline; font-weight: 600; }
   .ck-tools select, .ck-tools .btn { width: 100%; max-width: none !important; }
 }
-@container ck (max-width: 460px) { .ck-head { gap: 6px; padding: 8px 8px 8px 10px; } .ck-who strong { font-size: .92rem; } .ck-human-btn { padding: 0 10px; font-size: .74rem; gap: 5px; } }
-@container ck (max-width: 340px) { .ck-human-btn span { display: none; } .ck-human-btn { width: 38px; padding: 0; } }
+@container ck (max-width: 460px) { .ck-head { gap: 6px; padding: 8px 6px 8px 10px; } .ck-who strong { font-size: .92rem; } .ck-av .avatar, .ck-av img { width: 36px; height: 36px; } .ck-human-btn { padding: 0 10px; font-size: .74rem; gap: 5px; } }
+@container ck (max-width: 300px) { .ck-human-btn span { display: none; } .ck-human-btn { width: 38px; padding: 0; } }
 
 /* ---------- search ---------- */
 .ck-search { display: flex; align-items: center; gap: 6px; padding: 6px 10px 6px 16px; background: var(--surface); border-bottom: 1px solid var(--line); color: var(--muted); }

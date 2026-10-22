@@ -47,7 +47,7 @@ Optional: under **Build watch paths**, include `shared/*`, `scripts/*` and that 
 
 ## AI chat backend (Cloudflare Workers, not Firebase Functions)
 
-The visitor chat calls `workers/chat-api/`, which uses the Cloudflare Workers AI binding and returns a business-grounded answer. Firestore continues to store conversations. After deploying the Worker, set `CHAT_API_URL` in `shared/assets/js/config.js` to the full deployed URL ending in `/api/chat`; the same setting is used by the Portfolio and Hub. Until that URL is set and the Worker is deployed with its `AI` binding, the chat will clearly tell visitors that AI is not connected and direct them to the human-support button.
+The visitor chat calls `workers/chat-api/`, which uses the Cloudflare Workers AI binding and returns a business-grounded answer. Firestore continues to store conversations. After deploying the Worker, set `CHAT_API_URL` in `shared/assets/js/config.js` to the full deployed URL ending in `/api/chat`; the same setting is used by the Portfolio and Hub. Until that URL is set and the Worker is deployed with its `AI` binding, the chat simply waits for a team reply, and clients can tap **Talk to a person**. Automated replies appear as **ProfJero Assistant** (stored with `from: "ai"`, `name: "ProfJero AI"`, which the rules check). Chat text supports light formatting markers (`**bold**`, `_italic_`, `__underline__`, `~~strike~~`, `[color=red]…[/color]`, lists), rendered safely by `shared/assets/js/chat-format.js`.
 
 ```bash
 cd workers/chat-api

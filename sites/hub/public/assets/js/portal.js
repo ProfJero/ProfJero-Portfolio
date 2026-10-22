@@ -221,6 +221,9 @@ function render() {
   if (r !== "messages") { chatRoom?.destroy(); chatRoom = null; }
   document.body.dataset.ptab = r;
   $$(".portal-side nav a").forEach(a => a.classList.toggle("active", a.dataset.tab === r));
+  // On phones the tabs are a sideways row: bring the current one into view.
+  const nav = $(".portal-side nav"), act = $(".portal-side nav a.active");
+  if (nav && act && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: act.offsetLeft - nav.clientWidth / 2 + act.offsetWidth / 2, behavior: "smooth" });
   const view = $("#pv");
   ({ overview, bookings: renderBookings, orders: renderOrders, invoices: renderInvoices, projects: renderProjects, messages: renderMessages, review: renderReview, profile: renderProfile }[r] || overview)();
   view.focus({ preventScroll: true });
